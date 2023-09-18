@@ -13,9 +13,17 @@
             "FGTCLB\\AcademicJobs\\": "Classes/"
         }
     },
+	"config": {
+        "vendor-dir": ".Build/vendor",
+        "bin-dir": ".Build/bin",
+        "allow-plugins": true
+    },
     "extra": {
         "typo3/cms": {
+			"web-dir": ".Build/Web",
+            "app-dir": ".Build",
             "extension-key": "academic_jobs"
+
         }
     }
 }
