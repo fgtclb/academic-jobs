@@ -1,6 +1,6 @@
 <f:for each="{jobs}" as="job" iteration="i">
     <article class="card text-white bg-dark-green border-dark h-100 mb-3">
-        <div class="card-body overlay-link">
+        <div class="card-body">
             <div class="row">
                 <f:if condition="{job.image}">
                     <div class="col job-image">
@@ -10,17 +10,6 @@
                 <f:if condition="{job.image}"></f:if>
                 <div class="col-md-9 mt-4">
                     <div class="row mb-2">
-                        <div class="col">
-                            <f:link.action
-								action="show"
-								controller="Job"
-								arguments="{job: '{job}'}"
-							>
-								{job.title}
-							</f:link.action>
-
-                            <hr>
-
                             <f:link.action  action="show" arguments="{job: '{job}'}">
                                 <h4 class="card-title  text-white">{job.title}</h4>
                             </f:link.action>
