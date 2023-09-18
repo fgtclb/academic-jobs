@@ -1,0 +1,16 @@
+routeEnhancers:
+  AcademicJobsDetailPlugin:
+    type: Extbase
+    extension: AcademicJobs
+    plugin: Detail
+    routes:
+      - routePath: '/detail/{job_title}'
+        _controller: 'Job::show'
+        _arguments:
+          job_title: 'job'
+    defaultController: 'Job::list'
+    aspects:
+      job_title:
+        type: PersistedAliasMapper
+        tableName: tx_academicjobs_domain_model_job
+        routeFieldName: slug

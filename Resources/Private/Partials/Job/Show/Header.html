@@ -1,0 +1,15 @@
+<html data-namespace-typo3-fluid="true" xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
+    <div class="job-detail-header">
+        <div class="job-detail-header-left">
+            <f:if condition="{job.title}">
+                <h2 class="mb-0">{job.title}</h2>
+            </f:if>
+        </div>
+
+        <div class="job-detail-header-right">
+            <f:link.action action="list">
+                <f:translate key="tx_academicjobs.fe.list.text.back" extensionName="site" />
+            </f:link.action>
+        </div>
+    </div>
+</html>

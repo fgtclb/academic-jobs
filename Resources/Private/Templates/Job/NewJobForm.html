@@ -1,0 +1,158 @@
+<f:flashMessages />
+<f:asset.script
+    identifier="ckeditor"
+    src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"
+    defer="1"
+/>
+<f:asset.script
+    identifier="frontend-editor"
+    src="EXT:academic_jobs/Resources/Public/JavaScript/CKEditor.js"
+    defer="1"
+/>
+
+<f:render partial="FormErrors" />
+
+<f:form
+    class="row g-6"
+    action="saveJob"
+    name="job"
+    object="{job}"
+    enctype="multipart/form-data"
+>
+
+<div class="col-md-3">
+        <label for="job-image" class="form-label">Logo</label>
+        <f:form.upload property="image" class="form-control" id="job-image" />
+    </div>
+    <div class="col-md-9">
+        <label for="title" class="form-label">Title</label>
+        <f:form.textfield
+            id="title"
+            property="title"
+            class="form-control"
+            required="true"
+        />
+    </div>
+    <div class="col-md-4">
+        <label for="employment_type" class="form-label">Arbeitszeit:</label>
+        <f:form.select
+            property="employmentType"
+            id="employmentType"
+            class="form-select"
+            options="{
+                1: '{f:translate(id: \'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.employment_type.fulltime\')}',
+                2: '{f:translate(id: \'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.employment_type.parttime\')}',
+            }"
+            required="true"
+        />
+    </div>
+    <div class="col-md-4">
+        <label for="job-type" class="form-label">Art des Stellenangebots</label>
+        <f:form.select
+            property="type"
+            id="job-type"
+            class="form-select"
+            options="{
+                1: '{f:translate(id: \'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.jobtype.job\')}',
+                2: '{f:translate(id: \'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.jobtype.sidejob\')}',
+                3: '{f:translate(id: \'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.jobtype.thesis\')}',
+            }"
+            required="true"
+        />
+    </div>
+
+    <div class="col-md-4">
+        <label for="employmentStartDate" class="form-label"
+            >Arbeitsantritt</label
+        >
+        <f:form.textfield
+            type="date"
+            property="employmentStartDate"
+            id="employmentStartDate"
+            class="form-control"
+            required="true"
+        />
+    </div>
+
+    <div class="col-md-6">
+        <label for="companyName" class="form-label">Argeitgeber</label>
+        <f:form.textfield
+            property="companyName"
+            id="companyName"
+            class="form-control"
+            required="true"
+        />
+    </div>
+
+    <div class="col-md-6">
+        <label for="sector" class="form-label">Branche</label>
+        <f:form.textfield property="sector" id="sector" class="form-control" />
+    </div>
+
+    <div class="col-md-6">
+        <label for="workLocation" class="form-label">Ort</label>
+        <f:form.textfield
+            property="workLocation"
+            id="workLocation"
+            class="form-control"
+            placeholder="Remote, Berlin, Aachen"
+        />
+    </div>
+    <div class="col-md-6">
+        <label for="link" class="form-label">Link</label>
+        <f:form.textfield property="link" id="link" class="form-control" />
+    </div>
+
+    <div class="col-md-6">
+        <label for="starttime" class="form-label">Bewerbungsfrist beginn</label>
+        <f:form.textfield
+            type="date"
+            property="starttime"
+            id="starttime"
+            class="form-control"
+        />
+    </div>
+    <div class="col-md-6">
+        <label for="endtime" class="form-label">Bewerbungsfrist ende</label>
+        <f:form.textfield
+            type="date"
+            property="endtime"
+            id="endtime"
+            class="form-control"
+        />
+    </div>
+    <div class="col-12">
+        <label for="job-description" class="form-label">Beschreibung</label>
+        <f:form.textarea
+            rows="4"
+            id="job-description"
+            property="description"
+            class="form-control"
+            required="true"
+        />
+    </div>
+
+    <div class="col-12">
+        <h3>Kontaktdaten:</h3>
+        <div class="col-md-6">
+            <label for="sector" class="form-label">Name:</label>
+            <f:form.textfield property="contact.name" id="contact.name" class="form-control" />
+        </div>
+        <div class="col-md-6">
+            <label for="sector" class="form-label">E-Mail:</label>
+            <f:form.textfield property="contact.email" id="contact.email" class="form-control" />
+        </div>
+        <div class="col-md-6">
+            <label for="sector" class="form-label">Phone:</label>
+            <f:form.textfield property="contact.phone" id="contact.phone" class="form-control" />
+        </div>
+    </div>
+
+
+
+    <div class="col-12 mt-3">
+        <f:form.submit class="btn btn-primary w-100" value="Absenden"
+            >Absenden</f:form.submit
+        >
+    </div>
+</f:form>

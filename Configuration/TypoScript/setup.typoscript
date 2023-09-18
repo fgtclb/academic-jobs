@@ -1,0 +1,56 @@
+page {
+  10 {
+    templateRootPaths {
+      1693651551 = EXT:academic_jobs/Resources/Private/Templates/
+    }
+
+    partialRootPaths {
+      1693651551 = EXT:academic_jobs/Resources/Private/Partials/
+    }
+
+    layoutRootPaths {
+      1693651551 = EXT:academic_jobs/Resources/Private/Layouts/
+    }
+  }
+}
+
+plugin.tx_academicjobs {
+  persistence {
+    storagePid = {$plugin.tx_academicjobs.persistence.storagePid}
+    #recursive = 1
+  }
+  settings {
+    detailPid = 100
+
+    email {
+      recipientEmail = {$plugin.tx_academicjobs.email.recipientEmail}
+      senderEmail = {$plugin.tx_academicjobs.email.from}
+      subject = {$plugin.tx_academicjobs.email.subject}
+      template = {$plugin.tx_academicjobs.email.template}
+    }
+
+    saveForm {
+      jobLogo {
+        targetFolder = 1:/global-content/jobs/logos/
+        validation {
+          maxFileSize = 2M
+          allowedMimeTypes = image/jpeg,image/png,image/webp,image/svg+xml
+        }
+      }
+    }
+  }
+  view {
+    templateRootPaths {
+      0 = EXT:academic_jobs/Resources/Private/Templates/
+      1 = {$plugin.tx_academicjobs.view.templateRootPath}
+    }
+    partialRootPaths {
+      0 = EXT:academic_jobs/Resources/Private/Partials/
+      1 = {$plugin.tx_academicjobs.view.partialRootPath}
+    }
+    layoutRootPaths {
+      0 = EXT:academic_jobs/Resources/Private/Layouts/
+      1 = {$plugin.tx_academicjobs.view.layoutRootPath}
+    }
+  }
+}

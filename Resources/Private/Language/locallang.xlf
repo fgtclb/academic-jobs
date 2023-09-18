@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="EXT:academic_jobs/Resources/Private/Language/locallang.xlf" date="2023-09-02T12:17:09Z" product-name="academic_jobs">
+		<header/>
+		<body>
+			<trans-unit id="tx_academicjobs_domain_model_job" resname="tx_academicjobs_domain_model_job">
+				<source>Job</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.description" resname="tx_academicjobs_domain_model_job.description">
+				<source>Job</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.job_title" resname="tx_academicjobs_domain_model_job.job_title">
+				<source>Job Title</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.job_title.description" resname="tx_academicjobs_domain_model_job.job_title.description">
+				<source>Job Title</source>
+			</trans-unit>
+
+			<trans-unit id="tx_academicjobs_domain_model_job.employment_start_date" resname="tx_academicjobs_domain_model_job.employment_start_date">
+				<source>Employment Start Date</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.employment_start_date.description" resname="tx_academicjobs_domain_model_job.employment_start_date.description">
+				<source>Employment Start Date</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.job_description" resname="tx_academicjobs_domain_model_job.job_description">
+				<source>Job Description</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.job_description.description" resname="tx_academicjobs_domain_model_job.job_description.description">
+				<source>Job Description</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.image" resname="tx_academicjobs_domain_model_job.image">
+				<source>Image</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.image.description" resname="tx_academicjobs_domain_model_job.image.description">
+				<source>Image</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.company_name" resname="tx_academicjobs_domain_model_job.company_name">
+				<source>Company Name</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.company_name.description" resname="tx_academicjobs_domain_model_job.company_name.description">
+				<source>Company Name</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.sector" resname="tx_academicjobs_domain_model_job.sector">
+				<source>Sector</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.sector.description" resname="tx_academicjobs_domain_model_job.sector.description">
+				<source>Sector</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.employment_type" resname="tx_academicjobs_domain_model_job.employment_type">
+				<source>Employment Type</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.employment_type.description" resname="tx_academicjobs_domain_model_job.employment_type.description">
+				<source>Employment Type</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.employment_type.fulltime" resname="tx_academicjobs_domain_model_job.employment_type.fulltime">
+				<source>Full-time</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.employment_type.parttime" resname="tx_academicjobs_domain_model_job.employment_type.parttime">
+				<source>Part-time</source>
+			</trans-unit>
+
+			<trans-unit id="tx_academicjobs_domain_model_job.application_time" resname="tx_academicjobs_domain_model_job.application_time">
+				<source>Application time</source>
+			</trans-unit>
+
+			<trans-unit id="tx_academicjobs_domain_model_job.work_location" resname="tx_academicjobs_domain_model_job.work_location">
+				<source>Work Location</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.work_location.description" resname="tx_academicjobs_domain_model_job.work_location.description">
+				<source>Work Location</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.link" resname="tx_academicjobs_domain_model_job.link">
+				<source>Link</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.link.description" resname="tx_academicjobs_domain_model_job.link.description">
+				<source>Link</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.slug" resname="tx_academicjobs_domain_model_job.slug">
+				<source>Slug</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.slug.description" resname="tx_academicjobs_domain_model_job.slug.description">
+				<source>Slug</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.job_type" resname="tx_academicjobs_domain_model_job.job_type">
+				<source>Job Type</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.job_type.description" resname="tx_academicjobs_domain_model_job.job_type.description">
+				<source>Job Type</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.contact" resname="tx_academicjobs_domain_model_job.contact">
+				<source>Contact</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.contact.description" resname="tx_academicjobs_domain_model_job.contact.description">
+				<source>Contact</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_jobtype" resname="tx_academicjobs_domain_model_jobtypes">
+				<source>Job Types</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_jobtype.description" resname="tx_academicjobs_domain_model_jobtypes.description">
+				<source>Job Types</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.jobtype.job" resname="tx_academicjobs_domain_model_job.jobtype.job">
+				<source>Job</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.jobtype.sidejob" resname="tx_academicjobs_domain_model_job.jobtype.sidejob">
+				<source>Sidejob</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.jobtype.thesis" resname="tx_academicjobs_domain_model_job.jobtype.thesis">
+				<source>Thesis</source>
+			</trans-unit>
+
+			<trans-unit id="tx_academicjobs_domain_model_job.jobtype.1" resname="tx_academicjobs_domain_model_job.jobtype.1">
+				<source>Job</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.jobtype.2" resname="tx_academicjobs_domain_model_job.jobtype.2">
+				<source>Sidejob</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.jobtype.3" resname="tx_academicjobs_domain_model_job.jobtype.3">
+				<source>Thesis</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_jobtype.name" resname="tx_academicjobs_domain_model_jobtypes.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_jobtype.name.description" resname="tx_academicjobs_domain_model_jobtypes.name.description">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_contact" resname="tx_academicjobs_domain_model_contact">
+				<source>Contact</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_contact.description" resname="tx_academicjobs_domain_model_contact.description">
+				<source>Contact</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_contact.name" resname="tx_academicjobs_domain_model_contact.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_contact.name.description" resname="tx_academicjobs_domain_model_contact.name.description">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_contact.email" resname="tx_academicjobs_domain_model_contact.email">
+				<source>Email</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_contact.email.description" resname="tx_academicjobs_domain_model_contact.email.description">
+				<source>Email</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_contact.phone" resname="tx_academicjobs_domain_model_contact.phone">
+				<source>Phone</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_contact.phone.description" resname="tx_academicjobs_domain_model_contact.phone.description">
+				<source>Phone</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_contact.additional_information" resname="tx_academicjobs_domain_model_contact.additional_information">
+				<source>Additional Information</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_contact.additional_information.description" resname="tx_academicjobs_domain_model_contact.additional_information.description">
+				<source>Additional Information</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

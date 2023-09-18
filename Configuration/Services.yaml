@@ -1,0 +1,18 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  FGTCLB\AcademicJobs\Property\TypeConverter:
+    public: true
+
+  FGTCLB\AcademicJobs\:
+    resource: '../Classes/*'
+    exclude: '../Classes/Domain/Model/*'
+
+  FGTCLB\AcademicJobs\EventListener\GenerateJobSlug:
+    tags:
+      - name: event.listener
+        identifier: generateJobSlug
+        event: FGTCLB\AcademicJobs\Event\AfterSaveJobEvent

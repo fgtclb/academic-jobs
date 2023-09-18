@@ -1,0 +1,21 @@
+{
+    "name": "fgtclb/academic-jobs",
+    "description": "The AcademicJobs extension allows users to create and manage job postings.",
+    "type": "typo3-cms-extension",
+    "license": [
+        "GPL-2.0-or-later"
+    ],
+    "require": {
+        "typo3/cms-core": "^11.5 || ^12.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "FGTCLB\\AcademicJobs\\": "Classes/"
+        }
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "academic_jobs"
+        }
+    }
+}

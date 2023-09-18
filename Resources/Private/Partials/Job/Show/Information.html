@@ -1,0 +1,85 @@
+<html data-namespace-typo3-fluid="true" xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
+    <f:variable name="employmentType">
+        <f:switch expression="{job.employmentType}">
+            <f:case value="1">
+                <f:translate key="tx_academicjobs.fe.list.text.fulltime" extensionName="site" />
+            </f:case>
+            <f:case value="2">
+                <f:translate key="tx_academicjobs.fe.list.text.parttime" extensionName="site" />
+            </f:case>
+            <f:defaultCase></f:defaultCase>
+        </f:switch>
+    </f:variable>
+
+    <ul class="job-detail-list my-5">
+        <f:if condition="{job.starttime}">
+            <li>
+                <i class="job-detail-list-icon">
+                    <core:icon identifier="calendar" alternativeMarkupIdentifier="inline"/>
+                </i>
+                <span class="job-detail-list-title">
+                    <f:translate key="tx_academicjobs.fe.list.text.when" extensionName="site" />
+                </span>
+                <span class="job-detail-list-value">
+                    <time datetime="{job.starttime -> f:format.date(format: 'Y-m-d')}">
+                        {job.starttime -> f:format.date(format: 'd.m.Y')}
+                    </time>
+                </span>
+            </li>
+        </f:if>
+        <f:if condition="{job.endtime}">
+            <li>
+                <i class="job-detail-list-icon">
+                    <core:icon identifier="calendar" alternativeMarkupIdentifier="inline"/>
+                </i>
+                <span class="job-detail-list-title">
+                    <f:translate key="tx_academicjobs.fe.list.text.application_deadline" extensionName="site" />
+                </span>
+                <span class="job-detail-list-value">
+                    <time datetime="{job.endtime -> f:format.date(format: 'Y-m-d')}">
+                        {job.endtime -> f:format.date(format: 'd.m.Y')}
+                    </time>
+                </span>
+            </li>
+        </f:if>
+        <f:if condition="{job.companyName}">
+            <li>
+                <i class="job-detail-list-icon">
+                    <core:icon identifier="building" alternativeMarkupIdentifier="inline"/>
+                </i>
+                <span class="job-detail-list-title">
+                    <f:translate key="tx_academicjobs.fe.list.text.employer" extensionName="site" />
+                </span>
+                <span class="job-detail-list-value">
+                    {job.companyName}
+                </span>
+            </li>
+        </f:if>
+        <f:if condition="{job.employmentType}">
+            <li>
+                <i class="job-detail-list-icon">
+                    <core:icon identifier="clock" alternativeMarkupIdentifier="inline"/>
+                </i>
+                <span class="job-detail-list-title">
+                    <f:translate key="tx_academicjobs.fe.list.text.working_hours" extensionName="site" />
+                </span>
+                <span class="job-detail-list-value">
+                    {employmentType}
+                </span>
+            </li>
+        </f:if>
+        <f:if condition="{job.workLocation}">
+            <li>
+                <i class="job-detail-list-icon">
+                    <core:icon identifier="map-marker" alternativeMarkupIdentifier="inline"/>
+                </i>
+                <span class="job-detail-list-title">
+                    <f:translate key="tx_academicjobs.fe.list.text.place" extensionName="site" />
+                </span>
+                <span class="job-detail-list-value">
+                    {job.workLocation}
+                </span>
+            </li>
+        </f:if>
+    </ul>
+</html>

@@ -1,0 +1,15 @@
+<f:flashMessages />
+
+<div class="job-detail">
+    <f:render partial="Job/Show/Header" arguments="{job: job}" />
+    <f:render partial="Job/Show/Information" arguments="{job: job}" />
+
+    <div class="row">
+        <div class="col-12 col-md-8">
+            <f:render partial="Job/Show/Details" arguments="{job: job}" />
+        </div>
+        <div class="col-12 col-md-4">
+            <f:render partial="Job/Show/Contact" arguments="{job: job}" />
+        </div>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+<f:for each="{jobs}" as="job" iteration="i">
+    <article class="card text-white bg-dark-green border-dark h-100 mb-3">
+        <div class="card-body overlay-link">
+            <div class="row">
+                <f:if condition="{job.image}">
+                    <div class="col job-image">
+                        <f:image image="{job.image}" maxWidth="200"/>
+                    </f:if>
+                </div>
+                <f:if condition="{job.image}"></f:if>
+                <div class="col-md-9 mt-4">
+                    <div class="row mb-2">
+                        <div class="col">
+                            <f:link.action
+								action="show"
+								controller="Job"
+								arguments="{job: '{job}'}"
+							>
+								{job.title}
+							</f:link.action>
+
+                            <hr>
+
+                            <f:link.action  action="show" arguments="{job: '{job}'}">
+                                <h4 class="card-title  text-white">{job.title}</h4>
+                            </f:link.action>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 mb-2">
+                            <b><f:translate key="tx_academicjobs_domain_model_job.employment_start_date"/></b><br>
+                            <f:format.date format="d.m.Y">{job.employmentStartDate}</f:format.date>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <b><f:translate key="tx_academicjobs_domain_model_job.application_time"/></b><br>
+                            <f:format.date format="d.m.Y">{job.endtime}</f:format.date>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <b><f:translate key="tx_academicjobs_domain_model_job.company_name"/></b><br>
+                            {job.companyName}
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <b>Arbeitszeit</b><br>
+                            <f:switch expression="{job.type}">
+                                <f:case value="1"><f:translate key="tx_academicjobs_domain_model_job.jobtype.job" /></f:case>
+                                <f:case value="2"><f:translate key="tx_academicjobs_domain_model_job.jobtype.sidejob" /></f:case>
+                                <f:case value="3"><f:translate key="tx_academicjobs_domain_model_job.jobtype.thesis" /></f:case>
+                            </f:switch>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <b><f:translate key="tx_academicjobs_domain_model_job.employment_type"/></b><br>
+
+                            <f:switch expression="{job.employmentType}">
+                                <f:case value="1"><f:translate key="tx_academicjobs_domain_model_job.employment_type.fulltime" /></f:case>
+                                <f:case value="2"><f:translate key="tx_academicjobs_domain_model_job.employment_type.parttime" /></f:case>
+                            </f:switch>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <b><f:translate key="tx_academicjobs_domain_model_job.work_location"/></b><br>
+                            {job.workLocation}
+                        </div>
+                    </div>
+                    <div class="row pt-4">
+                        <div class="col-12 text-white">
+                            {job.description  -> f:format.html() -> f:format.crop(maxCharacters: '100', respectWordBoundaries: 'true', respectHtml: 'true')}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </article>
+</f:for>
