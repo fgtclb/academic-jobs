@@ -11,6 +11,8 @@ plugin.tx_academicjobs {
         # cat=plugin.tx_academicjobs_createjob//a; type=string; label=Default storage PID
         storagePid = 524
     }
+    # cat=plugin.tx_academicjobs_createjob//a; type=string; label=Default detail page PID
+    detailPid = 543
     email {
         from = typo3@hnee.de
         recipientEmail = jobs@hnee.de

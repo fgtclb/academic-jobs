@@ -20,7 +20,7 @@ plugin.tx_academicjobs {
     #recursive = 1
   }
   settings {
-    detailPid = 100
+    detailPid = {$plugin.tx_academicjobs.detailPid}
 
     email {
       recipientEmail = {$plugin.tx_academicjobs.email.recipientEmail}

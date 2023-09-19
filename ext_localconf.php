@@ -22,7 +22,7 @@ if (!defined('TYPO3')) {
         'AcademicJobs',
         'List',
         [
-            JobController::class => 'list, show',
+            JobController::class => 'list',
         ],
         [
             JobController::class => 'list',
@@ -32,7 +32,7 @@ if (!defined('TYPO3')) {
         'AcademicJobs',
         'Detail',
         [
-            JobController::class => 'show',
+            JobController::class => 'show, list',
         ]
     );
 })();
