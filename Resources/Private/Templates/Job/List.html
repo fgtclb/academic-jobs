@@ -1,5 +1,5 @@
 <f:for each="{jobs}" as="job" iteration="i">
-    <article class="card text-white bg-dark-green border-dark h-100 mb-3">
+    <article class="card text-white bg-secondary border-dark h-100 mb-3">
         <div class="card-body">
             <div class="row">
                 <f:if condition="{job.image}">
@@ -11,7 +11,7 @@
                 <div class="col-md-9 mt-4">
                     <div class="row mb-2">
                             <f:link.action pageUid="{settings.detailPid}" action="show" pluginName="Detail" arguments="{job: job}">
-                                <h4 class="card-title  text-white">{job.title}</h4>
+                                <h4 class="card-title text-white">{job.title}</h4>
                             </f:link.action>
                         </div>
                     </div>
