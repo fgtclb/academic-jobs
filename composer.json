@@ -16,24 +16,58 @@
 		"source": "https://github.com/fgtclb/academic-jobs"
 	},
 	"homepage": "https://github.com/fgtclb/academic-jobs",
+	"repositories":  [
+        { "type": "git", "url": "https://github.com/andreaswolf/typo3-ext-migrations.git" }
+    ],
     "require": {
         "php": "^8.1",
         "typo3/cms-core": "^11.5",
         "typo3/cms-rte-ckeditor": "^11.5"
     },
 	"require-dev": {
-        "typo3/minimal": "v11.5.0",
+		"typo3/cms-adminpanel": "^11.5",
+		"typo3/cms-backend": "^11.5",
+		"typo3/cms-belog": "^11.5",
+		"typo3/cms-beuser": "^11.5",
+		"typo3/cms-dashboard": "^11.5",
+		"typo3/cms-extbase": "^11.5",
+		"typo3/cms-extensionmanager": "^11.5",
+		"typo3/cms-felogin": "^11.5",
+		"typo3/cms-filelist": "^11.5",
+		"typo3/cms-filemetadata": "^11.5",
+		"typo3/cms-fluid": "^11.5",
+		"typo3/cms-fluid-styled-content": "^11.5",
+		"typo3/cms-form": "^11.5",
+		"typo3/cms-frontend": "^11.5",
+		"typo3/cms-impexp": "^11.5",
+		"typo3/cms-indexed-search": "^11.5",
+		"typo3/cms-info": "^11.5",
+		"typo3/cms-install": "^11.5",
+		"typo3/cms-linkvalidator": "^11.5",
+		"typo3/cms-lowlevel": "^11.5",
+		"typo3/cms-seo": "^11.5",
+		"typo3/cms-setup": "^11.5",
+		"typo3/cms-tstemplate": "^11.5",
+		"typo3/minimal": "^11",
         "typo3/cms-composer-installers": "v4.0.0-RC1",
         "helhum/typo3-console": "^7.1 || ^8.0",
         "saschaegerer/phpstan-typo3": "^1.8",
         "friendsofphp/php-cs-fixer": "^3.14",
-        "bk2k/bootstrap-package": "^14.0"
+        "bk2k/bootstrap-package": "^14.0",
+		"kaystrobach/migrations": "0.11.0",
+		"andreaswolf/typo3-uuid": "^0.3.0"
     },
 	"autoload": {
 		"psr-4": {
 			"FGTCLB\\AcademicJobs\\": "Classes/"
 		}
 	},
+	"autoload-dev": {
+        "psr-4": {
+            "FGTCLB\\AcademicJobs\\Migrations\\": "Migrations/",
+            "FGTCLB\\AcademicJobs\\Tests\\": "Tests/"
+        }
+    },
 	"config": {
 		"vendor-dir": ".Build/vendor",
 		"bin-dir": ".Build/bin",
@@ -44,6 +78,11 @@
 			"web-dir": ".Build/Web",
 			"app-dir": ".Build",
 			"extension-key": "academic_jobs"
+		},
+		"patches": {
+			"kaystrobach/migrations": {
+				"Load migrations from autoload-dev": "patches/migrations/autoload.patch"
+			}
 		}
 	}
 }
