@@ -48,7 +48,7 @@ return (new PhpCsFixer\Config())
         'no_blank_lines_after_phpdoc' => true,
         'array_syntax' => ['syntax' => 'short'],
         'whitespace_after_comma_in_array' => true,
-        'function_typehint_space' => true,
+        'type_declaration_spaces' => true,
         'no_alias_functions' => true,
         'lowercase_cast' => true,
         'no_leading_namespace_whitespace' => true,
