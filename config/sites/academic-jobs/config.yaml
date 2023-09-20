@@ -1,5 +1,5 @@
 imports:
-  - {resource: 'EXT:academic_jobs/Configuration/Routes/ListAndDetail.yaml' }
+  - {resource: 'EXT:academic_jobs/Configuration/Routes/Detail.yaml' }
 
 base: 'https://academic-jobs.ddev.site/'
 languages:
