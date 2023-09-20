@@ -10,8 +10,8 @@ declare(strict_types=1);
  */
 
 use AndreasWolf\Uuid\Service\TableConfigurationService;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 if (ExtensionManagementUtility::isLoaded('uuid')) {
     $tableConfigurationService = GeneralUtility::makeInstance(TableConfigurationService::class);
