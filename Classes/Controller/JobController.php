@@ -17,6 +17,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
+use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
+use TYPO3\CMS\Extbase\Service\ImageService;
 
 class JobController extends ActionController
 {
@@ -25,7 +27,8 @@ class JobController extends ActionController
     public function __construct(
         private readonly JobRepository $jobRepository,
         private readonly ContactRepository $contactRepository,
-        private readonly PersistenceManagerInterface $persistenceManager
+        private readonly PersistenceManagerInterface $persistenceManager,
+        private readonly ImageService $imageService
     ) {
     }
 
@@ -36,8 +39,55 @@ class JobController extends ActionController
 
     public function showAction(Job $job): ResponseInterface
     {
+        $title = $job->getTitle();
+        $description = strip_tags($job->getDescription());
+        $image = $this->getImageUri($job->getImage());
+
+        $metaTags = [
+            'title' => $title,
+            'description' => $description,
+            'og:title' => $title,
+            'og:description' => $description,
+            'twitter:card' => 'summary',
+            'twitter:title' => $title,
+            'twitter:description' => $description,
+        ];
+
+        if ($image !== null) {
+            $metaTags['og:image'] = $title;
+            $metaTags['og:image:alt'] = $image;
+            $metaTags['twitter:image'] = $image;
+            $metaTags['twitter:image:alt'] = $title;
+        }
+
+        $this->setMetaTags($metaTags);
+
         $this->view->assign('job', $job);
         return $this->htmlResponse();
+    }
+
+    public function getImageUri($imageObject): ?string
+    {
+        if ($imageObject === null) {
+            return null;
+        }
+        $originalResource = $imageObject->getOriginalResource();
+
+        if ($originalResource === null) {
+            return null;
+        }
+
+        return $this->imageService->getImageUri($originalResource, true);
+    }
+
+    private function setMetaTags(array $metaTags)
+    {
+        $metaTagManager = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
+
+        foreach ($metaTags as $property => $content) {
+            $metaTagManagerForProperty = $metaTagManager->getManagerForProperty($property);
+            $metaTagManagerForProperty->addProperty($property, $content);
+        }
     }
 
     public function newJobFormAction(Job $job = null): ResponseInterface
