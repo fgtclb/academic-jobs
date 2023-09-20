@@ -9,7 +9,7 @@ $EM_CONF[$_EXTKEY] = [
         ],
     ],
     'state' => 'beta',
-    'version' => '0.1.0',
+    'version' => '0.1.1',
     'clearCacheOnLoad' => true,
     'category' => 'fe,be',
     'author' => 'Riad Zejnilagic Trumic',
