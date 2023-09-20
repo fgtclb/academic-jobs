@@ -4,7 +4,7 @@ routeEnhancers:
     extension: AcademicJobs
     plugin: Detail
     routes:
-      - routePath: '/detail/{job_title}'
+      - routePath: '/{job_title}'
         _controller: 'Job::show'
         _arguments:
           job_title: 'job'
