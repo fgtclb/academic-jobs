@@ -9,13 +9,13 @@ plugin.tx_academicjobs {
     }
     persistence {
         # cat=plugin.tx_academicjobs_createjob//a; type=string; label=Default storage PID
-        storagePid = 524
+        storagePid =
     }
     # cat=plugin.tx_academicjobs_createjob//a; type=string; label=Default detail page PID
-    detailPid = 543
+    detailPid =
     email {
-        from = typo3@hnee.de
-        recipientEmail = jobs@hnee.de
+        from =
+        recipientEmail =
         subject = New job application
         template = A new job application has been submitted. Please check the backend.
     }
