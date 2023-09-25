@@ -154,6 +154,52 @@
 			<trans-unit id="tx_academicjobs_domain_model_contact.additional_information.description" resname="tx_academicjobs_domain_model_contact.additional_information.description">
 				<source>Additional Information</source>
 			</trans-unit>
+
+            <trans-unit id="tx_academicjobs.fe.list.text.fulltime">
+				<source>Full-Time</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.list.text.parttime">
+				<source>Part-Time</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.list.text.back">
+				<source>Back to job list</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.list.text.contact">
+				<source>Contact</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.list.text.description">
+				<source>Details about the job announcement</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.list.text.contact.name">
+				<source>Creator: </source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.list.text.contact.email">
+				<source>E-Mail: </source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.text.email_address_alt">
+				<source>E-Mail of: %s</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.list.text.contact.phone">
+				<source>Phone number: </source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.text.phone_number_alt">
+				<source>Phone Number of: %s</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.list.text.when">
+				<source>When</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.list.text.application_deadline">
+				<source>Application deadline</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.list.text.employer">
+				<source>Employere</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.list.text.working_hours">
+				<source>Working hours</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.list.text.place">
+				<source>Place</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

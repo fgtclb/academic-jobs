@@ -204,6 +204,67 @@
 				<source>Additional Information</source>
 				<target>Zusätzliche Informationen</target>
 			</trans-unit>
+
+            <trans-unit id="tx_academicjobs.fe.list.text.fulltime">
+				<source>Full-Time</source>
+				<target>Full-Time</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.list.text.parttime">
+				<source>Part-Time</source>
+				<target>Part-Time</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.list.text.back">
+				<source>Back to job list</source>
+				<target>Zurück zu den Stellenangeboten</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.list.text.contact">
+				<source>Contact</source>
+				<target>Kontakt</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.list.text.description">
+				<source>Details about the job announcement</source>
+				<target>Details der Stellenanzeige</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.list.text.contact.name">
+				<source>Creator: </source>
+				<target>Ersteller*in: </target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.list.text.contact.email">
+				<source>E-Mail: </source>
+				<target>E-Mail: </target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.text.email_address_alt">
+				<source>E-Mail of: %s</source>
+				<source>E-Mail Adresse von: %s</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.list.text.contact.phone">
+				<source>Phone number: </source>
+				<target>Telefonnummer: </target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.text.phone_number_alt">
+				<source>Phone Number of: %s</source>
+				<source>Telefonnummer von: %s</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.list.text.when">
+				<source>When</source>
+				<target>Ab wann</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.list.text.application_deadline">
+				<source>Application deadline</source>
+				<target>Bewerbungsfrist</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.list.text.employer">
+				<source>Employere</source>
+				<target>Arbeitgeber</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.list.text.working_hours">
+				<source>Working hours</source>
+				<target>Arbeitszeit</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.list.text.place">
+				<source>Ort</source>
+				<target>Place</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

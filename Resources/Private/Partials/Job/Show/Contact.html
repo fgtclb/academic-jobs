@@ -1,7 +1,7 @@
 <html data-namespace-typo3-fluid="true" xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
     <f:if condition="{job.contact}">
         <h3>
-            <f:translate key="tx_academicjobs.fe.list.text.contact" extensionName="site" />
+            <f:translate key="tx_academicjobs.fe.list.text.contact"  />
         </h3>
         <div class="job-detail-contact">
             <f:for each="{job.contact}" as="contact" iteration="iterator">
@@ -12,7 +12,7 @@
                     <f:if condition="{contact.name}">
                         <li>
                             <span class="job-detail-contact-list-label">
-                                <f:translate key="tx_academicjobs.fe.list.text.contact.name" extensionName="site" />
+                                <f:translate key="tx_academicjobs.fe.list.text.contact.name"  />
                             </span>
                             <span class="job-detail-contact-list-value">{contact.name}</span>
                         </li>
@@ -20,7 +20,7 @@
                     <f:if condition="{contact.email}">
                         <li>
                             <span class="job-detail-contact-list-label">
-                                <f:translate key="tx_academicjobs.fe.list.text.contact.email" extensionName="site" />
+                                <f:translate key="tx_academicjobs.fe.list.text.contact.email"  />
                             </span>
                             <f:link.email email="{contact.email}" title="{f:translate(key: 'tx_academicjobs.fe.text.email_address_alt', extensionName: 'site', arguments: {0: '{contact.name}'})}">
                                 {contact.email}
@@ -30,7 +30,7 @@
                     <f:if condition="{contact.phone}">
                         <li>
                             <span class="job-detail-contact-list-label">
-                                <f:translate key="tx_academicjobs.fe.list.text.contact.phone" extensionName="site" />
+                                <f:translate key="tx_academicjobs.fe.list.text.contact.phone"  />
                             </span>
                             <a href="tel:{contact.phone}" title="{f:translate(key: 'tx_academicjobs.fe.text.phone_number_alt', extensionName: 'site', arguments: {0: '{contact.name}'})}">
                                 {contact.phone}
