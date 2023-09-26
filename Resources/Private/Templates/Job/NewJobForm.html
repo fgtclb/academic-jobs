@@ -16,7 +16,6 @@
     class="row g-6"
     action="saveJob"
     name="job"
-    object="{job}"
     enctype="multipart/form-data"
 >
 
@@ -131,6 +130,27 @@
             required="true"
         />
     </div>
+		<label for="contact-name" class="form-label">Name:</label>
+		<f:form.textfield
+			id="contact-name"
+			name="contact[name]"
+			class="form-control"
+			required="true"
+		/>
+		<label for="contact-email" class="form-label">E-Mail:</label>
+		<f:form.textfield
+			id="contact-email"
+			name="contact[email]"
+			class="form-control"
+			type="email"
+			required="true"
+		/>
+		<label for="contact-phone" class="form-label">Telefon:</label>
+		<f:form.textfield
+			id="contact-phone"
+			name="contact[phone]"
+			class="form-control"
+		/>
 
     <div class="col-12 mt-3">
         <f:form.submit class="btn btn-primary w-100" value="Absenden"

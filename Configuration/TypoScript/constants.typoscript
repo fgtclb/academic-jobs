@@ -9,13 +9,13 @@ plugin.tx_academicjobs {
     }
     persistence {
         # cat=plugin.tx_academicjobs_createjob//a; type=string; label=Default storage PID
-        storagePid =
+        storagePid = 524
     }
     # cat=plugin.tx_academicjobs_createjob//a; type=string; label=Default detail page PID
-    detailPid =
+    detailPid = 526
     email {
-        from =
-        recipientEmail =
+        from = riad@riad@de
+        recipientEmail = riad@riad.de
         subject = New job application
         template = A new job application has been submitted. Please check the backend.
     }

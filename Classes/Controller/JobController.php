@@ -17,6 +17,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
+use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 class JobController extends ActionController
 {
@@ -102,11 +104,24 @@ class JobController extends ActionController
             );
     }
 
+    /**
+     * @IgnoreValidation("contact")
+     * @IgnoreValidation("job")
+     * @throws ImmediateResponseException
+     */
     public function saveJobAction(Job $job, Contact $contact): void
     {
         $job->setHidden((int)self::JOB_HIDDEN);
         $this->jobRepository->add($job);
-        $this->contactRepository->add($contact);
+        $this->persistenceManager->persistAll();
+
+        if ($contact) {
+            $contact->setJob($job->getUid());
+            $this->contactRepository->add($contact);
+            $job->addContact($contact);
+            $this->persistenceManager->persistAll();
+        }
+
         $this->persistenceManager->persistAll();
 
         $afterSaveJobEvent = new AfterSaveJobEvent($job);
