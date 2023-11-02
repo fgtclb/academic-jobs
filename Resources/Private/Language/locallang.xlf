@@ -35,10 +35,10 @@
 				<source>Image</source>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs_domain_model_job.company_name" resname="tx_academicjobs_domain_model_job.company_name">
-				<source>Company Name</source>
+				<source>Organization</source>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs_domain_model_job.company_name.description" resname="tx_academicjobs_domain_model_job.company_name.description">
-				<source>Company Name</source>
+				<source>Organization</source>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs_domain_model_job.sector" resname="tx_academicjobs_domain_model_job.sector">
 				<source>Sector</source>
@@ -73,7 +73,7 @@
 				<source>Link</source>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs_domain_model_job.link.description" resname="tx_academicjobs_domain_model_job.link.description">
-				<source>Link</source>
+				<source>Link to the announcement or website</source>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs_domain_model_job.slug" resname="tx_academicjobs_domain_model_job.slug">
 				<source>Slug</source>
@@ -192,13 +192,55 @@
 				<source>Application deadline</source>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.list.text.employer">
-				<source>Employere</source>
+				<source>Organization</source>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.list.text.working_hours">
 				<source>Working hours</source>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.list.text.place">
 				<source>Place</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_logo">
+				<source>Logo</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_logo">
+				<source>Logo</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_title">
+				<source>Job title / Thesis title</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_working_hours">
+				<source>Working hours</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_employer">
+				<source>Organization</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_industry">
+				<source>Industry</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_location">
+				<source>Location</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_description">
+				<source>Job description</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_start_employment">
+				<source>Start of employment</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_offer_type">
+				<source>Type of job offer</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_link">
+				<source>Link (to the announcement or website)</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_starttime">
+				<source>Application deadline start</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_endtime">
+				<source>Application deadline end</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.submit">
+				<source>Submit</source>
 			</trans-unit>
 		</body>
 	</file>
