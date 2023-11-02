@@ -58,6 +58,24 @@
 			<trans-unit id="tx_academicjobs_domain_model_job.employment_type.parttime" resname="tx_academicjobs_domain_model_job.employment_type.parttime">
 				<source>Part-time</source>
 			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.required_degree" resname="tx_academicjobs_domain_model_job.required_degree">
+				<source>Required degree</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.degree.without_degree" resname="tx_academicjobs_domain_model_job.degree.without_degree">
+				<source>Without degree</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.degree.secondary_school" resname="tx_academicjobs_domain_model_job.degree.secondary_school">
+				<source>Secondary school</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.degree.intermediate_degree" resname="tx_academicjobs_domain_model_job.degree.intermediate_degree">
+				<source>Intermediate degree</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.degree.higher_qualification" resname="tx_academicjobs_domain_model_job.degree.higher_qualification">
+				<source>Higher education entrance qualification</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.degree.general_higher_qualification" resname="ttx_academicjobs_domain_model_job.degree.general_higher_qualification">
+				<source>General higher education entrance qualification</source>
+			</trans-unit>
 
 			<trans-unit id="tx_academicjobs_domain_model_job.application_time" resname="tx_academicjobs_domain_model_job.application_time">
 				<source>Application time</source>
@@ -199,6 +217,51 @@
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.list.text.place">
 				<source>Place</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_logo">
+				<source>Logo</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_logo">
+				<source>Logo</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_title">
+				<source>Job title / Thesis title</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_working_hours">
+				<source>Working hours</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_required_degree">
+				<source>Required degree</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_employer">
+				<source>Organization</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_industry">
+				<source>Industry</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_location">
+				<source>Location</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_description">
+				<source>Job description</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_start_employment">
+				<source>Start of employment</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_offer_type">
+				<source>Type of job offer</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_link">
+				<source>Link (to the announcement or website)</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_starttime">
+				<source>Application deadline start</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_endtime">
+				<source>Application deadline end</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.submit">
+				<source>Submit</source>
 			</trans-unit>
 		</body>
 	</file>

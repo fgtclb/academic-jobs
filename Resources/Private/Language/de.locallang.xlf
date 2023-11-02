@@ -76,7 +76,30 @@
 				<source>Part-time</source>
 				<target>Teilzeit</target>
 			</trans-unit>
-
+			<trans-unit id="tx_academicjobs_domain_model_job.required_degree" resname="tx_academicjobs_domain_model_job.required_degree">
+				<source>Required degree</source>
+				<target>Benötigter Abschluss</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.degree.without_degree" resname="tx_academicjobs_domain_model_job.degree.without_degree">
+				<source>Without degree</source>
+				<target>Ohne Abschluss</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.degree.secondary_school" resname="tx_academicjobs_domain_model_job.degree.secondary_school">
+				<source>Secondary school</source>
+				<target>Hauptschulabschluss</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.degree.intermediate_degree" resname="tx_academicjobs_domain_model_job.degree.intermediate_degree">
+				<source>Intermediate degree</source>
+				<target>Mittlerer Abschluss</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.degree.higher_qualification" resname="tx_academicjobs_domain_model_job.degree.higher_qualification">
+				<source>Higher education entrance qualification</source>
+				<target>Fachhochschulreife</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.degree.general_higher_qualification" resname="ttx_academicjobs_domain_model_job.degree.general_higher_qualification">
+				<source>General higher education entrance qualification</source>
+				<target>Allgemeine Hochschulreife</target>
+			</trans-unit>
 			<trans-unit id="tx_academicjobs_domain_model_job.application_time" resname="tx_academicjobs_domain_model_job.application_time">
 				<source>Application time</source>
 				<target>Bewerbungsfrist</target>
@@ -264,6 +287,62 @@
 			<trans-unit id="tx_academicjobs.fe.list.text.place">
 				<source>Ort</source>
 				<target>Place</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_logo">
+				<source>Logo</source>
+				<target>Logo</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_title">
+				<source>Job title / Thesis title</source>
+				<target>Stellenbezeichnung / Titel der Abschlussarbeit</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_working_hours">
+				<source>Working hours</source>
+				<target>Arbeitszeit</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_required_degree">
+				<source>Required degree</source>
+				<target>Benötigter Abschluss</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_employer">
+				<source>Organization</source>
+				<target>Organisation</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_industry">
+				<source>Industry</source>
+				<target>Branche</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_location">
+				<source>Location</source>
+				<target>Ort</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_description">
+				<source>Job description</source>
+				<target>Stellenbeschreibung</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_start_employment">
+				<source>Start of employment</source>
+				<target>Arbeitsantritt (keine Angabe = sofort)</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_offer_type">
+				<source>Type of job offer</source>
+				<target>Art des Stellenangebots</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_link">
+				<source>Link (to the announcement or website)</source>
+				<target>Link (zur Ausschreibung oder Website)</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_starttime">
+				<source>Application deadline start</source>
+				<target>Bewerbungsfrist Beginn</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_endtime">
+				<source>Application deadline end</source>
+				<target>Bewerbungsfrist Ende</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.submit">
+				<source>Submit</source>
+				<target>Absenden</target>
 			</trans-unit>
 		</body>
 	</file>

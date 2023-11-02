@@ -46,6 +46,26 @@
             required="true"
         />
     </div>
+
+      <div class="col-md-4">
+        <label for="employment_type" class="form-label">
+          <f:translate key="tx_academicjobs.fe.form.text.job_required_degree" extensionName="academic_jobs" />
+        </label>
+        <f:form.select
+            property="requiredDegree"
+            id="employment_type"
+            class="form-select"
+            options="{
+                1: '{f:translate(id: \'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:x_academicjobs_domain_model_job.degree.without_degree\')}',
+                2: '{f:translate(id: \'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.degree.secondary_school\')}',
+                3: '{f:translate(id: \'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.degree.intermediate_degree\')}',
+                4: '{f:translate(id: \'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.degree.higher_qualification\')}',
+                5: '{f:translate(id: \'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.degree.general_higher_qualification\')}',
+            }"
+            required="true"
+        />
+    </div>
+
     <div class="col-md-4">
         <label for="job-type" class="form-label">Art des Stellenangebots</label>
         <f:form.select

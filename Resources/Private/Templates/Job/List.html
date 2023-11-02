@@ -1,4 +1,5 @@
 <f:for each="{jobs}" as="job" iteration="i">
+	<f:debug>{_all}</f:debug>
     <article class="card text-white bg-secondary border-dark h-100 mb-3">
         <div class="card-body">
             <div class="row">
@@ -59,6 +60,18 @@
                             {job.workLocation}
                         </div>
 											</f:if>
+                      <f:if condition="{job.requiredDegree}">
+                        <div class="col-md-3 mb-2">
+                          <b><f:translate key="tx_academicjobs.fe.form.text.job_required_degree"/></b><br>
+                            <f:switch expression="{job.requiredDegree}">
+                                <f:case value="1"><f:translate key="tx_academicjobs_domain_model_job.degree.without_degree" /></f:case>
+                                <f:case value="2"><f:translate key="tx_academicjobs_domain_model_job.degree.secondary_school" /></f:case>
+                                <f:case value="3"><f:translate key="tx_academicjobs_domain_model_job.degree.intermediate_degree" /></f:case>
+                                <f:case value="4"><f:translate key="tx_academicjobs_domain_model_job.degree.higher_qualification" /></f:case>
+                                <f:case value="5"><f:translate key="tx_academicjobs_domain_model_job.degree.general_higher_qualification" /></f:case>
+                            </f:switch>
+                        </div>
+                      </f:if>
                     </div>
                     <div class="row pt-4">
                         <div class="col-12 text-white">

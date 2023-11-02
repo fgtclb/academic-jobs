@@ -48,6 +48,14 @@ class Job extends AbstractEntity
      */
     protected int $employmentType;
 
+    /**
+     * requiredDegree
+     *
+     * @var int
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+     */
+    protected int $requiredDegree;
+
     protected string $workLocation;
 
     protected string $link;
@@ -246,6 +254,28 @@ class Job extends AbstractEntity
     public function setEmploymentType(int $employmentType): self
     {
         $this->employmentType = $employmentType;
+        return $this;
+    }
+
+    /**
+     * requiredDegree
+     *
+     * @return int
+     */
+    public function getRequiredDegree(): int
+    {
+        return $this->requiredDegree;
+    }
+
+    /**
+     * requiredDegree
+     *
+     * @param int $requiredDegree requiredDegree
+     * @return self
+     */
+    public function setRequiredDegree(int $requiredDegree): self
+    {
+        $this->requiredDegree = $requiredDegree;
         return $this;
     }
 

@@ -6,6 +6,7 @@ CREATE TABLE tx_academicjobs_domain_model_job (
 	company_name text NOT NULL DEFAULT '',
 	sector text NOT NULL DEFAULT '',
 	employment_type int(11) DEFAULT '0' NOT NULL,
+	required_degree int(11) DEFAULT '0' NOT NULL,
 	work_location varchar(255) NOT NULL DEFAULT '',
 	link varchar(255) NOT NULL DEFAULT '',
 	slug varchar(255) NOT NULL DEFAULT '',

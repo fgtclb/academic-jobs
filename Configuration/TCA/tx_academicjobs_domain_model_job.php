@@ -244,6 +244,24 @@ return [
                 'eval' => 'required',
             ],
         ],
+        'required_degree' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.required_degree',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'items' => [
+                    [$ll('tx_academicjobs_domain_model_job.degree.without_degree'), 1],
+                    [$ll('tx_academicjobs_domain_model_job.degree.secondary_school'), 2],
+                    [$ll('tx_academicjobs_domain_model_job.degree.intermediate_degree'), 3],
+                    [$ll('tx_academicjobs_domain_model_job.degree.higher_qualification'), 4],
+                    [$ll('tx_academicjobs_domain_model_job.degree.general_higher_qualification'), 5],
+                ],
+                'size' => 1,
+                'maxitems' => 1,
+                'eval' => 'required',
+            ],
+        ],
         'work_location' => [
             'exclude' => true,
             'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.work_location',
@@ -315,6 +333,7 @@ return [
             'showitem' => '
                 title,
                 employment_type,
+                required_degree,
                 --linebreak--,
                 description,
                 --linebreak--,
