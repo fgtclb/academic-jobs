@@ -58,6 +58,8 @@ class Job extends AbstractEntity
 
     protected string $workLocation;
 
+    protected string $contractualRelation;
+
     protected string $link;
 
     protected string $slug = '';
@@ -167,6 +169,16 @@ class Job extends AbstractEntity
     public function setWorkLocation(string $workLocation): void
     {
         $this->workLocation = $workLocation;
+    }
+
+    public function getContractualRelation(): string
+    {
+        return $this->contractualRelation;
+    }
+
+    public function setContractualRelation(string $contractualRelation): void
+    {
+        $this->contractualRelation = $contractualRelation;
     }
 
     public function getLink(): string

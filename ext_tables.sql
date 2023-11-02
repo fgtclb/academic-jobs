@@ -13,7 +13,8 @@ CREATE TABLE tx_academicjobs_domain_model_job (
 	type int(11) DEFAULT '0' NOT NULL,
 	contact int(11) unsigned NOT NULL DEFAULT '0',
 	recommendation tinyint(3) DEFAULT '0' NOT NULL,
-	international tinyint(3) DEFAULT '0' NOT NULL
+	international tinyint(3) DEFAULT '0' NOT NULL,
+	contractual_relation varchar(255) NOT NULL DEFAULT '',
 );
 
 CREATE TABLE tx_academicjobs_domain_model_contact (

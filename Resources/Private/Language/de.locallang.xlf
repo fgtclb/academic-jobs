@@ -113,6 +113,14 @@
 				<source>ex. (Remote, Hybrid, Berlin)</source>
 				<target>e.g (Remote, Hybrid, Berlin)</target>
 			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.work_location" resname="tx_academicjobs_domain_model_job.contractual_relation">
+				<source>Contractual relations</source>
+				<target>Vertragsverhältnis</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.work_location.description" resname="tx_academicjobs_domain_model_job.contractual_relation.description">
+				<source>Contract between employer and employee</source>
+				<target>Vertrag zwischen Arbeitgeber und Arbeitnehmer</target>
+			</trans-unit>
 			<trans-unit id="tx_academicjobs_domain_model_job.link" resname="tx_academicjobs_domain_model_job.link">
 				<source>Link</source>
 				<target>Link</target>
@@ -359,6 +367,10 @@
 			<trans-unit id="tx_academicjobs.fe.form.text.recommendation">
 				<source>Recommended offer</source>
 				<target>Empfohlenes Angebot</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.contractual_relation">
+				<source>Contractual relations</source>
+				<target>Vertragsverhältnis</target>
 			</trans-unit>
 		</body>
 	</file>

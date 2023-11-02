@@ -273,6 +273,17 @@ return [
                 'default' => '',
             ],
         ],
+        'contractual_relation' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.contractual_relation',
+            'description' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.contractual_relation.description',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim',
+                'default' => '',
+            ],
+        ],
         'link' => [
             'exclude' => true,
             'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.link',
@@ -353,6 +364,8 @@ return [
                 employment_start_date,
                 --linebreak--,
                 work_location,
+                --linebreak--,
+                contractual_relation,
                 --linebreak--,
                 link,
                 --linebreak--,

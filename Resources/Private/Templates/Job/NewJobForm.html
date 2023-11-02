@@ -94,13 +94,24 @@
         />
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <label for="companyName" class="form-label">Argeitgeber</label>
         <f:form.textfield
             property="companyName"
             id="companyName"
             class="form-control"
             required="true"
+        />
+    </div>
+
+    <div class="col-md-4">
+        <label for="contractualRelation" class="form-label">
+          <f:translate key="tx_academicjobs.fe.form.text.contractual_relation" extensionName="academic_jobs" />
+        </label>
+        <f:form.textfield
+            property="contractualRelation"
+            id="contractualRelation"
+            class="form-control"
         />
     </div>
 
@@ -152,26 +163,31 @@
         />
     </div>
     <div class="col-3">
-      <label for="job-recommended" class="form-label">
-				<f:translate key="tx_academicjobs.fe.form.text.recommendation" extensionName="academic_jobs" />
-			</label>
-			<f:form.checkbox
-				id="job-recommended"
-				property="recommendation"
-				value="1"
-			/>
+      <div class="form-check">
+        <label for="job-recommended" class="form-check-label">
+          <f:translate key="tx_academicjobs.fe.form.text.recommendation" extensionName="academic_jobs" />
+        </label>
+        <f:form.checkbox
+          id="job-recommended"
+          class="form-check-input"
+          property="recommendation"
+          value="1"
+        />
+      </div>
     </div>
 
     <div class="col-3">
-      <label for="job-international" class="form-label">
-				<f:translate key="tx_academicjobs.fe.form.text.international" extensionName="academic_jobs" />
-			</label>
-			<f:form.checkbox
-				id="job-international"
-				property="international"
-				value="1"
-				checked="false"
-			/>
+      <div class="form-check">
+        <label for="job-international" class="form-check-label">
+          <f:translate key="tx_academicjobs.fe.form.text.international" extensionName="academic_jobs" />
+        </label>
+        <f:form.checkbox
+          id="job-international"
+          class="form-check-input"
+          property="international"
+          value="1"
+        />
+      </div>
     </div>
 
     <div class="col-12 mt-3">
