@@ -10,55 +10,60 @@
                 <f:if condition="{job.image}"></f:if>
                 <div class="col-md-9 mt-4">
                     <div class="row mb-2">
-												<f:link.action pageUid="{settings.detailPid}" action="show" pluginName="Detail" arguments="{job: job}">
-														<h4 class="card-title text-white">{job.title}</h4>
-												</f:link.action>
+                        <f:link.action pageUid="{settings.detailPid}" action="show" pluginName="Detail" arguments="{job: job}">
+                            <h4 class="card-title text-white">{job.title}</h4>
+                        </f:link.action>
                     </div>
                     <div class="row">
-											<f:if condition="{job.employmentStartDate}">
+                      <f:if condition="{job.employmentStartDate}">
                         <div class="col-md-3 mb-2">
                             <b><f:translate key="tx_academicjobs_domain_model_job.employment_start_date"/></b><br>
                             <f:format.date format="d.m.Y">{job.employmentStartDate}</f:format.date>
                         </div>
-											</f:if>
-											<f:if condition="{job.endtime}">
+                      </f:if>
+                      <f:if condition="{job.endtime}">
                         <div class="col-md-3 mb-2">
                             <b><f:translate key="tx_academicjobs_domain_model_job.application_time"/></b><br>
                             <f:format.date format="d.m.Y">{job.endtime}</f:format.date>
                         </div>
-											</f:if>
-											<f:if condition="{job.companyName}">
+                      </f:if>
+                      <f:if condition="{job.companyName}">
                         <div class="col-md-3 mb-2">
                             <b><f:translate key="tx_academicjobs_domain_model_job.company_name"/></b><br>
                             {job.companyName}
                         </div>
-											</f:if>
-											<f:if condition="{job.type}">
+                      </f:if>
+                      <f:if condition="{job.type}">
                         <div class="col-md-3 mb-2">
-													<b><f:translate key="tx_academicjobs_domain_model_job.job_type"/></b><br>
+                          <b><f:translate key="tx_academicjobs_domain_model_job.job_type"/></b><br>
                             <f:switch expression="{job.type}">
                                 <f:case value="1"><f:translate key="tx_academicjobs_domain_model_job.jobtype.job" /></f:case>
                                 <f:case value="2"><f:translate key="tx_academicjobs_domain_model_job.jobtype.sidejob" /></f:case>
                                 <f:case value="3"><f:translate key="tx_academicjobs_domain_model_job.jobtype.thesis" /></f:case>
                             </f:switch>
                         </div>
-											</f:if>
-											<f:if condition="{job.employmentType}">
+                      </f:if>
+                      <f:if condition="{job.employmentType}">
                         <div class="col-md-3 mb-2">
 
-														<b>Arbeitszeit</b><br>
+                            <b>
+                              <f:translate key="tx_academicjobs.fe.list.text.working_hours" />
+                            </b>
+
+                            <br>
+
                             <f:switch expression="{job.employmentType}">
                                 <f:case value="1"><f:translate key="tx_academicjobs_domain_model_job.employment_type.fulltime" /></f:case>
                                 <f:case value="2"><f:translate key="tx_academicjobs_domain_model_job.employment_type.parttime" /></f:case>
                             </f:switch>
                         </div>
-											</f:if>
-											<f:if condition="{job.workLocation}">
+                      </f:if>
+                      <f:if condition="{job.workLocation}">
                         <div class="col-md-3 mb-2">
                             <b><f:translate key="tx_academicjobs_domain_model_job.work_location"/></b><br>
                             {job.workLocation}
                         </div>
-											</f:if>
+                      </f:if>
                     </div>
                     <div class="row pt-4">
                         <div class="col-12 text-white">

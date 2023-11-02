@@ -44,12 +44,12 @@
 				<target>Bild</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs_domain_model_job.company_name" resname="tx_academicjobs_domain_model_job.company_name">
-				<source>Company Name</source>
-				<target>Firmenname</target>
+				<source>Organization</source>
+				<target>Organisation</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs_domain_model_job.company_name.description" resname="tx_academicjobs_domain_model_job.company_name.description">
-				<source>Company Name</source>
-				<target>Firmenname</target>
+				<source>Organization</source>
+				<target>Organisation</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs_domain_model_job.sector" resname="tx_academicjobs_domain_model_job.sector">
 				<source>Sector</source>
@@ -62,11 +62,11 @@
 
 			<trans-unit id="tx_academicjobs_domain_model_job.employment_type" resname="tx_academicjobs_domain_model_job.employment_type">
 				<source>Employment Type</source>
-				<target>Arbeitszeit</target>
+				<target>Art des Stellenangebots</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs_domain_model_job.employment_type.description" resname="tx_academicjobs_domain_model_job.employment_type.description">
 				<source>Employment Type Description</source>
-				<target>Arbeitszeit Beschreibung</target>
+				<target>Stellenbeschreibung</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs_domain_model_job.employment_type.fulltime" resname="tx_academicjobs_domain_model_job.employment_type.fulltime">
 				<source>Full-time</source>
@@ -95,8 +95,8 @@
 				<target>Link</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs_domain_model_job.link.description" resname="tx_academicjobs_domain_model_job.link.description">
-				<source>Link</source>
-				<target>Link</target>
+				<source>Link to the announcement or website</source>
+				<target>Link zur Ausschreibung oder Website</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs_domain_model_job.slug" resname="tx_academicjobs_domain_model_job.slug">
 				<source>Slug</source>
@@ -207,7 +207,7 @@
 
             <trans-unit id="tx_academicjobs.fe.list.text.fulltime">
 				<source>Full-Time</source>
-				<target>Full-Time</target>
+				<target>Vollzeit</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.list.text.parttime">
 				<source>Part-Time</source>
@@ -254,8 +254,8 @@
 				<target>Bewerbungsfrist</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.list.text.employer">
-				<source>Employere</source>
-				<target>Arbeitgeber</target>
+				<source>Organization</source>
+				<target>Organisation</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.list.text.working_hours">
 				<source>Working hours</source>
@@ -264,6 +264,58 @@
 			<trans-unit id="tx_academicjobs.fe.list.text.place">
 				<source>Ort</source>
 				<target>Place</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_logo">
+				<source>Logo</source>
+				<target>Logo</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_title">
+				<source>Job title / Thesis title</source>
+				<target>Stellenbezeichnung / Titel der Abschlussarbeit</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_working_hours">
+				<source>Working hours</source>
+				<target>Arbeitszeit</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_employer">
+				<source>Organization</source>
+				<target>Organisation</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_industry">
+				<source>Industry</source>
+				<target>Branche</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_location">
+				<source>Location</source>
+				<target>Ort</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_description">
+				<source>Job description</source>
+				<target>Stellenbeschreibung</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_start_employment">
+				<source>Start of employment</source>
+				<target>Arbeitsantritt (keine Angabe = sofort)</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_offer_type">
+				<source>Type of job offer</source>
+				<target>Art des Stellenangebots</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_link">
+				<source>Link (to the announcement or website)</source>
+				<target>Link (zur Ausschreibung oder Website)</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_starttime">
+				<source>Application deadline start</source>
+				<target>Bewerbungsfrist Beginn</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.job_endtime">
+				<source>Application deadline end</source>
+				<target>Bewerbungsfrist Ende</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.submit">
+				<source>Submit</source>
+				<target>Absenden</target>
 			</trans-unit>
 		</body>
 	</file>
