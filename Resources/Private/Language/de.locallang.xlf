@@ -145,6 +145,14 @@
 				<source>Contact</source>
 				<target>Kontakt</target>
 			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.recommendation" resname="tx_academicjobs_domain_model_job.international">
+				<source>Internationals welcome</source>
+				<target>Internationals willkommen</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.recommendation" resname="tx_academicjobs_domain_model_job.recommendation">
+				<source>Recommended offer</source>
+				<target>Empfohlenes Angebot</target>
+			</trans-unit>
 			<trans-unit id="tx_academicjobs_domain_model_jobtype" resname="tx_academicjobs_domain_model_jobtypes">
 				<source>Job Types</source>
 				<target>Jobtypen</target>
@@ -343,6 +351,14 @@
 			<trans-unit id="tx_academicjobs.fe.form.text.submit">
 				<source>Submit</source>
 				<target>Absenden</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.international">
+				<source>Internationals welcome</source>
+				<target>Internationals willkommen</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.recommendation">
+				<source>Recommended offer</source>
+				<target>Empfohlenes Angebot</target>
 			</trans-unit>
 		</body>
 	</file>

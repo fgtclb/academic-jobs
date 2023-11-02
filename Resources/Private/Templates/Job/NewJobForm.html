@@ -151,6 +151,28 @@
             required="true"
         />
     </div>
+    <div class="col-3">
+      <label for="job-recommended" class="form-label">
+				<f:translate key="tx_academicjobs.fe.form.text.recommendation" extensionName="academic_jobs" />
+			</label>
+			<f:form.checkbox
+				id="job-recommended"
+				property="recommendation"
+				value="1"
+			/>
+    </div>
+
+    <div class="col-3">
+      <label for="job-international" class="form-label">
+				<f:translate key="tx_academicjobs.fe.form.text.international" extensionName="academic_jobs" />
+			</label>
+			<f:form.checkbox
+				id="job-international"
+				property="international"
+				value="1"
+				checked="false"
+			/>
+    </div>
 
     <div class="col-12 mt-3">
         <f:form.submit class="btn btn-primary w-100" value="Absenden"

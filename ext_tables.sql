@@ -11,7 +11,9 @@ CREATE TABLE tx_academicjobs_domain_model_job (
 	link varchar(255) NOT NULL DEFAULT '',
 	slug varchar(255) NOT NULL DEFAULT '',
 	type int(11) DEFAULT '0' NOT NULL,
-	contact int(11) unsigned NOT NULL DEFAULT '0'
+	contact int(11) unsigned NOT NULL DEFAULT '0',
+	recommendation tinyint(3) DEFAULT '0' NOT NULL,
+	international tinyint(3) DEFAULT '0' NOT NULL
 );
 
 CREATE TABLE tx_academicjobs_domain_model_contact (

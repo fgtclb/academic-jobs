@@ -299,7 +299,6 @@ return [
                 'fallbackCharacter' => '-',
                 'eval' => 'uniqueInPid',
             ],
-
         ],
         'contact' => [
             'exclude' => true,
@@ -318,9 +317,23 @@ return [
                     'showAllLocalizationLink' => 1,
                 ],
             ],
-
         ],
-
+        'recommendation' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.recommendation',
+            'config' => [
+                'type' => 'check',
+                'default' => 0,
+            ],
+        ],
+        'international' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.international',
+            'config' => [
+                'type' => 'check',
+                'default' => 0,
+            ],
+        ],
     ],
     'palettes' => [
         'general' => [
@@ -342,7 +355,9 @@ return [
                 work_location,
                 --linebreak--,
                 link,
-
+                --linebreak--,
+                recommendation,
+                international,
             ',
         ],
         'company' => [

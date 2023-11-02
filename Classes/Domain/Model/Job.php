@@ -66,6 +66,10 @@ class Job extends AbstractEntity
 
     protected int $hidden = 0;
 
+    protected $recommendation = false;
+
+    protected $international = false;
+
     /**
      * @var ObjectStorage<Contact>
      * @Lazy
@@ -319,6 +323,28 @@ class Job extends AbstractEntity
     public function setHidden(int $hidden): self
     {
         $this->hidden = $hidden;
+        return $this;
+    }
+
+    public function getRecommendation(): bool
+    {
+        return $this->recommendation;
+    }
+
+    public function setRecommendation(bool $recommendation)
+    {
+        $this->recommendation = $recommendation;
+        return $this;
+    }
+
+    public function getInternational(): bool
+    {
+        return $this->international;
+    }
+
+    public function setInternational(bool $international)
+    {
+        $this->international = $international;
         return $this;
     }
 
