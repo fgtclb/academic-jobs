@@ -19,13 +19,17 @@
     object="{job}"
     enctype="multipart/form-data"
 >
-
-<div class="col-md-3">
-        <label for="job-image" class="form-label">Logo</label>
+    <div class="col-md-3">
+        <label for="job-image" class="form-label">
+          <f:translate key="tx_academicjobs.fe.form.text.job_logo" extensionName="academic_jobs" />
+        </label>
         <f:form.upload property="image" class="form-control" id="job-image" />
     </div>
+
     <div class="col-md-9">
-        <label for="title" class="form-label">Title</label>
+        <label for="title" class="form-label">
+          <f:translate key="tx_academicjobs.fe.form.text.job_title" extensionName="academic_jobs" />
+        </label>
         <f:form.textfield
             id="title"
             property="title"
@@ -33,8 +37,11 @@
             required="true"
         />
     </div>
+
     <div class="col-md-4">
-        <label for="employment_type" class="form-label">Arbeitszeit:</label>
+        <label for="employment_type" class="form-label">
+          <f:translate key="tx_academicjobs.fe.form.text.job_working_hours" extensionName="academic_jobs" />
+        </label>
         <f:form.select
             property="employmentType"
             id="employmentType"
@@ -46,8 +53,11 @@
             required="true"
         />
     </div>
+
     <div class="col-md-4">
-        <label for="job-type" class="form-label">Art des Stellenangebots</label>
+        <label for="job-type" class="form-label">
+          <f:translate key="tx_academicjobs.fe.form.text.job_offer_type" extensionName="academic_jobs" />
+        </label>
         <f:form.select
             property="type"
             id="job-type"
@@ -62,9 +72,9 @@
     </div>
 
     <div class="col-md-4">
-        <label for="employmentStartDate" class="form-label"
-            >Arbeitsantritt</label
-        >
+        <label for="employmentStartDate" class="form-label">
+          <f:translate key="tx_academicjobs.fe.form.text.job_start_employment" extensionName="academic_jobs" />
+        </label>
         <f:form.textfield
             type="date"
             property="employmentStartDate"
@@ -75,7 +85,9 @@
     </div>
 
     <div class="col-md-6">
-        <label for="companyName" class="form-label">Argeitgeber</label>
+        <label for="companyName" class="form-label">
+          <f:translate key="tx_academicjobs.fe.form.text.job_employer" extensionName="academic_jobs" />
+        </label>
         <f:form.textfield
             property="companyName"
             id="companyName"
@@ -85,12 +97,16 @@
     </div>
 
     <div class="col-md-6">
-        <label for="sector" class="form-label">Branche</label>
+        <label for="sector" class="form-label">
+          <f:translate key="tx_academicjobs.fe.form.text.job_industry" extensionName="academic_jobs" />
+        </label>
         <f:form.textfield property="sector" id="sector" class="form-control" />
     </div>
 
     <div class="col-md-6">
-        <label for="workLocation" class="form-label">Ort</label>
+        <label for="workLocation" class="form-label">
+          <f:translate key="tx_academicjobs.fe.form.text.job_location" extensionName="academic_jobs" />
+        </label>
         <f:form.textfield
             property="workLocation"
             id="workLocation"
@@ -98,13 +114,18 @@
             placeholder="Remote, Berlin, Aachen"
         />
     </div>
+
     <div class="col-md-6">
-        <label for="link" class="form-label">Link</label>
+        <label for="link" class="form-label">
+          <f:translate key="tx_academicjobs.fe.form.text.job_link" extensionName="academic_jobs" />
+        </label>
         <f:form.textfield property="link" id="link" class="form-control" />
     </div>
 
     <div class="col-md-6">
-        <label for="starttime" class="form-label">Bewerbungsfrist beginn</label>
+        <label for="starttime" class="form-label">
+          <f:translate key="tx_academicjobs.fe.form.text.job_starttime" extensionName="academic_jobs" />
+        </label>
         <f:form.textfield
             type="date"
             property="starttime"
@@ -112,8 +133,11 @@
             class="form-control"
         />
     </div>
+
     <div class="col-md-6">
-        <label for="endtime" class="form-label">Bewerbungsfrist ende</label>
+        <label for="endtime" class="form-label">
+          <f:translate key="tx_academicjobs.fe.form.text.job_endtime" extensionName="academic_jobs" />
+        </label>
         <f:form.textfield
             type="date"
             property="endtime"
@@ -121,8 +145,11 @@
             class="form-control"
         />
     </div>
+
     <div class="col-12">
-        <label for="job-description" class="form-label">Beschreibung</label>
+        <label for="job-description" class="form-label">
+          <f:translate key="tx_academicjobs.fe.form.text.job_description" extensionName="academic_jobs" />
+        </label>
         <f:form.textarea
             rows="4"
             id="job-description"
@@ -133,8 +160,8 @@
     </div>
 
     <div class="col-12 mt-3">
-        <f:form.submit class="btn btn-primary w-100" value="Absenden"
-            >Absenden</f:form.submit
-        >
+        <f:form.submit class="btn btn-primary w-100" value="Absenden">
+          <f:translate key="tx_academicjobs.fe.form.text.submit" extensionName="academic_jobs" />
+        </f:form.submit>
     </div>
 </f:form>
