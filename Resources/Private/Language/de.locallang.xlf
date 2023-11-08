@@ -372,6 +372,10 @@
 				<source>Contractual relations</source>
 				<target>Vertragsverhältnis</target>
 			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.add_contact">
+				<source>Add new contact record</source>
+				<target>Neuen Kontaktdatensatz hinzufügen</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

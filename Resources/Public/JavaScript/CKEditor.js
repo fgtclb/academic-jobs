@@ -22,6 +22,7 @@
     if (window.CKEDITOR) {
       clearInterval(waitCKEDITOR);
       CKEDITOR.replace('job-description', editorConfig);
+      CKEDITOR.replace('contact-description', editorConfig);
     }
   }, 100);
 })();

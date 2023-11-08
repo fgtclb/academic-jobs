@@ -284,6 +284,9 @@
 			<trans-unit id="tx_academicjobs.fe.form.text.contractual_relation">
 				<source>Contractual relations</source>
 			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.add_contact">
+				<source>Add new contact record</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

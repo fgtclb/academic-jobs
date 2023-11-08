@@ -19,7 +19,7 @@
     object="{job}"
     enctype="multipart/form-data"
 >
-
+<f:debug>{_all}</f:debug>
 <div class="col-md-3">
         <label for="job-image" class="form-label">Logo</label>
         <f:form.upload property="image" class="form-control" id="job-image" />
@@ -190,9 +190,58 @@
       </div>
     </div>
 
-    <div class="col-12 mt-3">
-        <f:form.submit class="btn btn-primary w-100" value="Absenden"
-            >Absenden</f:form.submit
-        >
+    <div class="accordion">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="job-accordion-contact">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#job-accordion-form" aria-expanded="true" aria-controls="job-accordion-form">
+            <f:translate key="tx_academicjobs.fe.form.text.add_contact" extensionName="academic_jobs" />
+          </button>
+        </h2>
+        <div id="job-accordion-form" class="accordion-collapse collapse" aria-labelledby="job-accordion-contact">
+          <div class="accordion-body">
+						<div class="row">
+							<div class="col-md-4">
+									<label for="contact-name" class="form-label">Name</label>
+									<f:form.textfield
+											id="contact-name"
+											property="name"
+											class="form-control"
+									/>
+							</div>
+							<div class="col-md-4">
+									<label for="contact-email" class="form-label">Email</label>
+									<f:form.textfield
+											id="contact-email"
+											property="email"
+											class="form-control"
+									/>
+							</div>
+							<div class="col-md-4">
+									<label for="contact-phone" class="form-label">phone</label>
+									<f:form.textfield
+											id="contact-phone"
+											property="phone"
+											class="form-control"
+									/>
+							</div>
+							<div class="col-12">
+									<label for="contact-description" class="form-label">description</label>
+									<f:form.textarea
+											rows="4"
+											id="contact-description"
+											property="additionalInformation"
+											class="form-control"
+									/>
+							</div>
+
+							<div class="col-12 mt-3">
+									<f:form.submit class="btn btn-primary w-100" value="Absenden"
+											>Absenden</f:form.submit
+									>
+							</div>
+						</div>
+          </div>
+        </div>
+      </div>
     </div>
 </f:form>
