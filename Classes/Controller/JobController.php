@@ -152,12 +152,13 @@ class JobController extends ActionController
             );
     }
 
-    public function saveJobAction(Job $job, Contact $contact): void
+    public function saveJobAction(Job $job): void
     {
+
         $job->setHidden((int)self::JOB_HIDDEN);
         $this->jobRepository->add($job);
-        $this->contactRepository->add($contact);
         $this->persistenceManager->persistAll();
+
 
         $afterSaveJobEvent = new AfterSaveJobEvent($job);
         $this->eventDispatcher->dispatch($afterSaveJobEvent);

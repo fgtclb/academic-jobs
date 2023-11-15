@@ -18,5 +18,5 @@ CREATE TABLE tx_academicjobs_domain_model_contact (
 	name varchar(255) NOT NULL DEFAULT '',
 	email varchar(255) NOT NULL DEFAULT '',
 	phone varchar(255) NOT NULL DEFAULT '',
-	additional_information text NOT NULL DEFAULT ''
+	additional_information text
 );

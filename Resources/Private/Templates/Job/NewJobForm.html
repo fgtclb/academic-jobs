@@ -1,4 +1,4 @@
-<f:flashMessages />
+
 <f:asset.script
     identifier="ckeditor"
     src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"
@@ -9,6 +9,31 @@
     src="EXT:academic_jobs/Resources/Public/JavaScript/CKEditor.js"
     defer="1"
 />
+
+<style>
+	details {
+		border: 1px solid #aaa;
+		border-radius: 4px;
+		padding: 0.5em 0.5em 0;
+	}
+
+	summary {
+		font-weight: bold;
+		margin: -0.5em -0.5em 0;
+		padding: 0.5em;
+	}
+
+	details[open] {
+		padding: 0.5em;
+	}
+
+	details[open] summary {
+		border-bottom: 1px solid #aaa;
+		margin-bottom: 0.5em;
+	}
+</style>
+
+<f:flashMessages />
 
 <f:render partial="FormErrors" />
 
@@ -158,6 +183,46 @@
             required="true"
         />
     </div>
+
+		<details class="col-12">
+			<summary>Kontact Informationen</summary>
+			<fieldset class="col-md-12">
+				<label class="form-label">
+					Name:
+				</label>
+				<f:form.textfield
+						property="contact.name"
+						class="form-control"
+				/>
+			</fieldset>
+			<fieldset class="col-md-12">
+				<label class="form-label">
+					E-Mail:
+				</label>
+				<f:form.textfield
+						property="contact.email"
+						class="form-control"
+				/>
+			</fieldset>
+			<fieldset class="col-md-12">
+				<label class="form-label">
+					Phone:
+				</label>
+				<f:form.textfield
+						property="contact.phone"
+						class="form-control"
+				/>
+			</fieldset>
+			<fieldset class="col-md-12">
+				<label class="form-label">
+					More information:
+				</label>
+				<f:form.textfield
+						property="contact.additional_information"
+						class="form-control"
+				/>
+			</fieldset>
+		</details>
 
     <div class="col-12 mt-3">
         <f:form.submit class="btn btn-primary w-100" value="Absenden">
