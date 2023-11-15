@@ -59,11 +59,9 @@ class Job extends AbstractEntity
     protected int $hidden = 0;
 
     /**
-     * @var ObjectStorage<Contact>
-     * @Lazy
-     * @Cascade("remove")
+     * @var Contact
      */
-    protected ObjectStorage $contact;
+    protected Contact $contact;
 
     /**
      * @var \DateTime
@@ -76,16 +74,6 @@ class Job extends AbstractEntity
      * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      */
     protected $endtime;
-
-    public function __construct()
-    {
-        $this->initializeObject();
-    }
-
-    public function initializeObject(): void
-    {
-        $this->contact = new ObjectStorage();
-    }
 
     public function getTitle(): string
     {
@@ -187,43 +175,11 @@ class Job extends AbstractEntity
         $this->type = $type;
     }
 
-    /**
-     * Adds a Contact
-     *
-     * @param \FGTCLB\AcademicJobs\Domain\Model\Contact $contact
-     */
-    public function addContact(Contact $contact): void
-    {
-        $this->contact->attach($contact);
-    }
-
-    /**
-     * Removes a Contact
-     *
-     * @param \FGTCLB\AcademicJobs\Domain\Model\Contact $contactToRemove The Contact to be removed
-     */
-    public function removeContact(Contact $contactToRemove): void
-    {
-        $this->contact->detach($contactToRemove);
-    }
-
-    /**
-     * Returns the contact
-     *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\FGTCLB\AcademicJobs\Domain\Model\Contact>
-     */
-    public function getContact()
-    {
+    public function getContact(): ?Contact {
         return $this->contact;
     }
 
-    /**
-     * Sets the contact
-     *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\FGTCLB\AcademicJobs\Domain\Model\Contact> $contact
-     */
-    public function setContact(ObjectStorage $contact): void
-    {
+    public function setContact(Contact $contact): void {
         $this->contact = $contact;
     }
 

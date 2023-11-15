@@ -290,7 +290,6 @@ return [
             'config' => [
                 'type' => 'inline',
                 'foreign_table' => 'tx_academicjobs_domain_model_contact',
-                'foreign_field' => 'job',
                 'maxitems' => 9999,
                 'appearance' => [
                     'collapseAll' => 0,
