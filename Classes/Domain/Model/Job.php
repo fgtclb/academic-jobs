@@ -58,10 +58,7 @@ class Job extends AbstractEntity
 
     protected int $hidden = 0;
 
-    /**
-     * @var Contact
-     */
-    protected Contact $contact;
+    protected ?Contact $contact = null;
 
     /**
      * @var \DateTime
