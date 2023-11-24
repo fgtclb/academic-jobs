@@ -168,13 +168,32 @@ class JobController extends ActionController
         $this->redirect('list');
     }
 
-    public function sendEmail(): void
+    public function sendEmail(int $recordId): void
     {
+        $url = $this->buildUrl($recordId);
+
         $mail = GeneralUtility::makeInstance(MailMessage::class);
         $mail->to($this->settings['email']['recipientEmail']);
         $mail->from($this->settings['email']['senderEmail']);
         $mail->subject($this->settings['email']['subject']);
-        $mail->text('A new job has been posted. Please check the backend.');
+        $mail->text('A new job has been posted. Please check the TYPO3 backend: ' . $url);
         $mail->send();
+    }
+    public function buildUrl(int $recordId): string
+    {
+        $path = $this->backendUriBuilder
+        ->buildUriFromRoute(
+            'record_edit',
+            [
+                'edit' => [
+                    'tx_academicjobs_domain_model_job' => [
+                        $recordId => 'edit'
+                    ]
+                ],
+                'returnUrl' => GeneralUtility::getIndpEnv('REQUEST_URI')
+            ]
+        );
+
+        return GeneralUtility::getIndpEnv('TYPO3_REQUEST_HOST') . $path;
     }
 }
