@@ -163,7 +163,7 @@ class JobController extends ActionController
         $afterSaveJobEvent = new AfterSaveJobEvent($job);
         $this->eventDispatcher->dispatch($afterSaveJobEvent);
 
-        $this->sendEmail();
+        $this->sendEmail($jobs->getUid());
 
         $this->redirect('list');
     }
