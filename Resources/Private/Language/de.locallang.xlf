@@ -313,6 +313,26 @@
 				<source>Application deadline end</source>
 				<target>Bewerbungsfrist Ende</target>
 			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.contact.title">
+				<source>Contact Informations</source>
+				<target>Kontakt Informationen</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.contact.name">
+				<source>Name</source>
+				<target>Name</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.contact.email">
+				<source>E-Mail</source>
+				<target>E-Mail</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.contact.phone">
+				<source>Phone</source>
+				<target>Telefon</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.contact.additional">
+				<source>More information</source>
+				<target>Weitere Informationen</target>
+			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.form.text.submit">
 				<source>Submit</source>
 				<target>Absenden</target>

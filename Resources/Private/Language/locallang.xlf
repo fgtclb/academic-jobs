@@ -239,6 +239,21 @@
 			<trans-unit id="tx_academicjobs.fe.form.text.job_endtime">
 				<source>Application deadline end</source>
 			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.contact.title">
+				<source>Contact Informations</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.contact.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.contact.email">
+				<source>E-Mail</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.contact.phone">
+				<source>Phone</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.contact.additional">
+				<source>More information</source>
+			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.form.text.submit">
 				<source>Submit</source>
 			</trans-unit>
