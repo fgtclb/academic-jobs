@@ -19,6 +19,7 @@ use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Extbase\Service\ImageService;
+use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
 
 class JobController extends ActionController
 {
@@ -28,7 +29,8 @@ class JobController extends ActionController
         private readonly JobRepository $jobRepository,
         private readonly ContactRepository $contactRepository,
         private readonly PersistenceManagerInterface $persistenceManager,
-        private readonly ImageService $imageService
+        private readonly ImageService $imageService,
+        protected readonly BackendUriBuilder $backendUriBuilder,
     ) {
     }
 
@@ -163,7 +165,7 @@ class JobController extends ActionController
         $afterSaveJobEvent = new AfterSaveJobEvent($job);
         $this->eventDispatcher->dispatch($afterSaveJobEvent);
 
-        $this->sendEmail($jobs->getUid());
+        $this->sendEmail($job->getUid());
 
         $this->redirect('list');
     }
@@ -182,17 +184,17 @@ class JobController extends ActionController
     public function buildUrl(int $recordId): string
     {
         $path = $this->backendUriBuilder
-        ->buildUriFromRoute(
-            'record_edit',
-            [
-                'edit' => [
-                    'tx_academicjobs_domain_model_job' => [
-                        $recordId => 'edit'
-                    ]
-                ],
-                'returnUrl' => GeneralUtility::getIndpEnv('REQUEST_URI')
-            ]
-        );
+            ->buildUriFromRoute(
+                'record_edit',
+                [
+                    'edit' => [
+                        'tx_academicjobs_domain_model_job' => [
+                            $recordId => 'edit'
+                        ]
+                    ],
+                    'returnUrl' => GeneralUtility::getIndpEnv('REQUEST_URI')
+                ]
+            );
 
         return GeneralUtility::getIndpEnv('TYPO3_REQUEST_HOST') . $path;
     }
