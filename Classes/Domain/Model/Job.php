@@ -40,6 +40,10 @@ class Job extends AbstractEntity
 
     protected string $sector;
 
+    protected string $requiredDegree;
+
+    protected string $contractualRelationship;
+
     protected int $alumniRecommend = 0;
 
     protected int $internationalsWelcome = 0;
@@ -134,6 +138,26 @@ class Job extends AbstractEntity
     public function setSector(string $sector): void
     {
         $this->sector = $sector;
+    }
+
+    public function getRequiredDegree(): string
+    {
+        return $this->requiredDegree;
+    }
+
+    public function setRequiredDegree(string $requiredDegree): void
+    {
+        $this->requiredDegree = $requiredDegree;
+    }
+
+    public function getContractualRelationship(): string
+    {
+        return $this->contractualRelationship;
+    }
+
+    public function setContractualRelationship(string $contractualRelationship): void
+    {
+        $this->contractualRelationship = $contractualRelationship;
     }
 
     public function getAlumniRecommend(): int
