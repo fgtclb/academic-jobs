@@ -5,6 +5,8 @@ CREATE TABLE tx_academicjobs_domain_model_job (
 	image int(11) unsigned NOT NULL DEFAULT '0',
 	company_name text NOT NULL DEFAULT '',
 	sector text NOT NULL DEFAULT '',
+	required_degree text NOT NULL DEFAULT '',
+	contractual_relationship text NOT NULL DEFAULT '',
 	alumni_recommend tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	internationals_welcome tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	employment_type int(11) DEFAULT '0' NOT NULL,
