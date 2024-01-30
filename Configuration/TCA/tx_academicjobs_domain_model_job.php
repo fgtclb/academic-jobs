@@ -229,6 +229,22 @@ return [
                 'default' => '',
             ],
         ],
+        'alumni_recommend' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.alumni_recommend',
+            'config' => [
+                'type' => 'check',
+                'default' => 0,
+            ],
+        ],
+        'internationals_welcome' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.internationals_welcome',
+            'config' => [
+                'type' => 'check',
+                'default' => 0,
+            ],
+        ],
         'employment_type' => [
             'exclude' => true,
             'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.employment_type',
@@ -329,6 +345,9 @@ return [
             'showitem' => '
                 company_name,
                 sector,
+                --linebreak--,
+                alumni_recommend,
+                internationals_welcome,
                 --linebreak--,
                 contact,
             ',
