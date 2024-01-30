@@ -40,6 +40,10 @@ class Job extends AbstractEntity
 
     protected string $sector;
 
+    protected int $alumniRecommend = 0;
+
+    protected int $internationalsWelcome = 0;
+
     /**
      * employmentType
      *
@@ -130,6 +134,26 @@ class Job extends AbstractEntity
     public function setSector(string $sector): void
     {
         $this->sector = $sector;
+    }
+
+    public function getAlumniRecommend(): int
+    {
+        return $this->alumniRecommend;
+    }
+
+    public function setAlumniRecommend(int $alumniRecommend): void
+    {
+        $this->alumniRecommend = $alumniRecommend;
+    }
+
+    public function getInternationalsWelcome(): int
+    {
+        return $this->internationalsWelcome;
+    }
+
+    public function setInternationalsWelcome(int $internationalsWelcome): void
+    {
+        $this->internationalsWelcome = $internationalsWelcome;
     }
 
     public function getWorkLocation(): string
