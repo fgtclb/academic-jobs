@@ -229,6 +229,26 @@ return [
                 'default' => '',
             ],
         ],
+        'required_degree' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.required_degree',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim',
+                'default' => '',
+            ],
+        ],
+        'contractual_relationship' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.contractual_relationship',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim',
+                'default' => '',
+            ],
+        ],
         'alumni_recommend' => [
             'exclude' => true,
             'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.alumni_recommend',
@@ -345,6 +365,9 @@ return [
             'showitem' => '
                 company_name,
                 sector,
+                --linebreak--,
+                required_degree,
+                contractual_relationship,
                 --linebreak--,
                 alumni_recommend,
                 internationals_welcome,

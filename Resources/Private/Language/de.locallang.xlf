@@ -59,6 +59,14 @@
 				<source>Sector</source>
 				<target>Branche Beschreibung</target>
 			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.required_degree" resname="tx_academicjobs_domain_model_job.required_degree">
+				<source>Required degree</source>
+				<target>Benötigter Abschluss</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.contractual_relationship" resname="tx_academicjobs_domain_model_job.contractual_relationship">
+				<source>Contractual relationship</source>
+				<target>Vertragsverhältnis</target>
+			</trans-unit>
 			<trans-unit id="tx_academicjobs_domain_model_job.alumni_recommend" resname="tx_academicjobs_domain_model_job.alumni_recommend">
 				<source>Alumni recommends</source>
 				<target>Alumni empfiehlt</target>
@@ -291,6 +299,14 @@
 			<trans-unit id="tx_academicjobs.fe.form.text.job_industry">
 				<source>Industry</source>
 				<target>Branche</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.required_degree">
+				<source>Required degree</source>
+				<target>Benötigter Abschluss</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.contractual_relationship">
+				<source>Contractual relationship</source>
+				<target>Vertragsverhältnis</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.form.text.alumni_recommend">
 				<source>Alumni recommends: </source>
