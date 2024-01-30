@@ -59,7 +59,14 @@
 				<source>Sector</source>
 				<target>Branche Beschreibung</target>
 			</trans-unit>
-
+			<trans-unit id="tx_academicjobs_domain_model_job.alumni_recommend" resname="tx_academicjobs_domain_model_job.alumni_recommend">
+				<source>Alumni recommends</source>
+				<target>Alumni empfiehlt</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.internationals_welcome" resname="tx_academicjobs_domain_model_job.internationals_welcome">
+				<source>Internationals welcome</source>
+				<target>Internationals willkommen</target>
+			</trans-unit>
 			<trans-unit id="tx_academicjobs_domain_model_job.employment_type" resname="tx_academicjobs_domain_model_job.employment_type">
 				<source>Employment Type</source>
 				<target>Art des Stellenangebots</target>
@@ -284,6 +291,14 @@
 			<trans-unit id="tx_academicjobs.fe.form.text.job_industry">
 				<source>Industry</source>
 				<target>Branche</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.alumni_recommend">
+				<source>Alumni recommends: </source>
+				<target>Alumni empfiehlt: </target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.internationals_welcome">
+				<source>Internationals welcome: </source>
+				<target>Internationals willkommen: </target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.form.text.job_location">
 				<source>Location</source>

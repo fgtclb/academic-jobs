@@ -46,6 +46,12 @@
 			<trans-unit id="tx_academicjobs_domain_model_job.sector.description" resname="tx_academicjobs_domain_model_job.sector.description">
 				<source>Sector</source>
 			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.alumni_recommend" resname="tx_academicjobs_domain_model_job.alumni_recommend">
+				<source>Alumni recommends</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.internationals_welcome" resname="tx_academicjobs_domain_model_job.internationals_welcome">
+				<source>Internationals welcome</source>
+			</trans-unit>
 			<trans-unit id="tx_academicjobs_domain_model_job.employment_type" resname="tx_academicjobs_domain_model_job.employment_type">
 				<source>Employment Type</source>
 			</trans-unit>
@@ -217,6 +223,12 @@
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.form.text.job_industry">
 				<source>Industry</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.alumni_recommend">
+				<source>Alumni recommends: </source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.form.text.internationals_welcome">
+				<source>Internationals welcome: </source>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.form.text.job_location">
 				<source>Location</source>
