@@ -23,9 +23,6 @@ class Job extends AbstractEntity
      */
     protected $employmentStartDate;
 
-    /**
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
-     */
     protected string $description;
 
     /**
