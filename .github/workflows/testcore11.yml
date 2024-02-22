@@ -15,8 +15,8 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v3
 
-      # - name: "Prepare dependencies for TYPO3 v11"
-      #   run: "Build/Scripts/runTests.sh -t 11 -p ${{ matrix.php-version }} -s composerUpdate"
+      - name: "Prepare dependencies for TYPO3 v11"
+        run: "Build/Scripts/runTests.sh -t 11 -p ${{ matrix.php-version }} -s composerUpdate"
 
       - name: "Run TypoScript lint"
         run: "Build/Scripts/runTests.sh -t 11 -p ${{ matrix.php-version }} -s lintTypoScript"
