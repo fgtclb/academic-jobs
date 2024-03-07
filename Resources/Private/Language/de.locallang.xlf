@@ -277,8 +277,8 @@
 				<target>Arbeitszeit</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.list.text.place">
-				<source>Ort</source>
-				<target>Place</target>
+				<source>Place</source>
+				<target>Ort</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.form.text.job_logo">
 				<source>Logo</source>
