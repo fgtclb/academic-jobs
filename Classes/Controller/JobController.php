@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace FGTCLB\AcademicJobs\Controller;
 
 use FGTCLB\AcademicJobs\DateTime\IsoDateTime;
-use FGTCLB\AcademicJobs\Domain\Model\Contact;
 use FGTCLB\AcademicJobs\Domain\Model\Job;
 use FGTCLB\AcademicJobs\Domain\Repository\ContactRepository;
 use FGTCLB\AcademicJobs\Domain\Repository\JobRepository;
@@ -19,7 +18,9 @@ use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Extbase\Service\ImageService;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
 
 class JobController extends ActionController
 {
@@ -109,9 +110,9 @@ class JobController extends ActionController
         }
 
         $this->view->assign('jobs', $jobs);
-        $this->view->render();
         return $this->htmlResponse();
     }
+
     public function initializeSaveJobAction(): void
     {
         if ($this->request->hasArgument('job')) {
@@ -156,11 +157,18 @@ class JobController extends ActionController
 
     public function saveJobAction(Job $job): void
     {
-
         $job->setHidden((int)self::JOB_HIDDEN);
         $this->jobRepository->add($job);
         $this->persistenceManager->persistAll();
 
+        $successMessageTitle = LocalizationUtility::translate('tx_academicjobs.fe.alert.job_created.title', 'AcademicJobs');
+        $successMessageBody = LocalizationUtility::translate('tx_academicjobs.fe.alert.job_created.body', 'AcademicJobs');
+        $this->addFlashMessage(
+            (string)$successMessageBody,
+            (string)$successMessageTitle,
+            FlashMessage::OK,
+            true
+        );
 
         $afterSaveJobEvent = new AfterSaveJobEvent($job);
         $this->eventDispatcher->dispatch($afterSaveJobEvent);
@@ -181,6 +189,7 @@ class JobController extends ActionController
         $mail->text('A new job has been posted. Please check the TYPO3 backend: ' . $url);
         $mail->send();
     }
+
     public function buildUrl(int $recordId): string
     {
         $path = $this->backendUriBuilder
