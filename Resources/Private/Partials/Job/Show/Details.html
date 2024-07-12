@@ -1,10 +1,14 @@
-<html data-namespace-typo3-fluid="true" xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
-    <div class="job-detail-content">
-        <h3>
-            <f:translate key="tx_academicjobs.fe.list.text.description"  />
-        </h3>
-        <f:if condition="{job.description}">
-            <f:format.raw>{job.description}</f:format.raw>
-        </f:if>
-    </div>
+<html
+  data-namespace-typo3-fluid="true"
+  xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+>
+  <div class="job-detail-content">
+    <h3>
+      <f:translate key="tx_academicjobs.fe.list.text.description" />
+    </h3>
+
+    <f:if condition="{job.description}">
+      <f:format.raw>{job.description}</f:format.raw>
+    </f:if>
+  </div>
 </html>
