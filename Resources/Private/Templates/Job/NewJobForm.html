@@ -14,28 +14,10 @@
     defer="1"
   />
 
-  <style>
-    details {
-      border: 1px solid #aaa;
-      border-radius: 4px;
-      padding: 0.5em 0.5em 0;
-    }
-
-    summary {
-      font-weight: bold;
-      margin: -0.5em -0.5em 0;
-      padding: 0.5em;
-    }
-
-    details[open] {
-      padding: 0.5em;
-    }
-
-    details[open] summary {
-      border-bottom: 1px solid #aaa;
-      margin-bottom: 0.5em;
-    }
-  </style>
+  <f:asset.css
+    identifier="frontend-editor"
+    href="EXT:academic_jobs/Resources/Public/Css/Styles.css"
+  />
 
   <f:flashMessages />
 
@@ -55,6 +37,7 @@
           extensionName="academic_jobs"
         />
       </label>
+
       <f:form.upload property="image" class="form-control" id="job-image" />
     </div>
 
@@ -298,61 +281,63 @@
       />
     </div>
 
-    <details class="col-12">
-      <summary>
-        <f:translate
-          key="tx_academicjobs.fe.form.text.contact.title"
-          extensionName="academic_jobs"
-        />
-      </summary>
-
-      <fieldset class="col-md-12">
-        <label class="form-label">
+    <div class="col-12 mt-3">
+      <details>
+        <summary>
           <f:translate
-            key="tx_academicjobs.fe.form.text.contact.name"
+            key="tx_academicjobs.fe.form.text.contact.title"
             extensionName="academic_jobs"
           />
-        </label>
+        </summary>
 
-        <f:form.textfield property="contact.name" class="form-control" />
-      </fieldset>
+        <fieldset class="col-md-12">
+          <label class="form-label">
+            <f:translate
+              key="tx_academicjobs.fe.form.text.contact.name"
+              extensionName="academic_jobs"
+            />
+          </label>
 
-      <fieldset class="col-md-12">
-        <label class="form-label">
-          <f:translate
-            key="tx_academicjobs.fe.form.text.contact.email"
-            extensionName="academic_jobs"
+          <f:form.textfield property="contact.name" class="form-control" />
+        </fieldset>
+
+        <fieldset class="col-md-12">
+          <label class="form-label">
+            <f:translate
+              key="tx_academicjobs.fe.form.text.contact.email"
+              extensionName="academic_jobs"
+            />
+          </label>
+
+          <f:form.textfield property="contact.email" class="form-control" />
+        </fieldset>
+
+        <fieldset class="col-md-12">
+          <label class="form-label">
+            <f:translate
+              key="tx_academicjobs.fe.form.text.contact.phone"
+              extensionName="academic_jobs"
+            />
+          </label>
+
+          <f:form.textfield property="contact.phone" class="form-control" />
+        </fieldset>
+
+        <fieldset class="col-md-12">
+          <label class="form-label">
+            <f:translate
+              key="tx_academicjobs.fe.form.text.contact.additional"
+              extensionName="academic_jobs"
+            />
+          </label>
+
+          <f:form.textfield
+            property="contact.additionalInformation"
+            class="form-control"
           />
-        </label>
-
-        <f:form.textfield property="contact.email" class="form-control" />
-      </fieldset>
-
-      <fieldset class="col-md-12">
-        <label class="form-label">
-          <f:translate
-            key="tx_academicjobs.fe.form.text.contact.phone"
-            extensionName="academic_jobs"
-          />
-        </label>
-
-        <f:form.textfield property="contact.phone" class="form-control" />
-      </fieldset>
-
-      <fieldset class="col-md-12">
-        <label class="form-label">
-          <f:translate
-            key="tx_academicjobs.fe.form.text.contact.additional"
-            extensionName="academic_jobs"
-          />
-        </label>
-
-        <f:form.textfield
-          property="contact.additionalInformation"
-          class="form-control"
-        />
-      </fieldset>
-    </details>
+        </fieldset>
+      </details>
+    </div>
 
     <div class="col-12 mt-3">
       <f:form.submit class="btn btn-primary w-100" value="Absenden">
