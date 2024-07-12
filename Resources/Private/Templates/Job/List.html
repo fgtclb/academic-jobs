@@ -43,6 +43,30 @@
                             </f:switch>
                         </div>
                       </f:if>
+                      <f:if condition="{job.requiredDegree}">
+                        <div class="col-md-3 mb-2">
+                          <b>
+                            <f:translate
+                              key="tx_academicjobs.fe.form.text.required_degree"
+                              extensionName="academic_jobs"
+                            />
+                          </b>
+                          <br>
+                          {job.requiredDegree}
+                        </div>
+                      </f:if>
+                      <f:if condition="{job.contractualRelationship}">
+                        <div class="col-md-3 mb-2">
+                          <b>
+                            <f:translate
+                              key="tx_academicjobs.fe.form.text.contractual_relationship"
+                              extensionName="academic_jobs"
+                            />
+                          </b>
+                          <br>
+                          {job.contractualRelationship}
+                        </div>
+                      </f:if>
                       <f:if condition="{job.employmentType}">
                         <div class="col-md-3 mb-2">
 
