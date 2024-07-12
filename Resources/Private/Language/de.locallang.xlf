@@ -368,6 +368,14 @@
 				<source>Submit</source>
 				<target>Absenden</target>
 			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.alert.job_created.title">
+				<source>The job advertisement has been sent.</source>
+                <target>Die Stellenanzeige wurde gesendet.</target>
+			</trans-unit>
+            <trans-unit id="tx_academicjobs.fe.alert.job_created.body">
+				<source>Your application has been sent. After a review, your job advertisement will be activated.</source>
+                <target>Ihre Eingaben wurden versandt. Nach einer Prüfung wird Ihre Stellenanzeige freigeschaltet.</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
