@@ -3,6 +3,7 @@
   const editorConfig = {
     language: 'de',
     height: 200,
+    versionCheck: false,
     format_tags: 'p',
     toolbarGroups: [
       { name: 'basicstyles', groups: [ 'basicstyles' ] },
