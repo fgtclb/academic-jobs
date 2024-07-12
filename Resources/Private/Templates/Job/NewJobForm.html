@@ -128,6 +128,23 @@
         <f:form.textfield property="sector" id="sector" class="form-control" />
     </div>
 
+		<div class="col-md-6">
+				<label for="requiredDegree" class="form-label">
+					<f:translate key="tx_academicjobs.fe.form.text.required_degree" extensionName="academic_jobs" />
+				</label>
+				<f:form.textfield
+						property="requiredDegree"
+						id="requiredDegree"
+						class="form-control"
+						placeholder="Bachelor, Diplom, Master"
+				/>
+		</div>
+		<div class="col-md-6">
+			<label for="contractualRelationship" class="form-label">
+				<f:translate key="tx_academicjobs.fe.form.text.contractual_relationship" extensionName="academic_jobs" />
+			</label>
+			<f:form.textfield property="contractualRelationship" id="contractualRelationship" class="form-control" />
+		</div>
     <div class="col-md-6">
         <label for="workLocation" class="form-label">
           <f:translate key="tx_academicjobs.fe.form.text.job_location" extensionName="academic_jobs" />
