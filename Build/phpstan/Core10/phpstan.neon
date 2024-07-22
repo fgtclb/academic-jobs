@@ -9,8 +9,7 @@ parameters:
 	level: 8
 
 	paths:
-		- ../../../Classes
-		- ../../../Tests/
+		- ../../../
 
 	excludePaths:
 		- ../../../.Build

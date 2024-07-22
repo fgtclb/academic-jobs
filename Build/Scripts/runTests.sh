@@ -112,10 +112,11 @@ Options:
             - 8.1: use PHP 8.1
             - 8.2: use PHP 8.2
 
-    -t <11|12>
+    -t <10|11|12>
         Only with -s composerUpdate
         Specifies the TYPO3 core major version to be used
-            - 11 (default): use TYPO3 core v11
+            - 10 (default): use TYPO3 core v10
+            - 11: use TYPO3 core v11
             - 12: use TYPO3 core v12
 
     -e "<phpunit or codeception options>"
@@ -192,7 +193,7 @@ fi
 TEST_SUITE=""
 DBMS="sqlite"
 PHP_VERSION="7.4"
-TYPO3_VERSION="11"
+TYPO3_VERSION="10"
 PHP_XDEBUG_ON=0
 EXTRA_TEST_OPTIONS=""
 SCRIPT_VERBOSE=0
@@ -225,7 +226,7 @@ while getopts ":s:a:d:p:t:e:xnhuv" OPT; do
             ;;
         t)
             TYPO3_VERSION=${OPTARG}
-            if ! [[ ${TYPO3_VERSION} =~ ^(11|12)$ ]]; then
+            if ! [[ ${TYPO3_VERSION} =~ ^(10|11|12)$ ]]; then
                 INVALID_OPTIONS+=("p ${OPTARG}")
             fi
             ;;
@@ -347,7 +348,7 @@ case ${TEST_SUITE} in
         case ${DBMS} in
             mariadb)
                 echo "Using driver: ${DATABASE_DRIVER}"
-                if [[ "${TYPO3_VERSION}" -eq 11 ]] ; then
+                if [[ "${TYPO3_VERSION}" -eq 10 || "${TYPO3_VERSION}" -eq 11 ]] ; then
                     docker-compose run functional_mariadb10
                     SUITE_EXIT_CODE=$?
                 else
@@ -357,7 +358,7 @@ case ${TEST_SUITE} in
                 ;;
             mysql)
                 echo "Using driver: ${DATABASE_DRIVER}"
-                if [[ "${TYPO3_VERSION}" -eq 11 ]] ; then
+                if [[ "${TYPO3_VERSION}" -eq 10 || "${TYPO3_VERSION}" -eq 11 ]] ; then
                     docker-compose run functional_mysql80
                     SUITE_EXIT_CODE=$?
                 else
@@ -366,7 +367,7 @@ case ${TEST_SUITE} in
                 fi
                 ;;
             postgres)
-                if [[ "${TYPO3_VERSION}" -eq 11 ]] ; then
+                if [[ "${TYPO3_VERSION}" -eq 10 || "${TYPO3_VERSION}" -eq 11 ]] ; then
                     docker-compose run functional_postgres10
                     SUITE_EXIT_CODE=$?
                 else
@@ -380,8 +381,11 @@ case ${TEST_SUITE} in
                 # root if docker creates it. Thank you, docker. We create the path beforehand
                 # to avoid permission issues.
                 mkdir -p ${ROOT_DIR}/.Build/Web/typo3temp/var/tests/functional-sqlite-dbs/
-                if [[ "${TYPO3_VERSION}" -eq 11 ]] ; then
+                if [[ "${TYPO3_VERSION}" -eq 10 ]] ; then
                     docker-compose run functional_sqlite
+                    SUITE_EXIT_CODE=$?
+                elif [[ "${TYPO3_VERSION}" -eq 11 ]] ; then
+                    docker-compose run functional_sqlite_phpunit9
                     SUITE_EXIT_CODE=$?
                 else
                     docker-compose run functional_sqlite_phpunit10
@@ -429,7 +433,7 @@ case ${TEST_SUITE} in
         ;;
     unit)
         setUpDockerComposeDotEnv
-        if [[ "${TYPO3_VERSION}" -eq 11 ]] ; then
+        if [[ "${TYPO3_VERSION}" -eq 10 || "${TYPO3_VERSION}" -eq 11 ]] ; then
             docker-compose run unit
             SUITE_EXIT_CODE=$?
         else
