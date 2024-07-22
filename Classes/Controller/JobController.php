@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace FGTCLB\AcademicJobs\Controller;
 
 use FGTCLB\AcademicJobs\DateTime\IsoDateTime;
-use FGTCLB\AcademicJobs\Domain\Model\Contact;
 use FGTCLB\AcademicJobs\Domain\Model\Job;
-use FGTCLB\AcademicJobs\Domain\Repository\ContactRepository;
 use FGTCLB\AcademicJobs\Domain\Repository\JobRepository;
 use FGTCLB\AcademicJobs\Event\AfterSaveJobEvent;
 use FGTCLB\AcademicJobs\Property\TypeConverter\JobAvatarImageUploadConverter;
@@ -27,7 +25,6 @@ class JobController extends ActionController
 
     public function __construct(
         private readonly JobRepository $jobRepository,
-        private readonly ContactRepository $contactRepository,
         private readonly PersistenceManagerInterface $persistenceManager,
         private readonly ImageService $imageService,
         protected readonly BackendUriBuilder $backendUriBuilder,
@@ -45,6 +42,7 @@ class JobController extends ActionController
         $description = strip_tags($job->getDescription());
         $image = $this->getImageUri($job->getImage());
 
+        /** @var array<string, string> */
         $metaTags = [
             'title' => $title,
             'description' => $description,
@@ -68,6 +66,9 @@ class JobController extends ActionController
         return $this->htmlResponse();
     }
 
+    /**
+     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference|null $imageObject
+     */
     public function getImageUri($imageObject): ?string
     {
         if ($imageObject === null) {
@@ -75,14 +76,13 @@ class JobController extends ActionController
         }
         $originalResource = $imageObject->getOriginalResource();
 
-        if ($originalResource === null) {
-            return null;
-        }
-
         return $this->imageService->getImageUri($originalResource, true);
     }
 
-    private function setMetaTags(array $metaTags)
+    /**
+     * @param array<string, string> $metaTags
+     */
+    private function setMetaTags(array $metaTags): void
     {
         $metaTagManager = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
 
@@ -165,7 +165,11 @@ class JobController extends ActionController
         $afterSaveJobEvent = new AfterSaveJobEvent($job);
         $this->eventDispatcher->dispatch($afterSaveJobEvent);
 
-        $this->sendEmail($job->getUid());
+        $uid = $job->getUid();
+
+        if ($uid !== null) {
+            $this->sendEmail($uid);
+        }
 
         $this->redirect('list');
     }

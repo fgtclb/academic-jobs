@@ -9,6 +9,9 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
+/**
+ * @extends Repository<Job>
+ */
 class JobRepository extends Repository
 {
     protected $defaultOrderings = [
