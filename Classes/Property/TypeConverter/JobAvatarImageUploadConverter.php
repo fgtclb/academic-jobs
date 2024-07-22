@@ -134,7 +134,7 @@ final class JobAvatarImageUploadConverter extends AbstractTypeConverter implemen
             throw new TypeConverterException('Uploaded file exceeds allowed file size', 1690538138);
         }
         if (!in_array($uploadedFileInformation['type'], $allowedMimeTypesArray, true)) {
-            throw new TypeConverterException('The uploaded file type is not allowed', 1690538138);
+            throw new TypeConverterException('The uploaded file type is not allowed', 1721647425);
         }
     }
 
