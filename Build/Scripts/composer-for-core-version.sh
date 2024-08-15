@@ -40,6 +40,16 @@ update_v11() {
         "phpunit/phpunit":"^9.6.8"
 }
 
+update_v10() {
+    echo -e "💪 Enforce TYPO3 v10"
+    composer require --no-update \
+        "typo3/cms-core":"^10.4"
+
+    echo -e "💪 Enforce PHPUnit ^9.5.25"
+    composer req --dev --no-update \
+        "phpunit/phpunit":"^9.5.25"
+}
+
 case "$1" in
 12)
     composer_cleanup
@@ -51,8 +61,13 @@ case "$1" in
     update_v11
     composer_update
     ;;
+10)
+    composer_cleanup
+    update_v10
+    composer_update
+    ;;
 *)
-    echo -e "🌀 Usage: ddev update-to (11|12)" >&2
+    echo -e "🌀 Usage: ddev update-to (10|11|12)" >&2
     exit 0
     ;;
 esac
