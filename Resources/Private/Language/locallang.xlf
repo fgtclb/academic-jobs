@@ -281,11 +281,28 @@
 			<trans-unit id="tx_academicjobs.fe.form.text.submit">
 				<source>Submit</source>
 			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.alert.job_created.title">
-				<source>The job advertisement has been sent.</source>
+
+			<trans-unit id="tx_academicjobs.fe.alert.job_created.body">
+				<source>We are automatically notified that you have created a job advert. After a review, we will activate your job advert.</source>
+				<target>Wir werden automatisch darüber benachrichtigt, dass Sie eine Stellanzeige erstellt haben. Nach einer Überprüfung schalten wir Ihre Stellenanzeige frei.</target>
 			</trans-unit>
-            <trans-unit id="tx_academicjobs.fe.alert.job_created.body">
-				<source>Your application has been sent. After a review, your job advertisement will be activated.</source>
+			<trans-unit id="tx_academicjobs.fe.alert.job_created.title">
+				<source>Your job advert has been successfully created</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.alert.job_created_no_email.body">
+				<source>Your job advert has been successfully created, but no notification could be sent to us. Please contact us to have your job advert activated.</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.alert.job_created_no_email.title">
+				<source>Notification email could not be sent</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.alert.job_not_created.body">
+				<source>An unknown error has occurred. Please try again. Please let us know if the problem persists.</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.alert.job_not_created.title">
+				<source>Your job advert could not be created</source>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.alert.job_not_found.body">
+				<source>No job advert could be found.</source>
 			</trans-unit>
 		</body>
 	</file>
