@@ -7,12 +7,17 @@ plugin.tx_academicjobs {
         # cat=plugin.tx_academicjobs_createjob/file; type=string; label=Path to template layouts (FE)
         layoutRootPath = EXT:academic_jobs/Resources/Private/Layouts/
     }
+
     persistence {
         # cat=plugin.tx_academicjobs_createjob//a; type=string; label=Default storage PID
         storagePid =
     }
+
     # cat=plugin.tx_academicjobs_createjob//a; type=string; label=Default detail page PID
     detailPid =
+    # cat=plugin.tx_academicjobs_createjob//a; type=string; label=Default list page PID
+    listPid =
+
     email {
         from =
         recipientEmail =
