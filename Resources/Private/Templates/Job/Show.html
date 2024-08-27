@@ -2,20 +2,26 @@
   data-namespace-typo3-fluid="true"
   xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
 >
-  <f:flashMessages />
-
-  <div class="job-detail">
-    <f:render partial="Job/Show/Header" arguments="{job: job}" />
-    <f:render partial="Job/Show/Information" arguments="{job: job}" />
-
-    <div class="row">
-      <div class="col-12 col-md-8">
-        <f:render partial="Job/Show/Details" arguments="{job: job}" />
-      </div>
-
-      <div class="col-12 col-md-4">
-        <f:render partial="Job/Show/Contact" arguments="{contact: job.contact}" />
-      </div>
-    </div>
-  </div>
+    <f:flashMessages />
+    <f:if condition="{job}">
+        <f:then>
+            <div class="job-detail">
+                <f:render partial="Job/Show/Header" arguments="{job: job}" />
+                <f:render partial="Job/Show/Information" arguments="{job: job}" />
+                <div class="row">
+                    <div class="col-12 col-md-8">
+                        <f:render partial="Job/Show/Details" arguments="{job: job}" />
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <f:render partial="Job/Show/Contact" arguments="{contact: job.contact}" />
+                    </div>
+                </div>
+            </div>
+        </f:then>
+        <f:else>
+            <f:link.page pageUid="{settings.listPid}">
+                <f:translate key="tx_academicjobs.fe.list.text.back" />
+            </f:link.page>
+        </f:else>
+    </f:if>
 </html>
