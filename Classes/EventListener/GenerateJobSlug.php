@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FGTCLB\AcademicJobs\EventListener;
 
 use FGTCLB\AcademicJobs\Event\AfterSaveJobEvent;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -19,13 +20,23 @@ class GenerateJobSlug
     {
         $this->connectionPool = $connectionPool;
     }
+
     public function __invoke(AfterSaveJobEvent $event): void
     {
         $uid = $event->getJob()->getUid();
-        $connection = $this->connectionPool->getConnectionForTable('tx_academicjobs_domain_model_job');
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tx_academicjobs_domain_model_job');
+        $queryBuilder->getRestrictions()->removeAll();
 
-        $jobRecord = $connection
-            ->select(['*'], 'tx_academicjobs_domain_model_job', ['uid' => $uid])
+        $jobRecord = $queryBuilder
+            ->select('*')
+            ->from('tx_academicjobs_domain_model_job')
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'uid',
+                    $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT)
+                )
+            )
+            ->executeQuery()
             ->fetchAssociative();
 
         if ($jobRecord === false) {
@@ -35,19 +46,17 @@ class GenerateJobSlug
         $slugHelper = $this->getSlugHelperForProfileSlug();
         $jobSlug = $slugHelper->generate($jobRecord, $jobRecord['pid']);
 
-        if (empty($jobRecord)) {
-            return;
-        }
-
-        $connection->update(
-            self::TABLE_NAME,
-            [
-                'slug' => $jobSlug,
-            ],
-            [
-                'uid' => $uid,
-            ]
-        );
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tx_academicjobs_domain_model_job');
+        $queryBuilder
+            ->update('tx_academicjobs_domain_model_job')
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'uid',
+                    $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT)
+                )
+            )
+            ->set('slug', $jobSlug)
+            ->executeStatement();
     }
 
     private function getSlugHelperForProfileSlug(): SlugHelper
