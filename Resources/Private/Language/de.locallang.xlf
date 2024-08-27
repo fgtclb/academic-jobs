@@ -368,13 +368,35 @@
 				<source>Submit</source>
 				<target>Absenden</target>
 			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.alert.job_created.title">
-				<source>The job advertisement has been sent.</source>
-                <target>Die Stellenanzeige wurde gesendet.</target>
+
+			<!-- Alerts -->
+			<trans-unit id="tx_academicjobs.fe.alert.job_created.body">
+				<source>We are automatically notified that you have created a job advert. After a review, we will activate your job advert.</source>
+				<target>Wir werden automatisch darüber benachrichtigt, dass Sie eine Stellanzeige erstellt haben. Nach einer Überprüfung schalten wir Ihre Stellenanzeige frei.</target>
 			</trans-unit>
-            <trans-unit id="tx_academicjobs.fe.alert.job_created.body">
-				<source>Your application has been sent. After a review, your job advertisement will be activated.</source>
-                <target>Ihre Eingaben wurden versandt. Nach einer Prüfung wird Ihre Stellenanzeige freigeschaltet.</target>
+			<trans-unit id="tx_academicjobs.fe.alert.job_created.title">
+				<source>Your job advert has been successfully created</source>
+				<target>Ihre Stellenanzeige wurde erfolgreich erstellt</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.alert.job_created_no_email.body">
+				<source>Your job advert has been successfully created, but no notification could be sent to us. Please contact us to have your job advert activated.</source>
+				<target>Ihre Stellenanzeige wurde erfolgreich erstellt, aber es konnte keine Benachrichtigung an uns verschickt werden. Bitte kontaktieren Sie uns, um ihre Stellenanzeige freischalten zu lassen.</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.alert.job_created_no_email.title">
+				<source>Notification email could not be sent</source>
+				<target>Benachrichtigungs-E-Mail konnte nicht gesendet werden</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.alert.job_not_created.body">
+				<source>An unknown error has occurred. Please try again. Please let us know if the problem persists.</source>
+				<target>Ein unbekannter Fehler ist aufgetreten. Bitte versuchen Sie es erneut. Bitte informieren Sie uns, wenn das Problem weiterhin besteht.</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.alert.job_not_created.title">
+				<source>Your job advert could not be created</source>
+				<target>Ihre Stellenanzeige konnte nicht erstellt werden</target>
+			</trans-unit>
+			<trans-unit id="tx_academicjobs.fe.alert.job_not_found.body">
+				<source>No job advert could be found.</source>
+				<target>Es konnte keine Stellenanzeige gefunden werden.</target>
 			</trans-unit>
 		</body>
 	</file>
