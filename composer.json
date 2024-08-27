@@ -17,13 +17,13 @@
 	},
 	"homepage": "https://github.com/fgtclb/academic-jobs",
 	"repositories":  [
-        { "type": "git", "url": "https://github.com/andreaswolf/typo3-ext-migrations.git" }
-    ],
-    "require": {
-        "php": "^8.1",
-        "typo3/cms-core": "^11.5",
-        "typo3/cms-rte-ckeditor": "^11.5"
-    },
+		{ "type": "git", "url": "https://github.com/andreaswolf/typo3-ext-migrations.git" }
+	],
+	"require": {
+		"php": "^8.1",
+		"typo3/cms-core": "^11.5",
+		"typo3/cms-rte-ckeditor": "^11.5"
+	},
 	"require-dev": {
 		"typo3/cms-adminpanel": "^11.5",
 		"typo3/cms-backend": "^11.5",
@@ -49,26 +49,26 @@
 		"typo3/cms-setup": "^11.5",
 		"typo3/cms-tstemplate": "^11.5",
 		"typo3/minimal": "^11",
-        "typo3/cms-composer-installers": "v4.0.0-RC1",
-        "helhum/typo3-console": "^7.1 || ^8.0",
-        "saschaegerer/phpstan-typo3": "^1.8",
-        "friendsofphp/php-cs-fixer": "^3.14",
-        "bk2k/bootstrap-package": "^14.0",
+		"typo3/cms-composer-installers": "v4.0.0-RC1",
+		"helhum/typo3-console": "^7.1 || ^8.0",
+		"saschaegerer/phpstan-typo3": "^1.8",
+		"friendsofphp/php-cs-fixer": "^3.14",
+		"bk2k/bootstrap-package": "^14.0",
 		"kaystrobach/migrations": "0.11.0",
 		"andreaswolf/typo3-uuid": "^0.3.0",
 		"cweagans/composer-patches": "^1.7"
-    },
+	},
 	"autoload": {
 		"psr-4": {
 			"FGTCLB\\AcademicJobs\\": "Classes/"
 		}
 	},
 	"autoload-dev": {
-        "psr-4": {
-            "FGTCLB\\AcademicJobs\\Migrations\\": "Migrations/",
-            "FGTCLB\\AcademicJobs\\Tests\\": "Tests/"
-        }
-    },
+		"psr-4": {
+			"FGTCLB\\AcademicJobs\\Migrations\\": "Migrations/",
+			"FGTCLB\\AcademicJobs\\Tests\\": "Tests/"
+		}
+	},
 	"config": {
 		"vendor-dir": ".Build/vendor",
 		"bin-dir": ".Build/bin",
@@ -85,5 +85,11 @@
 				"Load migrations from autoload-dev": "patches/migrations/autoload.patch"
 			}
 		}
+	},
+	"scripts": {
+		"cs:check": "php-cs-fixer fix --config Build/php-cs-fixer/php-cs-rules.php --ansi --diff --verbose --dry-run",
+		"cs:fix": "php-cs-fixer fix --config Build/php-cs-fixer/php-cs-rules.php --ansi",
+		"analyze:php": ".Build/bin/phpstan analyse --ansi --no-progress --memory-limit=768M --configuration=Build/phpstan/phpstan.neon",
+		"analyze:baseline": ".Build/bin/phpstan analyse --ansi --no-progress --memory-limit=768M --configuration=Build/phpstan/phpstan.neon --generate-baseline=Build/phpstan/phpstan-baseline.neon"
 	}
 }
