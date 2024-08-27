@@ -10,16 +10,16 @@ use FGTCLB\AcademicJobs\Domain\Repository\JobRepository;
 use FGTCLB\AcademicJobs\Event\AfterSaveJobEvent;
 use FGTCLB\AcademicJobs\Property\TypeConverter\JobAvatarImageUploadConverter;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
 use TYPO3\CMS\Core\Mail\MailMessage;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
-use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
 
 class JobController extends ActionController
 {
@@ -38,8 +38,18 @@ class JobController extends ActionController
         return $this->htmlResponse();
     }
 
-    public function showAction(Job $job): ResponseInterface
+    public function showAction(?Job $job = null): ResponseInterface
     {
+        if ($job === null) {
+            $this->addFlashMessage(
+                $this->translateAlert('job_not_found.body', 'Job not found.'),
+                null,
+                FlashMessage::ERROR,
+                true
+            );
+            return $this->htmlResponse();
+        }
+
         $title = $job->getTitle();
         $description = strip_tags($job->getDescription());
         $image = $this->getImageUri($job->getImage());
@@ -162,28 +172,52 @@ class JobController extends ActionController
         $this->jobRepository->add($job);
         $this->persistenceManager->persistAll();
 
-        $successMessageTitle = LocalizationUtility::translate('tx_academicjobs.fe.alert.job_created.title', 'AcademicJobs');
-        $successMessageBody = LocalizationUtility::translate('tx_academicjobs.fe.alert.job_created.body', 'AcademicJobs');
-        $this->addFlashMessage(
-            (string)$successMessageBody,
-            (string)$successMessageTitle,
-            FlashMessage::OK,
-            true
-        );
+        $uid = $job->getUid();
+
+        if ($uid === null) {
+            $this->addFlashMessage(
+                $this->translateAlert('job_not_created.body', 'Something went wrong.'),
+                $this->translateAlert('job_not_created.title', 'Job not created'),
+                FlashMessage::ERROR,
+                true
+            );
+            $this->redirect('newJobForm');
+        }
 
         $afterSaveJobEvent = new AfterSaveJobEvent($job);
         $this->eventDispatcher->dispatch($afterSaveJobEvent);
 
-        $uid = $job->getUid();
+        $listPid = $this->settings['listPid'] ? (int)$this->settings['listPid'] : null;
+        $mailWasSent = $this->sendEmail($uid);
 
-        if ($uid !== null) {
-            $this->sendEmail($uid);
+        // We only need to create messages if we stay on the same page
+        if ($listPid === null) {
+            if ($mailWasSent) {
+                $this->addFlashMessage(
+                    $this->translateAlert('job_created.body', 'Job created and email sent.'),
+                    $this->translateAlert('job_created.title', 'Job created'),
+                    FlashMessage::OK,
+                    true
+                );
+            } else {
+                $this->addFlashMessage(
+                    $this->translateAlert('job_created_no_email.body', 'Job created, but email could not be sent.'),
+                    $this->translateAlert('job_created_no_email.title', 'Job created'),
+                    FlashMessage::WARNING,
+                    true
+                );
+            }
         }
 
-        $this->redirect('list');
+        if ($listPid !== null) {
+            $uri = $this->uriBuilder->setTargetPageUid($listPid)->build();
+            $this->redirectToUri($uri);
+        } else {
+            $this->redirect('list');
+        }
     }
 
-    public function sendEmail(int $recordId): void
+    public function sendEmail(int $recordId): bool
     {
         $url = $this->buildUrl($recordId);
 
@@ -192,7 +226,8 @@ class JobController extends ActionController
         $mail->from($this->settings['email']['senderEmail']);
         $mail->subject($this->settings['email']['subject']);
         $mail->text('A new job has been posted. Please check the TYPO3 backend: ' . $url);
-        $mail->send();
+
+        return $mail->send();
     }
 
     public function buildUrl(int $recordId): string
@@ -203,13 +238,20 @@ class JobController extends ActionController
                 [
                     'edit' => [
                         'tx_academicjobs_domain_model_job' => [
-                            $recordId => 'edit'
-                        ]
+                            $recordId => 'edit',
+                        ],
                     ],
-                    'returnUrl' => GeneralUtility::getIndpEnv('REQUEST_URI')
+                    'returnUrl' => GeneralUtility::getIndpEnv('REQUEST_URI'),
                 ]
             );
 
         return GeneralUtility::getIndpEnv('TYPO3_REQUEST_HOST') . $path;
+    }
+
+    private function translateAlert(
+        string $alert,
+        string $missing = 'Missing translation!'
+    ): string {
+        return LocalizationUtility::translate('tx_academicjobs.fe.alert.' . $alert, 'AcademicJobs') ?? $missing;
     }
 }
