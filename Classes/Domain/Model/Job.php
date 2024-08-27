@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace FGTCLB\AcademicJobs\Domain\Model;
 
 use TYPO3\CMS\Extbase\Annotation\ORM\Cascade;
-use TYPO3\CMS\Extbase\Annotation\ORM\Lazy;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
-use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 class Job extends AbstractEntity
 {
@@ -217,11 +215,13 @@ class Job extends AbstractEntity
         $this->type = $type;
     }
 
-    public function getContact(): ?Contact {
+    public function getContact(): ?Contact
+    {
         return $this->contact;
     }
 
-    public function setContact(Contact $contact): void {
+    public function setContact(Contact $contact): void
+    {
         $this->contact = $contact;
     }
 
