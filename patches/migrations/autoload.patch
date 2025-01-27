@@ -1,6 +1,6 @@
---- Classes/Service/DoctrineService.php
-+++ Classes/Service/DoctrineService.php
-@@ -131,7 +131,7 @@
+--- .Build/vendor/kaystrobach/migrations/Classes/Typo3ConfigurationLoader.php	2025-01-27 17:08:20
++++ .Build/vendor/kaystrobach/migrations/Classes/Typo3ConfigurationLoader-copy.php	2025-01-27 17:09:43
+@@ -70,7 +70,7 @@
       */
      private function getPackageMigrationNamespaceAndDirectory(PackageInterface $package): array
      {
