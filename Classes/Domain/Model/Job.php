@@ -12,27 +12,21 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 class Job extends AbstractEntity
 {
-    /**
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
-     */
+    #[\TYPO3\CMS\Extbase\Annotation\Validate(['validator' => 'NotEmpty'])]
     protected string $title;
 
     /**
      * @var \DateTime
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      */
+    #[\TYPO3\CMS\Extbase\Annotation\Validate(['validator' => 'NotEmpty'])]
     protected $employmentStartDate;
 
     protected string $description;
 
-    /**
-     * @Cascade("remove")
-     */
+    #[Cascade(['value' => 'remove'])]
     protected ?FileReference $image = null;
 
-    /**
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
-     */
+    #[\TYPO3\CMS\Extbase\Annotation\Validate(['validator' => 'NotEmpty'])]
     protected string $companyName;
 
     protected string $sector;
@@ -49,8 +43,8 @@ class Job extends AbstractEntity
      * employmentType
      *
      * @var int
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      */
+    #[\TYPO3\CMS\Extbase\Annotation\Validate(['validator' => 'NotEmpty'])]
     protected int $employmentType;
 
     protected string $workLocation;
@@ -67,14 +61,14 @@ class Job extends AbstractEntity
 
     /**
      * @var \DateTime
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      */
+    #[\TYPO3\CMS\Extbase\Annotation\Validate(['validator' => 'NotEmpty'])]
     protected $starttime;
 
     /**
      * @var \DateTime
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      */
+    #[\TYPO3\CMS\Extbase\Annotation\Validate(['validator' => 'NotEmpty'])]
     protected $endtime;
 
     public function getTitle(): string

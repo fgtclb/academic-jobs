@@ -13,11 +13,8 @@ class GenerateJobSlug
 {
     public const TABLE_NAME = 'tx_academicjobs_domain_model_job';
 
-    private ConnectionPool $connectionPool;
-
-    public function __construct(ConnectionPool $connectionPool)
+    public function __construct(private readonly ConnectionPool $connectionPool)
     {
-        $this->connectionPool = $connectionPool;
     }
     public function __invoke(AfterSaveJobEvent $event): void
     {

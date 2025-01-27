@@ -36,11 +36,8 @@ final class JobAvatarImageUploadConverter extends AbstractTypeConverter implemen
 
     protected $priority = 10;
 
-    protected ResourceFactory $resourceFactory;
-
-    public function __construct(ResourceFactory $resourceFactory)
+    public function __construct(protected ResourceFactory $resourceFactory)
     {
-        $this->resourceFactory = $resourceFactory;
     }
 
     /**

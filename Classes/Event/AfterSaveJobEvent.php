@@ -8,11 +8,8 @@ use FGTCLB\AcademicJobs\Domain\Model\Job;
 
 final class AfterSaveJobEvent
 {
-    private Job $job;
-
-    public function __construct(Job $job)
+    public function __construct(private readonly Job $job)
     {
-        $this->job = $job;
     }
 
     public function getJob(): Job

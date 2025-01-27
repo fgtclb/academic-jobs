@@ -156,7 +156,7 @@ class JobController extends ActionController
             );
     }
 
-    public function saveJobAction(Job $job): void
+    public function saveJobAction(Job $job)
     {
         $job->setHidden((int)self::JOB_HIDDEN);
         $this->jobRepository->add($job);
@@ -167,7 +167,7 @@ class JobController extends ActionController
         $this->addFlashMessage(
             (string)$successMessageBody,
             (string)$successMessageTitle,
-            FlashMessage::OK,
+            \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK,
             true
         );
 
@@ -180,7 +180,7 @@ class JobController extends ActionController
             $this->sendEmail($uid);
         }
 
-        $this->redirect('list');
+        return $this->redirect('list');
     }
 
     public function sendEmail(int $recordId): void
