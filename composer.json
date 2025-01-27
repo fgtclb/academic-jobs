@@ -20,43 +20,9 @@
         { "type": "git", "url": "https://github.com/andreaswolf/typo3-ext-migrations.git" }
     ],
     "require": {
-        "php": "^8.1",
-        "typo3/cms-core": "^11.5",
-        "typo3/cms-rte-ckeditor": "^11.5"
-    },
-	"require-dev": {
-		"typo3/cms-adminpanel": "^11.5",
-		"typo3/cms-backend": "^11.5",
-		"typo3/cms-belog": "^11.5",
-		"typo3/cms-beuser": "^11.5",
-		"typo3/cms-dashboard": "^11.5",
-		"typo3/cms-extbase": "^11.5",
-		"typo3/cms-extensionmanager": "^11.5",
-		"typo3/cms-felogin": "^11.5",
-		"typo3/cms-filelist": "^11.5",
-		"typo3/cms-filemetadata": "^11.5",
-		"typo3/cms-fluid": "^11.5",
-		"typo3/cms-fluid-styled-content": "^11.5",
-		"typo3/cms-form": "^11.5",
-		"typo3/cms-frontend": "^11.5",
-		"typo3/cms-impexp": "^11.5",
-		"typo3/cms-indexed-search": "^11.5",
-		"typo3/cms-info": "^11.5",
-		"typo3/cms-install": "^11.5",
-		"typo3/cms-linkvalidator": "^11.5",
-		"typo3/cms-lowlevel": "^11.5",
-		"typo3/cms-seo": "^11.5",
-		"typo3/cms-setup": "^11.5",
-		"typo3/cms-tstemplate": "^11.5",
-		"typo3/minimal": "^11",
-        "typo3/cms-composer-installers": "v4.0.0-RC1",
-        "helhum/typo3-console": "^7.1 || ^8.0",
-        "saschaegerer/phpstan-typo3": "^1.8",
-        "friendsofphp/php-cs-fixer": "^3.14",
-        "bk2k/bootstrap-package": "^14.0",
-		"kaystrobach/migrations": "0.11.0",
-		"andreaswolf/typo3-uuid": "^0.3.0",
-		"cweagans/composer-patches": "^1.7"
+        "php": "^8.2",
+		"typo3/cms-core": "^12.4",
+		"typo3/cms-rte-ckeditor": "^12.4"
     },
 	"autoload": {
 		"psr-4": {
@@ -85,5 +51,40 @@
 				"Load migrations from autoload-dev": "patches/migrations/autoload.patch"
 			}
 		}
+	},
+	"require-dev": {
+		"typo3/cms-adminpanel": "^12.4",
+		"typo3/cms-backend": "^12.4",
+		"typo3/cms-belog": "^12.4",
+		"typo3/cms-beuser": "^12.4",
+		"typo3/cms-dashboard": "^12.4",
+		"typo3/cms-extbase": "^12.4",
+		"typo3/cms-extensionmanager": "^12.4",
+		"typo3/cms-felogin": "^12.4",
+		"typo3/cms-filelist": "^12.4",
+		"typo3/cms-filemetadata": "^12.4",
+		"typo3/cms-fluid": "^12.4",
+		"typo3/cms-fluid-styled-content": "^12.4",
+		"typo3/cms-form": "^12.4",
+		"typo3/cms-frontend": "^12.4",
+		"typo3/cms-impexp": "^12.4",
+		"typo3/cms-indexed-search": "^12.4",
+		"typo3/cms-info": "^12.4",
+		"typo3/cms-install": "^12.4",
+		"typo3/cms-linkvalidator": "^12.4",
+		"typo3/cms-lowlevel": "^12.4",
+		"typo3/cms-seo": "^12.4",
+		"typo3/cms-setup": "^12.4",
+		"typo3/cms-tstemplate": "^12.4",
+		"typo3/minimal": "^12",
+		"helhum/typo3-console": "^8.2",
+		"saschaegerer/phpstan-typo3": "^1.8",
+		"friendsofphp/php-cs-fixer": "^3.14",
+		"bk2k/bootstrap-package": "^15.0",
+		"kaystrobach/migrations": "0.12.0",
+		"andreaswolf/typo3-uuid": "dev-typo3v13-compat",
+		"cweagans/composer-patches": "^1.7",
+		"ssch/typo3-rector": "^2.12",
+		"a9f/typo3-fractor": "^0.4.2"
 	}
 }
