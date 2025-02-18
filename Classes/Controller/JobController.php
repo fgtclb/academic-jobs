@@ -104,7 +104,7 @@ class JobController extends ActionController
         }
     }
 
-    public function newJobFormAction(Job $job = null): ResponseInterface
+    public function newJobFormAction(?Job $job = null): ResponseInterface
     {
         return $this->htmlResponse();
     }
