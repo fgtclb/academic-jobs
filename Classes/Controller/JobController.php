@@ -184,14 +184,18 @@ class JobController extends ActionController
             $this->redirect('newJobForm');
         }
 
-        $afterSaveJobEvent = new AfterSaveJobEvent($job);
-        $this->eventDispatcher->dispatch($afterSaveJobEvent);
+        $afterSaveJobEvent = new AfterSaveJobEvent($this->request, $job, $this->settings);
+        $shouldSendMail = $this->eventDispatcher->dispatch($afterSaveJobEvent)->getSendMail();
 
         $listPid = $this->settings['listPid'] ? (int)$this->settings['listPid'] : null;
-        $mailWasSent = $this->sendEmail($uid);
+        $mailWasSent = false;
+        if ($shouldSendMail) {
+            $mailWasSent = $this->sendEmail($uid);
+        }
 
-        // We only need to create messages if we stay on the same page
-        if ($listPid === null) {
+        // We only need to create messages if we stay on the same page and mail should have been sent.
+        // @todo This does not make sense in all projects.
+        if ($shouldSendMail && $listPid === null) {
             if ($mailWasSent) {
                 $this->addFlashMessage(
                     $this->translateAlert('job_created.body', 'Job created and email sent.'),
