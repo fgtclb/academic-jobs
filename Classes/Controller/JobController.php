@@ -43,7 +43,7 @@ class JobController extends ActionController
         if ($job === null) {
             $this->addFlashMessage(
                 $this->translateAlert('job_not_found.body', 'Job not found.'),
-                null,
+                '',
                 FlashMessage::ERROR,
                 true
             );
