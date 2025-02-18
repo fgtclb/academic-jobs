@@ -105,12 +105,12 @@ Options:
             - mysql: use mysql
             - postgres: use postgres
 
-    -p <7.4|8.0|8.1|8.2>
+    -p <8.1|8.2|8.3|8.4>
         Specifies the PHP minor version to be used
-            - 7.4 (default): use PHP 7.4
-            - 8.0: use PHP 8.0
-            - 8.1: use PHP 8.1
+            - 8.1: use PHP 8.1 (default)
             - 8.2: use PHP 8.2
+            - 8.3: use PHP 8.3
+            - 8.4: use PHP 8.4
 
     -t <11|12>
         Only with -s composerUpdate
@@ -191,7 +191,7 @@ else
 fi
 TEST_SUITE=""
 DBMS="sqlite"
-PHP_VERSION="7.4"
+PHP_VERSION="8.1"
 TYPO3_VERSION="11"
 PHP_XDEBUG_ON=0
 EXTRA_TEST_OPTIONS=""
@@ -219,7 +219,7 @@ while getopts ":s:a:d:p:t:e:xnhuv" OPT; do
             ;;
         p)
             PHP_VERSION=${OPTARG}
-            if ! [[ ${PHP_VERSION} =~ ^(7.4|8.0|8.1|8.2)$ ]]; then
+            if ! [[ ${PHP_VERSION} =~ ^(8.1|8.2|8.3|8.4)$ ]]; then
                 INVALID_OPTIONS+=("p ${OPTARG}")
             fi
             ;;
