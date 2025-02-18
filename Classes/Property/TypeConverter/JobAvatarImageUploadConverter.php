@@ -54,7 +54,7 @@ final class JobAvatarImageUploadConverter extends AbstractTypeConverter implemen
         $source,
         string $targetType,
         array $convertedChildProperties = [],
-        PropertyMappingConfigurationInterface $configuration = null
+        ?PropertyMappingConfigurationInterface $configuration = null
     ): Error|ExtbaseFileReference|null {
         $uploadedFileInformation = $source;
 
