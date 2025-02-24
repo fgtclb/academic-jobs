@@ -24,4 +24,9 @@ plugin.tx_academicjobs {
         subject = New job application
         template = A new job application has been submitted. Please check the backend.
     }
+
+    saveForm {
+        # cat=plugin.tx_academicjobs_createjob//a; type=string; label=Default redirect page PID, can be overruled in plugin
+        fallbackRedirectPageId =
+    }
 }
