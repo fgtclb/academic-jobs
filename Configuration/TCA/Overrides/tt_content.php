@@ -28,9 +28,14 @@ if (!defined('TYPO3')) {
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['academicjobs_list'] = 'pages,layout,select_key,recursive';
 
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['academicjobs_list'] = 'pi_flexform';
+    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['academicjobs_newjobform'] = 'pi_flexform';
 
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
         'academicjobs_list',
         'FILE:EXT:academic_jobs/Configuration/Flexforms/PluginList.xml'
+    );
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+        'academicjobs_newjobform',
+        'FILE:EXT:academic_jobs/Configuration/Flexforms/Plugin_NewJobForm.xml'
     );
 })();

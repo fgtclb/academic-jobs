@@ -3,6 +3,21 @@
 	<file source-language="en" datatype="plaintext" original="EXT:academic_jobs/Resources/Private/Language/locallang.xlf" date="2023-09-02T12:17:09Z" product-name="academic_jobs">
 		<header/>
 		<body>
+            <!-- Flexform General -->
+            <trans-unit id="tx_academicjobs_domain_model_job.pi_flexform.sheetGeneral">
+                <source>Settings</source>
+            </trans-unit>
+
+            <!-- Flexform Plugin List -->
+            <trans-unit id="tx_academicjobs_domain_model_job.list.jobType.label">
+                <source>Job Type</source>
+            </trans-unit>
+
+            <!-- Flexform Plugin NewJobForm -->
+            <trans-unit id="tx_academicjobs_domain_model_job.newJobForm.redirectPageId.label">
+                <source>Redirect page after job creation</source>
+            </trans-unit>
+
 			<!-- Domain Model: Job -->
 
 			<trans-unit id="tx_academicjobs_domain_model_job">
@@ -104,6 +119,9 @@
 			<trans-unit id="tx_academicjobs_domain_model_job.contact.description">
 				<source>Contact</source>
 			</trans-unit>
+            <trans-unit id="tx_academicjobs_domain_model_job.jobtype.none">
+                <source>None</source>
+            </trans-unit>
 			<trans-unit id="tx_academicjobs_domain_model_job.jobtype.job">
 				<source>Job</source>
 			</trans-unit>

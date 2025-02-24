@@ -15,11 +15,13 @@ use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 class JobController extends ActionController
 {
@@ -173,7 +175,6 @@ class JobController extends ActionController
         $this->persistenceManager->persistAll();
 
         $uid = $job->getUid();
-
         if ($uid === null) {
             $this->addFlashMessage(
                 $this->translateAlert('job_not_created.body', 'Something went wrong.'),
@@ -184,14 +185,43 @@ class JobController extends ActionController
             $this->redirect('newJobForm');
         }
 
-        $afterSaveJobEvent = new AfterSaveJobEvent($job);
-        $this->eventDispatcher->dispatch($afterSaveJobEvent);
-
+        $redirectPageId = $this->resolveRedirectPageId();
+        $afterSaveJobEvent = new AfterSaveJobEvent(
+            request: $this->request,
+            job: $job,
+            settings: $this->settings,
+            redirectPageId: $redirectPageId
+        );
+        /** @var AfterSaveJobEvent $afterSaveJobEvent */
+        $afterSaveJobEvent = $this->eventDispatcher->dispatch($afterSaveJobEvent);
+        $redirectPageId = $afterSaveJobEvent->getRedirectPageId();
         $listPid = $this->settings['listPid'] ? (int)$this->settings['listPid'] : null;
         $mailWasSent = $this->sendEmail($uid);
 
-        // We only need to create messages if we stay on the same page
-        if ($listPid === null) {
+        $useRedirectPageId = $redirectPageId;
+        if ($useRedirectPageId === null && $listPid !== null && $listPid > 0) {
+            trigger_error(
+                sprintf(
+                    'Using TypoScript setting "%s" to redirect after persisting new job is deprecated.'
+                    . ' Use NewJobForm plugin setting redirectPageId or TypoScript "%s" instead.',
+                    'plugin.tx_academicjobs.settings.listPid',
+                    'plugin.tx_academicjobs.settings.saveForm.fallbackRedirectPageId'
+                ),
+                E_USER_DEPRECATED
+            );
+            $useRedirectPageId = $listPid;
+        }
+
+        // FlashMessage are added to a queue based on default extbase identifier determination. Creating them in the
+        // session for the current form page and redirecting to another page would not consume the FlashMessages without
+        // enforcing a concrete matching identifier. If target page is already fully cached and no USER_INT elements is
+        // placed on that page, they will not be consumed. When user navigates back to the new form page will display
+        // the FlashMessage which is highly confusing to casual website visitors.
+        // Based on the above reasoning, we suppress creating FlashMessages in case redirect to an external page is
+        // requested
+        // @todo: Make this configurable by a mode selection, an additional queue identifier override and along with
+        //        providing simplified `display new form flashmessages only` plugin / element.
+        if ($useRedirectPageId === null || $useRedirectPageId === $this->determineCurrentPageId()) {
             if ($mailWasSent) {
                 $this->addFlashMessage(
                     $this->translateAlert('job_created.body', 'Job created and email sent.'),
@@ -209,8 +239,8 @@ class JobController extends ActionController
             }
         }
 
-        if ($listPid !== null) {
-            $uri = $this->uriBuilder->setTargetPageUid($listPid)->build();
+        if ($useRedirectPageId !== null) {
+            $uri = $this->uriBuilder->setTargetPageUid($useRedirectPageId)->build();
             $this->redirectToUri($uri);
         } else {
             $this->redirect('list');
@@ -253,5 +283,53 @@ class JobController extends ActionController
         string $missing = 'Missing translation!'
     ): string {
         return LocalizationUtility::translate('tx_academicjobs.fe.alert.' . $alert, 'AcademicJobs') ?? $missing;
+    }
+
+    /**
+     * Resolves redirect page id to use from different sources, using following priority order:
+     *
+     * 1. Plugin settings (flexform): redirectPageId
+     * 2. TypoScript setting (SETUP/CONSTANTS): plugin.tx_academicjobs.saveForm.fallbackRedirectPageId
+     * 3. return null indicating no external page redirect
+     *
+     * @return int|null
+     */
+    private function resolveRedirectPageId(): ?int
+    {
+        if (isset($this->settings['redirectPageId'])
+            && (is_string($this->settings['redirectPageId']) || is_int($this->settings['redirectPageId']))
+            && MathUtility::canBeInterpretedAsInteger($this->settings['redirectPageId'])
+        ) {
+            // Ensure positive page id
+            $redirectPageId = (int)$this->settings['redirectPageId'];
+            return ($redirectPageId > 0)
+                ? $redirectPageId
+                : null;
+        }
+        if (isset($this->settings['saveForm'])
+            && is_array($this->settings['saveForm'])
+            && isset($this->settings['saveForm']['fallbackRedirectPageId'])
+            && (is_string($this->settings['saveForm']['fallbackRedirectPageId']) || is_int($this->settings['saveForm']['fallbackRedirectPageId']))
+            && MathUtility::canBeInterpretedAsInteger($this->settings['saveForm']['fallbackRedirectPageId'])
+        ) {
+            // Ensure positive page id
+            $fallbackRedirectPageId = (int)$this->settings['saveForm']['fallbackRedirectPageId'];
+            return ($fallbackRedirectPageId > 0)
+                ? $fallbackRedirectPageId
+                : null;
+        }
+        return null;
+    }
+
+    /**
+     * Determine current displayed page id. Works only when used in FE context.
+     */
+    private function determineCurrentPageId(): int
+    {
+        $frontendController = $this->request->getAttribute('frontend.controller');
+        if ($frontendController instanceof TypoScriptFrontendController) {
+            return (int)$frontendController->id;
+        }
+        return 0;
     }
 }

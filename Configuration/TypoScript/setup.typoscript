@@ -38,6 +38,7 @@ plugin.tx_academicjobs {
           allowedMimeTypes = image/jpeg,image/png,image/webp,image/svg+xml
         }
       }
+      fallbackRedirectPageId = {$plugin.tx_academicjobs.saveForm.fallbackRedirectPageId}
     }
   }
   view {
