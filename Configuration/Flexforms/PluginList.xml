@@ -3,19 +3,19 @@
         <sDEF>
             <ROOT>
                 <TCEforms>
-                    <sheetTitle>Settings</sheetTitle>
+                    <sheetTitle>LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.pi_flexform.sheetGeneral</sheetTitle>
                 </TCEforms>
                 <type>array</type>
                 <el>
                     <settings.job.type>
                         <TCEforms>
-                            <label>Job Type</label>
+                            <label>LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.list.jobType.label</label>
                             <config>
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
                                 <items>
                                     <numIndex index="0" type="array">
-                                        <numIndex index="0">None</numIndex>
+                                        <numIndex index="0">LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.jobtype.none</numIndex>
                                         <numIndex index="1">0</numIndex>
                                     </numIndex>
                                     <numIndex index="1" type="array">
