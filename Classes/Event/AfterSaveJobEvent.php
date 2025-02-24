@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FGTCLB\AcademicJobs\Event;
 
 use FGTCLB\AcademicJobs\Domain\Model\Job;
+use FGTCLB\AcademicJobs\SaveForm\FlashMessageCreationMode;
 use Psr\Http\Message\ServerRequestInterface;
 
 final class AfterSaveJobEvent
@@ -14,8 +15,10 @@ final class AfterSaveJobEvent
      */
     public function __construct(
         private readonly ServerRequestInterface $request,
-        private Job $job,
+        private readonly Job $job,
+        private readonly int $currentPageId,
         private readonly array $settings,
+        private FlashMessageCreationMode $flashMessageCreationMode,
         private ?int $redirectPageId,
     ) {
     }
@@ -28,6 +31,11 @@ final class AfterSaveJobEvent
     public function getRequest(): ServerRequestInterface
     {
         return $this->request;
+    }
+
+    public function getCurrentPageId(): int
+    {
+        return $this->currentPageId;
     }
 
     /**
@@ -60,6 +68,17 @@ final class AfterSaveJobEvent
     public function setRedirectPageId(?int $redirectPageId): self
     {
         $this->redirectPageId = $redirectPageId;
+        return $this;
+    }
+
+    public function getFlashMessageCreationMode(): FlashMessageCreationMode
+    {
+        return $this->flashMessageCreationMode;
+    }
+
+    public function setFlashMessageCreationMode(FlashMessageCreationMode $flashMessageCreationMode): AfterSaveJobEvent
+    {
+        $this->flashMessageCreationMode = $flashMessageCreationMode;
         return $this;
     }
 }

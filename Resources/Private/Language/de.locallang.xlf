@@ -3,6 +3,7 @@
 	<file source-language="en" target-langague="de" datatype="plaintext" original="EXT:academic_jobs/Resources/Private/Language/locallang.xlf" date="2023-09-02T12:17:09Z" product-name="academic_jobs">
 		<header/>
 		<body>
+
             <!-- Flexform General -->
             <trans-unit id="tx_academicjobs_domain_model_job.pi_flexform.sheetGeneral">
                 <source>Settings</source>
@@ -19,6 +20,25 @@
             <trans-unit id="tx_academicjobs_domain_model_job.newJobForm.redirectPageId.label">
                 <source>Redirect page after job creation</source>
                 <target>Weiterleitungsseite nach erfolgreichen anlegen eines Jobs</target>
+            </trans-unit>
+
+            <!-- Backend: TypoScript Constants Editor -->
+
+            <trans-unit id="saveForm.flashMessageCreationMode.label">
+                <source>Flashmessage creation mode when persisting new jobs (FE)</source>
+                <target>Flashmessage creation mode when persisting new jobs (FE)</target>
+            </trans-unit>
+            <trans-unit id="saveForm.flashMessageCreationMode.option_always">
+                <source>always</source>
+                <target>immer</target>
+            </trans-unit>
+            <trans-unit id="saveForm.flashMessageCreationMode.option_never">
+                <source>never</source>
+                <target>niemals</target>
+            </trans-unit>
+            <trans-unit id="saveForm.flashMessageCreationMode.option_suppressWhenListPidSelected">
+                <source>suppress when list pid has been configured</source>
+                <target>Nur wenn keine listPid gesetzt wurde.</target>
             </trans-unit>
 
 			<!-- Domain Model: Job -->

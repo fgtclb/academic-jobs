@@ -9,6 +9,7 @@ use FGTCLB\AcademicJobs\Domain\Model\Job;
 use FGTCLB\AcademicJobs\Domain\Repository\JobRepository;
 use FGTCLB\AcademicJobs\Event\AfterSaveJobEvent;
 use FGTCLB\AcademicJobs\Property\TypeConverter\JobAvatarImageUploadConverter;
+use FGTCLB\AcademicJobs\SaveForm\FlashMessageCreationMode;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
 use TYPO3\CMS\Core\Mail\MailMessage;
@@ -185,16 +186,21 @@ class JobController extends ActionController
             $this->redirect('newJobForm');
         }
 
+        $currentPageId = $this->determineCurrentPageId();
         $redirectPageId = $this->resolveRedirectPageId();
+        $flashMessageCreationMode = $this->resolveFlashMessageCreationMode();
         $afterSaveJobEvent = new AfterSaveJobEvent(
             request: $this->request,
             job: $job,
+            currentPageId: $currentPageId,
             settings: $this->settings,
+            flashMessageCreationMode: $flashMessageCreationMode,
             redirectPageId: $redirectPageId
         );
         /** @var AfterSaveJobEvent $afterSaveJobEvent */
         $afterSaveJobEvent = $this->eventDispatcher->dispatch($afterSaveJobEvent);
         $redirectPageId = $afterSaveJobEvent->getRedirectPageId();
+        $flashMessageCreationMode = $afterSaveJobEvent->getFlashMessageCreationMode();
         $listPid = $this->settings['listPid'] ? (int)$this->settings['listPid'] : null;
         $mailWasSent = $this->sendEmail($uid);
 
@@ -217,11 +223,21 @@ class JobController extends ActionController
         // enforcing a concrete matching identifier. If target page is already fully cached and no USER_INT elements is
         // placed on that page, they will not be consumed. When user navigates back to the new form page will display
         // the FlashMessage which is highly confusing to casual website visitors.
-        // Based on the above reasoning, we suppress creating FlashMessages in case redirect to an external page is
-        // requested
-        // @todo: Make this configurable by a mode selection, an additional queue identifier override and along with
-        //        providing simplified `display new form flashmessages only` plugin / element.
-        if ($useRedirectPageId === null || $useRedirectPageId === $this->determineCurrentPageId()) {
+        //
+        // Based on the above reasoning, we allow to configure the behaviour in installation per plugin instance with
+        // fallback to a global TypoScript setting to determine if flash messages should be created
+        //   - ALWAYS
+        //   - NEVER
+        //   - SUPPRESS_WHEN_REDIRECTED (only when staying on the same page)
+        //
+        // Not that this still requires to have a uncached conent element rendering the specific newjobform plugin
+        // extbase flash message queue, for example using following fluid code:
+        //
+        // ```xml
+        // <f:flashMessages queueIdentifier="extbase.flashmessages.tx_academicjobs_newjobform"/>
+        // ```
+        // @todo Make flashmessage queue identifier configurable or at least use a dedicated identifer when redirecting.
+        if ($flashMessageCreationMode->shouldBeCreated($currentPageId, $useRedirectPageId)) {
             if ($mailWasSent) {
                 $this->addFlashMessage(
                     $this->translateAlert('job_created.body', 'Job created and email sent.'),
@@ -296,6 +312,7 @@ class JobController extends ActionController
      */
     private function resolveRedirectPageId(): ?int
     {
+        // Plugin flexform settings
         if (isset($this->settings['redirectPageId'])
             && (is_string($this->settings['redirectPageId']) || is_int($this->settings['redirectPageId']))
             && MathUtility::canBeInterpretedAsInteger($this->settings['redirectPageId'])
@@ -306,6 +323,7 @@ class JobController extends ActionController
                 ? $redirectPageId
                 : null;
         }
+        // TypoScript SETUP/CONSTANT
         if (isset($this->settings['saveForm'])
             && is_array($this->settings['saveForm'])
             && isset($this->settings['saveForm']['fallbackRedirectPageId'])
@@ -319,6 +337,31 @@ class JobController extends ActionController
                 : null;
         }
         return null;
+    }
+
+    private function resolveFlashMessageCreationMode(): FlashMessageCreationMode
+    {
+        // Plugin flexform settings
+        if (isset($this->settings['flashMessageCreationMode'])
+            && (is_string($this->settings['flashMessageCreationMode']) || is_int($this->settings['flashMessageCreationMode']))
+            && MathUtility::canBeInterpretedAsInteger($this->settings['flashMessageCreationMode'])
+            && (int)$this->settings['flashMessageCreationMode'] >= 0
+            && FlashMessageCreationMode::tryFrom((int)$this->settings['flashMessageCreationMode']) !== null
+        ) {
+            return FlashMessageCreationMode::from((int)$this->settings['flashMessageCreationMode']);
+        }
+        // TypoScript SETUP/CONSTANT
+        if (isset($this->settings['saveForm'])
+            && is_array($this->settings['saveForm'])
+            && isset($this->settings['saveForm']['fallbackFlashMessageCreationMode'])
+            && (is_string($this->settings['saveForm']['fallbackFlashMessageCreationMode']) || is_int($this->settings['saveForm']['fallbackFlashMessageCreationMode']))
+            && MathUtility::canBeInterpretedAsInteger($this->settings['saveForm']['fallbackFlashMessageCreationMode'])
+            && (int)$this->settings['saveForm']['fallbackFlashMessageCreationMode'] >= 0
+            && FlashMessageCreationMode::tryFrom((int)$this->settings['saveForm']['fallbackFlashMessageCreationMode']) !== null
+        ) {
+            return FlashMessageCreationMode::from((int)$this->settings['saveForm']['fallbackFlashMessageCreationMode']);
+        }
+        return FlashMessageCreationMode::default();
     }
 
     /**
