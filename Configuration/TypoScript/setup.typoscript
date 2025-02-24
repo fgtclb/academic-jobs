@@ -39,6 +39,7 @@ plugin.tx_academicjobs {
         }
       }
       fallbackRedirectPageId = {$plugin.tx_academicjobs.saveForm.fallbackRedirectPageId}
+      fallbackFlashMessageCreationMode = {$plugin.tx_academicjobs.saveForm.fallbackFlashMessageCreationMode}
     }
   }
   view {
