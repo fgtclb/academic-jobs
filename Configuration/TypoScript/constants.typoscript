@@ -28,5 +28,7 @@ plugin.tx_academicjobs {
     saveForm {
         # cat=plugin.tx_academicjobs_createjob//a; type=string; label=Default redirect page PID, can be overruled in plugin
         fallbackRedirectPageId =
+        # cat=plugin.tx_academicjobs_createjob//a; type=options [LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:saveForm.flashMessageCreationMode.option_always=1,LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:saveForm.flashMessageCreationMode.option_suppressWhenRedirectPageIsSelected=0,LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:saveForm.flashMessageCreationMode.option_never=2]; label=LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:saveForm.flashMessageCreationMode.label
+        fallbackFlashMessageCreationMode = 0
     }
 }

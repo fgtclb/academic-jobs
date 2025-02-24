@@ -24,6 +24,38 @@
                             </config>
                         </TCEforms>
                     </settings.redirectPageId>
+                    <settings.flashMessageCreationMode>
+                        <TCEforms>
+                            <label>LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:saveForm.flashMessageCreationMode.label</label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <default>-1</default>
+                                <items>
+                                    <!-- /* TYPO3 v11 Syntax, compatible with TYPO3 v12. Needs to be changed when TYPO3 v13 */ -->
+                                    <!-- /* support is added and should be done with dropping TYPO3 v11 support in same run.  */ -->
+                                    <!-- /* @todo Adjust syntax using <label></lable>, <value></value> instead of element numIndex */ -->
+                                    <!-- /* @todo to align with TCA Select changes */ -->
+                                    <numIndex index="0">
+                                        <numIndex index="0">LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:saveForm.flashMessageCreationMode.use_global_setting</numIndex>>
+                                        <numIndex index="1">-1</numIndex>>
+                                    </numIndex>
+                                    <numIndex index="1">
+                                        <numIndex index="0">LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:saveForm.flashMessageCreationMode.option_always</numIndex>
+                                        <numIndex index="1">1</numIndex>>
+                                    </numIndex>
+                                    <numIndex index="2">
+                                        <numIndex index="0">LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:saveForm.flashMessageCreationMode.option_never</numIndex>>
+                                        <numIndex index="1">2</numIndex>>
+                                    </numIndex>
+                                    <numIndex index="3">
+                                        <numIndex index="0">LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:saveForm.flashMessageCreationMode.option_suppressWhenRedirectPageIsSelected</numIndex>
+                                        <numIndex index="1">0</numIndex>
+                                    </numIndex>
+                                </items>
+                            </config>
+                        </TCEforms>
+                    </settings.flashMessageCreationMode>
                 </el>
             </ROOT>
         </sDEF>
