@@ -13,6 +13,7 @@ use FGTCLB\AcademicJobs\SaveForm\FlashMessageCreationMode;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
 use TYPO3\CMS\Core\Mail\MailMessage;
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -239,14 +240,14 @@ class JobController extends ActionController
         // @todo Make flashmessage queue identifier configurable or at least use a dedicated identifer when redirecting.
         if ($flashMessageCreationMode->shouldBeCreated($currentPageId, $useRedirectPageId)) {
             if ($mailWasSent) {
-                $this->addFlashMessage(
+                $this->addFlashMessageToQueue(
                     $this->translateAlert('job_created.body', 'Job created and email sent.'),
                     $this->translateAlert('job_created.title', 'Job created'),
                     FlashMessage::OK,
                     true
                 );
             } else {
-                $this->addFlashMessage(
+                $this->addFlashMessageToQueue(
                     $this->translateAlert('job_created_no_email.body', 'Job created, but email could not be sent.'),
                     $this->translateAlert('job_created_no_email.title', 'Job created'),
                     FlashMessage::WARNING,
@@ -374,5 +375,49 @@ class JobController extends ActionController
             return (int)$frontendController->id;
         }
         return 0;
+    }
+
+    /**
+     * Creates a Message object and adds it to the FlashMessageQueue specified by `$queueIdentifier`.
+     *
+     * Adopted from {@see parent::addFlashMessage()} making the queue identifier configurable.
+     */
+    private function addFlashMessageToQueue(
+        string $messageBody,
+        string $messageTitle = '',
+        int $severity = AbstractMessage::OK,
+        bool $storeInSession = true,
+        ?string $queueIdentifier = null,
+    ): void {
+        if ($queueIdentifier === null) {
+            $this->addFlashMessage($messageBody, $messageTitle, $severity, $storeInSession);
+            return;
+        }
+
+        if (!is_string($messageBody)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'The message body must be of type string, "%s" given.',
+                    gettype($messageBody)
+                ),
+                1740480922
+            );
+        }
+        if ($queueIdentifier === '') {
+            throw new \InvalidArgumentException(
+                'The queue identifier must be set but was an empty string.',
+                1740481093
+            );
+        }
+        /* @var \TYPO3\CMS\Core\Messaging\FlashMessage $flashMessage */
+        $flashMessage = GeneralUtility::makeInstance(
+            FlashMessage::class,
+            $messageBody,
+            $messageTitle,
+            $severity,
+            $storeInSession
+        );
+
+        $this->getFlashMessageQueue($queueIdentifier)->enqueue($flashMessage);
     }
 }
