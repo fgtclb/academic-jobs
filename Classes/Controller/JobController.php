@@ -12,10 +12,11 @@ use FGTCLB\AcademicJobs\Property\TypeConverter\JobAvatarImageUploadConverter;
 use FGTCLB\AcademicJobs\SaveForm\FlashMessageCreationMode;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Mail\MailMessage;
-use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -48,7 +49,8 @@ class JobController extends ActionController
             $this->addFlashMessage(
                 $this->translateAlert('job_not_found.body', 'Job not found.'),
                 '',
-                FlashMessage::ERROR,
+                // @todo FlashMessage constants deprecated since TYPO3 v12 in favour of Native Enum.
+                (((new Typo3Version())->getMajorVersion() < 12) ? FlashMessage::ERROR : ContextualFeedbackSeverity::ERROR),
                 true
             );
             return $this->htmlResponse();
@@ -170,7 +172,7 @@ class JobController extends ActionController
             );
     }
 
-    public function saveJobAction(Job $job): void
+    public function saveJobAction(Job $job): ResponseInterface
     {
         $job->setHidden((int)self::JOB_HIDDEN);
         $this->jobRepository->add($job);
@@ -181,7 +183,8 @@ class JobController extends ActionController
             $this->addFlashMessage(
                 $this->translateAlert('job_not_created.body', 'Something went wrong.'),
                 $this->translateAlert('job_not_created.title', 'Job not created'),
-                FlashMessage::ERROR,
+                // @todo FlashMessage constants deprecated since TYPO3 v12 in favour of Native Enum.
+                (((new Typo3Version())->getMajorVersion() < 12) ? FlashMessage::ERROR : ContextualFeedbackSeverity::ERROR),
                 true
             );
             $this->redirect('newJobForm');
@@ -243,14 +246,16 @@ class JobController extends ActionController
                 $this->addFlashMessageToQueue(
                     $this->translateAlert('job_created.body', 'Job created and email sent.'),
                     $this->translateAlert('job_created.title', 'Job created'),
-                    FlashMessage::OK,
+                    // @todo FlashMessage constants deprecated since TYPO3 v12 in favour of Native Enum.
+                    (((new Typo3Version())->getMajorVersion() < 12) ? FlashMessage::OK : ContextualFeedbackSeverity::OK),
                     true
                 );
             } else {
                 $this->addFlashMessageToQueue(
                     $this->translateAlert('job_created_no_email.body', 'Job created, but email could not be sent.'),
                     $this->translateAlert('job_created_no_email.title', 'Job created'),
-                    FlashMessage::WARNING,
+                    // @todo FlashMessage constants deprecated since TYPO3 v12 in favour of Native Enum.
+                    (((new Typo3Version())->getMajorVersion() < 12) ? FlashMessage::WARNING : ContextualFeedbackSeverity::WARNING),
                     true
                 );
             }
@@ -258,10 +263,24 @@ class JobController extends ActionController
 
         if ($useRedirectPageId !== null) {
             $uri = $this->uriBuilder->setTargetPageUid($useRedirectPageId)->build();
-            $this->redirectToUri($uri);
+            if ((new Typo3Version())->getMajorVersion() >= 12) {
+                // Since TYPO3v12 redirect method returns a response object. Return it directly.
+                return $this->redirectToUri($uri);
+            } else {
+                // @todo Remove when TYPO3 v11 support is dropped.
+                $this->redirectToUri($uri);
+            }
         } else {
-            $this->redirect('list');
+            if ((new Typo3Version())->getMajorVersion() >= 12) {
+                // Since TYPO3v12 redirect method returns a response object. Return it directly.
+                return $this->redirect('list');
+            } else {
+                // @todo Remove when TYPO3 v11 support is dropped.
+                $this->redirect('list');
+            }
         }
+        // @phpstan-ignore-next-line Satisfy PHPStan in IDE's.
+        return $this->htmlResponse();
     }
 
     public function sendEmail(int $recordId): bool
@@ -385,10 +404,11 @@ class JobController extends ActionController
     private function addFlashMessageToQueue(
         string $messageBody,
         string $messageTitle = '',
-        int $severity = AbstractMessage::OK,
+        $severity = null,
         bool $storeInSession = true,
         ?string $queueIdentifier = null,
     ): void {
+        $severity ??= (((new Typo3Version())->getMajorVersion() < 12) ? FlashMessage::OK : ContextualFeedbackSeverity::OK);
         if ($queueIdentifier === null) {
             $this->addFlashMessage($messageBody, $messageTitle, $severity, $storeInSession);
             return;

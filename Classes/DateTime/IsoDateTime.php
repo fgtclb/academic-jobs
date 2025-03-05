@@ -7,11 +7,11 @@ namespace FGTCLB\AcademicJobs\DateTime;
 /**
  * DateTime which prefers ISO (YYYY-MM-DD) format and can be used as value in Fluid forms
  */
-final class IsoDateTime extends \DateTime
+final class IsoDateTime extends \DateTime implements \Stringable
 {
     public const FORMAT = 'Y-m-d';
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->format(self::FORMAT);
     }
