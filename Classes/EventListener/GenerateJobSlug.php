@@ -12,13 +12,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class GenerateJobSlug
 {
-    public const TABLE_NAME = 'tx_academicjobs_domain_model_job';
-
-    private ConnectionPool $connectionPool;
-
-    public function __construct(ConnectionPool $connectionPool)
-    {
-        $this->connectionPool = $connectionPool;
+    public function __construct(
+        private readonly ConnectionPool $connectionPool
+    ) {
     }
 
     public function __invoke(AfterSaveJobEvent $event): void
@@ -63,9 +59,9 @@ class GenerateJobSlug
     {
         return GeneralUtility::makeInstance(
             SlugHelper::class,
-            self::TABLE_NAME,
+            'tx_academicjobs_domain_model_job',
             'slug',
-            $GLOBALS['TCA'][self::TABLE_NAME]['columns']['slug']['config']
+            $GLOBALS['TCA']['tx_academicjobs_domain_model_job']['columns']['slug']['config'] ?? []
         );
     }
 }

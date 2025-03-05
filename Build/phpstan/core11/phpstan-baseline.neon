@@ -1,6 +1,26 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Access to constant ERROR on an unknown class TYPO3\\\\CMS\\\\Core\\\\Type\\\\ContextualFeedbackSeverity\\.$#"
+			count: 2
+			path: ../../../Classes/Controller/JobController.php
+
+		-
+			message: "#^Access to constant OK on an unknown class TYPO3\\\\CMS\\\\Core\\\\Type\\\\ContextualFeedbackSeverity\\.$#"
+			count: 2
+			path: ../../../Classes/Controller/JobController.php
+
+		-
+			message: "#^Access to constant WARNING on an unknown class TYPO3\\\\CMS\\\\Core\\\\Type\\\\ContextualFeedbackSeverity\\.$#"
+			count: 1
+			path: ../../../Classes/Controller/JobController.php
+
+		-
+			message: "#^Method FGTCLB\\\\AcademicJobs\\\\Controller\\\\JobController\\:\\:addFlashMessageToQueue\\(\\) has parameter \\$severity with no type specified\\.$#"
+			count: 1
+			path: ../../../Classes/Controller/JobController.php
+
+		-
 			message: "#^Variable \\$_EXTKEY might not be defined\\.$#"
 			count: 1
-			path: ../../ext_emconf.php
+			path: ../../../ext_emconf.php

@@ -1,6 +1,11 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Method FGTCLB\\\\AcademicJobs\\\\Controller\\\\JobController\\:\\:addFlashMessageToQueue\\(\\) has parameter \\$severity with no type specified\\.$#"
+			count: 1
+			path: ../../../Classes/Controller/JobController.php
+
+		-
 			message: "#^Variable \\$_EXTKEY might not be defined\\.$#"
 			count: 1
-			path: ../../ext_emconf.php
+			path: ../../../ext_emconf.php

@@ -1,12 +1,15 @@
 <?php
 
+$typo3MajorVersion = (new \TYPO3\CMS\Core\Information\Typo3Version())->getMajorVersion();
+$selectLabelKey = ($typo3MajorVersion >= 12) ? 'label' : 0;
+$selectValueKey = ($typo3MajorVersion >= 12) ? 'value' : 1;
+
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_contact',
         'label' => 'name',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
         'versioningWS' => true,
         'languageField' => 'sys_language_uid',
         'transOrigPointerField' => 'l10n_parent',
@@ -19,6 +22,9 @@ return [
         ],
         'searchFields' => 'name,email,phone,additional_information',
         'iconfile' => 'EXT:academic_jobs/Resources/Public/Icons/tx_academicjobs_domain_model_contact.svg',
+        'security' => [
+            'ignorePageTypeRestriction' => true,
+        ],
     ],
     'types' => [
         '1' => ['showitem' => 'name, email, phone, additional_information, --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language, sys_language_uid, l10n_parent, l10n_diffsource, --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, hidden, starttime, endtime'],
@@ -39,7 +45,10 @@ return [
                 'renderType' => 'selectSingle',
                 'default' => 0,
                 'items' => [
-                    ['', 0],
+                    [
+                        $selectLabelKey => '',
+                        $selectValueKey => 0,
+                    ],
                 ],
                 'foreign_table' => 'tx_academicjobs_domain_model_contact',
                 'foreign_table_where' => 'AND {#tx_academicjobs_domain_model_contact}.{#pid}=###CURRENT_PID### AND {#tx_academicjobs_domain_model_contact}.{#sys_language_uid} IN (-1,0)',
@@ -58,8 +67,8 @@ return [
                 'renderType' => 'checkboxToggle',
                 'items' => [
                     [
-                        0 => '',
-                        1 => '',
+                        $selectLabelKey => '',
+                        $selectValueKey => '',
                         'invertStateDisplay' => true,
                     ],
                 ],

@@ -1,11 +1,8 @@
 <?php
 
-$ll = function (string $label) {
-    return sprintf(
-        'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:%s',
-        $label
-    );
-};
+$typo3MajorVersion = (new \TYPO3\CMS\Core\Information\Typo3Version())->getMajorVersion();
+$selectLabelKey = ($typo3MajorVersion >= 12) ? 'label' : 0;
+$selectValueKey = ($typo3MajorVersion >= 12) ? 'value' : 1;
 
 return [
     'ctrl' => [
@@ -13,7 +10,6 @@ return [
         'label' => 'title',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
         'versioningWS' => true,
         'languageField' => 'sys_language_uid',
         'transOrigPointerField' => 'l10n_parent',
@@ -26,6 +22,9 @@ return [
         ],
         'searchFields' => 'title,description,company_name,sector,work_location,link,slug',
         'iconfile' => 'EXT:academic_jobs/Resources/Public/Icons/tx_academicjobs_domain_model_job.svg',
+        'security' => [
+            'ignorePageTypeRestriction' => true,
+        ],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -43,7 +42,10 @@ return [
                 'renderType' => 'selectSingle',
                 'default' => 0,
                 'items' => [
-                    ['', 0],
+                    [
+                        $selectLabelKey => '',
+                        $selectValueKey => 0,
+                    ],
                 ],
                 'foreign_table' => 'tx_academicjobs_domain_model_job',
                 'foreign_table_where' => 'AND {#tx_academicjobs_domain_model_job}.{#pid}=###CURRENT_PID### AND {#tx_academicjobs_domain_model_job}.{#sys_language_uid} IN (-1,0)',
@@ -62,8 +64,8 @@ return [
                 'renderType' => 'checkboxToggle',
                 'items' => [
                     [
-                        0 => '',
-                        1 => '',
+                        $selectLabelKey => '',
+                        $selectValueKey => '',
                         'invertStateDisplay' => true,
                     ],
                 ],
@@ -105,9 +107,18 @@ return [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    [$ll('tx_academicjobs_domain_model_job.jobtype.job'), 1],
-                    [$ll('tx_academicjobs_domain_model_job.jobtype.sidejob'), 2],
-                    [$ll('tx_academicjobs_domain_model_job.jobtype.thesis'), 3],
+                    [
+                        $selectLabelKey => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.jobtype.job',
+                        $selectValueKey => 1,
+                    ],
+                    [
+                        $selectLabelKey => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.jobtype.sidejob',
+                        $selectValueKey => 2,
+                    ],
+                    [
+                        $selectLabelKey => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.jobtype.thesis',
+                        $selectValueKey => 3,
+                    ],
                 ],
                 'size' => 1,
                 'maxitems' => 1,
@@ -272,8 +283,14 @@ return [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    [$ll('tx_academicjobs_domain_model_job.employment_type.fulltime'), 1],
-                    [$ll('tx_academicjobs_domain_model_job.employment_type.parttime'), 2],
+                    [
+                        $selectLabelKey => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.employment_type.fulltime',
+                        $selectValueKey => 1,
+                    ],
+                    [
+                        $selectLabelKey => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.employment_type.parttime',
+                        $selectValueKey => 2,
+                    ],
                 ],
                 'size' => 1,
                 'maxitems' => 1,
