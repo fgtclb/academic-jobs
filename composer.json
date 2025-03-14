@@ -20,7 +20,7 @@
 		{ "type": "git", "url": "https://github.com/andreaswolf/typo3-ext-migrations.git" }
 	],
 	"require": {
-		"php": "^8.1",
+		"php": "^8.1 || ^8.2 || ^8.3 || ^8.4",
 		"typo3/cms-core": "^11.5 || ^12.4",
 		"typo3/cms-rte-ckeditor": "^11.5 || ^12.4"
 	},
