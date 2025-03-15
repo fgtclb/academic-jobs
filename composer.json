@@ -16,9 +16,6 @@
 		"source": "https://github.com/fgtclb/academic-jobs"
 	},
 	"homepage": "https://github.com/fgtclb/academic-jobs",
-	"repositories":  [
-		{ "type": "git", "url": "https://github.com/andreaswolf/typo3-ext-migrations.git" }
-	],
 	"require": {
 		"php": "^8.1 || ^8.2 || ^8.3 || ^8.4",
 		"typo3/cms-core": "^11.5 || ^12.4",
@@ -52,10 +49,7 @@
 		"helhum/typo3-console": "^7.1 || ^8.0",
 		"saschaegerer/phpstan-typo3": "^1.8",
 		"friendsofphp/php-cs-fixer": "^3.14",
-		"bk2k/bootstrap-package": "^14.0",
-		"kaystrobach/migrations": "0.11.0 || 0.12.0",
-		"andreaswolf/typo3-uuid": "^0.3.0 || ^0.4.0",
-		"cweagans/composer-patches": "^1.7"
+		"bk2k/bootstrap-package": "^14.0"
 	},
 	"autoload": {
 		"psr-4": {
@@ -64,7 +58,6 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"FGTCLB\\AcademicJobs\\Migrations\\": "Migrations/",
 			"FGTCLB\\AcademicJobs\\Tests\\": "Tests/"
 		}
 	},
@@ -79,11 +72,6 @@
 			"web-dir": ".Build/Web",
 			"app-dir": ".Build",
 			"extension-key": "academic_jobs"
-		},
-		"patches": {
-			"kaystrobach/migrations": {
-				"Load migrations from autoload-dev": "patches/migrations/autoload.patch"
-			}
 		}
 	},
 	"scripts": {
