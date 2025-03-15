@@ -10,6 +10,4 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 /**
  * @extends Repository<Contact>
  */
-class ContactRepository extends Repository
-{
-}
+class ContactRepository extends Repository {}

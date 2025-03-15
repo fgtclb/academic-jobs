@@ -14,8 +14,7 @@ class GenerateJobSlug
 {
     public function __construct(
         private readonly ConnectionPool $connectionPool
-    ) {
-    }
+    ) {}
 
     public function __invoke(AfterSaveJobEvent $event): void
     {

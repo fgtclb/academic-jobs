@@ -20,8 +20,7 @@ final class AfterSaveJobEvent
         private readonly array $settings,
         private FlashMessageCreationMode $flashMessageCreationMode,
         private ?int $redirectPageId,
-    ) {
-    }
+    ) {}
 
     public function getJob(): Job
     {

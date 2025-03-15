@@ -35,8 +35,7 @@ class JobController extends ActionController
         private readonly PersistenceManagerInterface $persistenceManager,
         private readonly ImageService $imageService,
         protected readonly BackendUriBuilder $backendUriBuilder,
-    ) {
-    }
+    ) {}
 
     public function indexAction(): ResponseInterface
     {
@@ -266,18 +265,18 @@ class JobController extends ActionController
             if ((new Typo3Version())->getMajorVersion() >= 12) {
                 // Since TYPO3v12 redirect method returns a response object. Return it directly.
                 return $this->redirectToUri($uri);
-            } else {
-                // @todo Remove when TYPO3 v11 support is dropped.
-                $this->redirectToUri($uri);
             }
+            // @todo Remove when TYPO3 v11 support is dropped.
+            $this->redirectToUri($uri);
+
         } else {
             if ((new Typo3Version())->getMajorVersion() >= 12) {
                 // Since TYPO3v12 redirect method returns a response object. Return it directly.
                 return $this->redirect('list');
-            } else {
-                // @todo Remove when TYPO3 v11 support is dropped.
-                $this->redirect('list');
             }
+            // @todo Remove when TYPO3 v11 support is dropped.
+            $this->redirect('list');
+
         }
         // @phpstan-ignore-next-line Satisfy PHPStan in IDE's.
         return $this->htmlResponse();

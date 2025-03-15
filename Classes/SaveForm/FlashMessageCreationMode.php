@@ -24,7 +24,7 @@ enum FlashMessageCreationMode: int
     public function shouldBeCreated(int $currentPageId, ?int $redirectPageId = null): bool
     {
         $shouldRedirect = ($redirectPageId !== null && $redirectPageId > 0 && $currentPageId !== $redirectPageId);
-        return match($this) {
+        return match ($this) {
             self::ALWAYS => true,
             self::NEVER => false,
             self::SUPPRESS_WITH_CONFIGURED_REDIRECT_PAGE => $shouldRedirect === false,

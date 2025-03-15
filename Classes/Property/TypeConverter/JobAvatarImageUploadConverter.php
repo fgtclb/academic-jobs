@@ -36,8 +36,7 @@ final class JobAvatarImageUploadConverter extends AbstractTypeConverter
     public function __construct(
         private readonly ResourceFactory $resourceFactory,
         private readonly LoggerInterface $logger,
-    ) {
-    }
+    ) {}
 
     /**
      * Actually convert from $source to $targetType, taking into account the fully
