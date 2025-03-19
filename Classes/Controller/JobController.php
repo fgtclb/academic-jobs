@@ -276,9 +276,7 @@ class JobController extends ActionController
             }
             // @todo Remove when TYPO3 v11 support is dropped.
             $this->redirect('list');
-
         }
-        // @phpstan-ignore-next-line Satisfy PHPStan in IDE's.
         return $this->htmlResponse();
     }
 
