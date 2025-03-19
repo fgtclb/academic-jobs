@@ -1,50 +1,51 @@
 {
-	"name": "fgtclb/academic-jobs",
-	"description": "The Academic Jobs extension allows users to create and manage job postings.",
-	"type": "typo3-cms-extension",
-	"license": [
-		"GPL-2.0-or-later"
-	],
-	"authors": [
-		{
-			"name": "FGTCLB GmbH",
-			"email": "hello@fgtclb.com"
-		}
-	],
-	"support": {
-		"issues": "https://github.com/fgtclb/academic-jobs/issues",
-		"source": "https://github.com/fgtclb/academic-jobs"
-	},
-	"homepage": "https://github.com/fgtclb/academic-jobs",
-	"require": {
-		"php": "^8.1 || ^8.2 || ^8.3 || ^8.4",
-		"typo3/cms-core": "^11.5 || ^12.4",
-		"typo3/cms-rte-ckeditor": "^11.5 || ^12.4"
-	},
-	"autoload": {
-		"psr-4": {
-			"FGTCLB\\AcademicJobs\\": "Classes/"
-		}
-	},
-	"autoload-dev": {
-		"psr-4": {
-			"FGTCLB\\AcademicJobs\\Tests\\": "Tests/"
-		}
-	},
-	"config": {
-		"vendor-dir": ".Build/vendor",
-		"bin-dir": ".Build/bin",
-		"allow-plugins": true,
-		"sort-packages": true
-	},
-	"extra": {
-		"typo3/cms": {
-			"web-dir": ".Build/Web",
-			"app-dir": ".Build",
-			"extension-key": "academic_jobs"
-		},
-		"branch-alias": {
-			"dev-main": "1.2.x-dev"
-		}
-	}
+    "name": "fgtclb/academic-jobs",
+    "description": "The Academic Jobs extension allows users to create and manage job postings.",
+    "type": "typo3-cms-extension",
+    "license": [
+        "GPL-2.0-or-later"
+    ],
+    "authors": [
+        {
+            "name": "FGTCLB GmbH",
+            "email": "hello@fgtclb.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/fgtclb/academic-extensions/issues",
+        "source": "https://github.com/fgtclb/academic-extensions",
+        "email": "hello@fgtclb.com"
+    },
+    "homepage": "https://www.fgtclb.com/",
+    "require": {
+        "php": "^8.1 || ^8.2 || ^8.3 || ^8.4",
+        "typo3/cms-core": "^11.5 || ^12.4",
+        "typo3/cms-rte-ckeditor": "^11.5 || ^12.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "FGTCLB\\AcademicJobs\\": "Classes/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "FGTCLB\\AcademicJobs\\Tests\\": "Tests/"
+        }
+    },
+    "config": {
+        "vendor-dir": ".Build/vendor",
+        "bin-dir": ".Build/bin",
+        "allow-plugins": true,
+        "sort-packages": true
+    },
+    "extra": {
+        "typo3/cms": {
+            "web-dir": ".Build/Web",
+            "app-dir": ".Build",
+            "extension-key": "academic_jobs"
+        },
+        "branch-alias": {
+            "dev-main": "1.2.x-dev"
+        }
+    }
 }
