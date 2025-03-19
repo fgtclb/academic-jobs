@@ -42,6 +42,9 @@
 			"web-dir": ".Build/Web",
 			"app-dir": ".Build",
 			"extension-key": "academic_jobs"
+		},
+		"branch-alias": {
+			"dev-main": "1.2.x-dev"
 		}
 	}
 }
