@@ -4,7 +4,7 @@ use FGTCLB\AcademicJobs\Controller\JobController;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 if (!defined('TYPO3')) {
-    die(__CLASS__);
+    die('Not authorized');
 }
 
 (static function (): void {

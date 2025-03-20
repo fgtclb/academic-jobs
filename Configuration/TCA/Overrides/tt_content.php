@@ -1,7 +1,7 @@
 <?php
 
 if (!defined('TYPO3')) {
-    die(__CLASS__);
+    die('Not authorized');
 }
 
 (static function (): void {
