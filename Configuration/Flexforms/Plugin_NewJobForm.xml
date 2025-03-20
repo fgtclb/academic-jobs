@@ -37,16 +37,16 @@
                                     <!-- /* @todo Adjust syntax using <label></lable>, <value></value> instead of element numIndex */ -->
                                     <!-- /* @todo to align with TCA Select changes */ -->
                                     <numIndex index="0">
-                                        <numIndex index="0">LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:saveForm.flashMessageCreationMode.use_global_setting</numIndex>>
-                                        <numIndex index="1">-1</numIndex>>
+                                        <numIndex index="0">LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:saveForm.flashMessageCreationMode.use_global_setting</numIndex>
+                                        <numIndex index="1">-1</numIndex>
                                     </numIndex>
                                     <numIndex index="1">
                                         <numIndex index="0">LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:saveForm.flashMessageCreationMode.option_always</numIndex>
                                         <numIndex index="1">1</numIndex>>
                                     </numIndex>
                                     <numIndex index="2">
-                                        <numIndex index="0">LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:saveForm.flashMessageCreationMode.option_never</numIndex>>
-                                        <numIndex index="1">2</numIndex>>
+                                        <numIndex index="0">LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:saveForm.flashMessageCreationMode.option_never</numIndex>
+                                        <numIndex index="1">2</numIndex>
                                     </numIndex>
                                     <numIndex index="3">
                                         <numIndex index="0">LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:saveForm.flashMessageCreationMode.option_suppressWhenRedirectPageIsSelected</numIndex>
