@@ -1,9 +1,5 @@
 <?php
 
-$typo3MajorVersion = (new \TYPO3\CMS\Core\Information\Typo3Version())->getMajorVersion();
-$selectLabelKey = ($typo3MajorVersion >= 12) ? 'label' : 0;
-$selectValueKey = ($typo3MajorVersion >= 12) ? 'value' : 1;
-
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job',
@@ -43,8 +39,8 @@ return [
                 'default' => 0,
                 'items' => [
                     [
-                        $selectLabelKey => '',
-                        $selectValueKey => 0,
+                        'label' => '',
+                        'value' => 0,
                     ],
                 ],
                 'foreign_table' => 'tx_academicjobs_domain_model_job',
@@ -64,8 +60,8 @@ return [
                 'renderType' => 'checkboxToggle',
                 'items' => [
                     [
-                        $selectLabelKey => '',
-                        $selectValueKey => '',
+                        'label' => '',
+                        'value' => '',
                         'invertStateDisplay' => true,
                     ],
                 ],
@@ -75,9 +71,8 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
-                'eval' => 'datetime,int,required',
+                'type' => 'datetime',
+                'required' => true,
                 'default' => 0,
                 'behaviour' => [
                     'allowLanguageSynchronization' => true,
@@ -88,9 +83,8 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
-                'eval' => 'datetime,int,required',
+                'type' => 'datetime',
+                'required' => true,
                 'default' => 0,
                 'range' => [
                     'upper' => mktime(0, 0, 0, 1, 1, 2038),
@@ -108,21 +102,21 @@ return [
                 'renderType' => 'selectSingle',
                 'items' => [
                     [
-                        $selectLabelKey => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.jobtype.job',
-                        $selectValueKey => 1,
+                        'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.jobtype.job',
+                        'value' => 1,
                     ],
                     [
-                        $selectLabelKey => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.jobtype.sidejob',
-                        $selectValueKey => 2,
+                        'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.jobtype.sidejob',
+                        'value' => 2,
                     ],
                     [
-                        $selectLabelKey => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.jobtype.thesis',
-                        $selectValueKey => 3,
+                        'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.jobtype.thesis',
+                        'value' => 3,
                     ],
                 ],
                 'size' => 1,
                 'maxitems' => 1,
-                'eval' => 'required',
+                'required' => true,
             ],
 
         ],
@@ -132,7 +126,8 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim,required',
+                'eval' => 'trim',
+                'required' => true,
                 'default' => '',
             ],
         ],
@@ -159,10 +154,10 @@ return [
             'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.employment_start_date',
             'config' => [
                 'dbType' => 'date',
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
+                'type' => 'datetime',
+                'format' => 'date',
                 'size' => 7,
-                'eval' => 'date,required',
+                'required' => true,
                 'default' => null,
             ],
         ],
@@ -284,17 +279,17 @@ return [
                 'renderType' => 'selectSingle',
                 'items' => [
                     [
-                        $selectLabelKey => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.employment_type.fulltime',
-                        $selectValueKey => 1,
+                        'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.employment_type.fulltime',
+                        'value' => 1,
                     ],
                     [
-                        $selectLabelKey => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.employment_type.parttime',
-                        $selectValueKey => 2,
+                        'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.employment_type.parttime',
+                        'value' => 2,
                     ],
                 ],
                 'size' => 1,
                 'maxitems' => 1,
-                'eval' => 'required',
+                'required' => true,
             ],
         ],
         'work_location' => [
@@ -313,8 +308,7 @@ return [
             'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.link',
             'description' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.link.description',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputLink',
+                'type' => 'link',
             ],
         ],
         'slug' => [

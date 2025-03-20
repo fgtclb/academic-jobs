@@ -262,22 +262,12 @@ class JobController extends ActionController
 
         if ($useRedirectPageId !== null) {
             $uri = $this->uriBuilder->setTargetPageUid($useRedirectPageId)->build();
-            if ((new Typo3Version())->getMajorVersion() >= 12) {
-                // Since TYPO3v12 redirect method returns a response object. Return it directly.
-                return $this->redirectToUri($uri);
-            }
-            // @todo Remove when TYPO3 v11 support is dropped.
-            $this->redirectToUri($uri);
-
-        } else {
-            if ((new Typo3Version())->getMajorVersion() >= 12) {
-                // Since TYPO3v12 redirect method returns a response object. Return it directly.
-                return $this->redirect('list');
-            }
-            // @todo Remove when TYPO3 v11 support is dropped.
-            $this->redirect('list');
+            // Since TYPO3v12 redirect method returns a response object. Return it directly.
+            return $this->redirectToUri($uri);
         }
-        return $this->htmlResponse();
+        // Since TYPO3v12 redirect method returns a response object. Return it directly.
+        return $this->redirect('list');
+
     }
 
     public function sendEmail(int $recordId): bool
