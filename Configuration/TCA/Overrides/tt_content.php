@@ -5,6 +5,7 @@ if (!defined('TYPO3')) {
 }
 
 (static function (): void {
+    $typo3MajorVersion = (new \TYPO3\CMS\Core\Information\Typo3Version())->getMajorVersion();
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
         'AcademicJobs',
         'NewJobForm',
@@ -32,10 +33,10 @@ if (!defined('TYPO3')) {
 
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
         'academicjobs_list',
-        'FILE:EXT:academic_jobs/Configuration/Flexforms/PluginList.xml'
+        sprintf('FILE:EXT:academic_jobs/Configuration/Flexforms/Core%s/PluginList.xml', $typo3MajorVersion)
     );
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
         'academicjobs_newjobform',
-        'FILE:EXT:academic_jobs/Configuration/Flexforms/Plugin_NewJobForm.xml'
+        sprintf('FILE:EXT:academic_jobs/Configuration/Flexforms/Core%s/Plugin_NewJobForm.xml', $typo3MajorVersion)
     );
 })();
