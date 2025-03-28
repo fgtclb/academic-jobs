@@ -2,13 +2,16 @@
 
 declare(strict_types=1);
 
+use FGTCLB\AcademicJobs\Domain\Model\Job;
+use FGTCLB\AcademicJobs\Domain\Model\Contact;
+
 return [
-    \FGTCLB\AcademicJobs\Domain\Model\Job::class => [
+    Job::class => [
         'tableName' => 'tx_academicjobs_domain_model_job',
-        'recordType' => \FGTCLB\AcademicJobs\Domain\Model\Job::class,
+        'recordType' => Job::class,
     ],
-    \FGTCLB\AcademicJobs\Domain\Model\Contact::class => [
+    Contact::class => [
         'tableName' => 'tx_academicjobs_domain_model_contact',
-        'recordType' => \FGTCLB\AcademicJobs\Domain\Model\Contact::class,
+        'recordType' => Contact::class,
     ],
 ];

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FGTCLB\AcademicJobs\Domain\Model;
 
+use TYPO3\CMS\Extbase\Annotation\Validate;
 use TYPO3\CMS\Extbase\Annotation\ORM\Cascade;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
@@ -15,13 +16,13 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 class Job extends AbstractEntity
 {
     /**
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+     * @Validate("NotEmpty")
      */
     protected string $title;
 
     /**
      * @var \DateTime
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+     * @Validate("NotEmpty")
      */
     protected $employmentStartDate;
 
@@ -33,7 +34,7 @@ class Job extends AbstractEntity
     protected ?FileReference $image = null;
 
     /**
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+     * @Validate("NotEmpty")
      */
     protected string $companyName;
 
@@ -51,7 +52,7 @@ class Job extends AbstractEntity
      * employmentType
      *
      * @var int
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+     * @Validate("NotEmpty")
      */
     protected int $employmentType;
 
@@ -69,13 +70,13 @@ class Job extends AbstractEntity
 
     /**
      * @var \DateTime
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+     * @Validate("NotEmpty")
      */
     protected $starttime;
 
     /**
      * @var \DateTime
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+     * @Validate("NotEmpty")
      */
     protected $endtime;
 

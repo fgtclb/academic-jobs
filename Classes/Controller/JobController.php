@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FGTCLB\AcademicJobs\Controller;
 
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use FGTCLB\AcademicJobs\DateTime\IsoDateTime;
 use FGTCLB\AcademicJobs\Domain\Model\Job;
 use FGTCLB\AcademicJobs\Domain\Repository\JobRepository;
@@ -84,7 +85,7 @@ class JobController extends ActionController
     }
 
     /**
-     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference|null $imageObject
+     * @param FileReference|null $imageObject
      */
     public function getImageUri($imageObject): ?string
     {
