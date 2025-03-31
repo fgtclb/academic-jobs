@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use FGTCLB\AcademicJobs\Domain\Model\Job;
 use FGTCLB\AcademicJobs\Domain\Model\Contact;
+use FGTCLB\AcademicJobs\Domain\Model\Job;
 
 return [
     Job::class => [
