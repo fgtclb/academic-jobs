@@ -12,7 +12,6 @@ use FGTCLB\AcademicJobs\Property\TypeConverter\JobAvatarImageUploadConverter;
 use FGTCLB\AcademicJobs\SaveForm\FlashMessageCreationMode;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
-use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
@@ -49,8 +48,7 @@ class JobController extends ActionController
             $this->addFlashMessage(
                 $this->translateAlert('job_not_found.body', 'Job not found.'),
                 '',
-                // @todo FlashMessage constants deprecated since TYPO3 v12 in favour of Native Enum.
-                (((new Typo3Version())->getMajorVersion() < 12) ? FlashMessage::ERROR : ContextualFeedbackSeverity::ERROR),
+                ContextualFeedbackSeverity::ERROR,
                 true
             );
             return $this->htmlResponse();
@@ -183,8 +181,7 @@ class JobController extends ActionController
             $this->addFlashMessage(
                 $this->translateAlert('job_not_created.body', 'Something went wrong.'),
                 $this->translateAlert('job_not_created.title', 'Job not created'),
-                // @todo FlashMessage constants deprecated since TYPO3 v12 in favour of Native Enum.
-                (((new Typo3Version())->getMajorVersion() < 12) ? FlashMessage::ERROR : ContextualFeedbackSeverity::ERROR),
+                ContextualFeedbackSeverity::ERROR,
                 true
             );
             $this->redirect('newJobForm');
@@ -246,16 +243,14 @@ class JobController extends ActionController
                 $this->addFlashMessageToQueue(
                     $this->translateAlert('job_created.body', 'Job created and email sent.'),
                     $this->translateAlert('job_created.title', 'Job created'),
-                    // @todo FlashMessage constants deprecated since TYPO3 v12 in favour of Native Enum.
-                    (((new Typo3Version())->getMajorVersion() < 12) ? FlashMessage::OK : ContextualFeedbackSeverity::OK),
+                    ContextualFeedbackSeverity::OK,
                     true
                 );
             } else {
                 $this->addFlashMessageToQueue(
                     $this->translateAlert('job_created_no_email.body', 'Job created, but email could not be sent.'),
                     $this->translateAlert('job_created_no_email.title', 'Job created'),
-                    // @todo FlashMessage constants deprecated since TYPO3 v12 in favour of Native Enum.
-                    (((new Typo3Version())->getMajorVersion() < 12) ? FlashMessage::WARNING : ContextualFeedbackSeverity::WARNING),
+                    ContextualFeedbackSeverity::WARNING,
                     true
                 );
             }
@@ -392,11 +387,11 @@ class JobController extends ActionController
     private function addFlashMessageToQueue(
         string $messageBody,
         string $messageTitle = '',
-        $severity = null,
+        ?ContextualFeedbackSeverity $severity = null,
         bool $storeInSession = true,
         ?string $queueIdentifier = null,
     ): void {
-        $severity ??= (((new Typo3Version())->getMajorVersion() < 12) ? FlashMessage::OK : ContextualFeedbackSeverity::OK);
+        $severity ??= ContextualFeedbackSeverity::OK;
         if ($queueIdentifier === null) {
             $this->addFlashMessage($messageBody, $messageTitle, $severity, $storeInSession);
             return;
