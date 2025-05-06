@@ -18,67 +18,53 @@ class Job extends AbstractEntity
     /**
      * @Validate("NotEmpty")
      */
-    protected string $title;
-
+    protected string $title = '';
     /**
-     * @var \DateTime
      * @Validate("NotEmpty")
      */
-    protected $employmentStartDate;
-
-    protected string $description;
-
+    protected ?\DateTime $employmentStartDate = null;
+    protected string $description = '';
     /**
      * @Cascade("remove")
      */
     protected ?FileReference $image = null;
-
     /**
      * @Validate("NotEmpty")
      */
-    protected string $companyName;
-
-    protected string $sector;
-
-    protected string $requiredDegree;
-
-    protected string $contractualRelationship;
-
+    protected string $companyName = '';
+    protected string $sector = '';
+    protected string $requiredDegree = '';
+    protected string $contractualRelationship = '';
     protected int $alumniRecommend = 0;
-
     protected int $internationalsWelcome = 0;
-
     /**
-     * employmentType
-     *
-     * @var int
      * @Validate("NotEmpty")
      */
-    protected int $employmentType;
-
-    protected string $workLocation;
-
-    protected string $link;
-
+    protected int $employmentType = 0;
+    protected string $workLocation = '';
+    protected string $link = '';
     protected string $slug = '';
-
-    protected int $type;
-
+    protected int $type = 0;
     protected int $hidden = 0;
-
     protected ?Contact $contact = null;
-
     /**
-     * @var \DateTime
      * @Validate("NotEmpty")
      */
-    protected $starttime;
-
+    protected ?\DateTime $starttime = null;
     /**
-     * @var \DateTime
      * @Validate("NotEmpty")
      */
-    protected $endtime;
+    protected ?\DateTime $endtime = null;
+
+    public function __construct()
+    {
+        $this->initializeObject();
+    }
+
+    /**
+     * @link https://docs.typo3.org/m/typo3/reference-coreapi/main/en-us/ExtensionArchitecture/Extbase/Reference/Domain/Model/Index.html#good-use-initializeobject-for-setup
+     */
+    public function initializeObject(): void {}
 
     public function getTitle(): string
     {
@@ -90,22 +76,12 @@ class Job extends AbstractEntity
         $this->title = $title;
     }
 
-    /**
-     * Returns the employmentStartDate
-     *
-     * @return \DateTime
-     */
-    public function getEmploymentStartDate()
+    public function getEmploymentStartDate(): ?\DateTime
     {
         return $this->employmentStartDate;
     }
 
-    /**
-     * Sets the employmentStartDate
-     *
-     * @param \DateTime $employmentStartDate
-     */
-    public function setEmploymentStartDate(\DateTime $employmentStartDate): void
+    public function setEmploymentStartDate(?\DateTime $employmentStartDate = null): void
     {
         $this->employmentStartDate = $employmentStartDate;
     }
@@ -230,56 +206,32 @@ class Job extends AbstractEntity
         $this->contact = $contact;
     }
 
-    /**
-     * employmentType
-     *
-     * @return int
-     */
     public function getEmploymentType(): int
     {
         return $this->employmentType;
     }
 
-    /**
-     * employmentType
-     *
-     * @param int $employmentType employmentType
-     * @return self
-     */
-    public function setEmploymentType(int $employmentType): self
+    public function setEmploymentType(int $employmentType): void
     {
         $this->employmentType = $employmentType;
-        return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getStarttime()
+    public function getStarttime(): ?\DateTime
     {
         return $this->starttime;
     }
 
-    /**
-     * @param \DateTime $starttime
-     */
-    public function setStarttime($starttime): void
+    public function setStarttime(?\DateTime $starttime = null): void
     {
         $this->starttime = $starttime;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getEndtime()
+    public function getEndtime(): ?\DateTime
     {
         return $this->endtime;
     }
 
-    /**
-     * @param \DateTime $endtime
-     */
-    public function setEndtime($endtime): void
+    public function setEndtime(?\DateTime $endtime = null): void
     {
         $this->endtime = $endtime;
     }
@@ -289,10 +241,9 @@ class Job extends AbstractEntity
         return $this->hidden;
     }
 
-    public function setHidden(int $hidden): self
+    public function setHidden(int $hidden): void
     {
         $this->hidden = $hidden;
-        return $this;
     }
 
     public function getImage(): ?FileReference
@@ -300,9 +251,8 @@ class Job extends AbstractEntity
         return $this->image;
     }
 
-    public function setImage(?FileReference $image): self
+    public function setImage(?FileReference $image): void
     {
         $this->image = $image;
-        return $this;
     }
 }
