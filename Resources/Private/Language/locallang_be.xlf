@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" product-name="academic_jobs">
+        <header/>
+        <body>
+            <!-- /* shared */ -->
+            <trans-unit id="element.tab.configuration">
+                <source>Configuration</source>
+            </trans-unit>
+
+            <!-- /* CType group */ -->
+            <trans-unit id="content.ctype.group.label">
+                <source>Academic</source>
+            </trans-unit>
+
+            <!-- /* academicjobs_newjobform */ -->
+            <trans-unit id="plugin.newjobform.label">
+                <source>Academic Jobs: New Job Form</source>
+            </trans-unit>
+
+            <!-- /* academicjobs_list */ -->
+            <trans-unit id="plugin.list.label">
+                <source>Academic Jobs: List Jobs</source>
+            </trans-unit>
+
+            <!-- /* academicjobs_detail */ -->
+            <trans-unit id="plugin.detail.label">
+                <source>Academic Jobs: Detail</source>
+            </trans-unit>
+
+            <!-- /* newContentElement */ -->
+            <trans-unit id="newContentElement.wizardItems.academic">
+                <source>Academic</source>
+            </trans-unit>
+            <trans-unit id="newContentElement.wizardItems.academic.newjobform.title">
+                <source>Academic New Jobs Form</source>
+            </trans-unit>
+            <trans-unit id="newContentElement.wizardItems.academic.newjobform.description">
+                <source>Plugin providing new jobs form</source>
+            </trans-unit>
+            <trans-unit id="newContentElement.wizardItems.academic.list.title">
+                <source>Academic Jobs List</source>
+            </trans-unit>
+            <trans-unit id="newContentElement.wizardItems.academic.list.description">
+                <source>Plugin for listing academic jobs</source>
+            </trans-unit>
+            <trans-unit id="newContentElement.wizardItems.academic.detail.title">
+                <source>Academic Jobs Detail</source>
+            </trans-unit>
+            <trans-unit id="newContentElement.wizardItems.academic.detail.description">
+                <source>Plugin for viewing single academic job</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

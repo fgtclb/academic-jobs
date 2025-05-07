@@ -6,6 +6,8 @@ $EM_CONF[$_EXTKEY] = [
     'constraints' => [
         'depends' => [
             'typo3' => '12.4.0-13.4.99',
+            'rte-ckeditor' => '12.4.0-13.4.99',
+            'install' => '12.4.0-13.4.99',
         ],
     ],
     'state' => 'beta',

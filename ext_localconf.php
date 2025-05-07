@@ -8,7 +8,6 @@ if (!defined('TYPO3')) {
 }
 
 (static function (): void {
-    // @todo Needs to be migrated to CType due to TYPO3 v13 constraint.
     ExtensionUtility::configurePlugin(
         'AcademicJobs',
         'NewJobForm',
@@ -17,9 +16,9 @@ if (!defined('TYPO3')) {
         ],
         [
             JobController::class => 'newJobForm, saveJob',
-        ]
+        ],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
-    // @todo Needs to be migrated to CType due to TYPO3 v13 constraint.
     ExtensionUtility::configurePlugin(
         'AcademicJobs',
         'List',
@@ -28,14 +27,16 @@ if (!defined('TYPO3')) {
         ],
         [
             JobController::class => 'list',
-        ]
+        ],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
-    // @todo Needs to be migrated to CType due to TYPO3 v13 constraint.
     ExtensionUtility::configurePlugin(
         'AcademicJobs',
         'Detail',
         [
             JobController::class => 'show, list',
-        ]
+        ],
+        [],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 })();
