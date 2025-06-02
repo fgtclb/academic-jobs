@@ -1,108 +1,18 @@
 <html
+    lang="en"
     data-namespace-typo3-fluid="true"
     xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
 >
+
+<div class="academic-jobs-list">
     <f:flashMessages />
-    <f:for each="{jobs}" as="job" iteration="i">
-        <article class="card text-white bg-secondary border-dark h-100 mb-3">
-            <div class="card-body">
-                <div class="row">
-                    <f:if condition="{job.image}">
-                        <div class="col job-image">
-                            <f:image image="{job.image}" maxWidth="200"/>
-                        </f:if>
-                    </div>
-                    <div class="col-md-9 mt-4">
-                        <div class="row mb-2">
-                            <f:if condition="{job.slug}">
-                                <f:then>
-                                    <f:link.action
-                                        pageUid="{settings.detailPid}"
-                                        action="show"
-                                        pluginName="Detail"
-                                        arguments="{job: job}"
-                                    >
-                                        <h4 class="card-title text-white">{job.title}</h4>
-                                    </f:link.action>
-                                </f:then>
-                                <f:else>
-                                    <h4 class="card-title text-white">{job.title}</h4>
-                                    <p>
-                                        <b><f:translate key="tx_academicjobs.fe.alert.slug_missing.body" extensionName="academic_jobs" /></b>
-                                    </p>
-                                </f:else>
-                            </f:if>
-                        </div>
-                        <div class="row">
-                            <f:if condition="{job.employmentStartDate}">
-                                <div class="col-md-3 mb-2">
-                                    <b><f:translate key="tx_academicjobs_domain_model_job.employment_start_date"/></b><br>
-                                    <f:format.date format="d.m.Y">{job.employmentStartDate}</f:format.date>
-                                </div>
-                            </f:if>
-                            <f:if condition="{job.endtime}">
-                                <div class="col-md-3 mb-2">
-                                    <b><f:translate key="tx_academicjobs_domain_model_job.application_time"/></b><br>
-                                    <f:format.date format="d.m.Y">{job.endtime}</f:format.date>
-                                </div>
-                            </f:if>
-                            <f:if condition="{job.companyName}">
-                                <div class="col-md-3 mb-2">
-                                    <b><f:translate key="tx_academicjobs_domain_model_job.company_name"/></b><br>
-                                    {job.companyName}
-                                </div>
-                            </f:if>
-                            <f:if condition="{job.type}">
-                                <div class="col-md-3 mb-2">
-                                    <b><f:translate key="tx_academicjobs_domain_model_job.job_type"/></b>
-                                    <br>
-                                    <f:switch expression="{job.type}">
-                                        <f:case value="1"><f:translate key="tx_academicjobs_domain_model_job.jobtype.job" /></f:case>
-                                        <f:case value="2"><f:translate key="tx_academicjobs_domain_model_job.jobtype.sidejob" /></f:case>
-                                        <f:case value="3"><f:translate key="tx_academicjobs_domain_model_job.jobtype.thesis" /></f:case>
-                                    </f:switch>
-                                </div>
-                            </f:if>
-                            <f:if condition="{job.requiredDegree}">
-                                <div class="col-md-3 mb-2">
-                                    <b><f:translate key="tx_academicjobs.fe.form.text.required_degree" /></b>
-                                    <br>
-                                    {job.requiredDegree}
-                                </div>
-                            </f:if>
-                            <f:if condition="{job.contractualRelationship}">
-                                <div class="col-md-3 mb-2">
-                                    <b><f:translate key="tx_academicjobs.fe.form.text.contractual_relationship" /></b>
-                                    <br>
-                                    {job.contractualRelationship}
-                                </div>
-                            </f:if>
-                            <f:if condition="{job.employmentType}">
-                                <div class="col-md-3 mb-2">
-                                    <b><f:translate key="tx_academicjobs.fe.list.text.working_hours" /></b>
-                                    <br>
-                                    <f:switch expression="{job.employmentType}">
-                                        <f:case value="1"><f:translate key="tx_academicjobs_domain_model_job.employment_type.fulltime" /></f:case>
-                                        <f:case value="2"><f:translate key="tx_academicjobs_domain_model_job.employment_type.parttime" /></f:case>
-                                    </f:switch>
-                                </div>
-                            </f:if>
-                            <f:if condition="{job.workLocation}">
-                                <div class="col-md-3 mb-2">
-                                    <b><f:translate key="tx_academicjobs_domain_model_job.work_location"/></b>
-                                    <br>
-                                    {job.workLocation}
-                                </div>
-                            </f:if>
-                        </div>
-                        <div class="row pt-4">
-                            <div class="col-12 text-white">
-                                {job.description  -> f:format.html() -> f:format.crop(maxCharacters: '100', respectWordBoundaries: 'true', respectHtml: 'true')}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </article>
+
+    <f:for each="{jobs}" as="job">
+        <f:render
+            partial="Job/Item"
+            arguments="{_all}"
+        />
     </f:for>
+</div>
+
 </html>

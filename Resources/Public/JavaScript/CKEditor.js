@@ -18,11 +18,20 @@
     ]
   };
 
+  const rteFields = document.querySelectorAll('.rte');
+
+  if (!rteFields) {
+    return;
+  }
+
   let waitCKEDITOR = setInterval(function() {
     console.log('Wait for ckeditor');
     if (window.CKEDITOR) {
       clearInterval(waitCKEDITOR);
-      CKEDITOR.replace('job-description', editorConfig);
+
+      rteFields.forEach(function(field) {
+        CKEDITOR.replace(field.id, editorConfig);
+      });
     }
   }, 100);
 })();

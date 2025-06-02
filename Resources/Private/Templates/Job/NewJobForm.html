@@ -1,351 +1,126 @@
 <html
-  data-namespace-typo3-fluid="true"
-  xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+    lang="en"
+    data-namespace-typo3-fluid="true"
+    xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
 >
-  <f:asset.script
-    identifier="ckeditor"
-    src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"
-    defer="1"
-  />
 
-  <f:asset.script
-    identifier="frontend-editor"
-    src="EXT:academic_jobs/Resources/Public/JavaScript/CKEditor.js"
-    defer="1"
-  />
+<f:asset.script identifier="ckeditor" src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js" defer="1"/>
 
-  <f:asset.css
-    identifier="frontend-editor"
-    href="EXT:academic_jobs/Resources/Public/Css/Styles.css"
-  />
+<f:asset.script identifier="frontend-editor" src="EXT:academic_jobs/Resources/Public/JavaScript/CKEditor.js" defer="1"/>
 
-  <f:flashMessages />
+<div class="academic-jobs-new">
+    <f:flashMessages />
 
-  <f:render partial="FormErrors" />
+    <f:form.validationResults>
+        <f:if condition="{validationResults.flattenedErrors}">
+            <ul class="alert alert-danger" role="alert">
+                <f:for each="{validationResults.flattenedErrors}" key="propertyPath" as="errors">
+                    <li>
+                        {propertyPath}:
 
-  <f:form
-    class="row g-6"
-    action="saveJob"
-    name="job"
-    object="{job}"
-    enctype="multipart/form-data"
-  >
-    <div class="col-md-3">
-      <label for="job-image" class="form-label">
-        <f:translate
-          key="tx_academicjobs.fe.form.text.job_logo"
-          extensionName="academic_jobs"
-        />
-      </label>
+                        <ul>
+                            <f:for each="{errors}" as="error">
+                                <li>{error}</li>
+                            </f:for>
+                        </ul>
+                    </li>
+                </f:for>
+            </ul>
+        </f:if>
+  </f:form.validationResults>
 
-      <f:form.upload property="image" class="form-control" id="job-image" />
-    </div>
+  <f:form action="saveJob" name="job" object="{job}" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-12 col-md-3">
+                <label for="job-image" class="form-label">
+                    {f:translate(key: 'jobs.image', extensionName: 'academic_jobs')}
+                </label>
 
-    <div class="col-md-9">
-      <label for="title" class="form-label">
-        <f:translate
-          key="tx_academicjobs.fe.form.text.job_title"
-          extensionName="academic_jobs"
-        />
-      </label>
+                <f:form.upload property="image" class="form-control" id="job-image"/>
+            </div>
 
-      <f:form.textfield
-        id="title"
-        property="title"
-        class="form-control"
-        required="true"
-      />
-    </div>
+            <div class="col-12 col-md-9">
+                <label for="title" class="form-label">
+                    {f:translate(key: 'jobs.title', extensionName: 'academic_jobs')}
+                </label>
 
-    <div class="col-md-4">
-      <label for="employment_type" class="form-label">
-        <f:translate
-          key="tx_academicjobs.fe.form.text.job_working_hours"
-          extensionName="academic_jobs"
-        />
-      </label>
+                <f:form.textfield id="title" property="title" class="form-control" required="true"/>
+            </div>
 
-      <f:form.select
-        property="employmentType"
-        id="employmentType"
-        class="form-select"
-        options="{
-          1: '{f:translate(id: \'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.employment_type.fulltime\')}',
-          2: '{f:translate(id: \'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.employment_type.parttime\')}',
-        }"
-        required="true"
-      />
-    </div>
+            <!-- This field configuration structure should come from the controller and should not be build here -->
 
-    <div class="col-md-4">
-      <label for="job-type" class="form-label">
-        <f:translate
-          key="tx_academicjobs.fe.form.text.job_offer_type"
-          extensionName="academic_jobs"
-        />
-      </label>
-
-      <f:form.select
-        property="type"
-        id="job-type"
-        class="form-select"
-        options="{
-          1: '{f:translate(id: \'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.jobtype.job\')}',
-          2: '{f:translate(id: \'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.jobtype.sidejob\')}',
-          3: '{f:translate(id: \'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.jobtype.thesis\')}',
-        }"
-        required="true"
-      />
-    </div>
-
-    <div class="col-md-4">
-      <label for="employmentStartDate" class="form-label">
-        <f:translate
-          key="tx_academicjobs.fe.form.text.job_start_employment"
-          extensionName="academic_jobs"
-        />
-      </label>
-
-      <f:form.textfield
-        type="date"
-        property="employmentStartDate"
-        id="employmentStartDate"
-        class="form-control"
-        required="true"
-      />
-    </div>
-
-    <div class="col-md-6">
-      <label for="companyName" class="form-label">
-        <f:translate
-          key="tx_academicjobs.fe.form.text.job_employer"
-          extensionName="academic_jobs"
-        />
-      </label>
-
-      <f:form.textfield
-        property="companyName"
-        id="companyName"
-        class="form-control"
-        required="true"
-      />
-    </div>
-
-    <div class="col-md-6">
-        <label for="sector" class="form-label">
-          <f:translate key="tx_academicjobs.fe.form.text.job_industry" />
-        </label>
-
-        <f:form.textfield property="sector" id="sector" class="form-control" />
-    </div>
-
-		<div class="col-md-6">
-				<label for="requiredDegree" class="form-label">
-					<f:translate key="tx_academicjobs.fe.form.text.required_degree" />
-				</label>
-
-				<f:form.textfield
-						property="requiredDegree"
-						id="requiredDegree"
-						class="form-control"
-						placeholder="Bachelor, Diplom, Master"
-				/>
-		</div>
-
-		<div class="col-md-6">
-			<label for="contractualRelationship" class="form-label">
-				<f:translate key="tx_academicjobs.fe.form.text.contractual_relationship" extensionName="academic_jobs" />
-			</label>
-
-			<f:form.textfield property="contractualRelationship" id="contractualRelationship" class="form-control" />
-		</div>
-
-    <div class="col-md-6">
-        <label for="workLocation" class="form-label">
-          <f:translate key="tx_academicjobs.fe.form.text.job_location" extensionName="academic_jobs" />
-        </label>
-
-        <f:form.textfield
-            property="workLocation"
-            id="workLocation"
-            class="form-control"
-            placeholder="Remote, Berlin, Aachen"
-        />
-      </label>
-    </div>
-
-    <div class="col-md-6">
-      <label for="requiredDegree" class="form-label">
-        <f:translate
-          key="tx_academicjobs.fe.form.text.required_degree"
-          extensionName="academic_jobs"
-        />
-      </label>
-
-      <f:form.textfield
-        property="requiredDegree"
-        id="requiredDegree"
-        class="form-control"
-        placeholder="Bachelor, Diplom, Master"
-      />
-    </div>
-
-    <div class="col-md-6">
-      <label for="contractualRelationship" class="form-label">
-        <f:translate
-          key="tx_academicjobs.fe.form.text.contractual_relationship"
-          extensionName="academic_jobs"
-        />
-      </label>
-
-      <f:form.textfield
-        property="contractualRelationship"
-        id="contractualRelationship"
-        class="form-control"
-      />
-    </div>
-
-    <div class="col-md-6">
-      <label for="workLocation" class="form-label">
-        <f:translate
-          key="tx_academicjobs.fe.form.text.job_location"
-          extensionName="academic_jobs"
-        />
-      </label>
-
-      <f:form.textfield
-        property="workLocation"
-        id="workLocation"
-        class="form-control"
-        placeholder="Remote, Berlin, Aachen"
-      />
-    </div>
-
-    <div class="col-md-6">
-      <label for="link" class="form-label">
-        <f:translate
-          key="tx_academicjobs.fe.form.text.job_link"
-          extensionName="academic_jobs"
-        />
-      </label>
-
-      <f:form.textfield property="link" id="link" class="form-control" />
-    </div>
-
-    <div class="col-md-6">
-      <label for="starttime" class="form-label">
-        <f:translate
-          key="tx_academicjobs.fe.form.text.job_starttime"
-          extensionName="academic_jobs"
-        />
-      </label>
-
-      <f:form.textfield
-        type="date"
-        property="starttime"
-        id="starttime"
-        class="form-control"
-      />
-    </div>
-
-    <div class="col-md-6">
-      <label for="endtime" class="form-label">
-        <f:translate
-          key="tx_academicjobs.fe.form.text.job_endtime"
-          extensionName="academic_jobs"
-        />
-      </label>
-
-      <f:form.textfield
-        type="date"
-        property="endtime"
-        id="endtime"
-        class="form-control"
-      />
-    </div>
-
-    <div class="col-12">
-      <label for="job-description" class="form-label">
-        <f:translate
-          key="tx_academicjobs.fe.form.text.job_description"
-          extensionName="academic_jobs"
-        />
-      </label>
-
-      <f:form.textarea
-        rows="4"
-        id="job-description"
-        property="description"
-        class="form-control"
-        required="true"
-      />
-    </div>
-
-    <div class="col-12 mt-3">
-      <details>
-        <summary>
-          <f:translate
-            key="tx_academicjobs.fe.form.text.contact.title"
-            extensionName="academic_jobs"
-          />
-        </summary>
-
-        <fieldset class="col-md-12">
-          <label class="form-label">
-            <f:translate
-              key="tx_academicjobs.fe.form.text.contact.name"
-              extensionName="academic_jobs"
+            <f:variable
+                name="employmentTypeOptions"
+                value="{
+                    1: '{f:translate(key: \'jobs.employmentType.1\', extensionName: \'academic_jobs\')}',
+                    2: '{f:translate(key: \'jobs.employmentType.2\', extensionName: \'academic_jobs\')}'
+                }"
             />
-          </label>
 
-          <f:form.textfield property="contact.name" class="form-control" />
-        </fieldset>
-
-        <fieldset class="col-md-12">
-          <label class="form-label">
-            <f:translate
-              key="tx_academicjobs.fe.form.text.contact.email"
-              extensionName="academic_jobs"
+            <f:variable
+                name="typeOptions"
+                value="{
+                    1: '{f:translate(key: \'jobs.type.1\', extensionName: \'academic_jobs\')}',
+                    2: '{f:translate(key: \'jobs.type.2\', extensionName: \'academic_jobs\')}',
+                    3: '{f:translate(key: \'jobs.type.3\', extensionName: \'academic_jobs\')}'
+                }"
             />
-          </label>
 
-          <f:form.textfield property="contact.email" class="form-control" />
-        </fieldset>
+            <f:for
+                each="{
+                    employmentType: '{field: \'select\', required: true, options: employmentTypeOptions}',
+                    type: '{field: \'select\', required: true, options: typeOptions}',
+                    employmentStartDate: '{type: \'date\', required: true}',
+                    companyName: '{required: true}',
+                    sector: '',
+                    requiredDegree: '',
+                    contractualRelationship: '',
+                    workLocation: '',
+                    link: '{type: \'url\'}',
+                    starttime: '{type: \'date\'}',
+                    endtime: '{type: \'date\'}',
+                    description: '{field: \'textarea\', required: true, rte: true}',
+                }"
+                as="fieldSettings"
+                key="property"
+            >
+                <f:render
+                    partial="Job/Form/Field"
+                    arguments="{
+                        property: property,
+                        fieldSettings: fieldSettings,
+                        labelPrefix: 'jobs',
+                    }"
+                />
+            </f:for>
+        </div>
 
-        <fieldset class="col-md-12">
-          <label class="form-label">
-            <f:translate
-              key="tx_academicjobs.fe.form.text.contact.phone"
-              extensionName="academic_jobs"
-            />
-          </label>
+        <div class="row">
+            <f:for
+                each="{
+                    name: '',
+                    email: '',
+                    phone: '',
+                    additionalInformation: '',
+                }"
+                as="fieldSettings"
+                key="property"
+            >
+                <f:render
+                    partial="Job/Form/Field"
+                    arguments="{
+                        property: 'contact.{property}',
+                        fieldSettings: fieldSettings,
+                        labelPrefix: 'jobs.contact',
+                    }"
+                />
+            </f:for>
+        </div>
 
-          <f:form.textfield property="contact.phone" class="form-control" />
-        </fieldset>
+        <button class="btn btn-primary mt-4" type="submit">
+            {f:translate(key: 'jobs.submit', extensionName: 'academic_jobs')}
+        </button>
+    </f:form>
+</div>
 
-        <fieldset class="col-md-12">
-          <label class="form-label">
-            <f:translate
-              key="tx_academicjobs.fe.form.text.contact.additional"
-              extensionName="academic_jobs"
-            />
-          </label>
-
-          <f:form.textfield
-            property="contact.additionalInformation"
-            class="form-control"
-          />
-        </fieldset>
-      </details>
-    </div>
-
-    <div class="col-12 mt-3">
-      <f:form.submit class="btn btn-primary w-100" value="Absenden">
-        <f:translate
-          key="tx_academicjobs.fe.form.text.submit"
-          extensionName="academic_jobs"
-        />
-      </f:form.submit>
-    </div>
-  </f:form>
 </html>

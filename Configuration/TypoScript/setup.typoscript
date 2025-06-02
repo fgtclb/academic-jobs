@@ -21,7 +21,7 @@ plugin.tx_academicjobs {
   }
   settings {
     detailPid = {$plugin.tx_academicjobs.detailPid}
-    listPid = {$plugin.tx_academicjobs.listPid}
+    listPid = 3
 
     email {
       recipientEmail = {$plugin.tx_academicjobs.email.recipientEmail}

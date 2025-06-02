@@ -24,6 +24,7 @@ use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 class JobController extends ActionController
@@ -37,8 +38,22 @@ class JobController extends ActionController
         protected readonly BackendUriBuilder $backendUriBuilder,
     ) {}
 
-    public function indexAction(): ResponseInterface
+    public function listAction(): ResponseInterface
     {
+        $jobs = [];
+        $jobType = $this->settings['job']['type'] ?? 0;
+
+        if ($jobType > 0) {
+            $jobs = $this->jobRepository->findByJobType((int)$jobType);
+        } else {
+            $jobs = $this->jobRepository->findAll();
+        }
+
+        $this->view->assignMultiple([
+            'jobs' => $jobs,
+            'data' => $this->getCurrentContentObjectRenderer()?->data,
+        ]);
+
         return $this->htmlResponse();
     }
 
@@ -78,53 +93,16 @@ class JobController extends ActionController
 
         $this->setMetaTags($metaTags);
 
-        $this->view->assign('job', $job);
+        $this->view->assignMultiple([
+            'job' => $job,
+            'data' => $this->getCurrentContentObjectRenderer()?->data,
+        ]);
+
         return $this->htmlResponse();
-    }
-
-    /**
-     * @param FileReference|null $imageObject
-     */
-    public function getImageUri($imageObject): ?string
-    {
-        if ($imageObject === null) {
-            return null;
-        }
-        $originalResource = $imageObject->getOriginalResource();
-
-        return $this->imageService->getImageUri($originalResource, true);
-    }
-
-    /**
-     * @param array<string, string> $metaTags
-     */
-    private function setMetaTags(array $metaTags): void
-    {
-        $metaTagManager = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
-
-        foreach ($metaTags as $property => $content) {
-            $metaTagManagerForProperty = $metaTagManager->getManagerForProperty($property);
-            $metaTagManagerForProperty->addProperty($property, $content);
-        }
     }
 
     public function newJobFormAction(?Job $job = null): ResponseInterface
     {
-        return $this->htmlResponse();
-    }
-
-    public function listAction(): ResponseInterface
-    {
-        $jobs = [];
-        $jobType = $this->settings['job']['type'] ?? 0;
-
-        if ($jobType > 0) {
-            $jobs = $this->jobRepository->findByJobType((int)$jobType);
-        } else {
-            $jobs = $this->jobRepository->findAll();
-        }
-
-        $this->view->assign('jobs', $jobs);
         return $this->htmlResponse();
     }
 
@@ -264,6 +242,38 @@ class JobController extends ActionController
         // Since TYPO3v12 redirect method returns a response object. Return it directly.
         return $this->redirect('list');
 
+    }
+
+    /**
+     * ------------------------------------------------------------------------
+     * Helper functions
+     * ------------------------------------------------------------------------
+     */
+
+    /**
+     * @param FileReference|null $imageObject
+     */
+    public function getImageUri($imageObject): ?string
+    {
+        if ($imageObject === null) {
+            return null;
+        }
+        $originalResource = $imageObject->getOriginalResource();
+
+        return $this->imageService->getImageUri($originalResource, true);
+    }
+
+    /**
+     * @param array<string, string> $metaTags
+     */
+    private function setMetaTags(array $metaTags): void
+    {
+        $metaTagManager = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
+
+        foreach ($metaTags as $property => $content) {
+            $metaTagManagerForProperty = $metaTagManager->getManagerForProperty($property);
+            $metaTagManagerForProperty->addProperty($property, $content);
+        }
     }
 
     public function sendEmail(int $recordId): bool
@@ -422,5 +432,10 @@ class JobController extends ActionController
         );
 
         $this->getFlashMessageQueue($queueIdentifier)->enqueue($flashMessage);
+    }
+
+    private function getCurrentContentObjectRenderer(): ?ContentObjectRenderer
+    {
+        return $this->request->getAttribute('currentContentObject');
     }
 }

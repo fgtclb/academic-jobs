@@ -1,28 +1,28 @@
 <T3DataStructure>
     <ROOT>
-        <sheetTitle>LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.pi_flexform.sheetGeneral</sheetTitle>
+        <sheetTitle>LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_job.pi_flexform.sheetGeneral</sheetTitle>
         <type>array</type>
         <el>
             <settings.job.type>
-                <label>LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.list.jobType.label</label>
+                <label>LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_job.list.jobType.label</label>
                 <config>
                     <type>select</type>
                     <renderType>selectSingle</renderType>
                     <items>
                         <numIndex index="0" type="array">
-                            <numIndex index="0">LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.jobtype.none</numIndex>
+                            <numIndex index="0">LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_job.jobtype.none</numIndex>
                             <numIndex index="1">0</numIndex>
                         </numIndex>
                         <numIndex index="1" type="array">
-                            <numIndex index="0">LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.jobtype.job</numIndex>
+                            <numIndex index="0">LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_job.jobtype.job</numIndex>
                             <numIndex index="1">1</numIndex>
                         </numIndex>
                         <numIndex index="2" type="array">
-                            <numIndex index="0">LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.jobtype.sidejob</numIndex>
+                            <numIndex index="0">LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_job.jobtype.sidejob</numIndex>
                             <numIndex index="1">2</numIndex>
                         </numIndex>
                         <numIndex index="3" type="array">
-                            <numIndex index="0">LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.jobtype.thesis</numIndex>
+                            <numIndex index="0">LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_job.jobtype.thesis</numIndex>
                             <numIndex index="1">3</numIndex>
                         </numIndex>
                     </items>

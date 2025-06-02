@@ -1,10 +1,10 @@
 <T3DataStructure>
     <ROOT>
-        <sheetTitle>LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.pi_flexform.sheetGeneral</sheetTitle>
+        <sheetTitle>LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_job.pi_flexform.sheetGeneral</sheetTitle>
         <type>array</type>
         <el>
             <settings.redirectPageId>
-                <label>LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:tx_academicjobs_domain_model_job.newJobForm.redirectPageId.label</label>
+                <label>LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_job.newJobForm.redirectPageId.label</label>
                 <config>
                     <type>group</type>
                     <allowed>pages</allowed>

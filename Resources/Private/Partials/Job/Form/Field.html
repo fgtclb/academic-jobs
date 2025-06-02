@@ -1,0 +1,52 @@
+<html
+    lang="en"
+    data-namespace-typo3-fluid="true"
+    xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+>
+
+<div class="col-12 col-md-4 mt-4">
+    <label for="{labelPrefix}-{property}" class="form-label">
+        {f:translate(key: '{labelPrefix}.{property}', extensionName: 'academic_jobs')}
+    </label>
+
+    <f:render
+        section="{f:if(condition: '{fieldSettings.field}', then: '{fieldSettings.field}', else: 'textfield')}"
+        arguments="{
+            property: property,
+            fieldSettings: fieldSettings,
+            labelPrefix: labelPrefix,
+        }"
+    />
+</div>
+
+<f:section name="textarea">
+    <f:form.textarea
+        rows="4"
+        id="{labelPrefix}-{property}"
+        property="{property}"
+        class="form-control {f:if(condition: '{fieldSettings.rte}', then: 'rte')}"
+        required="{fieldSettings.required}"
+    />
+</f:section>
+
+<f:section name="textfield">
+    <f:form.textfield
+        id="{labelPrefix}-{property}"
+        property="{property}"
+        class="form-control"
+        type="{fieldSettings.type}"
+        required="{fieldSettings.required}"
+    />
+</f:section>
+
+<f:section name="select">
+    <f:form.select
+        property="{property}"
+        id="{labelPrefix}-{property}"
+        class="form-select"
+        options="{fieldSettings.options}"
+        required="{fieldSettings.required}"
+    />
+</f:section>
+
+</html>

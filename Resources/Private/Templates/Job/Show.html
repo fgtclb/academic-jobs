@@ -1,27 +1,69 @@
 <html
-  data-namespace-typo3-fluid="true"
-  xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+    lang="en"
+    data-namespace-typo3-fluid="true"
+    xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
 >
+
+<div class="academic-jobs-detail">
     <f:flashMessages />
+
     <f:if condition="{job}">
         <f:then>
-            <div class="job-detail">
-                <f:render partial="Job/Show/Header" arguments="{job: job}" />
-                <f:render partial="Job/Show/Information" arguments="{job: job}" />
-                <div class="row">
-                    <div class="col-12 col-md-8">
-                        <f:render partial="Job/Show/Details" arguments="{job: job}" />
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <f:render partial="Job/Show/Contact" arguments="{contact: job.contact}" />
-                    </div>
+            <f:render
+                partial="Job/Header"
+                arguments="{
+                    header: '{job.title}',
+                    layout: '{data.header_layout}',
+                    subheader: '{data.subheader}'
+                    details: 'true',
+                }"
+            />
+
+            <div class="row">
+                <div class="col-12 col-md-8">
+                    <f:render
+                        partial="Job/Information"
+                        arguments="{
+                            job: job,
+                        }"
+                    />
+
+                    <f:if condition="{job.description}">
+                        <f:format.raw>{job.description}</f:format.raw>
+                    </f:if>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <f:if condition="{settings.listPid}">
+                        <f:link.page pageUid="{settings.listPid}">
+                            {f:translate(key: 'jobs.back', extensionName: 'academic_jobs')}
+                        </f:link.page>
+                    </f:if>
+
+                    <f:render
+                        partial="Job/Contact"
+                        arguments="{
+                            contact: job.contact,
+                            data: data,
+                        }"
+                    />
                 </div>
             </div>
         </f:then>
         <f:else>
-            <f:link.page pageUid="{settings.listPid}">
-                <f:translate key="tx_academicjobs.fe.list.text.back" />
-            </f:link.page>
+            <div class="row">
+                <div class="col-12 col-md-8"></div>
+
+                <div class="col-12 cold-md-4">
+                    <f:if condition="{settings.listPid}">
+                        <f:link.page pageUid="{settings.listPid}">
+                            {f:translate(key: 'jobs.back', extensionName: 'academic_jobs')}
+                        </f:link.page>
+                    </f:if>
+                </div>
+            </div>
         </f:else>
     </f:if>
+</div>
+
 </html>

@@ -1,406 +1,130 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-	<file
-		source-language="en"
-		target-language="de"
-		datatype="plaintext"
-		original="EXT:academic_jobs/Resources/Private/Language/locallang.xlf"
-		date="2023-09-02T12:17:09Z"
-		product-name="academic_jobs"
-	>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-langague="de" datatype="plaintext" original="EXT:academic_jobs/Resources/Private/Language/locallang.xlf" date="2023-09-02T12:17:09Z" product-name="academic_jobs">
 		<header/>
 		<body>
+            <!-- Backend: TypoScript Constants Editor -->
 
-			<!-- Flexform General -->
-			<trans-unit id="tx_academicjobs_domain_model_job.pi_flexform.sheetGeneral">
-				<source>Settings</source>
-				<target>Settings</target>
-			</trans-unit>
-
-			<!-- Flexform Plugin List -->
-			<trans-unit id="tx_academicjobs_domain_model_job.list.jobType.label">
-				<source>Job Type</source>
-				<target>Job Type</target>
-			</trans-unit>
-
-			<!-- Flexform Plugin NewJobForm -->
-			<trans-unit id="tx_academicjobs_domain_model_job.newJobForm.redirectPageId.label">
-				<source>Redirect page after job creation</source>
-				<target>Weiterleitungsseite nach erfolgreichen anlegen eines Jobs</target>
-			</trans-unit>
-
-			<!-- Backend: TypoScript Constants Editor -->
-
-			<trans-unit id="saveForm.flashMessageCreationMode.label">
-				<source>Flashmessage creation mode when persisting new jobs (FE)</source>
-				<target>Flashmessage creation mode when persisting new jobs (FE)</target>
-			</trans-unit>
-			<trans-unit id="saveForm.flashMessageCreationMode.option_always">
-				<source>always</source>
-				<target>immer</target>
-			</trans-unit>
-			<trans-unit id="saveForm.flashMessageCreationMode.option_never">
-				<source>never</source>
-				<target>niemals</target>
-			</trans-unit>
-			<trans-unit id="saveForm.flashMessageCreationMode.option_suppressWhenListPidSelected">
-				<source>suppress when list pid has been configured</source>
-				<target>Nur wenn keine listPid gesetzt wurde.</target>
-			</trans-unit>
-
-			<!-- Domain Model: Job -->
-
-			<trans-unit id="tx_academicjobs_domain_model_job">
-				<source>Job</source>
-				<target>Job</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.description">
-				<source>Job description</source>
-				<target>Jobbeschreibung</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.job_title">
-				<source>Job Title</source>
-				<target>Jobtitel</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.job_title.description">
-				<source>Job Title Description</source>
-				<target>Jobtitel</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.employment_start_date">
-				<source>Employment Start Date</source>
-				<target>Arbeitsbeginn</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.employment_start_date.description">
-				<source>Employment Start Date</source>
-				<target>Arbeitsbeginn</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.job_description">
-				<source>Job Description</source>
-				<target>Jobbeschreibung</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.job_description.description">
-				<source>Job Description</source>
-				<target>Jobbeschreibung</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.image">
-				<source>Image</source>
-				<target>Bild</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.image.description">
-				<source>Image</source>
-				<target>Bild</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.company_name">
-				<source>Organization</source>
-				<target>Organisation</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.company_name.description">
-				<source>Organization</source>
-				<target>Organisation</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.sector">
-				<source>Sector</source>
-				<target>Branche</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.sector.description">
-				<source>Sector</source>
-				<target>Branche Beschreibung</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.required_degree">
-				<source>Required degree</source>
-				<target>Benötigter Abschluss</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.contractual_relationship">
-				<source>Contractual relationship</source>
-				<target>Vertragsverhältnis</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.alumni_recommend">
-				<source>Alumni recommends</source>
-				<target>Alumni empfiehlt</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.internationals_welcome">
-				<source>Internationals welcome</source>
-				<target>Internationals willkommen</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.employment_type">
-				<source>Employment Type</source>
-				<target>Art des Stellenangebots</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.employment_type.description">
-				<source>Employment Type Description</source>
-				<target>Stellenbeschreibung</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.employment_type.fulltime">
-				<source>Full-time</source>
-				<target>Vollzeit</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.employment_type.parttime">
-				<source>Part-time</source>
-				<target>Teilzeit</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.application_time">
-				<source>Application time</source>
-				<target>Bewerbungsfrist</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.work_location">
-				<source>Work Location</source>
-				<target>Ort</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.work_location.description">
-				<source>ex. (Remote, Hybrid, Berlin)</source>
-				<target>e.g (Remote, Hybrid, Berlin)</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.link">
-				<source>Link</source>
-				<target>Link</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.link.description">
-				<source>Link to the announcement or website</source>
-				<target>Link zur Ausschreibung oder Website</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.slug">
-				<source>Slug</source>
-				<target>Slug</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.slug.description">
-				<source>Slug</source>
-				<target>Slug</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.job_type">
-				<source>Job Type</source>
-				<target>Jobtyp</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.job_type.description">
-				<source>Job Type</source>
-				<target>Jobtyp Beschreibung</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.contact">
-				<source>Contact</source>
-				<target>Kontakt</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.contact.description">
-				<source>Contact</source>
-				<target>Kontakt</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.jobtype.none">
-				<source>None</source>
-				<target>Keine Auswahl</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.jobtype.job">
-				<source>Job</source>
-				<target>Job</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.jobtype.sidejob">
-				<source>Sidejob</source>
-				<target>Nebenjob</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.jobtype.thesis">
-				<source>Thesis</source>
-				<target>Abschlussarbeit</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.jobtype.1">
-				<source>Job</source>
-				<target>Job</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.jobtype.2">
-				<source>Sidejob</source>
-				<target>Nebenjob</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_job.jobtype.3">
-				<source>Thesis</source>
-				<target>Abschlussarbeit</target>
-			</trans-unit>
-
-			<!-- Domain Model: Contact -->
-
-			<trans-unit id="tx_academicjobs_domain_model_contact">
-				<source>Contact</source>
-				<target>Kontakt</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_contact.description">
-				<source>Contact</source>
-				<target>Kontakt</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_contact.name">
-				<source>Name</source>
-				<target>Name</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_contact.name.description">
-				<source>Name</source>
-				<target>Name</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_contact.email">
-				<source>Email</source>
-				<target>E-Mail</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_contact.email.description">
-				<source>Email</source>
-				<target>E-Mail</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_contact.phone">
-				<source>Phone</source>
-				<target>Telefon</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_contact.phone.description">
-				<source>Phone</source>
-				<target>Telefon</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_contact.additional_information">
-				<source>Additional Information</source>
-				<target>Zusätzliche Informationen</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_contact.additional_information.description">
-				<source>Additional Information</source>
-				<target>Zusätzliche Informationen</target>
-			</trans-unit>
+            <trans-unit id="saveForm.flashMessageCreationMode.label">
+                <source>Flashmessage creation mode when persisting new jobs (FE)</source>
+                <target>Flashmessage creation mode when persisting new jobs (FE)</target>
+            </trans-unit>
+            <trans-unit id="saveForm.flashMessageCreationMode.option_always">
+                <source>always</source>
+                <target>immer</target>
+            </trans-unit>
+            <trans-unit id="saveForm.flashMessageCreationMode.option_never">
+                <source>never</source>
+                <target>niemals</target>
+            </trans-unit>
+            <trans-unit id="saveForm.flashMessageCreationMode.option_suppressWhenListPidSelected">
+                <source>suppress when list pid has been configured</source>
+                <target>Nur wenn keine listPid gesetzt wurde.</target>
+            </trans-unit>
 
 			<!-- Frontend -->
 
-			<trans-unit id="tx_academicjobs.fe.list.text.fulltime">
-				<source>Full-Time</source>
-				<target>Vollzeit</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.list.text.parttime">
-				<source>Part-Time</source>
-				<target>Part-Time</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.list.text.back">
+			<trans-unit id="jobs.back">
 				<source>Back to job list</source>
 				<target>Zurück zu den Stellenangeboten</target>
 			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.list.text.contact">
+			<trans-unit id="jobs.contact">
 				<source>Contact</source>
 				<target>Kontakt</target>
 			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.list.text.description">
-				<source>Details about the job announcement</source>
-				<target>Details der Stellenanzeige</target>
+			<trans-unit id="jobs.contact.name">
+				<source>Creator</source>
+				<target>Ersteller*in</target>
 			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.list.text.contact.name">
-				<source>Creator:</source>
-				<target>Ersteller*in:</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.list.text.contact.email">
-				<source>E-Mail:</source>
-				<target>E-Mail:</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.text.email_address_alt">
-				<source>E-Mail of: %s</source>
-				<source>E-Mail Adresse von: %s</source>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.list.text.contact.phone">
-				<source>Phone number:</source>
-				<target>Telefonnummer:</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.text.phone_number_alt">
-				<source>Phone Number of: %s</source>
-				<source>Telefonnummer von: %s</source>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.list.text.when">
-				<source>When</source>
-				<target>Ab wann</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.list.text.application_deadline">
-				<source>Application deadline</source>
-				<target>Bewerbungsfrist</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.list.text.employer">
-				<source>Organization</source>
-				<target>Organisation</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.list.text.working_hours">
-				<source>Working hours</source>
-				<target>Arbeitszeit</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.list.text.place">
-				<source>Place</source>
-				<target>Ort</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.form.text.job_logo">
-				<source>Logo</source>
-				<target>Logo</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.form.text.job_title">
-				<source>Job title / Thesis title</source>
-				<target>Stellenbezeichnung / Titel der Abschlussarbeit</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.form.text.job_working_hours">
-				<source>Working hours</source>
-				<target>Arbeitszeit</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.form.text.job_employer">
-				<source>Organization</source>
-				<target>Organisation</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.form.text.job_industry">
-				<source>Industry</source>
-				<target>Branche</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.form.text.required_degree">
-				<source>Required degree</source>
-				<target>Benötigter Abschluss</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.form.text.contractual_relationship">
-				<source>Contractual relationship</source>
-				<target>Vertragsverhältnis</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.form.text.alumni_recommend">
-				<source>Alumni recommends:</source>
-				<target>Alumni empfiehlt:</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.form.text.internationals_welcome">
-				<source>Internationals welcome:</source>
-				<target>Internationals willkommen:</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.form.text.job_location">
-				<source>Location</source>
-				<target>Ort</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.form.text.job_description">
-				<source>Job description</source>
-				<target>Stellenbeschreibung</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.form.text.job_start_employment">
-				<source>Start of employment</source>
-				<target>Arbeitsantritt (keine Angabe = sofort)</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.form.text.job_offer_type">
-				<source>Type of job offer</source>
-				<target>Art des Stellenangebots</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.form.text.job_link">
-				<source>Link (to the announcement or website)</source>
-				<target>Link (zur Ausschreibung oder Website)</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.form.text.job_starttime">
-				<source>Application deadline start</source>
-				<target>Bewerbungsfrist Beginn</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.form.text.job_endtime">
-				<source>Application deadline end</source>
-				<target>Bewerbungsfrist Ende</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.form.text.contact.title">
-				<source>Contact Informations</source>
-				<target>Kontakt Informationen</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.form.text.contact.name">
-				<source>Name</source>
-				<target>Name</target>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.form.text.contact.email">
+			<trans-unit id="jobs.contact.email">
 				<source>E-Mail</source>
 				<target>E-Mail</target>
 			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.form.text.contact.phone">
-				<source>Phone</source>
-				<target>Telefon</target>
+			<trans-unit id="jobs.contact.phone">
+				<source>Phone number</source>
+				<target>Telefonnummer</target>
 			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.form.text.contact.additional">
-				<source>More information</source>
-				<target>Weitere Informationen</target>
+			<trans-unit id="jobs.contact.additionalInformation">
+				<source>Additional information</source>
+				<target>Zusatzinformation</target>
 			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.form.text.submit">
+			<trans-unit id="jobs.starttime">
+				<source>When</source>
+				<target>Ab wann</target>
+			</trans-unit>
+			<trans-unit id="jobs.endtime">
+				<source>Application deadline</source>
+				<target>Bewerbungsfrist</target>
+			</trans-unit>
+			<trans-unit id="jobs.companyName">
+				<source>Organization</source>
+				<target>Organisation</target>
+			</trans-unit>
+			<trans-unit id="jobs.employmentType">
+				<source>Working hours</source>
+				<target>Arbeitszeit</target>
+			</trans-unit>
+			<trans-unit id="jobs.employmentType.1">
+				<source>Full-Time</source>
+				<target>Vollzeit</target>
+			</trans-unit>
+			<trans-unit id="jobs.employmentType.2">
+				<source>Part-Time</source>
+				<target>Teilzeit</target>
+			</trans-unit>
+			<trans-unit id="jobs.workLocation">
+				<source>Location</source>
+				<target>Ort</target>
+			</trans-unit>
+			<trans-unit id="jobs.employmentStartDate">
+				<source>Employment Start Date</source>
+				<target>Arbeitsbeginn</target>
+			</trans-unit>
+			<trans-unit id="jobs.type">
+				<source>Job Type</source>
+				<target>Jobtyp</target>
+			</trans-unit>
+			<trans-unit id="jobs.type.1">
+				<source>Job</source>
+				<target>Job</target>
+			</trans-unit>
+			<trans-unit id="jobs.type.2">
+				<source>Sidejob</source>
+				<target>Nebenjob</target>
+			</trans-unit>
+			<trans-unit id="jobs.type.3">
+				<source>Thesis</source>
+				<target>Abschlussarbeit</target>
+			</trans-unit>
+			<trans-unit id="jobs.image">
+				<source>Logo</source>
+				<target>Logo</target>
+			</trans-unit>
+			<trans-unit id="jobs.title">
+				<source>Job title / Thesis title</source>
+				<target>Stellenbezeichnung / Titel der Abschlussarbeit</target>
+			</trans-unit>
+			<trans-unit id="jobs.sector">
+				<source>Industry</source>
+				<target>Branche</target>
+			</trans-unit>
+			<trans-unit id="jobs.requiredDegree">
+				<source>Required degree</source>
+				<target>Benötigter Abschluss</target>
+			</trans-unit>
+			<trans-unit id="jobs.contractualRelationship">
+				<source>Contractual relationship</source>
+				<target>Vertragsverhältnis</target>
+			</trans-unit>
+			<trans-unit id="jobs.description">
+				<source>Job description</source>
+				<target>Stellenbeschreibung</target>
+			</trans-unit>
+			<trans-unit id="jobs.link">
+				<source>Link (to the announcement or website)</source>
+				<target>Link (zur Ausschreibung oder Website)</target>
+			</trans-unit>
+			<trans-unit id="jobs.submit">
 				<source>Submit</source>
 				<target>Absenden</target>
 			</trans-unit>
@@ -409,8 +133,7 @@
 
 			<trans-unit id="tx_academicjobs.fe.alert.job_created.body">
 				<source>We are automatically notified that you have created a job advert. After a review, we will activate your job advert.</source>
-				<target>Wir werden automatisch darüber benachrichtigt, dass Sie eine Stellanzeige erstellt haben. Nach einer Überprüfung schalten wir Ihre Stellenanzeige frei.
-				</target>
+				<target>Wir werden automatisch darüber benachrichtigt, dass Sie eine Stellanzeige erstellt haben. Nach einer Überprüfung schalten wir Ihre Stellenanzeige frei.</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.alert.job_created.title">
 				<source>Your job advert has been successfully created</source>
@@ -418,9 +141,7 @@
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.alert.job_created_no_email.body">
 				<source>Your job advert has been successfully created, but no notification could be sent to us. Please contact us to have your job advert activated.</source>
-				<target>Ihre Stellenanzeige wurde erfolgreich erstellt, aber es konnte keine Benachrichtigung an uns verschickt werden. Bitte kontaktieren Sie uns, um ihre
-					Stellenanzeige freischalten zu lassen.
-				</target>
+				<target>Ihre Stellenanzeige wurde erfolgreich erstellt, aber es konnte keine Benachrichtigung an uns verschickt werden. Bitte kontaktieren Sie uns, um ihre Stellenanzeige freischalten zu lassen.</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.alert.job_created_no_email.title">
 				<source>Notification email could not be sent</source>
@@ -438,7 +159,7 @@
 				<source>No job advert could be found.</source>
 				<target>Es konnte keine Stellenanzeige gefunden werden.</target>
 			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.alert.slug_missing.body">
+			<trans-unit id="jobs.noLink">
 				<source>The link to this job avert is broken. Please contact us.</source>
 				<target>Der Link zu dieser Stellenanzeige ist defekt. Bitte kontaktieren Sie uns.</target>
 			</trans-unit>
