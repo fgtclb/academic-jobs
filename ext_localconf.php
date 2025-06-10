@@ -12,10 +12,10 @@ if (!defined('TYPO3')) {
         'AcademicJobs',
         'NewJobForm',
         [
-            JobController::class => 'newJobForm, saveJob, list, show',
+            JobController::class => 'new, create',
         ],
         [
-            JobController::class => 'newJobForm, saveJob',
+            JobController::class => 'new, create',
         ],
         ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
@@ -34,7 +34,7 @@ if (!defined('TYPO3')) {
         'AcademicJobs',
         'Detail',
         [
-            JobController::class => 'show, list',
+            JobController::class => 'show',
         ],
         [],
         ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT

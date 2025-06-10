@@ -1,0 +1,82 @@
+<html
+    lang="en"
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true"
+>
+    <div class="row">
+        <div class="col-12 col-md-4 mt-4">
+            <f:render
+                partial="Forms/Textfield"
+                arguments="{
+                    element: {
+                        form: 'job',
+                        identifier: 'position',
+                        validations: validations
+                    }
+                }"
+            />
+        </div>
+    </div>
+    <f:render
+        partial="Forms/DateTime"
+        arguments="{
+            element: {
+                form: 'job',
+                identifier: 'validFrom',
+                value: '{job.validFrom}',
+                validations: validations
+            }
+        }"
+    />
+    <f:render
+        partial="Forms/DateTime"
+        arguments="{
+            element: {
+                form: 'job',
+                identifier: 'validTo',
+                value: '{job.validTo}',
+                validations: validations
+            }
+        }"
+    />
+    <f:render
+        partial="Forms/Textfield"
+        arguments="{
+            element: {
+                form: 'job',
+                identifier: 'location',
+                validations: validations
+            }
+        }"
+    />
+    <f:render
+        partial="Forms/Textfield"
+        arguments="{
+            element: {
+                form: 'job',
+                identifier: 'room',
+                validations: validations
+            }
+        }"
+    />
+    <f:render
+        partial="Forms/Wysiwyg"
+        arguments="{
+            element: {
+                form: 'job',
+                identifier: 'officeHours',
+                validations: validations
+            }
+        }"
+    />
+    <f:render
+        partial="Forms/Checkbox"
+        arguments="{
+            element: {
+                form: 'job',
+                identifier: 'publish',
+                validations: validations
+            }
+        }"
+    />
+</html>

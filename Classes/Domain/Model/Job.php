@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace FGTCLB\AcademicJobs\Domain\Model;
 
 use TYPO3\CMS\Extbase\Annotation\ORM\Cascade;
-use TYPO3\CMS\Extbase\Annotation\Validate;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
@@ -15,46 +14,31 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  */
 class Job extends AbstractEntity
 {
-    /**
-     * @Validate("NotEmpty")
-     */
     protected string $title = '';
-    /**
-     * @Validate("NotEmpty")
-     */
     protected ?\DateTime $employmentStartDate = null;
     protected string $description = '';
     /**
      * @Cascade("remove")
      */
     protected ?FileReference $image = null;
-    /**
-     * @Validate("NotEmpty")
-     */
     protected string $companyName = '';
     protected string $sector = '';
     protected string $requiredDegree = '';
     protected string $contractualRelationship = '';
     protected int $alumniRecommend = 0;
     protected int $internationalsWelcome = 0;
-    /**
-     * @Validate("NotEmpty")
-     */
     protected int $employmentType = 0;
     protected string $workLocation = '';
     protected string $link = '';
     protected string $slug = '';
     protected int $type = 0;
     protected int $hidden = 0;
-    protected ?Contact $contact = null;
-    /**
-     * @Validate("NotEmpty")
-     */
     protected ?\DateTime $starttime = null;
-    /**
-     * @Validate("NotEmpty")
-     */
     protected ?\DateTime $endtime = null;
+    protected string $contactName = '';
+    protected string $contactEmail = '';
+    protected string $contactPhone = '';
+    protected string $contactAdditionalInformation = '';
 
     public function __construct()
     {
@@ -66,19 +50,14 @@ class Job extends AbstractEntity
      */
     public function initializeObject(): void {}
 
-    public function getTitle(): string
-    {
-        return $this->title;
-    }
-
     public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    public function getEmploymentStartDate(): ?\DateTime
+    public function getTitle(): string
     {
-        return $this->employmentStartDate;
+        return $this->title;
     }
 
     public function setEmploymentStartDate(?\DateTime $employmentStartDate = null): void
@@ -86,9 +65,9 @@ class Job extends AbstractEntity
         $this->employmentStartDate = $employmentStartDate;
     }
 
-    public function getDescription(): string
+    public function getEmploymentStartDate(): ?\DateTime
     {
-        return $this->description;
+        return $this->employmentStartDate;
     }
 
     public function setDescription(string $description): void
@@ -96,9 +75,9 @@ class Job extends AbstractEntity
         $this->description = $description;
     }
 
-    public function getCompanyName(): string
+    public function getDescription(): string
     {
-        return $this->companyName;
+        return $this->description;
     }
 
     public function setCompanyName(string $companyName): void
@@ -106,9 +85,9 @@ class Job extends AbstractEntity
         $this->companyName = $companyName;
     }
 
-    public function getSector(): string
+    public function getCompanyName(): string
     {
-        return $this->sector;
+        return $this->companyName;
     }
 
     public function setSector(string $sector): void
@@ -116,9 +95,9 @@ class Job extends AbstractEntity
         $this->sector = $sector;
     }
 
-    public function getRequiredDegree(): string
+    public function getSector(): string
     {
-        return $this->requiredDegree;
+        return $this->sector;
     }
 
     public function setRequiredDegree(string $requiredDegree): void
@@ -126,9 +105,9 @@ class Job extends AbstractEntity
         $this->requiredDegree = $requiredDegree;
     }
 
-    public function getContractualRelationship(): string
+    public function getRequiredDegree(): string
     {
-        return $this->contractualRelationship;
+        return $this->requiredDegree;
     }
 
     public function setContractualRelationship(string $contractualRelationship): void
@@ -136,9 +115,9 @@ class Job extends AbstractEntity
         $this->contractualRelationship = $contractualRelationship;
     }
 
-    public function getAlumniRecommend(): int
+    public function getContractualRelationship(): string
     {
-        return $this->alumniRecommend;
+        return $this->contractualRelationship;
     }
 
     public function setAlumniRecommend(int $alumniRecommend): void
@@ -146,9 +125,9 @@ class Job extends AbstractEntity
         $this->alumniRecommend = $alumniRecommend;
     }
 
-    public function getInternationalsWelcome(): int
+    public function getAlumniRecommend(): int
     {
-        return $this->internationalsWelcome;
+        return $this->alumniRecommend;
     }
 
     public function setInternationalsWelcome(int $internationalsWelcome): void
@@ -156,9 +135,9 @@ class Job extends AbstractEntity
         $this->internationalsWelcome = $internationalsWelcome;
     }
 
-    public function getWorkLocation(): string
+    public function getInternationalsWelcome(): int
     {
-        return $this->workLocation;
+        return $this->internationalsWelcome;
     }
 
     public function setWorkLocation(string $workLocation): void
@@ -166,9 +145,9 @@ class Job extends AbstractEntity
         $this->workLocation = $workLocation;
     }
 
-    public function getLink(): string
+    public function getWorkLocation(): string
     {
-        return $this->link;
+        return $this->workLocation;
     }
 
     public function setLink(string $link): void
@@ -176,9 +155,9 @@ class Job extends AbstractEntity
         $this->link = $link;
     }
 
-    public function getSlug(): string
+    public function getLink(): string
     {
-        return $this->slug;
+        return $this->link;
     }
 
     public function setSlug(string $slug): void
@@ -186,9 +165,9 @@ class Job extends AbstractEntity
         $this->slug = $slug;
     }
 
-    public function getType(): int
+    public function getSlug(): string
     {
-        return $this->type;
+        return $this->slug;
     }
 
     public function setType(int $type): void
@@ -196,19 +175,9 @@ class Job extends AbstractEntity
         $this->type = $type;
     }
 
-    public function getContact(): ?Contact
+    public function getType(): int
     {
-        return $this->contact;
-    }
-
-    public function setContact(Contact $contact): void
-    {
-        $this->contact = $contact;
-    }
-
-    public function getEmploymentType(): int
-    {
-        return $this->employmentType;
+        return $this->type;
     }
 
     public function setEmploymentType(int $employmentType): void
@@ -216,9 +185,9 @@ class Job extends AbstractEntity
         $this->employmentType = $employmentType;
     }
 
-    public function getStarttime(): ?\DateTime
+    public function getEmploymentType(): int
     {
-        return $this->starttime;
+        return $this->employmentType;
     }
 
     public function setStarttime(?\DateTime $starttime = null): void
@@ -226,9 +195,9 @@ class Job extends AbstractEntity
         $this->starttime = $starttime;
     }
 
-    public function getEndtime(): ?\DateTime
+    public function getStarttime(): ?\DateTime
     {
-        return $this->endtime;
+        return $this->starttime;
     }
 
     public function setEndtime(?\DateTime $endtime = null): void
@@ -236,9 +205,9 @@ class Job extends AbstractEntity
         $this->endtime = $endtime;
     }
 
-    public function getHidden(): int
+    public function getEndtime(): ?\DateTime
     {
-        return $this->hidden;
+        return $this->endtime;
     }
 
     public function setHidden(int $hidden): void
@@ -246,13 +215,58 @@ class Job extends AbstractEntity
         $this->hidden = $hidden;
     }
 
-    public function getImage(): ?FileReference
+    public function getHidden(): int
     {
-        return $this->image;
+        return $this->hidden;
     }
 
     public function setImage(?FileReference $image): void
     {
         $this->image = $image;
+    }
+
+    public function getImage(): ?FileReference
+    {
+        return $this->image;
+    }
+
+    public function setContactName(string $contactName): void
+    {
+        $this->contactName = $contactName;
+    }
+
+    public function getContactName(): string
+    {
+        return $this->contactName;
+    }
+
+    public function setContactEmail(string $contactEmail): void
+    {
+        $this->contactEmail = $contactEmail;
+    }
+
+    public function getContactEmail(): string
+    {
+        return $this->contactEmail;
+    }
+
+    public function setContactPhone(string $contactPhone): void
+    {
+        $this->contactPhone = $contactPhone;
+    }
+
+    public function getContactPhone(): string
+    {
+        return $this->contactPhone;
+    }
+
+    public function setContactAdditionalInformation(string $contactAdditionalInformation): void
+    {
+        $this->contactAdditionalInformation = $contactAdditionalInformation;
+    }
+
+    public function getContactAdditionalInformation(): string
+    {
+        return $this->contactAdditionalInformation;
     }
 }

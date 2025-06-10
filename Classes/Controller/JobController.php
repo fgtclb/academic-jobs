@@ -8,7 +8,7 @@ use FGTCLB\AcademicJobs\DateTime\IsoDateTime;
 use FGTCLB\AcademicJobs\Domain\Model\Job;
 use FGTCLB\AcademicJobs\Domain\Repository\JobRepository;
 use FGTCLB\AcademicJobs\Event\AfterSaveJobEvent;
-use FGTCLB\AcademicJobs\Property\TypeConverter\JobAvatarImageUploadConverter;
+use FGTCLB\AcademicJobs\Property\TypeConverter\ImageUploadConverter;
 use FGTCLB\AcademicJobs\SaveForm\FlashMessageCreationMode;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
@@ -40,7 +40,6 @@ class JobController extends ActionController
 
     public function listAction(): ResponseInterface
     {
-        $jobs = [];
         $jobType = $this->settings['job']['type'] ?? 0;
 
         if ($jobType > 0) {
@@ -101,23 +100,23 @@ class JobController extends ActionController
         return $this->htmlResponse();
     }
 
-    public function newJobFormAction(?Job $job = null): ResponseInterface
+    public function newAction(?Job $job = null): ResponseInterface
     {
         return $this->htmlResponse();
     }
 
-    public function initializeSaveJobAction(): void
+    public function initializeCreateAction(): void
     {
         if ($this->request->hasArgument('job')) {
             $jobArgumentConfiguration = $this->arguments->getArgument('job')->getPropertyMappingConfiguration();
 
-            $propertiesToCpnvert = [
+            $propertiesToConvert = [
                 'employmentStartDate',
                 'starttime',
                 'endtime',
             ];
 
-            foreach ($propertiesToCpnvert as $propertyToConvert) {
+            foreach ($propertiesToConvert as $propertyToConvert) {
                 $jobArgumentConfiguration->forProperty($propertyToConvert)
                     ->setTypeConverterOptions(
                         DateTimeConverter::class,
@@ -131,7 +130,7 @@ class JobController extends ActionController
         $targetFolderIdentifier = $this->settings['saveForm']['jobLogo']['targetFolder'] ?? null;
         $maxFilesize = $this->settings['saveForm']['jobLogo']['validation']['maxFileSize'] ?? '0kb';
         $allowedImeTypes = $this->settings['saveForm']['jobLogo']['validation']['allowedMimeTypes'] ?? '';
-        $jobAvatarImageUploadConverter = GeneralUtility::makeInstance(JobAvatarImageUploadConverter::class);
+        $jobAvatarImageUploadConverter = GeneralUtility::makeInstance(ImageUploadConverter::class);
 
         $this->arguments
             ->getArgument('job')
@@ -139,16 +138,16 @@ class JobController extends ActionController
             ->forProperty('image')
             ->setTypeConverter($jobAvatarImageUploadConverter)
             ->setTypeConverterOptions(
-                JobAvatarImageUploadConverter::class,
+                ImageUploadConverter::class,
                 [
-                    JobAvatarImageUploadConverter::CONFIGURATION_TARGET_DIRECTORY_COMBINED_IDENTIFIER => $targetFolderIdentifier,
-                    JobAvatarImageUploadConverter::CONFIGURATION_MAX_UPLOAD_SIZE => $maxFilesize,
-                    JobAvatarImageUploadConverter::CONFIGURATION_ALLOWED_MIME_TYPES => $allowedImeTypes,
+                    ImageUploadConverter::CONFIGURATION_TARGET_DIRECTORY_COMBINED_IDENTIFIER => $targetFolderIdentifier,
+                    ImageUploadConverter::CONFIGURATION_MAX_UPLOAD_SIZE => $maxFilesize,
+                    ImageUploadConverter::CONFIGURATION_ALLOWED_MIME_TYPES => $allowedImeTypes,
                 ]
             );
     }
 
-    public function saveJobAction(Job $job): ResponseInterface
+    public function createAction(Job $job): ResponseInterface
     {
         $job->setHidden((int)self::JOB_HIDDEN);
         $this->jobRepository->add($job);
@@ -181,7 +180,9 @@ class JobController extends ActionController
         $redirectPageId = $afterSaveJobEvent->getRedirectPageId();
         $flashMessageCreationMode = $afterSaveJobEvent->getFlashMessageCreationMode();
         $listPid = $this->settings['listPid'] ? (int)$this->settings['listPid'] : null;
-        $mailWasSent = $this->sendEmail($uid);
+        // @todo Reenable
+        // $mailWasSent = $this->sendEmail($uid);
+        $mailWasSent = true; // For now, assume email was sent successfully.
 
         $useRedirectPageId = $redirectPageId;
         if ($useRedirectPageId === null && $listPid !== null && $listPid > 0) {

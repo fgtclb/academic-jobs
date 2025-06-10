@@ -21,7 +21,7 @@ use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
-final class JobAvatarImageUploadConverter extends AbstractTypeConverter
+final class ImageUploadConverter extends AbstractTypeConverter
 {
     public const CONFIGURATION_TARGET_DIRECTORY_COMBINED_IDENTIFIER = 'targetFolderCombinedIdentifier';
     public const CONFIGURATION_MAX_UPLOAD_SIZE = 'maxUploadSize';

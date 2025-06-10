@@ -1,0 +1,22 @@
+{
+    "name": "tests/test-jobcontact-schema",
+    "description": "Extension providing TCA for tests",
+    "type": "typo3-cms-extension",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Stefan Bürk",
+            "email": "stefan@buerk.tech",
+            "role": "Maintainer"
+        }
+    ],
+    "require": {
+        "typo3/cms-core": "^12.4.22 || ^13.4",
+        "fgtclb/academic-jobs": "2.0.*@dev"
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "test_jobcontact_schema"
+        }
+    }
+}

@@ -146,31 +146,31 @@
 			<trans-unit id="tx_academicjobs_domain_model_contact">
 				<source>Contact</source>
 			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_contact.description">
+			<trans-unit id="tx_academicjobs_domain_model_job.contact.description">
 				<source>Contact</source>
 			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_contact.name">
+			<trans-unit id="tx_academicjobs_domain_model_job.contact.name">
 				<source>Name</source>
 			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_contact.name.description">
+			<trans-unit id="tx_academicjobs_domain_model_job.contact.name.description">
 				<source>Name</source>
 			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_contact.email">
+			<trans-unit id="tx_academicjobs_domain_model_job.contact.email">
 				<source>Email</source>
 			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_contact.email.description">
+			<trans-unit id="tx_academicjobs_domain_model_job.contact.email.description">
 				<source>Email</source>
 			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_contact.phone">
+			<trans-unit id="tx_academicjobs_domain_model_job.contact.phone">
 				<source>Phone</source>
 			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_contact.phone.description">
+			<trans-unit id="tx_academicjobs_domain_model_job.contact.phone.description">
 				<source>Phone</source>
 			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_contact.additional_information">
+			<trans-unit id="tx_academicjobs_domain_model_job.contact.additional_information">
 				<source>Additional Information</source>
 			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_contact.additional_information.description">
+			<trans-unit id="tx_academicjobs_domain_model_job.contact.additional_information.description">
 				<source>Additional Information</source>
 			</trans-unit>
         </body>

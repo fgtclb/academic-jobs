@@ -2,7 +2,7 @@
 
 return [
     'ctrl' => [
-        'title' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_contact',
+        'title' => 'tx_academicjobs_domain_model_contact',
         'label' => 'name',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -23,19 +23,19 @@ return [
         ],
     ],
     'types' => [
-        '1' => ['showitem' => 'name, email, phone, additional_information, --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language, sys_language_uid, l10n_parent, l10n_diffsource, --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, hidden, starttime, endtime'],
+        '1' => ['showitem' => 'name, email, phone, additional_information, --div--;language, sys_language_uid, l10n_parent, l10n_diffsource, --div--;access, hidden, starttime, endtime'],
     ],
     'columns' => [
         'sys_language_uid' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
+            'label' => 'LGL.language',
             'config' => [
                 'type' => 'language',
             ],
         ],
         'l10n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
+            'label' => 'LGL.l18n_parent',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -57,7 +57,7 @@ return [
         ],
         'hidden' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.visible',
+            'label' => 'LGL.visible',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxToggle',
@@ -72,7 +72,7 @@ return [
         ],
         'starttime' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
+            'label' => 'LGL.starttime',
             'config' => [
                 'type' => 'datetime',
                 'default' => 0,
@@ -83,7 +83,7 @@ return [
         ],
         'endtime' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
+            'label' => 'LGL.endtime',
             'config' => [
                 'type' => 'datetime',
                 'default' => 0,
@@ -97,8 +97,8 @@ return [
         ],
         'name' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_contact.name',
-            'description' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_contact.name.description',
+            'label' => 'tx_academicjobs_domain_model_contact.name',
+            'description' => 'tx_academicjobs_domain_model_contact.name.description',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -108,8 +108,8 @@ return [
         ],
         'email' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_contact.email',
-            'description' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_contact.email.description',
+            'label' => 'tx_academicjobs_domain_model_contact.email',
+            'description' => 'tx_academicjobs_domain_model_contact.email.description',
             'config' => [
                 'type' => 'email',
                 'size' => 30,
@@ -119,8 +119,8 @@ return [
         ],
         'phone' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_contact.phone',
-            'description' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_contact.phone.description',
+            'label' => 'tx_academicjobs_domain_model_contact.phone',
+            'description' => 'tx_academicjobs_domain_model_contact.phone.description',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -130,8 +130,8 @@ return [
         ],
         'additional_information' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_contact.additional_information',
-            'description' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_contact.additional_information.description',
+            'label' => 'tx_academicjobs_domain_model_contact.additional_information',
+            'description' => 'tx_academicjobs_domain_model_contact.additional_information.description',
             'config' => [
                 'type' => 'text',
                 'cols' => 40,

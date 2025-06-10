@@ -2,6 +2,13 @@
 
 ## X.Y.Z
 
+### BREAKING: Removed `tx_academicjobs_domain_model_contact`
+
+As the relation between `tx_academicjobs_domain_model_job` and `tx_academicjobs_domain_model_contact`
+is 1:1 and there is no reuse of contact records, it does not make sense to have a separate table
+and record for these contacts. Therefore the relation was resolved and an upgrade wizard
+handles the migration to the new fields in the `tx_academicjobs_domain_model_job`.
+
 ### BREAKING: Migrated extbase plugins from `list_type` to `CType`
 
 TYPO3 v13 deprecated the `tt_content` sub-type feature, only used for `CType=list` sub-typing also known

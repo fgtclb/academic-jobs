@@ -190,19 +190,19 @@
 				<source>Contact</source>
 				<target>Kontakt</target>
 			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_contact.name">
+			<trans-unit id="tx_academicjobs_domain_model_job.contact.name">
 				<source>Name</source>
 				<target>Name</target>
 			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_contact.email">
+			<trans-unit id="tx_academicjobs_domain_model_job.contact.email">
 				<source>Email</source>
 				<target>E-Mail</target>
 			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_contact.phone">
+			<trans-unit id="tx_academicjobs_domain_model_job.contact.phone">
 				<source>Phone</source>
 				<target>Telefon</target>
 			</trans-unit>
-			<trans-unit id="tx_academicjobs_domain_model_contact.additional_information">
+			<trans-unit id="tx_academicjobs_domain_model_job.contact.additional_information">
 				<source>Additional Information</source>
 				<target>Zusätzliche Informationen</target>
 			</trans-unit>

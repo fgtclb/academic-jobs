@@ -1,0 +1,16 @@
+mod.wizards.newContentElement.wizardItems.academic {
+  header = LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:newContentElement.wizardItems.academic
+  after = special
+  elements {
+    academicjobs_list {
+      iconIdentifier = academic_jobs_icon
+      title = LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:newContentElement.wizardItems.academic.list.title
+      description = LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:newContentElement.wizardItems.academic.list.description
+      tt_content_defValues {
+        CType = academicjobs_list
+      }
+    }
+  }
+  show := addToList(academicjobs_list)
+}
+
