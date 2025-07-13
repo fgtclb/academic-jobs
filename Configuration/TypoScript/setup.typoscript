@@ -32,6 +32,7 @@ plugin.tx_academicjobs {
 
     saveForm {
       jobLogo {
+        # @todo How can we have a hardcoded target folder defined here ? That should be configurable.
         targetFolder = 1:/global-content/jobs/logos/
         validation {
           maxFileSize = 2M
