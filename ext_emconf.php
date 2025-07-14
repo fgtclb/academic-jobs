@@ -7,9 +7,9 @@ $EM_CONF[$_EXTKEY] = [
     'category' => 'fe,be',
     'constraints' => [
         'depends' => [
-            'typo3' => '12.4.0-13.4.99',
-            'rte-ckeditor' => '12.4.0-13.4.99',
-            'install' => '12.4.0-13.4.99',
+            'typo3' => '12.4.22-13.4.99',
+            'rte-ckeditor' => '12.4.22-13.4.99',
+            'install' => '12.4.22-13.4.99',
         ],
     ],
     'description' => 'The Academic Jobs extension allows users to create and manage job postings.',
