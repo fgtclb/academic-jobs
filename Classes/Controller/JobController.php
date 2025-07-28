@@ -6,8 +6,10 @@ namespace FGTCLB\AcademicJobs\Controller;
 
 use FGTCLB\AcademicJobs\Domain\Model\Job;
 use FGTCLB\AcademicJobs\Domain\Repository\JobRepository;
+use FGTCLB\AcademicJobs\Domain\Validator\JobValidator;
 use FGTCLB\AcademicJobs\Event\AfterSaveJobEvent;
 use FGTCLB\AcademicJobs\Property\TypeConverter\ImageUploadConverter;
+use FGTCLB\AcademicJobs\Registry\AcademicJobsSettingsRegistry;
 use FGTCLB\AcademicJobs\SaveForm\FlashMessageCreationMode;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
@@ -17,6 +19,7 @@ use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Extbase\Annotation\Validate;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
@@ -35,6 +38,7 @@ final class JobController extends ActionController
         private readonly PersistenceManagerInterface $persistenceManager,
         private readonly ImageService $imageService,
         protected readonly BackendUriBuilder $backendUriBuilder,
+        protected AcademicJobsSettingsRegistry $settingsRegistry,
     ) {}
 
     public function listAction(): ResponseInterface
@@ -101,6 +105,7 @@ final class JobController extends ActionController
 
     public function newAction(?Job $job = null): ResponseInterface
     {
+        $this->view->assign('validations', $this->settingsRegistry->getValidationsForFrontend('job'));
         return $this->htmlResponse();
     }
 
@@ -145,8 +150,16 @@ final class JobController extends ActionController
             );
     }
 
-    public function createAction(Job $job): ResponseInterface
+    #[Validate([
+        'param' => 'job',
+        'validator' => JobValidator::class,
+    ])]
+    public function createAction(?Job $job = null): ResponseInterface
     {
+        if ($job === null) {
+            return $this->redirect('new');
+        }
+
         $job->setHidden((int)self::JOB_HIDDEN);
         $this->jobRepository->add($job);
         $this->persistenceManager->persistAll();

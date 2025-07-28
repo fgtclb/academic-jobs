@@ -1,0 +1,21 @@
+validations:
+  # @todo We either need a translation map (to TCA) or simply matching convention which resolves needs to be added.
+  job:
+    title:
+      - required
+    employmentType:
+      - required
+    type:
+      - required
+    companyName:
+      - required
+    employmentStartDate:
+      - required
+    description:
+      - required
+    link:
+      - url
+    contactEmail:
+      - email
+    contactPhone:
+      - number

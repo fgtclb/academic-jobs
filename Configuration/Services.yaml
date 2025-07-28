@@ -16,3 +16,9 @@ services:
       - name: event.listener
         identifier: generateJobSlug
         event: FGTCLB\AcademicJobs\Event\AfterSaveJobEvent
+
+  FGTCLB\AcademicJobs\Registry\AcademicJobsSettingsRegistry:
+    public: true
+    factory:
+      - '@FGTCLB\AcademicJobs\Loader\AcademicJobsSettingsLoader'
+      - 'load'
