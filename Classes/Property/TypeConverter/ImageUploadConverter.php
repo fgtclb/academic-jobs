@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace FGTCLB\AcademicJobs\Property\TypeConverter;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
+use TYPO3\CMS\Core\Http\UploadedFile;
 use TYPO3\CMS\Core\Resource\DuplicationBehavior;
 use TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException;
 use TYPO3\CMS\Core\Resource\File;
@@ -21,8 +23,10 @@ use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
-final class ImageUploadConverter extends AbstractTypeConverter
+final class ImageUploadConverter extends AbstractTypeConverter implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     public const CONFIGURATION_TARGET_DIRECTORY_COMBINED_IDENTIFIER = 'targetFolderCombinedIdentifier';
     public const CONFIGURATION_MAX_UPLOAD_SIZE = 'maxUploadSize';
     public const CONFIGURATION_ALLOWED_MIME_TYPES = 'allowedMimeTypes';
@@ -33,16 +37,13 @@ final class ImageUploadConverter extends AbstractTypeConverter
 
     protected $priority = 10;
 
-    public function __construct(
-        private readonly ResourceFactory $resourceFactory,
-        private readonly LoggerInterface $logger,
-    ) {}
+    public function __construct(protected ResourceFactory $resourceFactory) {}
 
     /**
      * Actually convert from $source to $targetType, taking into account the fully
      * built $convertedChildProperties and $configuration.
      *
-     * @param array{name?: string, type: string, tmp_name?: string, error?: int, size: int, __identity?: string} $source
+     * @param UploadedFile $source
      * @param array<string, mixed> $convertedChildProperties
      */
     public function convertFrom(
@@ -71,25 +72,28 @@ final class ImageUploadConverter extends AbstractTypeConverter
             );
         }
 
-        if (!isset($uploadedFileInformation['error']) || $uploadedFileInformation['error'] === \UPLOAD_ERR_NO_FILE) {
+        // @todo Check how the `__identifier` key was generated in TYPO3 version below 12 before restoring this check
+        /*
+        if ($uploadedFileInformation->getError() === \UPLOAD_ERR_NO_FILE) {
             return $this->handleNoFileUploaded($uploadedFileInformation);
         }
+        */
 
-        if ($uploadedFileInformation['error'] !== \UPLOAD_ERR_OK) {
+        if ($uploadedFileInformation->getError() !== \UPLOAD_ERR_OK) {
             return GeneralUtility::makeInstance(
                 Error::class,
-                $this->getUploadErrorMessage($uploadedFileInformation['error']),
-                1471715915
+                $this->getUploadErrorMessage($uploadedFileInformation->getError()),
+                1753712909
             );
         }
 
-        if (!isset($uploadedFileInformation['tmp_name']) || !isset($uploadedFileInformation['name'])) {
+        if ($uploadedFileInformation->getClientFilename() === null) {
             return null;
         }
 
         try {
             $this->validateUploadedFile($uploadedFileInformation, $maxFileSize, $allowedMimeTypes);
-            return $this->importUploadedResource($uploadedFileInformation, $targetFolderIdentifier);
+            return $this->importUploadedResource($uploadedFileInformation, $targetFolderIdentifier, $uploadedFileInformation->getClientFilename());
         } catch (TypeConverterException $e) {
             return GeneralUtility::makeInstance(
                 Error::class,
@@ -100,36 +104,55 @@ final class ImageUploadConverter extends AbstractTypeConverter
     }
 
     /**
-     * @param array{name: string, tmp_name: string, __identity?: string} $uploadedFileInformation
      * @throws TypeConverterException
      */
-    private function importUploadedResource(array $uploadedFileInformation, string $targetFolderIdentifier): ExtbaseFileReference
-    {
-        if (!GeneralUtility::makeInstance(FileNameValidator::class)->isValid($uploadedFileInformation['name'])) {
-            throw new TypeConverterException('Uploading files with PHP file extensions is not allowed!', 1690525745);
+    private function importUploadedResource(
+        UploadedFile $uploadedFileInformation,
+        string $targetFolderIdentifier,
+        ?string $targetFileName
+    ): ExtbaseFileReference {
+        if (!GeneralUtility::makeInstance(FileNameValidator::class)->isValid((string)$uploadedFileInformation->getClientFilename())) {
+            throw new TypeConverterException('Uploading files with PHP file extensions is not allowed!', 1753712929);
         }
 
         $targetFolder = $this->getOrCreateTargetFolder($targetFolderIdentifier);
-        $uploadedFile = $targetFolder->addUploadedFile($uploadedFileInformation, DuplicationBehavior::REPLACE);
+        /** @var File $uploadedFile */
+        $uploadedFile = $targetFolder->getStorage()->addUploadedFile(
+            $uploadedFileInformation,
+            $targetFolder,
+            $targetFileName,
+            DuplicationBehavior::REPLACE
+        );
 
-        $resourcePointer = isset($uploadedFileInformation['__identity']) ? (int)$uploadedFileInformation['__identity'] : null;
-        return $this->createFileReferenceFromFalFileObject($uploadedFile, $resourcePointer);
+        return $this->createFileReferenceFromFalFileObject($uploadedFile);
     }
 
     /**
-     * @param array{size: int, type: string} $uploadedFileInformation
      * @throws TypeConverterException
      */
-    private function validateUploadedFile(array $uploadedFileInformation, string $maxFileSize, string $allowedMimeTypes): void
+    private function validateUploadedFile(UploadedFile $uploadedFileInformation, string $maxFileSize, string $allowedMimeTypes): void
     {
+        $typoScriptFrontendController = $this->getTypo3Request()->getAttribute('frontend.controller') ?? $GLOBALS['TSFE'] ?? null;
         $maxFileSizeInBytes = GeneralUtility::getBytesFromSizeMeasurement($maxFileSize);
         $allowedMimeTypesArray = GeneralUtility::trimExplode(',', $allowedMimeTypes);
 
-        if ($uploadedFileInformation['size'] > $maxFileSizeInBytes) {
-            throw new TypeConverterException('Uploaded file exceeds allowed file size', 1690538138);
+        if ($uploadedFileInformation->getSize() > $maxFileSizeInBytes) {
+            throw new TypeConverterException(
+                $typoScriptFrontendController?->sL(
+                    'LLL:EXT:form/Resources/Private/Language/locallang.xlf:upload.error.150530345'
+                ) ?? 'Upload error',
+                1753712943
+            );
         }
-        if (!in_array($uploadedFileInformation['type'], $allowedMimeTypesArray, true)) {
-            throw new TypeConverterException('The uploaded file type is not allowed', 1721647425);
+        if (!in_array($uploadedFileInformation->getClientMediaType(), $allowedMimeTypesArray, true)) {
+            throw new TypeConverterException(
+                $typoScriptFrontendController?->sL(
+                    'LLL:EXT:form/Resources/Private/Language/locallang.xlf:validation.error.1471708998',
+                    null,
+                    $uploadedFileInformation->getClientMediaType(),
+                ) ?? 'Validation error',
+                1753712948
+            );
         }
     }
 
@@ -141,7 +164,7 @@ final class ImageUploadConverter extends AbstractTypeConverter
         if (empty($targetFolderIdentifier)) {
             throw new TypeConverterException(
                 'Missing TypoScript configuration "editForm.profileImage.targetFolder".',
-                1690527282
+                1753712953
             );
         }
 
@@ -159,7 +182,7 @@ final class ImageUploadConverter extends AbstractTypeConverter
                         'Target upload folder "%s" does not exist and creation of forbidden by TypeConverter configuration',
                         $targetFolderIdentifier
                     ),
-                    1690527439
+                    1753712957
                 );
             }
         }
@@ -167,19 +190,18 @@ final class ImageUploadConverter extends AbstractTypeConverter
         if (!$uploadFolder instanceof Folder) {
             throw new TypeConverterException(
                 sprintf('Target upload folder "%s" is not accessible', $targetFolderIdentifier),
-                1690527459
+                1753712962
             );
         }
 
         return $uploadFolder;
     }
 
-    /**
-     * @param array{__identity?: string} $uploadedFileInformation
-     */
-    private function handleNoFileUploaded(array $uploadedFileInformation): ?ExtbaseFileReference
+    // @todo Check how the `__identifier` key was generated in TYPO3 version below 12 before restoring the function
+    /*
+    private function handleNoFileUploaded(UploadedFile $uploadedFileInformation): ?ExtbaseFileReference
     {
-        if (!empty($uploadedFileInformation['__identity'])) {
+        if (!empty($uploadedFileInformation->getTemporaryFileName())) {
             try {
                 $fileReferenceUid = (int)$uploadedFileInformation['__identity'];
                 $fileReference = GeneralUtility::makeInstance(ExtbaseFileReference::class);
@@ -191,15 +213,14 @@ final class ImageUploadConverter extends AbstractTypeConverter
         }
         return null;
     }
+    */
 
-    private function createFileReferenceFromFalFileReferenceObject(
-        CoreFileReference $falFileReference,
-        ?int $resourcePointer = null
-    ): ExtbaseFileReference {
-        if ($resourcePointer !== null) {
+    private function createFileReferenceFromFalFileReferenceObject(CoreFileReference $falFileReference): ExtbaseFileReference
+    {
+        if ($falFileReference->getIdentifier() !== null) {
             try {
                 // Delete the current profile image with its file reference.
-                $this->resourceFactory->getFileReferenceObject($resourcePointer)->getOriginalFile()->delete();
+                $falFileReference->getOriginalFile()->delete();
             } catch (ResourceDoesNotExistException) {
             }
         }
@@ -209,10 +230,8 @@ final class ImageUploadConverter extends AbstractTypeConverter
         return $fileReference;
     }
 
-    private function createFileReferenceFromFalFileObject(
-        File $file,
-        ?int $resourcePointer = null
-    ): ExtbaseFileReference {
+    private function createFileReferenceFromFalFileObject(File $file): ExtbaseFileReference
+    {
         $fileReference = $this->resourceFactory->createFileReferenceObject(
             [
                 'uid_local' => $file->getUid(),
@@ -222,7 +241,7 @@ final class ImageUploadConverter extends AbstractTypeConverter
             ]
         );
 
-        return $this->createFileReferenceFromFalFileReferenceObject($fileReference, $resourcePointer);
+        return $this->createFileReferenceFromFalFileReferenceObject($fileReference);
     }
 
     /**
@@ -236,36 +255,36 @@ final class ImageUploadConverter extends AbstractTypeConverter
 
         switch ($errorCode) {
             case \UPLOAD_ERR_INI_SIZE:
-                $this->logger->error('The uploaded file exceeds the upload_max_filesize directive in php.ini.');
-                return $typoScriptFrontendController->sL('EXT:form/Resources/Private/Language/locallang.xlf:upload.error.150530345');
+                $this->logger?->error('The uploaded file exceeds the upload_max_filesize directive in php.ini.');
+                return $typoScriptFrontendController->sL('LLL:EXT:form/Resources/Private/Language/locallang.xlf:upload.error.150530345');
             case \UPLOAD_ERR_FORM_SIZE:
-                $this->logger->error('The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.');
-                return $typoScriptFrontendController->sL('EXT:form/Resources/Private/Language/locallang.xlf:upload.error.150530345');
+                $this->logger?->error('The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.');
+                return $typoScriptFrontendController->sL('LLL:EXT:form/Resources/Private/Language/locallang.xlf:upload.error.150530345');
             case \UPLOAD_ERR_PARTIAL:
-                $this->logger->error('The uploaded file was only partially uploaded.');
-                return $typoScriptFrontendController->sL('EXT:form/Resources/Private/Language/locallang.xlf:upload.error.150530346');
+                $this->logger?->error('The uploaded file was only partially uploaded.');
+                return $typoScriptFrontendController->sL('LLL:EXT:form/Resources/Private/Language/locallang.xlf:upload.error.150530346');
             case \UPLOAD_ERR_NO_FILE:
-                $this->logger->error('No file was uploaded.');
-                return $typoScriptFrontendController->sL('EXT:form/Resources/Private/Language/locallang.xlf:upload.error.150530347');
+                $this->logger?->error('No file was uploaded.');
+                return $typoScriptFrontendController->sL('LLL:EXT:form/Resources/Private/Language/locallang.xlf:upload.error.150530347');
             case \UPLOAD_ERR_NO_TMP_DIR:
-                $this->logger->error('Missing a temporary folder.');
-                return $typoScriptFrontendController->sL('EXT:form/Resources/Private/Language/locallang.xlf:upload.error.150530348');
+                $this->logger?->error('Missing a temporary folder.');
+                return $typoScriptFrontendController->sL('LLL:EXT:form/Resources/Private/Language/locallang.xlf:upload.error.150530348');
             case \UPLOAD_ERR_CANT_WRITE:
-                $this->logger->error('Failed to write file to disk.');
-                return $typoScriptFrontendController->sL('EXT:form/Resources/Private/Language/locallang.xlf:upload.error.150530348');
+                $this->logger?->error('Failed to write file to disk.');
+                return $typoScriptFrontendController->sL('LLL:EXT:form/Resources/Private/Language/locallang.xlf:upload.error.150530348');
             case \UPLOAD_ERR_EXTENSION:
-                $this->logger->error('File upload stopped by extension.');
-                return $typoScriptFrontendController->sL('EXT:form/Resources/Private/Language/locallang.xlf:upload.error.150530348');
+                $this->logger?->error('File upload stopped by extension.');
+                return $typoScriptFrontendController->sL('LLL:EXT:form/Resources/Private/Language/locallang.xlf:upload.error.150530348');
             default:
-                $this->logger->error('Unknown upload error.');
-                return $typoScriptFrontendController->sL('EXT:form/Resources/Private/Language/locallang.xlf:upload.error.150530348');
+                $this->logger?->error('Unknown upload error.');
+                return $typoScriptFrontendController->sL('LLL:EXT:form/Resources/Private/Language/locallang.xlf:upload.error.150530348');
         }
     }
 
     private function getTypo3Request(): ServerRequestInterface
     {
         if (!isset($GLOBALS['TYPO3_REQUEST'])) {
-            throw new \RuntimeException('Missing array key "TYPO3_REQUEST" in $GLOBALS.', 1690525047);
+            throw new \RuntimeException('Missing array key "TYPO3_REQUEST" in $GLOBALS.', 1753712973);
         }
         return $GLOBALS['TYPO3_REQUEST'];
     }

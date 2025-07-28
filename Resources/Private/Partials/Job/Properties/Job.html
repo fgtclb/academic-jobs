@@ -5,8 +5,17 @@
 >
     <div class="row">
 
-        <!-- Bild -->
-
+        <div class="col-12 col-md-4">
+            <f:render
+                partial="Job/Forms/Upload"
+                arguments="{
+                    element: {
+                        identifier: 'image',
+                        validations: validations
+                    }
+                }"
+            />
+        </div>
 
         <div class="col-12 col-md-8">
             <f:render

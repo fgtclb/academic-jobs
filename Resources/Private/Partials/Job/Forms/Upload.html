@@ -1,0 +1,27 @@
+<html
+    lang="en"
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true"
+>
+
+<f:variable name="elementId" value="job.{element.identifier}"/>
+
+<f:variable name="required" value="{element.required}" />
+
+<f:for each="{element.validations.{element.identifier}}" as="validation">
+    <f:switch expression="{validation}">
+        <f:case value="required">
+            <f:variable name="required" value="1" />
+        </f:case>
+    </f:switch>
+</f:for>
+
+<f:render
+    partial="Job/Forms/FieldWrapper"
+    arguments="{element: element, elementId: elementId, class: 'form-upload-wrap'}"
+    contentAs="elementContent"
+>
+    <f:form.upload property="{element.identifier}" class="form-control" id="{elementId}"/>
+</f:render>
+
+</html>
