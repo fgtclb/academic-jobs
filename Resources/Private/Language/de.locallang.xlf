@@ -120,6 +120,10 @@
 				<source>Link</source>
 				<target>Link</target>
 			</trans-unit>
+			<trans-unit id="create.job.incorrectValues">
+				<source>One or more fields have not been filled out correctly.</source>
+				<target>Ein oder mehrere Felder wurden nicht korrekt ausgefüllt.</target>
+			</trans-unit>
 			<trans-unit id="jobs.submit">
 				<source>Submit</source>
 				<target>Absenden</target>

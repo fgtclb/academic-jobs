@@ -6,18 +6,9 @@
 
 <f:form.validationResults for="{object}">
     <f:if condition="{validationResults.flattenedErrors}">
-        <f:for each="{validationResults.flattenedErrors}" key="propertyName" as="errors">
-            <f:for each="{errors}" as="error">
-                <div class="alert alert-danger" role="alert">
-                    <f:debug>{_all}</f:debug>
-                    {f:translate(
-                        key: 'form.{propertyName}.error.{error.code}',
-                        default: propertyName,
-                        extensionName: 'academic_jobs'
-                    )}
-                </div>
-            </f:for>
-        </f:for>
+        <div class="alert alert-danger">
+            {f:translate(key: 'create.job.incorrectValues', extensionName: 'academic_jobs')}
+        </div>
     </f:if>
 </f:form.validationResults>
 

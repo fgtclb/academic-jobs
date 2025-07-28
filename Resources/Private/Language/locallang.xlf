@@ -95,6 +95,9 @@
 			<trans-unit id="create.job.link.label">
 				<source>Link</source>
 			</trans-unit>
+			<trans-unit id="create.job.incorrectValues">
+				<source>One or more fields have not been filled out correctly.</source>
+			</trans-unit>
 			<trans-unit id="jobs.submit">
 				<source>Submit</source>
 			</trans-unit>

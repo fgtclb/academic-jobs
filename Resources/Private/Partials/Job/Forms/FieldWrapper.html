@@ -5,23 +5,7 @@
 >
 
 <f:form.validationResults for="{elementId}" as="validationResults">
-    <div class="mb-3{f:if(condition:'{validationResults.flattenedErrors}', then:' field--has-error')} {class}">
-        <f:if condition="{validationResults.flattenedErrors}">
-            <ul>
-                <f:for each="{validationResults.flattenedErrors}" as="errors">
-                    <f:for each="{errors}" as="error">
-                        <li class="notification notification--is-danger">{propertyName}
-                            {f:translate(
-                                key: 'form.{elementId}.error.{error.code}',
-                                default: propertyName,
-                                extensionName: 'academic_jobs'
-                            )}
-                        </li>
-                    </f:for>
-                </f:for>
-            </ul>
-        </f:if>
-
+    <div class="{f:if(condition:'{validationResults.flattenedErrors}', then:' is-invalid')} {class}">
         <label class="form-label" for="{elementId}">
             {f:translate(key:'create.{elementId}.label', extensionName: 'academic_jobs')}
             {f:if(condition: required, then: '<abbr title="required">*</abbr>')}

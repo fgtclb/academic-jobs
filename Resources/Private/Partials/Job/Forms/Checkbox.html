@@ -6,8 +6,6 @@
 
 <f:variable name="elementId" value="job.{element.identifier}"/>
 
-<f:variable name="type" value="text" />
-
 <f:variable name="required" value="{element.required}" />
 
 <f:for each="{element.validations.{element.identifier}}" as="validation">
@@ -33,6 +31,7 @@
         id="{elementId}"
         value="1"
         disabled="{element.disabled}"
+        class="form-check-input"
     />
 </f:render>
 

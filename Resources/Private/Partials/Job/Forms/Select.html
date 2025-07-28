@@ -7,9 +7,19 @@
 
 <f:variable name="elementId" value="job.{element.identifier}"/>
 
+<f:variable name="required" value="{element.required}" />
+
+<f:for each="{element.validations.{element.identifier}}" as="validation">
+    <f:switch expression="{validation}">
+        <f:case value="required">
+            <f:variable name="required" value="1" />
+        </f:case>
+    </f:switch>
+</f:for>
+
 <f:render
     partial="Job/Forms/FieldWrapper"
-    arguments="{element: element, elementId: elementId, class: 'form-select-wrap'}"
+    arguments="{element: element, elementId: elementId, required: required, class: 'form-select-wrap'}"
     contentAs="elementContent"
 >
     <f:form.select
