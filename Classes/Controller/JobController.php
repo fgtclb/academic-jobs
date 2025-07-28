@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace FGTCLB\AcademicJobs\Controller;
 
-use FGTCLB\AcademicJobs\DateTime\IsoDateTime;
 use FGTCLB\AcademicJobs\Domain\Model\Job;
 use FGTCLB\AcademicJobs\Domain\Repository\JobRepository;
 use FGTCLB\AcademicJobs\Event\AfterSaveJobEvent;
@@ -27,7 +26,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
-class JobController extends ActionController
+final class JobController extends ActionController
 {
     private const JOB_HIDDEN = true;
 
@@ -84,8 +83,8 @@ class JobController extends ActionController
         ];
 
         if ($image !== null) {
-            $metaTags['og:image'] = $title;
-            $metaTags['og:image:alt'] = $image;
+            $metaTags['og:image'] = $image;
+            $metaTags['og:image:alt'] = $title;
             $metaTags['twitter:image'] = $image;
             $metaTags['twitter:image:alt'] = $title;
         }
@@ -111,18 +110,17 @@ class JobController extends ActionController
             $jobArgumentConfiguration = $this->arguments->getArgument('job')->getPropertyMappingConfiguration();
 
             $propertiesToConvert = [
-                'employmentStartDate',
-                'starttime',
-                'endtime',
+                'employmentStartDate' => 'Y-m-d',
+                'starttime' => 'Y-m-d',
+                'endtime' => 'Y-m-d',
             ];
 
-            foreach ($propertiesToConvert as $propertyToConvert) {
+            foreach ($propertiesToConvert as $propertyToConvert => $format) {
                 $jobArgumentConfiguration->forProperty($propertyToConvert)
-                    ->setTypeConverterOptions(
+                    ->setTypeConverterOption(
                         DateTimeConverter::class,
-                        [
-                            DateTimeConverter::CONFIGURATION_DATE_FORMAT => IsoDateTime::FORMAT,
-                        ]
+                        DateTimeConverter::CONFIGURATION_DATE_FORMAT,
+                        $format
                     );
             }
         }
@@ -161,12 +159,13 @@ class JobController extends ActionController
                 ContextualFeedbackSeverity::ERROR,
                 true
             );
-            $this->redirect('newJobForm');
+            $this->redirect('new');
         }
 
         $currentPageId = $this->determineCurrentPageId();
         $redirectPageId = $this->resolveRedirectPageId();
         $flashMessageCreationMode = $this->resolveFlashMessageCreationMode();
+
         $afterSaveJobEvent = new AfterSaveJobEvent(
             request: $this->request,
             job: $job,
@@ -177,12 +176,11 @@ class JobController extends ActionController
         );
         /** @var AfterSaveJobEvent $afterSaveJobEvent */
         $afterSaveJobEvent = $this->eventDispatcher->dispatch($afterSaveJobEvent);
+
         $redirectPageId = $afterSaveJobEvent->getRedirectPageId();
         $flashMessageCreationMode = $afterSaveJobEvent->getFlashMessageCreationMode();
         $listPid = $this->settings['listPid'] ? (int)$this->settings['listPid'] : null;
-        // @todo Reenable
-        // $mailWasSent = $this->sendEmail($uid);
-        $mailWasSent = true; // For now, assume email was sent successfully.
+        $mailWasSent = $this->sendEmail($uid);
 
         $useRedirectPageId = $redirectPageId;
         if ($useRedirectPageId === null && $listPid !== null && $listPid > 0) {
