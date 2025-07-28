@@ -8,7 +8,7 @@
     <div class="card-content">
         <div class="card-body">
             <f:render
-                partial="Job/Header"
+                partial="Job/SectionHeader"
                 arguments="{
                     header: '{job.title}',
                     layout: '{data.header_layout}',
@@ -26,8 +26,6 @@
         <f:variable
             name="jobItems"
             value="{
-                0: 'employmentStartDate',
-                1: 'endtime',
                 2: 'companyName',
                 3: 'type',
                 4: 'requiredDegree',

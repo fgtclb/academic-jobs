@@ -26,77 +26,74 @@
 			<trans-unit id="jobs.back">
 				<source>Back to job list</source>
 			</trans-unit>
-			<trans-unit id="jobs.contact">
-				<source>Contact</source>
+			<trans-unit id="create.job.contactName.label">
+				<source>Contact name</source>
 			</trans-unit>
-			<trans-unit id="jobs.contact.name">
-				<source>Creator</source>
-			</trans-unit>
-			<trans-unit id="jobs.contact.email">
+			<trans-unit id="create.job.contactEmail.label">
 				<source>E-Mail</source>
 			</trans-unit>
-			<trans-unit id="jobs.contact.phone">
+			<trans-unit id="create.job.contactPhone.label">
 				<source>Phone number</source>
 			</trans-unit>
-			<trans-unit id="jobs.contact.additionalInformation">
+			<trans-unit id="create.job.contactAdditionalInformation.label">
 				<source>Additional information</source>
 			</trans-unit>
-			<trans-unit id="jobs.starttime">
+			<trans-unit id="create.job.starttime.label">
 				<source>When</source>
 			</trans-unit>
-			<trans-unit id="jobs.endtime">
+			<trans-unit id="create.job.endtime.label">
 				<source>Application deadline</source>
 			</trans-unit>
-			<trans-unit id="jobs.companyName">
+			<trans-unit id="create.job.companyName.label">
 				<source>Organization</source>
 			</trans-unit>
-			<trans-unit id="jobs.employmentType">
+			<trans-unit id="create.job.employmentType.label">
 				<source>Working hours</source>
 			</trans-unit>
-			<trans-unit id="jobs.employmentType.1">
+			<trans-unit id="create.job.employmentType.1">
 				<source>Full-Time</source>
 			</trans-unit>
-			<trans-unit id="jobs.employmentType.2">
+			<trans-unit id="create.job.employmentType.2">
 				<source>Part-Time</source>
 			</trans-unit>
-			<trans-unit id="jobs.employmentStartDate">
+			<trans-unit id="create.job.employmentStartDate.label">
 				<source>Employment Start Date</source>
 			</trans-unit>
-			<trans-unit id="jobs.type">
+			<trans-unit id="create.job.type.label">
 				<source>Job Type</source>
 			</trans-unit>
-			<trans-unit id="jobs.type.1">
+			<trans-unit id="create.job.type.1">
 				<source>Job</source>
 			</trans-unit>
-			<trans-unit id="jobs.type.2">
+			<trans-unit id="create.job.type.2">
 				<source>Sidejob</source>
 			</trans-unit>
-			<trans-unit id="jobs.type.3">
+			<trans-unit id="create.job.type.3">
 				<source>Thesis</source>
 			</trans-unit>
-			<trans-unit id="jobs.workLocation">
+			<trans-unit id="create.job.workLocation.label">
 				<source>Location</source>
 			</trans-unit>
-			<trans-unit id="jobs.image">
+			<trans-unit id="create.job.image.label">
 				<source>Logo</source>
 			</trans-unit>
-			<trans-unit id="jobs.title">
+			<trans-unit id="create.job.title.label">
 				<source>Job title / Thesis title</source>
 			</trans-unit>
-			<trans-unit id="jobs.sector">
+			<trans-unit id="create.job.sector.label">
 				<source>Industry</source>
 			</trans-unit>
-			<trans-unit id="jobs.requiredDegree">
+			<trans-unit id="create.job.requiredDegree.label">
 				<source>Required degree</source>
 			</trans-unit>
-			<trans-unit id="jobs.contractualRelationship">
+			<trans-unit id="create.job.contractualRelationship.label">
 				<source>Contractual relationship</source>
 			</trans-unit>
-			<trans-unit id="jobs.description">
+			<trans-unit id="create.job.description.label">
 				<source>Job description</source>
 			</trans-unit>
-			<trans-unit id="jobs.link">
-				<source>Link (to the announcement or website)</source>
+			<trans-unit id="create.job.link.label">
+				<source>Link</source>
 			</trans-unit>
 			<trans-unit id="jobs.submit">
 				<source>Submit</source>
@@ -126,7 +123,7 @@
 			<trans-unit id="tx_academicjobs.fe.alert.job_not_found.body">
 				<source>No job advert could be found.</source>
 			</trans-unit>
-			<trans-unit id="jobs.noLink">
+			<trans-unit id="create.job.noLink">
 				<source>The link to this job avert is broken. Please contact us.</source>
 			</trans-unit>
 		</body>

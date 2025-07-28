@@ -12,34 +12,27 @@
 
 <f:for each="{element.validations.{element.identifier}}" as="validation">
     <f:switch expression="{validation}">
-        <f:case value="email">
-            <f:variable name="type" value="email" />
-        </f:case>
-        <f:case value="number">
-            <f:variable name="type" value="number" />
-        </f:case>
         <f:case value="required">
             <f:variable name="required" value="1" />
-        </f:case>
-        <f:case value="url">
-            <f:variable name="type" value="url" />
         </f:case>
     </f:switch>
 </f:for>
 
 <f:render
     partial="Job/Forms/FieldWrapper"
-    arguments="{element: element, elementId: elementId, required: required, class: 'form-textfield-wrap'}"
+    arguments="{
+        element: element,
+        elementId: elementId,
+        required: required,
+        class: 'form-check-wrap',
+    }"
     contentAs="elementContent"
 >
-    <f:form.textfield
-        type="{type}"
+    <f:form.checkbox
         property="{element.identifier}"
         id="{elementId}"
-        placeholder="{f:translate(key:'edit.{elementId}.placeholder', extensionName: 'academic_jobs')}"
-        class="form-control"
+        value="1"
         disabled="{element.disabled}"
-        autocomplete="{element.autocomplete}"
     />
 </f:render>
 

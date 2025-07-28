@@ -1,7 +1,6 @@
 (function() {
-
   const editorConfig = {
-    language: 'de',
+    language: 'en',
     height: 200,
     versionCheck: false,
     format_tags: 'p',
@@ -18,19 +17,12 @@
     ]
   };
 
-  const rteFields = document.querySelectorAll('.rte');
-
-  if (!rteFields) {
-    return;
-  }
-
-  let waitCKEDITOR = setInterval(function() {
-    console.log('Wait for ckeditor');
+  const waitCKEDITOR = setInterval(function() {
     if (window.CKEDITOR) {
       clearInterval(waitCKEDITOR);
 
-      rteFields.forEach(function(field) {
-        CKEDITOR.replace(field.id, editorConfig);
+      document.querySelectorAll('.rich-text').forEach((textarea) => {
+        CKEDITOR.replace(textarea.getAttribute('id'), editorConfig);
       });
     }
   }, 100);

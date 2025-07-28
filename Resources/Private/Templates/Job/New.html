@@ -16,115 +16,40 @@
 />
 
 <div class="academic-jobs-new">
+    <f:render
+        partial="Job/Header"
+        arguments="{
+            header: '{data.header}',
+            layout: '{data.header_layout}',
+            subheader: '{data.subheader}',
+        }"
+    />
+
     <f:flashMessages />
 
-    <f:form.validationResults>
-        <f:if condition="{validationResults.flattenedErrors}">
-            <ul class="alert alert-danger" role="alert">
-                <f:for each="{validationResults.flattenedErrors}" key="propertyPath" as="errors">
-                    <li>
-                        {propertyPath}:
+    <f:render
+        partial="Job/Forms/Errors"
+        arguments="{
+            object: job,
+            validationResults: validationResults
+        }"
+    />
 
-                        <ul>
-                            <f:for each="{errors}" as="error">
-                                <li>{error}</li>
-                            </f:for>
-                        </ul>
-                    </li>
-                </f:for>
-            </ul>
-        </f:if>
-  </f:form.validationResults>
+    <f:form
+        action="create"
+        name="job"
+        object="{job}"
+        enctype="multipart/form-data"
+    >
+        <f:render
+            partial="Job/Properties/Job"
+            arguments="{
+                job: job,
+                validations: validations
+            }"
+        />
 
-  <f:form action="saveJob" name="job" object="{job}" enctype="multipart/form-data">
-        <div class="row">
-            <div class="col-12 col-md-3">
-                <label for="job-image" class="form-label">
-                    {f:translate(key: 'jobs.image', extensionName: 'academic_jobs')}
-                </label>
-
-                <f:form.upload property="image" class="form-control" id="job-image"/>
-            </div>
-
-            <div class="col-12 col-md-9">
-                <label for="title" class="form-label">
-                    {f:translate(key: 'jobs.title', extensionName: 'academic_jobs')}
-                </label>
-
-                <f:form.textfield id="title" property="title" class="form-control" required="true"/>
-            </div>
-
-            <!-- This field configuration structure should come from the controller and should not be build here -->
-
-            <f:variable
-                name="employmentTypeOptions"
-                value="{
-                    1: '{f:translate(key: \'jobs.employmentType.1\', extensionName: \'academic_jobs\')}',
-                    2: '{f:translate(key: \'jobs.employmentType.2\', extensionName: \'academic_jobs\')}'
-                }"
-            />
-
-            <f:variable
-                name="typeOptions"
-                value="{
-                    1: '{f:translate(key: \'jobs.type.1\', extensionName: \'academic_jobs\')}',
-                    2: '{f:translate(key: \'jobs.type.2\', extensionName: \'academic_jobs\')}',
-                    3: '{f:translate(key: \'jobs.type.3\', extensionName: \'academic_jobs\')}'
-                }"
-            />
-
-            <f:for
-                each="{
-                    employmentType: '{field: \'select\', required: true, options: employmentTypeOptions}',
-                    type: '{field: \'select\', required: true, options: typeOptions}',
-                    employmentStartDate: '{type: \'date\', required: true}',
-                    companyName: '{required: true}',
-                    sector: '',
-                    requiredDegree: '',
-                    contractualRelationship: '',
-                    workLocation: '',
-                    link: '{type: \'url\'}',
-                    starttime: '{type: \'date\'}',
-                    endtime: '{type: \'date\'}',
-                    description: '{field: \'textarea\', required: true, rte: true}',
-                }"
-                as="fieldSettings"
-                key="property"
-            >
-                <f:render
-                    partial="Job/Form/Field"
-                    arguments="{
-                        property: property,
-                        fieldSettings: fieldSettings,
-                        labelPrefix: 'jobs',
-                    }"
-                />
-            </f:for>
-        </div>
-
-        <div class="row">
-            <f:for
-                each="{
-                    name: '',
-                    email: '',
-                    phone: '',
-                    additionalInformation: '',
-                }"
-                as="fieldSettings"
-                key="property"
-            >
-                <f:render
-                    partial="Job/Form/Field"
-                    arguments="{
-                        property: 'contact.{property}',
-                        fieldSettings: fieldSettings,
-                        labelPrefix: 'jobs.contact',
-                    }"
-                />
-            </f:for>
-        </div>
-
-        <button class="btn btn-primary mt-4" type="submit">
+        <button class="btn btn-primary" type="submit">
             {f:translate(key: 'jobs.submit', extensionName: 'academic_jobs')}
         </button>
     </f:form>

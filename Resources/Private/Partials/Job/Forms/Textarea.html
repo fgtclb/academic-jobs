@@ -3,28 +3,32 @@
     xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
     data-namespace-typo3-fluid="true"
 >
-    <f:variable
-        name="elementId"
-        value="{element.form}.{element.identifier}"
+
+<f:variable name="elementId" value="job.{element.identifier}"/>
+
+<f:variable name="required" value="{element.required}" />
+
+<f:for each="{element.validations.{element.identifier}}" as="validation">
+    <f:switch expression="{validation}">
+        <f:case value="required">
+            <f:variable name="required" value="1" />
+        </f:case>
+    </f:switch>
+</f:for>
+
+<f:render
+    partial="Job/Forms/FieldWrapper"
+    arguments="{element: element, elementId: elementId, required: required, class: 'form-textarea-wrap'}"
+    contentAs="elementContent"
+>
+    <f:form.textarea
+        property="{element.identifier}"
+        id="{elementId}"
+        class="form-control {f:if(condition: '{element.richtext}', then: 'rich-text')}"
+        disabled="{element.disabled}"
+        placeholder="{f:translate(key:'edit.{elementId}.placeholder', extensionName: 'academic_jobs')}"
+        rows="5"
     />
-    <f:variable name="required" value="{element.required}" />
-    <f:for each="{element.validations.{element.identifier}}" as="validation">
-        <f:switch expression="{validation}">
-            <f:case value="required">
-                <f:variable name="required" value="1" />
-            </f:case>
-        </f:switch>
-    </f:for>
-    <f:render
-        partial="Forms/FieldWrapper"
-        arguments="{element: element, elementId: elementId}"
-        contentAs="elementContent"
-    >
-        <f:form.textarea
-            property="{element.identifier}"
-            id="{elementId}"
-            class="form-control"
-            disabled="{element.disabled}"
-        />
-    </f:render>
+</f:render>
+
 </html>

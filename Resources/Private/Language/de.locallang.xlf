@@ -28,101 +28,97 @@
 				<source>Back to job list</source>
 				<target>Zurück zu den Stellenangeboten</target>
 			</trans-unit>
-			<trans-unit id="jobs.contact">
-				<source>Contact</source>
-				<target>Kontakt</target>
+			<trans-unit id="create.job.contactName.label">
+				<source>Contact name</source>
+				<target>Kontakt Name</target>
 			</trans-unit>
-			<trans-unit id="jobs.contact.name">
-				<source>Creator</source>
-				<target>Ersteller*in</target>
-			</trans-unit>
-			<trans-unit id="jobs.contact.email">
+			<trans-unit id="create.job.contactEmail.label">
 				<source>E-Mail</source>
 				<target>E-Mail</target>
 			</trans-unit>
-			<trans-unit id="jobs.contact.phone">
+			<trans-unit id="create.job.contactPhone.label">
 				<source>Phone number</source>
 				<target>Telefonnummer</target>
 			</trans-unit>
-			<trans-unit id="jobs.contact.additionalInformation">
+			<trans-unit id="create.job.contactAdditionalInformation.label">
 				<source>Additional information</source>
 				<target>Zusatzinformation</target>
 			</trans-unit>
-			<trans-unit id="jobs.starttime">
+			<trans-unit id="create.job.starttime.label">
 				<source>When</source>
 				<target>Ab wann</target>
 			</trans-unit>
-			<trans-unit id="jobs.endtime">
+			<trans-unit id="create.job.endtime.label">
 				<source>Application deadline</source>
 				<target>Bewerbungsfrist</target>
 			</trans-unit>
-			<trans-unit id="jobs.companyName">
+			<trans-unit id="create.job.companyName.label">
 				<source>Organization</source>
 				<target>Organisation</target>
 			</trans-unit>
-			<trans-unit id="jobs.employmentType">
+			<trans-unit id="create.job.employmentType.label">
 				<source>Working hours</source>
 				<target>Arbeitszeit</target>
 			</trans-unit>
-			<trans-unit id="jobs.employmentType.1">
+			<trans-unit id="create.job.employmentType.1">
 				<source>Full-Time</source>
 				<target>Vollzeit</target>
 			</trans-unit>
-			<trans-unit id="jobs.employmentType.2">
+			<trans-unit id="create.job.employmentType.2">
 				<source>Part-Time</source>
 				<target>Teilzeit</target>
 			</trans-unit>
-			<trans-unit id="jobs.workLocation">
+			<trans-unit id="create.job.workLocation.label">
 				<source>Location</source>
 				<target>Ort</target>
 			</trans-unit>
-			<trans-unit id="jobs.employmentStartDate">
+			<trans-unit id="create.job.employmentStartDate.label">
 				<source>Employment Start Date</source>
 				<target>Arbeitsbeginn</target>
 			</trans-unit>
-			<trans-unit id="jobs.type">
+			<trans-unit id="create.job.type.label">
 				<source>Job Type</source>
 				<target>Jobtyp</target>
 			</trans-unit>
-			<trans-unit id="jobs.type.1">
+			<trans-unit id="create.job.type.1">
 				<source>Job</source>
 				<target>Job</target>
 			</trans-unit>
-			<trans-unit id="jobs.type.2">
+			<trans-unit id="create.job.type.2">
 				<source>Sidejob</source>
 				<target>Nebenjob</target>
 			</trans-unit>
-			<trans-unit id="jobs.type.3">
+			<trans-unit id="create.job.type.3">
 				<source>Thesis</source>
 				<target>Abschlussarbeit</target>
 			</trans-unit>
-			<trans-unit id="jobs.image">
+			<trans-unit id="create.job.image.label">
 				<source>Logo</source>
 				<target>Logo</target>
 			</trans-unit>
-			<trans-unit id="jobs.title">
+			<trans-unit id="create.job.title.label">
 				<source>Job title / Thesis title</source>
 				<target>Stellenbezeichnung / Titel der Abschlussarbeit</target>
 			</trans-unit>
-			<trans-unit id="jobs.sector">
+			<trans-unit id="create.job.sector.label">
 				<source>Industry</source>
 				<target>Branche</target>
 			</trans-unit>
-			<trans-unit id="jobs.requiredDegree">
+			<trans-unit id="create.job.requiredDegree.label">
 				<source>Required degree</source>
 				<target>Benötigter Abschluss</target>
 			</trans-unit>
-			<trans-unit id="jobs.contractualRelationship">
+			<trans-unit id="create.job.contractualRelationship.label">
 				<source>Contractual relationship</source>
 				<target>Vertragsverhältnis</target>
 			</trans-unit>
-			<trans-unit id="jobs.description">
+			<trans-unit id="create.job.description.label">
 				<source>Job description</source>
 				<target>Stellenbeschreibung</target>
 			</trans-unit>
-			<trans-unit id="jobs.link">
-				<source>Link (to the announcement or website)</source>
-				<target>Link (zur Ausschreibung oder Website)</target>
+			<trans-unit id="create.job.link.label">
+				<source>Link</source>
+				<target>Link</target>
 			</trans-unit>
 			<trans-unit id="jobs.submit">
 				<source>Submit</source>
@@ -159,7 +155,7 @@
 				<source>No job advert could be found.</source>
 				<target>Es konnte keine Stellenanzeige gefunden werden.</target>
 			</trans-unit>
-			<trans-unit id="jobs.noLink">
+			<trans-unit id="create.job.noLink">
 				<source>The link to this job avert is broken. Please contact us.</source>
 				<target>Der Link zu dieser Stellenanzeige ist defekt. Bitte kontaktieren Sie uns.</target>
 			</trans-unit>

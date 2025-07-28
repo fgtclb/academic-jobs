@@ -5,6 +5,15 @@
 >
 
 <div class="academic-jobs-list">
+    <f:render
+        partial="Job/Header"
+        arguments="{
+            header: '{data.header}',
+            layout: '{data.header_layout}',
+            subheader: '{data.subheader}',
+        }"
+    />
+
     <f:flashMessages />
 
     <f:for each="{jobs}" as="job">
