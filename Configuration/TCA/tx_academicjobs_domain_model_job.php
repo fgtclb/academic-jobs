@@ -100,20 +100,7 @@ return [
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
-                'items' => [
-                    [
-                        'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_job.jobtype.job',
-                        'value' => 1,
-                    ],
-                    [
-                        'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_job.jobtype.sidejob',
-                        'value' => 2,
-                    ],
-                    [
-                        'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_job.jobtype.thesis',
-                        'value' => 3,
-                    ],
-                ],
+                'itemsProcFunc' => FGTCLB\AcademicJobs\Backend\FormEngine\TypeItems::class . '->itemsProcFunc',
                 'size' => 1,
                 'maxitems' => 1,
                 'required' => true,
@@ -232,16 +219,7 @@ return [
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
-                'items' => [
-                    [
-                        'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_job.employment_type.fulltime',
-                        'value' => 1,
-                    ],
-                    [
-                        'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_job.employment_type.parttime',
-                        'value' => 2,
-                    ],
-                ],
+                'itemsProcFunc' => FGTCLB\AcademicJobs\Backend\FormEngine\EmploymentTypeItems::class . '->itemsProcFunc',
                 'size' => 1,
                 'maxitems' => 1,
                 'required' => true,

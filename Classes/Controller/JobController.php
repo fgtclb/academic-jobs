@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace FGTCLB\AcademicJobs\Controller;
 
+use FGTCLB\AcademicJobs\Backend\FormEngine\EmploymentTypeItems;
+use FGTCLB\AcademicJobs\Backend\FormEngine\TypeItems;
 use FGTCLB\AcademicJobs\Domain\Model\Job;
 use FGTCLB\AcademicJobs\Domain\Repository\JobRepository;
 use FGTCLB\AcademicJobs\Domain\Validator\JobValidator;
@@ -37,6 +39,8 @@ final class JobController extends ActionController
         private readonly JobRepository $jobRepository,
         private readonly PersistenceManagerInterface $persistenceManager,
         private readonly ImageService $imageService,
+        private readonly EmploymentTypeItems $employmentTypeItems,
+        private readonly TypeItems $typeItems,
         protected readonly BackendUriBuilder $backendUriBuilder,
         protected AcademicJobsSettingsRegistry $settingsRegistry,
     ) {}
@@ -105,7 +109,11 @@ final class JobController extends ActionController
 
     public function newAction(?Job $job = null): ResponseInterface
     {
-        $this->view->assign('validations', $this->settingsRegistry->getValidationsForFrontend('job'));
+        $this->view->assignMultiple([
+            'validations' => $this->settingsRegistry->getValidationsForFrontend('job'),
+            'employmentTypeOptions' => $this->employmentTypeItems->getEmploymentTypes(),
+            'typeOptions' => $this->typeItems->getTypes(),
+        ]);
         return $this->htmlResponse();
     }
 
@@ -253,7 +261,6 @@ final class JobController extends ActionController
         }
         // Since TYPO3v12 redirect method returns a response object. Return it directly.
         return $this->redirect('list');
-
     }
 
     /**

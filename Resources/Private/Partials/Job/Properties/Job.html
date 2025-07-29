@@ -4,7 +4,6 @@
     data-namespace-typo3-fluid="true"
 >
     <div class="row">
-
         <div class="col-12 col-md-4">
             <f:render
                 partial="Job/Forms/Upload"
@@ -35,7 +34,10 @@
                 arguments="{
                     element: {
                         identifier: 'employmentType',
-                        validations: validations
+                        validations: validations,
+                        options: employmentTypeOptions,
+                        optionValueField: 'value',
+                        optionLabelField: 'label',
                     }
                 }"
             />
@@ -47,7 +49,10 @@
                 arguments="{
                     element: {
                         identifier: 'type',
-                        validations: validations
+                        validations: validations,
+                        options: typeOptions,
+                        optionValueField: 'value',
+                        optionLabelField: 'label',
                     }
                 }"
             />
