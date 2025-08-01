@@ -25,18 +25,17 @@ return [
     'columns' => [
         'sys_language_uid' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_be.general.xlf:LGL.language',
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
             'config' => [
                 'type' => 'language',
             ],
         ],
         'l10n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_be.general.xlf:LGL.l18n_parent',
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
-                'default' => 0,
                 'items' => [
                     [
                         'label' => '',
@@ -45,6 +44,7 @@ return [
                 ],
                 'foreign_table' => 'tx_academicjobs_domain_model_job',
                 'foreign_table_where' => 'AND {#tx_academicjobs_domain_model_job}.{#pid}=###CURRENT_PID### AND {#tx_academicjobs_domain_model_job}.{#sys_language_uid} IN (-1,0)',
+                'default' => 0,
             ],
         ],
         'l10n_diffsource' => [
@@ -54,14 +54,14 @@ return [
         ],
         'hidden' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_be.general.xlf:LGL.visible',
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.enabled',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxToggle',
+                'default' => 0,
                 'items' => [
                     [
                         'label' => '',
-                        'value' => '',
                         'invertStateDisplay' => true,
                     ],
                 ],
@@ -69,28 +69,20 @@ return [
         ],
         'starttime' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_be.general.xlf:LGL.starttime',
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
             'config' => [
                 'type' => 'datetime',
-                'required' => true,
                 'default' => 0,
-                'behaviour' => [
-                    'allowLanguageSynchronization' => true,
-                ],
             ],
         ],
         'endtime' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_be.general.xlf:LGL.endtime',
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
             'config' => [
                 'type' => 'datetime',
-                'required' => true,
                 'default' => 0,
                 'range' => [
                     'upper' => mktime(0, 0, 0, 1, 1, 2038),
-                ],
-                'behaviour' => [
-                    'allowLanguageSynchronization' => true,
                 ],
             ],
         ],
@@ -311,7 +303,6 @@ return [
     ],
     'palettes' => [
         'general' => [
-            'label' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_be.ttc.xlf:palette.general',
             'showitem' => '
                 type,
             ',
@@ -359,39 +350,38 @@ return [
         ],
         'hidden' => [
             'showitem' => '
-                hidden;LLL:EXT:frontend/Resources/Private/Language/locallang_be.ttc.xlf:field.default.hidden,
+                hidden
             ',
         ],
         'language' => [
             'showitem' => '
-                sys_language_uid;LLL:EXT:frontend/Resources/Private/Language/locallang_be.ttc.xlf:sys_language_uid_formlabel,
-                l10n_parent,
+                sys_language_uid,l10n_parent
             ',
         ],
         'access' => [
-            'label' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_be.ttc.xlf:palette.access',
+            'label' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access',
             'showitem' => '
-                starttime;LLL:EXT:frontend/Resources/Private/Language/locallang_be.ttc.xlf:starttime_formlabel,
-                endtime;LLL:EXT:frontend/Resources/Private/Language/locallang_be.ttc.xlf:endtime_formlabel,
+                starttime;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:starttime_formlabel,
+                endtime;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:endtime_formlabel,
             ',
         ],
     ],
     'types' => [
         '1' => [
             'showitem' => '
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_be.tabs.xlf:general,
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
                     --palette--;;general,
                     --palette--;;name,
                     image,
                     --palette--;;company,
                     --palette--;;contact,
                     --palette--;;slug,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_be.tabs.xlf:language,
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
                     --palette--;;language,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_be.tabs.xlf:access,
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
                     --palette--;;hidden,
                     --palette--;;access,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_be.tabs.xlf:extended,
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended,
             ',
         ],
     ],
