@@ -218,14 +218,6 @@ final class ImageUploadConverter extends AbstractTypeConverter implements Logger
 
     private function createFileReferenceFromFalFileReferenceObject(CoreFileReference $falFileReference): ExtbaseFileReference
     {
-        if ($falFileReference->getIdentifier() !== null) {
-            try {
-                // Delete the current profile image with its file reference.
-                $falFileReference->getOriginalFile()->delete();
-            } catch (ResourceDoesNotExistException) {
-            }
-        }
-
         $fileReference = GeneralUtility::makeInstance(ExtbaseFileReference::class);
         $fileReference->setOriginalResource($falFileReference);
         return $fileReference;
