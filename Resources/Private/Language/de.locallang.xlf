@@ -128,6 +128,26 @@
 				<source>Submit</source>
 				<target>Absenden</target>
 			</trans-unit>
+			<trans-unit id="upload.error.150530345">
+				<source>Maximum file size exceeded.</source>
+				<target>Maximale Dateigröße überschritten.</target>
+			</trans-unit>
+			<trans-unit id="upload.error.150530346">
+				<source>Upload failed. The file was only partially uploaded, please try again.</source>
+				<target>Fehler beim Hochladen. Die Datei wurde nur teilweise hochgeladen, bitte versuchen Sie es erneut.</target>
+			</trans-unit>
+			<trans-unit id="upload.error.150530347">
+				<source>No file was uploaded.</source>
+				<target>Keine Datei wurde hochgeladen.</target>
+			</trans-unit>
+			<trans-unit id="upload.error.150530348">
+				<source>Upload failed.</source>
+				<target>Das Hochladen ist fehlgeschlagen</target>
+			</trans-unit>
+			<trans-unit id="validation.error.1471708998">
+				<source>You entered an incorrect media type, "%s" is not allowed for this file. Please refer to the description of this field.</source>
+				<target>Sie haben einen falschen Medientyp eingegeben, "%s" ist für diese Datei nicht zulässig. Bitte beachten Sie die Beschreibung dieses Feldes.</target>
+			</trans-unit>
 
 			<!-- Alerts -->
 
