@@ -1,85 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" datatype="plaintext" product-name="academic_jobs">
-        <header/>
-        <body>
+	<file source-language="en" target-language="de" datatype="plaintext" product-name="academic_jobs">
+		<header/>
+		<body>
 			<!-- Flexform General -->
-            <trans-unit id="tx_academicjobs_domain_model_job.pi_flexform.sheetGeneral">
-                <source>Settings</source>
-                <target>Settings</target>
-            </trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.pi_flexform.sheetGeneral">
+				<source>Settings</source>
+				<target>Settings</target>
+			</trans-unit>
 
-            <!-- Flexform Plugin List -->
-            <trans-unit id="tx_academicjobs_domain_model_job.list.jobType.label">
-                <source>Job Type</source>
-                <target>Job Type</target>
-            </trans-unit>
+			<!-- Flexform Plugin List -->
+			<trans-unit id="tx_academicjobs_domain_model_job.list.jobType.label">
+				<source>Job Type</source>
+				<target>Job Type</target>
+			</trans-unit>
 
-            <!-- Flexform Plugin NewJobForm -->
-            <trans-unit id="tx_academicjobs_domain_model_job.newJobForm.redirectPageId.label">
-                <source>Redirect page after job creation</source>
-                <target>Weiterleitungsseite nach erfolgreichen anlegen eines Jobs</target>
-            </trans-unit>
+			<!-- Flexform Plugin NewJobForm -->
+			<trans-unit id="tx_academicjobs_domain_model_job.newJobForm.redirectPageId.label">
+				<source>Redirect page after job creation</source>
+				<target>Weiterleitungsseite nach erfolgreichen anlegen eines Jobs</target>
+			</trans-unit>
 
-            <!-- /* shared */ -->
-            <trans-unit id="element.tab.configuration">
-                <source>Configuration</source>
-                <target>Konfiguration</target>
-            </trans-unit>
+			<!-- /* shared */ -->
+			<trans-unit id="element.tab.configuration">
+				<source>Configuration</source>
+				<target>Konfiguration</target>
+			</trans-unit>
 
-            <!-- /* CType group */ -->
-            <trans-unit id="content.ctype.group.label">
-                <source>Academic</source>
-                <target>Academic</target>
-            </trans-unit>
+			<!-- /* CType group */ -->
+			<trans-unit id="content.ctype.group.label">
+				<source>Academic</source>
+				<target>Academic</target>
+			</trans-unit>
 
-            <!-- /* academicjobs_newjobform */ -->
-            <trans-unit id="plugin.newjobform.label">
-                <source>Jobs New</source>
-                <target>Jobs New</target>
-            </trans-unit>
+			<!-- /* academicjobs_newjobform */ -->
+			<trans-unit id="plugin.newjobform.label">
+				<source>Jobs New</source>
+				<target>Jobs New</target>
+			</trans-unit>
 
-            <!-- /* academicjobs_list */ -->
-            <trans-unit id="plugin.list.label">
-                <source>Jobs List</source>
-                <target>Jobs List</target>
-            </trans-unit>
+			<!-- /* academicjobs_list */ -->
+			<trans-unit id="plugin.list.label">
+				<source>Jobs List</source>
+				<target>Jobs List</target>
+			</trans-unit>
 
-            <!-- /* academicjobs_detail */ -->
-            <trans-unit id="plugin.detail.label">
-                <source>Jobs Detail</source>
-                <target>Jobs Detail</target>
-            </trans-unit>
+			<!-- /* academicjobs_detail */ -->
+			<trans-unit id="plugin.detail.label">
+				<source>Jobs Detail</source>
+				<target>Jobs Detail</target>
+			</trans-unit>
 
-            <!-- /* newContentElement */ -->
-            <trans-unit id="newContentElement.wizardItems.academic">
-                <source>Academic</source>
-                <target>Academic</target>
-            </trans-unit>
-            <trans-unit id="newContentElement.wizardItems.academic.newjobform.title">
-                <source>Jobs New</source>
-                <target>Jobs New</target>
-            </trans-unit>
-            <trans-unit id="newContentElement.wizardItems.academic.newjobform.description">
-                <source>Plugin providing new jobs form</source>
-                <target>Plugin providing new jobs form</target>
-            </trans-unit>
-            <trans-unit id="newContentElement.wizardItems.academic.list.title">
-                <source>Jobs List</source>
-                <target>Jobs List</target>
-            </trans-unit>
-            <trans-unit id="newContentElement.wizardItems.academic.list.description">
-                <source>Plugin for listing academic jobs</source>
-                <target>Plugin for listing academic jobs</target>
-            </trans-unit>
-            <trans-unit id="newContentElement.wizardItems.academic.detail.title">
-                <source>Jobs Detail</source>
-                <target>Jobs Detail</target>
-            </trans-unit>
-            <trans-unit id="newContentElement.wizardItems.academic.detail.description">
-                <source>Plugin for viewing single academic job</source>
-                <target>Plugin for viewing single academic job</target>
-            </trans-unit>
+			<!-- /* newContentElement */ -->
+			<trans-unit id="newContentElement.wizardItems.academic">
+				<source>Academic</source>
+				<target>Academic</target>
+			</trans-unit>
+			<trans-unit id="newContentElement.wizardItems.academic.newjobform.title">
+				<source>Jobs New</source>
+				<target>Jobs New</target>
+			</trans-unit>
+			<trans-unit id="newContentElement.wizardItems.academic.newjobform.description">
+				<source>Plugin providing new jobs form</source>
+				<target>Plugin providing new jobs form</target>
+			</trans-unit>
+			<trans-unit id="newContentElement.wizardItems.academic.list.title">
+				<source>Jobs List</source>
+				<target>Jobs List</target>
+			</trans-unit>
+			<trans-unit id="newContentElement.wizardItems.academic.list.description">
+				<source>Plugin for listing academic jobs</source>
+				<target>Plugin for listing academic jobs</target>
+			</trans-unit>
+			<trans-unit id="newContentElement.wizardItems.academic.detail.title">
+				<source>Jobs Detail</source>
+				<target>Jobs Detail</target>
+			</trans-unit>
+			<trans-unit id="newContentElement.wizardItems.academic.detail.description">
+				<source>Plugin for viewing single academic job</source>
+				<target>Plugin for viewing single academic job</target>
+			</trans-unit>
 
 			<!-- Domain Model: Job -->
 
@@ -167,10 +167,10 @@
 				<source>Contact</source>
 				<target>Kontakt</target>
 			</trans-unit>
-            <trans-unit id="tx_academicjobs_domain_model_job.jobtype.none">
-                <source>None</source>
-                <target>Keine Auswahl</target>
-            </trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.jobtype.none">
+				<source>None</source>
+				<target>Keine Auswahl</target>
+			</trans-unit>
 			<trans-unit id="tx_academicjobs_domain_model_job.jobtype.job">
 				<source>Job</source>
 				<target>Job</target>
@@ -206,6 +206,6 @@
 				<source>Additional Information</source>
 				<target>Zusätzliche Informationen</target>
 			</trans-unit>
-        </body>
-    </file>
+		</body>
+	</file>
 </xliff>

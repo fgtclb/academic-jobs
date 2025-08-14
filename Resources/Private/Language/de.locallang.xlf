@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" target-langague="de" datatype="plaintext" original="EXT:academic_jobs/Resources/Private/Language/locallang.xlf" date="2023-09-02T12:17:09Z" product-name="academic_jobs">
+	<file source-language="en" target-language="de" datatype="plaintext" original="EXT:academic_jobs/Resources/Private/Language/locallang.xlf" date="2023-09-02T12:17:09Z" product-name="academic_jobs">
 		<header/>
 		<body>
-            <!-- Backend: TypoScript Constants Editor -->
+			<!-- Backend: TypoScript Constants Editor -->
 
-            <trans-unit id="saveForm.flashMessageCreationMode.label">
-                <source>Flashmessage creation mode when persisting new jobs (FE)</source>
-                <target>Flashmessage creation mode when persisting new jobs (FE)</target>
-            </trans-unit>
-            <trans-unit id="saveForm.flashMessageCreationMode.option_always">
-                <source>always</source>
-                <target>immer</target>
-            </trans-unit>
-            <trans-unit id="saveForm.flashMessageCreationMode.option_never">
-                <source>never</source>
-                <target>niemals</target>
-            </trans-unit>
-            <trans-unit id="saveForm.flashMessageCreationMode.option_suppressWhenListPidSelected">
-                <source>suppress when list pid has been configured</source>
-                <target>Nur wenn keine listPid gesetzt wurde.</target>
-            </trans-unit>
+			<trans-unit id="saveForm.flashMessageCreationMode.label">
+				<source>Flashmessage creation mode when persisting new jobs (FE)</source>
+				<target>Flashmessage creation mode when persisting new jobs (FE)</target>
+			</trans-unit>
+			<trans-unit id="saveForm.flashMessageCreationMode.option_always">
+				<source>always</source>
+				<target>immer</target>
+			</trans-unit>
+			<trans-unit id="saveForm.flashMessageCreationMode.option_never">
+				<source>never</source>
+				<target>niemals</target>
+			</trans-unit>
+			<trans-unit id="saveForm.flashMessageCreationMode.option_suppressWhenListPidSelected">
+				<source>suppress when list pid has been configured</source>
+				<target>Nur wenn keine listPid gesetzt wurde.</target>
+			</trans-unit>
 
 			<!-- Frontend -->
 

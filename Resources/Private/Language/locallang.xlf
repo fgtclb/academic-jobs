@@ -3,23 +3,23 @@
 	<file source-language="en" datatype="plaintext" original="EXT:academic_jobs/Resources/Private/Language/locallang.xlf" date="2023-09-02T12:17:09Z" product-name="academic_jobs">
 		<header/>
 		<body>
-            <!-- Backend: TypoScript Constants Editor -->
+			<!-- Backend: TypoScript Constants Editor -->
 
-            <trans-unit id="saveForm.flashMessageCreationMode.label">
-                <source>Flashmessage creation mode when persisting new jobs (FE)</source>
-            </trans-unit>
-            <trans-unit id="saveForm.flashMessageCreationMode.use_global_setting">
-                <source>Fallback - Use TypoScript settings</source>
-            </trans-unit>
-            <trans-unit id="saveForm.flashMessageCreationMode.option_always">
-                <source>always</source>
-            </trans-unit>
-            <trans-unit id="saveForm.flashMessageCreationMode.option_never">
-                <source>never</source>
-            </trans-unit>
-            <trans-unit id="saveForm.flashMessageCreationMode.option_suppressWhenRedirectPageIsSelected">
-                <source>suppress when list pid has been configured</source>
-            </trans-unit>
+			<trans-unit id="saveForm.flashMessageCreationMode.label">
+				<source>Flashmessage creation mode when persisting new jobs (FE)</source>
+			</trans-unit>
+			<trans-unit id="saveForm.flashMessageCreationMode.use_global_setting">
+				<source>Fallback - Use TypoScript settings</source>
+			</trans-unit>
+			<trans-unit id="saveForm.flashMessageCreationMode.option_always">
+				<source>always</source>
+			</trans-unit>
+			<trans-unit id="saveForm.flashMessageCreationMode.option_never">
+				<source>never</source>
+			</trans-unit>
+			<trans-unit id="saveForm.flashMessageCreationMode.option_suppressWhenRedirectPageIsSelected">
+				<source>suppress when list pid has been configured</source>
+			</trans-unit>
 
 			<!-- Frontend -->
 
