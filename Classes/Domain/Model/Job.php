@@ -4,22 +4,16 @@ declare(strict_types=1);
 
 namespace FGTCLB\AcademicJobs\Domain\Model;
 
-use TYPO3\CMS\Extbase\Annotation\ORM\Cascade;
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
-/**
- * @todo Replace annotation with attributes when TYPO3 v11 support is dropped.
- * @see  https://docs.typo3.org/c/typo3/cms-core/main/en-us/Changelog/12.0/Feature-96688-AttributesForExtbaseAnnotations.html#feature-96688-attributes-for-extbase-annotations
- */
 class Job extends AbstractEntity
 {
     protected string $title = '';
     protected ?\DateTime $employmentStartDate = null;
     protected string $description = '';
-    /**
-     * @Cascade("remove")
-     */
+    #[Extbase\ORM\Cascade(['value' => 'remove'])]
     protected ?FileReference $image = null;
     protected string $companyName = '';
     protected string $sector = '';
