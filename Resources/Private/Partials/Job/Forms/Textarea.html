@@ -24,7 +24,7 @@
     <f:form.textarea
         property="{element.identifier}"
         id="{elementId}"
-        class="form-control {f:if(condition: '{element.richtext}', then: 'rich-text')}"
+        class="form-control {f:if(condition: element.richtext, then: 'rich-text')}"
         disabled="{element.disabled}"
         placeholder="{f:translate(key:'edit.{elementId}.placeholder', extensionName: 'academic_jobs')}"
         rows="5"

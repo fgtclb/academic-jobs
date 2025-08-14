@@ -10,11 +10,11 @@
             <f:render
                 partial="Job/SectionHeader"
                 arguments="{
-                    header: '{job.title}',
-                    layout: '{data.header_layout}',
+                    header: job.title,
+                    layout: data.header_layout,
                     positionClass: 'card-title',
                     link: '{f:uri.action(action: \'show\', pluginName: \'Detail\', pageUid: settings.detailPid)}',
-                    subheader: '{data.subheader}'
+                    subheader: data.subheader
                 }"
             />
 
