@@ -113,6 +113,7 @@ final class JobController extends ActionController
             'validations' => $this->settingsRegistry->getValidationsForFrontend('job'),
             'employmentTypeOptions' => $this->employmentTypeItems->getEmploymentTypes(),
             'typeOptions' => $this->typeItems->getTypes(),
+            'data' => $this->getCurrentContentObjectRenderer()?->data,
         ]);
         return $this->htmlResponse();
     }
