@@ -8,6 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Http\UploadedFile;
+use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Resource\DuplicationBehavior;
 use TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException;
 use TYPO3\CMS\Core\Resource\File;
@@ -38,7 +39,10 @@ final class ImageUploadConverter extends AbstractTypeConverter implements Logger
 
     protected $priority = 10;
 
-    public function __construct(protected ResourceFactory $resourceFactory) {}
+    public function __construct(
+        protected ResourceFactory $resourceFactory,
+        protected LanguageServiceFactory $languageServiceFactory
+    ) {}
 
     /**
      * Actually convert from $source to $targetType, taking into account the fully
@@ -133,25 +137,27 @@ final class ImageUploadConverter extends AbstractTypeConverter implements Logger
      */
     private function validateUploadedFile(UploadedFile $uploadedFileInformation, string $maxFileSize, string $allowedMimeTypes): void
     {
-        $typoScriptFrontendController = $this->getTypo3Request()->getAttribute('frontend.controller') ?? $GLOBALS['TSFE'] ?? null;
+        $languageService = $this->languageServiceFactory->createFromSiteLanguage($this->getTypo3Request()->getAttribute('language'));
         $maxFileSizeInBytes = GeneralUtility::getBytesFromSizeMeasurement($maxFileSize);
         $allowedMimeTypesArray = GeneralUtility::trimExplode(',', $allowedMimeTypes);
 
         if ($uploadedFileInformation->getSize() > $maxFileSizeInBytes) {
             throw new TypeConverterException(
-                $typoScriptFrontendController?->sL(
+                $languageService->sL(
                     'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:upload.error.150530345'
-                ) ?? 'Upload error',
+                ),
                 1753712943
             );
         }
+
         if (!in_array($uploadedFileInformation->getClientMediaType(), $allowedMimeTypesArray, true)) {
             throw new TypeConverterException(
-                $typoScriptFrontendController?->sL(
-                    'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:validation.error.1471708998',
-                    null,
-                    $uploadedFileInformation->getClientMediaType(),
-                ) ?? 'Validation error',
+                sprintf(
+                    $languageService->sL(
+                        'LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:validation.error.1471708998'
+                    ),
+                    $uploadedFileInformation->getClientMediaType()
+                ),
                 1753712948
             );
         }
