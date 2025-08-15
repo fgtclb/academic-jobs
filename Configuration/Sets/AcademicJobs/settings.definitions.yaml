@@ -1,0 +1,43 @@
+categories:
+  academic:
+    label: 'Academic'
+  academic.jobs:
+    label: 'Persons'
+    parent: academic
+
+settings:
+  plugin.tx_academicjobs.persistence.storagePid:
+    label: 'Storage page'
+    category: academic.jobs
+    type: int
+    default: 0
+  plugin.tx_academicjobs.detailPid:
+    label: 'Detail page'
+    category: academic.jobs
+    type: int
+    default: 0
+  plugin.tx_academicjobs.listPid:
+    label: 'List page'
+    category: academic.jobs
+    type: int
+    default: 0
+  plugin.tx_academicjobs.email.recipientEmail:
+    label: 'Recipient Email'
+    category: academic.jobs
+    type: string
+    default: ''
+  plugin.tx_academicjobs.email.from:
+    label: 'Sender Email'
+    category: academic.jobs
+    type: string
+    default: ''
+  plugin.tx_academicjobs.email.subject:
+    label: 'Email Subject'
+    category: academic.jobs
+    type: string
+    default: ''
+  plugin.tx_academicjobs.email.template:
+    label: 'Email Content'
+    category: academic.jobs
+    type: string
+    default: ''
