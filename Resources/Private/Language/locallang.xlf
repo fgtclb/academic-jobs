@@ -63,7 +63,7 @@
 				<source>Job Type</source>
 			</trans-unit>
 			<trans-unit id="create.job.type.1">
-				<source>Job</source>
+				<source>Type of job</source>
 			</trans-unit>
 			<trans-unit id="create.job.type.2">
 				<source>Sidejob</source>
@@ -95,6 +95,9 @@
 			<trans-unit id="create.job.link.label">
 				<source>Link</source>
 			</trans-unit>
+			<trans-unit id="create.job.alumniRecommend.label">
+				<source>Created by Alumni</source>
+			</trans-unit>
 			<trans-unit id="create.job.incorrectValues">
 				<source>One or more fields have not been filled out correctly.</source>
 			</trans-unit>
@@ -121,7 +124,6 @@
 
 			<trans-unit id="tx_academicjobs.fe.alert.job_created.body">
 				<source>We are automatically notified that you have created a job advert. After a review, we will activate your job advert.</source>
-				<target>Wir werden automatisch darüber benachrichtigt, dass Sie eine Stellanzeige erstellt haben. Nach einer Überprüfung schalten wir Ihre Stellenanzeige frei.</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.alert.job_created.title">
 				<source>Your job advert has been successfully created</source>
@@ -143,6 +145,81 @@
 			</trans-unit>
 			<trans-unit id="create.job.noLink">
 				<source>The link to this job avert is broken. Please contact us.</source>
+			</trans-unit>
+
+			<!-- Job List -->
+
+			<trans-unit id="jobs.contactName">
+				<source>Contact name</source>
+			</trans-unit>
+			<trans-unit id="jobs.contactEmail">
+				<source>E-Mail</source>
+			</trans-unit>
+			<trans-unit id="jobs.contactPhone">
+				<source>Phone number</source>
+			</trans-unit>
+			<trans-unit id="jobs.contactAdditionalInformation">
+				<source>Additional information</source>
+			</trans-unit>
+			<trans-unit id="jobs.starttime">
+				<source>When</source>
+			</trans-unit>
+			<trans-unit id="jobs.endtime">
+				<source>Application deadline</source>
+			</trans-unit>
+			<trans-unit id="jobs.companyName">
+				<source>Organization</source>
+			</trans-unit>
+			<trans-unit id="jobs.employmentType">
+				<source>Working hours</source>
+			</trans-unit>
+			<trans-unit id="jobs.employmentType.1">
+				<source>Full-Time</source>
+			</trans-unit>
+			<trans-unit id="jobs.employmentType.2">
+				<source>Part-Time</source>
+			</trans-unit>
+			<trans-unit id="jobs.workLocation">
+				<source>Location</source>
+			</trans-unit>
+			<trans-unit id="jobs.employmentStartDate">
+				<source>Employment Start Date</source>
+			</trans-unit>
+			<trans-unit id="jobs.type">
+				<source>Type of job</source>
+			</trans-unit>
+			<trans-unit id="jobs.type.1">
+				<source>Job</source>
+			</trans-unit>
+			<trans-unit id="jobs.type.2">
+				<source>Sidejob</source>
+			</trans-unit>
+			<trans-unit id="jobs.type.3">
+				<source>Thesis</source>
+			</trans-unit>
+			<trans-unit id="jobs.title">
+				<source>Job title / Thesis title</source>
+			</trans-unit>
+			<trans-unit id="jobs.sector">
+				<source>Industry</source>
+			</trans-unit>
+			<trans-unit id="jobs.requiredDegree">
+				<source>Required degree</source>
+			</trans-unit>
+			<trans-unit id="jobs.contractualRelationship">
+				<source>Contractual relationship</source>
+			</trans-unit>
+			<trans-unit id="jobs.description">
+				<source>Job description</source>
+			</trans-unit>
+			<trans-unit id="jobs.link">
+				<source>Link</source>
+			</trans-unit>
+
+			<!-- Details -->
+
+			<trans-unit id="jobs.contact">
+				<source>Contact</source>
 			</trans-unit>
 		</body>
 	</file>

@@ -5,23 +5,19 @@
 >
 
 <div class="academic-jobs-list">
-    <f:render
-        partial="Job/Header"
-        arguments="{
-            header: data.header,
-            layout: data.header_layout,
-            subheader: data.subheader,
-        }"
-    />
+
+    <f:render partial="Header/All" arguments="{_all}" />
 
     <f:flashMessages />
 
-    <f:for each="{jobs}" as="job">
-        <f:render
-            partial="Job/Item"
-            arguments="{_all}"
-        />
-    </f:for>
+    <div class="academic-jobs-itemlist">
+        <f:for each="{jobs}" as="job">
+            <f:render
+                partial="Job/Item"
+                arguments="{_all}"
+            />
+        </f:for>
+    </div>
 </div>
 
 </html>

@@ -5,64 +5,56 @@
 >
 
 <div class="academic-jobs-detail">
+
+    <f:render partial="Header/All" arguments="{_all}" />
+
     <f:flashMessages />
 
+    <f:if condition="{settings.listPid}">
+        <f:link.page pageUid="{settings.listPid}">
+            {f:translate(key: 'jobs.back', extensionName: 'academic_jobs')}
+        </f:link.page>
+    </f:if>
+
     <f:if condition="{job}">
-        <f:then>
-            <f:render
-                partial="Job/Header"
-                arguments="{
-                    header: job.title,
-                    layout: data.header_layout,
-                    subheader: data.subheader,
-                    detail: 'true',
-                }"
-            />
+        <f:render
+            partial="Job/Header"
+            arguments="{
+                header: job.title,
+                layout: data.header_layout,
+                subheader: data.subheader,
+                detail: 'true',
+            }"
+        />
 
-            <div class="row">
-                <div class="col-12 col-md-8">
-                    <f:render
-                        partial="Job/Information"
-                        arguments="{
-                            job: job,
-                        }"
-                    />
+        <f:render
+            partial="Job/Information"
+            arguments="{
+                job: job,
+            }"
+        />
 
-                    <f:if condition="{job.description}">
-                        <f:format.raw>{job.description}</f:format.raw>
-                    </f:if>
-                </div>
+        <f:variable name="contact" value="{f:if(condition: job.contactName || job.contactEmail || job.contactPhone)}"/>
 
-                <div class="col-12 col-md-4">
-                    <f:if condition="{settings.listPid}">
-                        <f:link.page pageUid="{settings.listPid}">
-                            {f:translate(key: 'jobs.back', extensionName: 'academic_jobs')}
-                        </f:link.page>
-                    </f:if>
+        <div class="row">
+            <div class="col-12 {f:if(condition: contact, then: 'col-lg-8')}">
+                <f:if condition="{job.description}">
+                    <f:format.html>{job.description}</f:format.html>
+                </f:if>
+            </div>
 
+            <f:if condition="{contact}">
+                <div class="col-12 col-lg-4">
                     <f:render
                         partial="Job/Contact"
                         arguments="{
-                            contact: job.contact,
+                            job: job,
                             data: data,
                         }"
                     />
                 </div>
-            </div>
-        </f:then>
-        <f:else>
-            <div class="row">
-                <div class="col-12 col-md-8"></div>
-
-                <div class="col-12 cold-md-4">
-                    <f:if condition="{settings.listPid}">
-                        <f:link.page pageUid="{settings.listPid}">
-                            {f:translate(key: 'jobs.back', extensionName: 'academic_jobs')}
-                        </f:link.page>
-                    </f:if>
-                </div>
-            </div>
-        </f:else>
+            </f:if>
+        </div>
     </f:if>
 </div>
 

@@ -5,31 +5,36 @@
     xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
 >
 
-<f:variable
-    name="jobItems"
-    value="{
-        0: 'starttime',
-        1: 'endtime',
-        2: 'companyName',
-        3: 'employmentType',
-        4: 'workLocation',
-    }"
-/>
-
 <ul>
-    <f:for each="{jobItems}" as="item">
+    <f:for
+        each="{
+            0: 'employmentStartDate',
+            1: 'companyName',
+            2: 'sector',
+            3: 'type',
+            4: 'requiredDegree',
+            5: 'contractualRelationship',
+            6: 'employmentType',
+            7: 'workLocation',
+            8: 'internationalsWelcome',
+            9: 'alumniRecommend',
+            10: 'link',
+            11: 'endtime',
+        }"
+        as="item"
+    >
         <f:if condition="{job.{item}}">
             <li>
                 <core:icon identifier="academic_jobs-{item}"/>
 
-                <span>{f:translate(key: 'jobs.{item}', extensionName: 'academic_jobs')}</span>
+                <b>{f:translate(key: 'jobs.{item}', extensionName: 'academic_jobs')}:</b>
 
                 <span>
-                    <f:if condition="{item} == 'starttime' || {item} == 'endtime'">
+                    <f:if condition="{item} == 'employmentStartDate' || {item} == 'endtime'">
                         <f:then>
                             <f:format.date format="d.m.Y">{job.{item}}</f:format.date>
                         </f:then>
-                        <f:else if="{item} == 'employmentType'">
+                        <f:else if="{item} == 'employmentType' || {item} == 'type'">
                             <f:translate key="jobs.{item}.{job.{item}}" />
                         </f:else>
                         <f:else>
@@ -40,5 +45,6 @@
             </li>
         </f:if>
     </f:for>
-  </ul>
+</ul>
+
 </html>

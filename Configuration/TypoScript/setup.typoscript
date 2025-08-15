@@ -45,16 +45,17 @@ plugin.tx_academicjobs {
   }
   view {
     templateRootPaths {
-      0 = EXT:academic_jobs/Resources/Private/Templates/
-      1 = {$plugin.tx_academicjobs.view.templateRootPath}
+      10 = EXT:academic_jobs/Resources/Private/Templates/
+      20 = {$plugin.tx_academicjobs.view.templateRootPath}
     }
     partialRootPaths {
-      0 = EXT:academic_jobs/Resources/Private/Partials/
-      1 = {$plugin.tx_academicjobs.view.partialRootPath}
+      0 = EXT:fluid_styled_content/Resources/Private/Partials/
+      10 = EXT:academic_jobs/Resources/Private/Partials/
+      20 = {$plugin.tx_academicjobs.view.partialRootPath}
     }
     layoutRootPaths {
-      0 = EXT:academic_jobs/Resources/Private/Layouts/
-      1 = {$plugin.tx_academicjobs.view.layoutRootPath}
+      10 = EXT:academic_jobs/Resources/Private/Layouts/
+      20 = {$plugin.tx_academicjobs.view.layoutRootPath}
     }
   }
 }

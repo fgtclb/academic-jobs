@@ -1,0 +1,44 @@
+<html
+    lang="en"
+    data-namespace-typo3-fluid="true"
+    xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+    xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+>
+
+<div class="academic-jobs-contact bg-grey">
+    <f:render
+        partial="Job/SectionHeader"
+        arguments="{
+            header: '{f:translate(key: \'jobs.contact\', extensionName: \'academic_jobs\')}',
+            layout: 'data.header_layout',
+            positionClass: 'contact-title',
+            subheader: 'data.subheader',
+        }"
+    />
+
+    <f:if condition="{job.contactName}">
+        <b>{job.contactName}</b>
+    </f:if>
+
+    <f:if condition="{job.contactEmail} || {job.contactPhone}">
+        <ul>
+            <f:if condition="{job.contactPhone}">
+                <li>
+                    <core:icon identifier="phone" alternativeMarkupIdentifier="inline"/>
+
+                    <a href="tel:{job.contactPhone}">{job.contactPhone}</a>
+                </li>
+            </f:if>
+
+            <f:if condition="{job.contactEmail}">
+                <li>
+                    <core:icon identifier="mail" alternativeMarkupIdentifier="inline"/>
+
+                    <f:link.email email="{job.contactEmail}">{job.contactEmail}</f:link.email>
+                </li>
+            </f:if>
+        </ul>
+    </f:if>
+</div>
+
+</html>

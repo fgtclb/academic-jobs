@@ -2,41 +2,47 @@
     lang="en"
     data-namespace-typo3-fluid="true"
     xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+    xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
 >
 
 <div class="card flex-column-reverse academic-jobs-item">
     <div class="card-content">
         <div class="card-body">
             <f:render
-                partial="Job/SectionHeader"
+                partial="Job/Header"
                 arguments="{
                     header: job.title,
                     layout: data.header_layout,
                     positionClass: 'card-title',
-                    link: '{f:uri.action(action: \'show\', pluginName: \'Detail\', pageUid: settings.detailPid)}',
-                    subheader: data.subheader
+                    link: '{f:uri.action(
+                        action: \'show\',
+                        pluginName: \'Detail\',
+                        pageUid: settings.detailPid,
+                        arguments: {job: job}
+                    )}',
+                    subheader: 'data.subheader'
                 }"
             />
-
-            <f:if condition="!{job.slug}">
-                <span>{f:translate(key: 'jobs.noLink', extensionName: 'academic_jobs')}</span>
-            </f:if>
         </div>
 
-        <f:variable
-            name="jobItems"
-            value="{
-                2: 'companyName',
-                3: 'type',
-                4: 'requiredDegree',
-                5: 'contractualRelationship',
-                6: 'employmentType',
-                7: 'workLocation'
-            }"
-        />
-
         <ul class="list-group list-group-flush">
-            <f:for each="{jobItems}" as="item" key="category">
+            <f:for
+                each="{
+                    0: 'employmentStartDate',
+                    1: 'companyName',
+                    2: 'sector',
+                    3: 'type',
+                    4: 'requiredDegree',
+                    5: 'contractualRelationship',
+                    6: 'employmentType',
+                    7: 'workLocation',
+                    8: 'internationalsWelcome',
+                    9: 'alumniRecommend',
+                    10: 'link',
+                    11: 'endtime',
+                }"
+                as="item"
+            >
                 <f:if condition="{job.{item}}">
                     <li class="list-group-item">
                         <core:icon identifier="academic_jobs-{item}"/>
@@ -44,7 +50,7 @@
                         <b>{f:translate(key: 'jobs.{item}', extensionName: 'academic_jobs')}:</b>
 
                         <span>
-                            <f:if condition="{item} == 'starttime' || {item} == 'endtime'">
+                            <f:if condition="{item} == 'employmentStartDate' || {item} == 'endtime'">
                                 <f:then>
                                     <f:format.date format="d.m.Y">{job.{item}}</f:format.date>
                                 </f:then>

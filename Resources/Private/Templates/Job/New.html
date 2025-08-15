@@ -16,14 +16,8 @@
 />
 
 <div class="academic-jobs-new">
-    <f:render
-        partial="Job/Header"
-        arguments="{
-            header: data.header,
-            layout: data.header_layout,
-            subheader: data.subheader,
-        }"
-    />
+
+    <f:render partial="Header/All" arguments="{_all}" />
 
     <f:render
         partial="Job/Forms/Errors"

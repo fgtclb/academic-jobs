@@ -20,7 +20,8 @@
         "fgtclb/academic-base": "2.0.*@dev",
         "typo3/cms-core": "^12.4.22 || ^13.4",
         "typo3/cms-install": "^12.4.22 || ^13.4",
-        "typo3/cms-rte-ckeditor": "^12.4.22 || ^13.4"
+        "typo3/cms-rte-ckeditor": "^12.4.22 || ^13.4",
+        "typo3/cms-fluid-styled-content": "^12.4.22 || ^13.4"
     },
     "autoload": {
         "psr-4": {
