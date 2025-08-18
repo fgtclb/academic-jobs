@@ -1,6 +1,7 @@
 <html
     lang="en"
     xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:j="http://typo3.org/ns/FGTCLB/AcademicJobs/ViewHelpers"
     data-namespace-typo3-fluid="true"
 >
 
@@ -8,7 +9,9 @@
     <div class="{f:if(condition:'{validationResults.flattenedErrors}', then:' is-invalid')} {class}">
         <label class="form-label" for="{elementId}">
             {f:translate(key:'create.{elementId}.label', extensionName: 'academic_jobs')}
-            {f:if(condition: required, then: '<abbr title="required">*</abbr>')}
+            <f:if condition="{j:validation.RequiredFromValidation(validations: element.validations, identifier: element.identifier)}">
+                <abbr title="required">*</abbr>
+            </f:if>
         </label>
 
         {elementContent->f:format.raw()}
