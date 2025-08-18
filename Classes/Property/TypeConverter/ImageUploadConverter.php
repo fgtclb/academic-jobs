@@ -77,13 +77,6 @@ final class ImageUploadConverter extends AbstractTypeConverter implements Logger
             );
         }
 
-        // @todo Check how the `__identifier` key was generated in TYPO3 version below 12 before restoring this check
-        /*
-        if ($uploadedFileInformation->getError() === \UPLOAD_ERR_NO_FILE) {
-            return $this->handleNoFileUploaded($uploadedFileInformation);
-        }
-        */
-
         if ($uploadedFileInformation->getError() !== \UPLOAD_ERR_OK) {
             return GeneralUtility::makeInstance(
                 Error::class,
@@ -203,24 +196,6 @@ final class ImageUploadConverter extends AbstractTypeConverter implements Logger
 
         return $uploadFolder;
     }
-
-    // @todo Check how the `__identifier` key was generated in TYPO3 version below 12 before restoring the function
-    /*
-    private function handleNoFileUploaded(UploadedFile $uploadedFileInformation): ?ExtbaseFileReference
-    {
-        if (!empty($uploadedFileInformation->getTemporaryFileName())) {
-            try {
-                $fileReferenceUid = (int)$uploadedFileInformation['__identity'];
-                $fileReference = GeneralUtility::makeInstance(ExtbaseFileReference::class);
-                $fileReference->setOriginalResource($this->resourceFactory->getFileReferenceObject($fileReferenceUid));
-                return $fileReference;
-            } catch (\Exception) {
-                return null;
-            }
-        }
-        return null;
-    }
-    */
 
     private function createFileReferenceFromFalFileReferenceObject(CoreFileReference $falFileReference): ExtbaseFileReference
     {
