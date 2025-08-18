@@ -1,6 +1,4 @@
 mod.wizards.newContentElement.wizardItems.academic {
-  header = LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:newContentElement.wizardItems.academic
-  after = special
   elements {
     academicjobs_newjobform {
       iconIdentifier = persons_icon
@@ -10,7 +8,6 @@ mod.wizards.newContentElement.wizardItems.academic {
         CType = academicjobs_newjobform
       }
     }
-
     academicjobs_list {
       iconIdentifier = persons_icon
       title = LLL:EXT:academic_persons/Resources/Private/Language/locallang_be.xlf:newContentElement.wizardItems.academic.list.title
@@ -19,7 +16,6 @@ mod.wizards.newContentElement.wizardItems.academic {
         CType = academicjobs_list
       }
     }
-
     academicjobs_detail {
       iconIdentifier = persons_icon
       title = LLL:EXT:academic_persons/Resources/Private/Language/locallang_be.xlf:newContentElement.wizardItems.academic.detail.title
@@ -28,9 +24,7 @@ mod.wizards.newContentElement.wizardItems.academic {
         CType = academicjobs_detail
       }
     }
-
   }
-
   show := addToList(academicjobs_newjobform,academicjobs_list,academicjobs_detail)
 }
 

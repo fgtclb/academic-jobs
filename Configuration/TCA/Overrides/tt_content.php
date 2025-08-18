@@ -12,16 +12,6 @@ if (!defined('TYPO3')) {
     $typo3MajorVersion = (new Typo3Version())->getMajorVersion();
 
     //==================================================================================================================
-    // Add custom content element group `academic`
-    //==================================================================================================================
-    ExtensionManagementUtility::addTcaSelectItemGroup(
-        'tt_content',
-        'CType',
-        'academic',
-        'LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:content.ctype.group.label',
-    );
-
-    //==================================================================================================================
     // Plugin: academicjobs_newjobform
     //==================================================================================================================
     ExtensionManagementUtility::addPlugin(

@@ -8,11 +8,6 @@
                 <source>Configuration</source>
             </trans-unit>
 
-            <!-- /* CType group */ -->
-            <trans-unit id="content.ctype.group.label">
-                <source>Academic</source>
-            </trans-unit>
-
             <!-- /* academicjobs_newjobform */ -->
             <trans-unit id="plugin.newjobform.label">
                 <source>Academic Jobs: New Job Form</source>
