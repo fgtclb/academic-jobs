@@ -1,28 +1,18 @@
 <html
     lang="en"
     xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:j="http://typo3.org/ns/FGTCLB/AcademicJobs/ViewHelpers"
     data-namespace-typo3-fluid="true"
 >
 
 <f:variable name="elementId" value="job.{element.identifier}"/>
 
-<f:variable name="type" value="text" />
-
 <f:variable name="required" value="{element.required}" />
 
 <f:for each="{element.validations.{element.identifier}}" as="validation">
     <f:switch expression="{validation}">
-        <f:case value="email">
-            <f:variable name="type" value="email" />
-        </f:case>
-        <f:case value="number">
-            <f:variable name="type" value="number" />
-        </f:case>
         <f:case value="required">
             <f:variable name="required" value="1" />
-        </f:case>
-        <f:case value="url">
-            <f:variable name="type" value="url" />
         </f:case>
     </f:switch>
 </f:for>
@@ -33,7 +23,7 @@
     contentAs="elementContent"
 >
     <f:form.textfield
-        type="{type}"
+        type="{j:validation.fieldTypeFromValidation(validations: element.validations, identifier: element.identifier)}"
         property="{element.identifier}"
         id="{elementId}"
         placeholder="{f:translate(key:'edit.{elementId}.placeholder', extensionName: 'academic_jobs')}"
