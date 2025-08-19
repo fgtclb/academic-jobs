@@ -1,45 +1,52 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<xliff version="1.0">
-	<file source-language="en" target-langague="de" datatype="plaintext" original="EXT:academic_jobs/Resources/Private/Language/locallang.xlf" date="2023-09-02T12:17:09Z" product-name="academic_jobs">
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+	<file
+		source-language="en"
+		target-langague="de"
+		datatype="plaintext"
+		original="EXT:academic_jobs/Resources/Private/Language/locallang.xlf"
+		date="2023-09-02T12:17:09Z"
+		product-name="academic_jobs"
+	>
 		<header/>
 		<body>
 
-            <!-- Flexform General -->
-            <trans-unit id="tx_academicjobs_domain_model_job.pi_flexform.sheetGeneral">
-                <source>Settings</source>
-                <target>Settings</target>
-            </trans-unit>
+			<!-- Flexform General -->
+			<trans-unit id="tx_academicjobs_domain_model_job.pi_flexform.sheetGeneral">
+				<source>Settings</source>
+				<target>Settings</target>
+			</trans-unit>
 
-            <!-- Flexform Plugin List -->
-            <trans-unit id="tx_academicjobs_domain_model_job.list.jobType.label">
-                <source>Job Type</source>
-                <target>Job Type</target>
-            </trans-unit>
+			<!-- Flexform Plugin List -->
+			<trans-unit id="tx_academicjobs_domain_model_job.list.jobType.label">
+				<source>Job Type</source>
+				<target>Job Type</target>
+			</trans-unit>
 
-            <!-- Flexform Plugin NewJobForm -->
-            <trans-unit id="tx_academicjobs_domain_model_job.newJobForm.redirectPageId.label">
-                <source>Redirect page after job creation</source>
-                <target>Weiterleitungsseite nach erfolgreichen anlegen eines Jobs</target>
-            </trans-unit>
+			<!-- Flexform Plugin NewJobForm -->
+			<trans-unit id="tx_academicjobs_domain_model_job.newJobForm.redirectPageId.label">
+				<source>Redirect page after job creation</source>
+				<target>Weiterleitungsseite nach erfolgreichen anlegen eines Jobs</target>
+			</trans-unit>
 
-            <!-- Backend: TypoScript Constants Editor -->
+			<!-- Backend: TypoScript Constants Editor -->
 
-            <trans-unit id="saveForm.flashMessageCreationMode.label">
-                <source>Flashmessage creation mode when persisting new jobs (FE)</source>
-                <target>Flashmessage creation mode when persisting new jobs (FE)</target>
-            </trans-unit>
-            <trans-unit id="saveForm.flashMessageCreationMode.option_always">
-                <source>always</source>
-                <target>immer</target>
-            </trans-unit>
-            <trans-unit id="saveForm.flashMessageCreationMode.option_never">
-                <source>never</source>
-                <target>niemals</target>
-            </trans-unit>
-            <trans-unit id="saveForm.flashMessageCreationMode.option_suppressWhenListPidSelected">
-                <source>suppress when list pid has been configured</source>
-                <target>Nur wenn keine listPid gesetzt wurde.</target>
-            </trans-unit>
+			<trans-unit id="saveForm.flashMessageCreationMode.label">
+				<source>Flashmessage creation mode when persisting new jobs (FE)</source>
+				<target>Flashmessage creation mode when persisting new jobs (FE)</target>
+			</trans-unit>
+			<trans-unit id="saveForm.flashMessageCreationMode.option_always">
+				<source>always</source>
+				<target>immer</target>
+			</trans-unit>
+			<trans-unit id="saveForm.flashMessageCreationMode.option_never">
+				<source>never</source>
+				<target>niemals</target>
+			</trans-unit>
+			<trans-unit id="saveForm.flashMessageCreationMode.option_suppressWhenListPidSelected">
+				<source>suppress when list pid has been configured</source>
+				<target>Nur wenn keine listPid gesetzt wurde.</target>
+			</trans-unit>
 
 			<!-- Domain Model: Job -->
 
@@ -175,10 +182,10 @@
 				<source>Contact</source>
 				<target>Kontakt</target>
 			</trans-unit>
-            <trans-unit id="tx_academicjobs_domain_model_job.jobtype.none">
-                <source>None</source>
-                <target>Keine Auswahl</target>
-            </trans-unit>
+			<trans-unit id="tx_academicjobs_domain_model_job.jobtype.none">
+				<source>None</source>
+				<target>Keine Auswahl</target>
+			</trans-unit>
 			<trans-unit id="tx_academicjobs_domain_model_job.jobtype.job">
 				<source>Job</source>
 				<target>Job</target>
@@ -270,20 +277,20 @@
 				<target>Details der Stellenanzeige</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.list.text.contact.name">
-				<source>Creator: </source>
-				<target>Ersteller*in: </target>
+				<source>Creator:</source>
+				<target>Ersteller*in:</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.list.text.contact.email">
-				<source>E-Mail: </source>
-				<target>E-Mail: </target>
+				<source>E-Mail:</source>
+				<target>E-Mail:</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.text.email_address_alt">
 				<source>E-Mail of: %s</source>
 				<source>E-Mail Adresse von: %s</source>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.list.text.contact.phone">
-				<source>Phone number: </source>
-				<target>Telefonnummer: </target>
+				<source>Phone number:</source>
+				<target>Telefonnummer:</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.text.phone_number_alt">
 				<source>Phone Number of: %s</source>
@@ -338,12 +345,12 @@
 				<target>Vertragsverhältnis</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.form.text.alumni_recommend">
-				<source>Alumni recommends: </source>
-				<target>Alumni empfiehlt: </target>
+				<source>Alumni recommends:</source>
+				<target>Alumni empfiehlt:</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.form.text.internationals_welcome">
-				<source>Internationals welcome: </source>
-				<target>Internationals willkommen: </target>
+				<source>Internationals welcome:</source>
+				<target>Internationals willkommen:</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.form.text.job_location">
 				<source>Location</source>
@@ -402,7 +409,8 @@
 
 			<trans-unit id="tx_academicjobs.fe.alert.job_created.body">
 				<source>We are automatically notified that you have created a job advert. After a review, we will activate your job advert.</source>
-				<target>Wir werden automatisch darüber benachrichtigt, dass Sie eine Stellanzeige erstellt haben. Nach einer Überprüfung schalten wir Ihre Stellenanzeige frei.</target>
+				<target>Wir werden automatisch darüber benachrichtigt, dass Sie eine Stellanzeige erstellt haben. Nach einer Überprüfung schalten wir Ihre Stellenanzeige frei.
+				</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.alert.job_created.title">
 				<source>Your job advert has been successfully created</source>
@@ -410,7 +418,9 @@
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.alert.job_created_no_email.body">
 				<source>Your job advert has been successfully created, but no notification could be sent to us. Please contact us to have your job advert activated.</source>
-				<target>Ihre Stellenanzeige wurde erfolgreich erstellt, aber es konnte keine Benachrichtigung an uns verschickt werden. Bitte kontaktieren Sie uns, um ihre Stellenanzeige freischalten zu lassen.</target>
+				<target>Ihre Stellenanzeige wurde erfolgreich erstellt, aber es konnte keine Benachrichtigung an uns verschickt werden. Bitte kontaktieren Sie uns, um ihre
+					Stellenanzeige freischalten zu lassen.
+				</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.alert.job_created_no_email.title">
 				<source>Notification email could not be sent</source>
