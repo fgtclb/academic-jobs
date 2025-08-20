@@ -1,6 +1,13 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<xliff version="1.0">
-	<file source-language="en" target-language="de" datatype="plaintext" original="EXT:academic_jobs/Resources/Private/Language/locallang.xlf" date="2023-09-02T12:17:09Z" product-name="academic_jobs">
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+	<file
+		source-language="en"
+		target-language="de"
+		datatype="plaintext"
+		original="EXT:academic_jobs/Resources/Private/Language/locallang.xlf"
+		date="2023-09-02T12:17:09Z"
+		product-name="academic_jobs"
+	>
 		<header/>
 		<body>
 			<!-- Backend: TypoScript Constants Editor -->
@@ -157,7 +164,8 @@
 
 			<trans-unit id="tx_academicjobs.fe.alert.job_created.body">
 				<source>We are automatically notified that you have created a job advert. After a review, we will activate your job advert.</source>
-				<target>Wir werden automatisch darüber benachrichtigt, dass Sie eine Stellanzeige erstellt haben. Nach einer Überprüfung schalten wir Ihre Stellenanzeige frei.</target>
+				<target>Wir werden automatisch darüber benachrichtigt, dass Sie eine Stellanzeige erstellt haben. Nach einer Überprüfung schalten wir Ihre Stellenanzeige frei.
+				</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.alert.job_created.title">
 				<source>Your job advert has been successfully created</source>
@@ -165,7 +173,9 @@
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.alert.job_created_no_email.body">
 				<source>Your job advert has been successfully created, but no notification could be sent to us. Please contact us to have your job advert activated.</source>
-				<target>Ihre Stellenanzeige wurde erfolgreich erstellt, aber es konnte keine Benachrichtigung an uns verschickt werden. Bitte kontaktieren Sie uns, um ihre Stellenanzeige freischalten zu lassen.</target>
+				<target>Ihre Stellenanzeige wurde erfolgreich erstellt, aber es konnte keine Benachrichtigung an uns verschickt werden. Bitte kontaktieren Sie uns, um ihre
+					Stellenanzeige freischalten zu lassen.
+				</target>
 			</trans-unit>
 			<trans-unit id="tx_academicjobs.fe.alert.job_created_no_email.title">
 				<source>Notification email could not be sent</source>
