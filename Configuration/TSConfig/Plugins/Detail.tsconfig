@@ -1,6 +1,4 @@
 mod.wizards.newContentElement.wizardItems.academic {
-  header = LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:newContentElement.wizardItems.academic
-  after = special
   elements {
     academicjobs_detail {
       iconIdentifier = academic_jobs_icon

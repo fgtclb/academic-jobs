@@ -45,9 +45,6 @@
 			</trans-unit>
 
 			<!-- /* newContentElement */ -->
-			<trans-unit id="newContentElement.wizardItems.academic">
-				<source>Academic</source>
-			</trans-unit>
 			<trans-unit id="newContentElement.wizardItems.academic.newjobform.title">
 				<source>Jobs New</source>
 			</trans-unit>

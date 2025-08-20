@@ -53,10 +53,6 @@
 			</trans-unit>
 
 			<!-- /* newContentElement */ -->
-			<trans-unit id="newContentElement.wizardItems.academic">
-				<source>Academic</source>
-				<target>Academic</target>
-			</trans-unit>
 			<trans-unit id="newContentElement.wizardItems.academic.newjobform.title">
 				<source>Jobs New</source>
 				<target>Jobs New</target>
