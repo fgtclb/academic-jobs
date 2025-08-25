@@ -31,16 +31,16 @@ plugin.tx_academicjobs {
     }
 
     saveForm {
-      jobLogo {
-        # @todo How can we have a hardcoded target folder defined here ? That should be configurable.
-        targetFolder = 1:/global-content/jobs/logos/
-        validation {
-          maxFileSize = 2M
-          allowedMimeTypes = image/jpeg,image/png,image/webp,image/svg+xml
-        }
-      }
       fallbackRedirectPageId = {$plugin.tx_academicjobs.saveForm.fallbackRedirectPageId}
       fallbackFlashMessageCreationMode = {$plugin.tx_academicjobs.saveForm.fallbackFlashMessageCreationMode}
+    }
+
+    jobAvatarImage {
+      uploadFolder = {$plugin.tx_academicjobs.jobAvatarImage.uploadFolder}
+      validation {
+        fileSize.maximum = {$plugin.tx_academicjobs.jobAvatarImage.validation.fileSize.maximum}
+        mimeType.allowedMimeTypes = {$plugin.tx_academicjobs.jobAvatarImage.validation.mimeType.allowedMimeTypes}
+      }
     }
   }
   view {

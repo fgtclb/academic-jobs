@@ -4,9 +4,6 @@ services:
     autoconfigure: true
     public: false
 
-  FGTCLB\AcademicJobs\Property\TypeConverter:
-    public: true
-
   FGTCLB\AcademicJobs\:
     resource: '../Classes/*'
     exclude: '../Classes/Domain/Model/*'

@@ -2,6 +2,18 @@
 
 ## X.Y.Z
 
+### BREAKING: Removed `ImageUploadConverter`
+
+Custom `ImageUploadConverter` implementation is removed in favour of the shared
+`EXT:academic_base/Classes/Extbase/Property/TypeConverter/FileUploadConterter`.
+The dropped implementation is considerable an internal implementation, but was
+never flagged internal and is therefore mentioned as breaking and added to the
+semver breaking exemption.
+
+Projects using the dropped implementation should implement their own or switch
+to the `internal` implementation of `EXT:academic_base` with all the danger it
+comes with.
+
 ### BREAKING: Removed `tx_academicjobs_domain_model_contact`
 
 As the relation between `tx_academicjobs_domain_model_job` and `tx_academicjobs_domain_model_contact`

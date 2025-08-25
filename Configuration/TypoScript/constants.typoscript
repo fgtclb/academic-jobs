@@ -31,4 +31,19 @@ plugin.tx_academicjobs {
         # cat=plugin.tx_academicjobs_createjob//a; type=options [LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:saveForm.flashMessageCreationMode.option_always=1,LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:saveForm.flashMessageCreationMode.option_suppressWhenRedirectPageIsSelected=0,LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:saveForm.flashMessageCreationMode.option_never=2]; label=LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:saveForm.flashMessageCreationMode.label
         fallbackFlashMessageCreationMode = 0
     }
+
+    jobAvatarImage {
+        # cat=plugin.tx_academicjobs//a; type=string; label=An upload folder
+        uploadFolder = 1:/global-content/jobs/logos/
+        validation {
+            fileSize {
+                # cat=plugin.tx_academicjobs//a; type=string; label=The maximum file size to accept
+                maximum = 2M
+            }
+            mimeType {
+                # cat=plugin.academicjobs//a; type=string; label=Allowed mime types (using */* IANA media types)
+                allowedMimeTypes = image/jpeg,image/png,image/webp,image/svg+xml
+            }
+        }
+    }
 }
