@@ -1,5 +1,12 @@
 validations:
   # @todo We either need a translation map (to TCA) or simply matching convention which resolves needs to be added.
+  # @todo Syntax and build-up is more than sub-optimal and needs a complete redesign and implementation.
+  # <identifier>:
+  #   <propertyName>:
+  #      - required
+  #      - email
+  #      - disabled
+  #      - readonly
   job:
     title:
       - required
