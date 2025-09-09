@@ -138,18 +138,16 @@ final class JobController extends ActionController
                     );
             }
 
-            $this->arguments
-                ->getArgument('job')
-                ->getPropertyMappingConfiguration()
-                ->forProperty('image')
-                ->setTypeConverter(GeneralUtility::makeInstance(FileUploadConverter::class))
-                ->setTypeConverterOptions(
-                    FileUploadConverter::class,
+            GeneralUtility::makeInstance(FileUploadConverter::class)
+                ->setArgumentTypeConverterConfiguration(
+                    $this->arguments,
+                    'job',
+                    'image',
                     [
                         FileUploadConverter::CONFIGURATION_UPLOAD_FOLDER => $this->settings['jobAvatarImage']['uploadFolder'] ?? '1:user_upload/',
                         FileUploadConverter::CONFIGURATION_VALIDATION_FILESIZE_MAXIMUM => $this->settings['jobAvatarImage']['validation']['fileSize']['maximum'] ?? PHP_INT_MAX . 'B',
                         FileUploadConverter::CONFIGURATION_VALIDATION_MIME_TYPE_ALLOWED_MIME_TYPES => $this->settings['jobAvatarImage']['validation']['mimeType']['allowedMimeTypes'] ?? null,
-                    ]
+                    ],
                 );
         }
     }
