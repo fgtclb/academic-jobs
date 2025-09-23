@@ -110,6 +110,7 @@ final class JobController extends ActionController
         $this->view->assignMultiple([
             'validations' => $this->settingsRegistry->getValidationsForFrontend('job'),
             'employmentTypeOptions' => $this->getSelectItemsForTcaManagedTableField(
+                $this->request,
                 $this->localizationUtility,
                 'academic_jobs',
                 'tx_academicjobs_domain_model_job',
@@ -117,6 +118,7 @@ final class JobController extends ActionController
                 [''],
             ),
             'typeOptions' => $this->getSelectItemsForTcaManagedTableField(
+                $this->request,
                 $this->localizationUtility,
                 'academic_jobs',
                 'tx_academicjobs_domain_model_job',

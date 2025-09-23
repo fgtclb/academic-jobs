@@ -2,6 +2,71 @@
 
 ## X.Y.Z
 
+### FEATURE: Dispatch `ModifyTcaSelectFieldItemsEvent` in `TypeItems` and `EmploymentTypeItems`
+
+Following provided `itemsProcFunc` handlers now dispatches the new
+PSR-14 `\FGTCLB\AcademicBase\Event\ModifyTcaSelectFieldItemsEvent`:
+
+* `\FGTCLB\AcademicJobs\Backend\FormEngine\EmploymentTypeItems`
+* `\FGTCLB\AcademicJobs\Backend\FormEngine\TypeItems`
+
+This allows projects to modify the available select items for the
+backend (FormEngine) and also for the frontend using a PSR-14 event
+listener:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace MyVendor\MyExt\EventListener;
+
+use FGTCLB\AcademicBase\Event\ModifyTcaSelectFieldItemsEvent;
+use TYPO3\CMS\Core\Attribute\AsEventListener;
+
+#[AsEventListener(identifier: 'project/modify-academic-jobs-tca-select-items')]
+final public ModifyTcaSelectFieldItemsEventListener
+{
+    public function __invoke(ModifyTcaSelectFieldItemsEvent $event): void
+    {
+        $tableName = $event->getParameters()['table'];
+        $fieldName = $event->getParameters()['field'];
+        if ($tableName !== 'tx_academicjobs_domain_model_job') {
+            // Not the table we want to handle. Skip
+            return;
+        }
+        if ($fieldName === 'type') {
+            $this->modifyJobsTypeSelectItems($event);
+        }
+        if ($fieldName === 'employment_type') {
+            $this->modifyJobsEmploymentTypeSelectItems($event);
+        }
+    }
+
+    private function modifyJobsTypeSelectItems(
+        ModifyTcaSelectFieldItemsEvent $event,
+    ): void {
+        $parameters = $event->getParameters();
+        $parameters['items'][] = [
+            'label' => 'LLL:EXT:my_ext/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_job.jobtype.custom_type',
+            'value' => 10
+        ];
+        $event->setParameters($parameters);
+    }
+
+    private function modifyJobsEmploymentTypeSelectItems(
+        ModifyTcaSelectFieldItemsEvent $event,
+    ): void {
+        $parameters = $event->getParameters();
+        $parameters['items'][] = [
+            'label' => 'LLL:EXT:my_ext/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_job.employment_type.custom_type',
+            'value' => 10
+        ];
+        $event->setParameters($parameters);
+    }
+}
+```
+
 ### BREAKING: Removed `ImageUploadConverter`
 
 Custom `ImageUploadConverter` implementation is removed in favour of the shared
