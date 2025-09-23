@@ -2,6 +2,56 @@
 
 ## X.Y.Z
 
+### FEATURE: Introduce `ModifyJobControllerNewActionViewEvent` in `JobController::newAction()`
+
+`JobController::newAction()` dispatches now the newly introduced PSR-14 event
+`\FGTCLB\AcademicJobs\Event\ModifyJobControllerNewActionViewEvent` providing
+following methods:
+
+* `getPluginControllerActionContext(): PluginControllerActionAcontext` to
+  extbase controller action plugin context data, which can be used to make
+  decisions using the event.
+* `getView(): FluidViewInterface|CoreViewInterface` to retrieve the view
+  instance, which can be used to assign additional data, but disallowing
+  to replace the instance.
+
+Implementing a event listener for this event allows attaching additional
+variables to the view for the `JobController::newAction()`, for example
+to provide additional select field options in case fields are changed,
+from text to a select field for example and avoid the need to implement
+a custom ViewHelper to retrieve the "select options" within the modifed
+views.
+
+**Example event listener**
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace MyVendor\MyExt\EventListener;
+
+use FGTCLB\AcademicJobs\Event\ModifyJobControllerNewActionViewEvent;
+
+final class ModifyJobControllerNewActionViewEventListener
+{
+    public function __invoke(
+        ModifyJobControllerNewActionViewEvent $event,
+    ): void {
+        $settings = $event
+            ->getPluginControllerActionContext()
+            ->getSettings();
+
+        // Assign additional variables to the new action view.
+        $event->getView()->assignMultiple(
+            [
+                'additionalViewVariable' => 1234,
+            ],
+        );
+    }
+}
+```
+
 ### FEATURE: Dispatch `ModifyTcaSelectFieldItemsEvent` in `TypeItems` and `EmploymentTypeItems`
 
 Following provided `itemsProcFunc` handlers now dispatches the new

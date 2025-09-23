@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace FGTCLB\AcademicJobs\Controller;
 
 use FGTCLB\AcademicBase\Controller\GetSelectItemsForTcaManagedTableFieldMethodTrait;
+use FGTCLB\AcademicBase\Domain\Model\Dto\PluginControllerActionContext;
 use FGTCLB\AcademicBase\Extbase\Property\TypeConverter\FileUploadConverter;
 use FGTCLB\AcademicJobs\Domain\Model\Job;
 use FGTCLB\AcademicJobs\Domain\Repository\JobRepository;
 use FGTCLB\AcademicJobs\Domain\Validator\JobValidator;
 use FGTCLB\AcademicJobs\Event\AfterSaveJobEvent;
+use FGTCLB\AcademicJobs\Event\ModifyJobControllerNewActionViewEvent;
 use FGTCLB\AcademicJobs\Registry\AcademicJobsSettingsRegistry;
 use FGTCLB\AcademicJobs\SaveForm\FlashMessageCreationMode;
 use Psr\Http\Message\ResponseInterface;
@@ -107,8 +109,11 @@ final class JobController extends ActionController
 
     public function newAction(): ResponseInterface
     {
+        $pluginControllerActionContext = new PluginControllerActionContext(
+            request: $this->request,
+            settings: $this->settings,
+        );
         $this->view->assignMultiple([
-            'validations' => $this->settingsRegistry->getValidationsForFrontend('job'),
             'employmentTypeOptions' => $this->getSelectItemsForTcaManagedTableField(
                 $this->request,
                 $this->localizationUtility,
@@ -127,6 +132,21 @@ final class JobController extends ActionController
             ),
             'data' => $this->getCurrentContentObjectRenderer()?->data,
         ]);
+
+        // As an object is passed to this event and objects are passed by reference in PHP,
+        // the event listener can modify the view object without needing to assign it afterwards.
+        // Trying to assign it back to the view would break the dual-version support.
+        $this->eventDispatcher->dispatch(new ModifyJobControllerNewActionViewEvent(
+            pluginControllerActionContext: $pluginControllerActionContext,
+            view: $this->view,
+        ));
+
+        // Additional variables which should not be able to be manipulated by the event
+        $this->view->assignMultiple(
+            [
+                'validations' => $this->settingsRegistry->getValidationsForFrontend('job'),
+            ]
+        );
         return $this->htmlResponse();
     }
 
