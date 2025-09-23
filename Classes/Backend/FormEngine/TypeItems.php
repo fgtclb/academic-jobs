@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace FGTCLB\AcademicJobs\Backend\FormEngine;
 
 use TYPO3\CMS\Core\Utility\ArrayUtility;
-use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 final class TypeItems
 {
@@ -18,24 +17,26 @@ final class TypeItems
             $parameters['items'],
             $this->getTypes()
         );
+        // @todo Add PSR-14 event to allow dynamic modification of items in project to avoid the need replace
+        //       this itemsProcFunc class.
     }
 
     /**
      * @return array<int, array{label: string|null, value: int}>
      */
-    public function getTypes(): array
+    private function getTypes(): array
     {
         return [
             [
-                'label' => LocalizationUtility::translate('LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_job.jobtype.job'),
+                'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_job.jobtype.job',
                 'value' => 1,
             ],
             [
-                'label' => LocalizationUtility::translate('LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_job.jobtype.sidejob'),
+                'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_job.jobtype.sidejob',
                 'value' => 2,
             ],
             [
-                'label' => LocalizationUtility::translate('LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_job.jobtype.thesis'),
+                'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_job.jobtype.thesis',
                 'value' => 3,
             ],
         ];

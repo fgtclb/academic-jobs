@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace FGTCLB\AcademicJobs\Controller;
 
+use FGTCLB\AcademicBase\Controller\GetSelectItemsForTcaManagedTableFieldMethodTrait;
 use FGTCLB\AcademicBase\Extbase\Property\TypeConverter\FileUploadConverter;
-use FGTCLB\AcademicJobs\Backend\FormEngine\EmploymentTypeItems;
-use FGTCLB\AcademicJobs\Backend\FormEngine\TypeItems;
 use FGTCLB\AcademicJobs\Domain\Model\Job;
 use FGTCLB\AcademicJobs\Domain\Repository\JobRepository;
 use FGTCLB\AcademicJobs\Domain\Validator\JobValidator;
@@ -33,14 +32,13 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 final class JobController extends ActionController
 {
-    private const JOB_HIDDEN = true;
+    use GetSelectItemsForTcaManagedTableFieldMethodTrait;
 
     public function __construct(
         private readonly JobRepository $jobRepository,
         private readonly PersistenceManagerInterface $persistenceManager,
         private readonly ImageService $imageService,
-        private readonly EmploymentTypeItems $employmentTypeItems,
-        private readonly TypeItems $typeItems,
+        private readonly LocalizationUtility $localizationUtility,
         protected readonly BackendUriBuilder $backendUriBuilder,
         protected AcademicJobsSettingsRegistry $settingsRegistry,
     ) {}
@@ -107,12 +105,24 @@ final class JobController extends ActionController
         return $this->htmlResponse();
     }
 
-    public function newAction(?Job $job = null): ResponseInterface
+    public function newAction(): ResponseInterface
     {
         $this->view->assignMultiple([
             'validations' => $this->settingsRegistry->getValidationsForFrontend('job'),
-            'employmentTypeOptions' => $this->employmentTypeItems->getEmploymentTypes(),
-            'typeOptions' => $this->typeItems->getTypes(),
+            'employmentTypeOptions' => $this->getSelectItemsForTcaManagedTableField(
+                $this->localizationUtility,
+                'academic_jobs',
+                'tx_academicjobs_domain_model_job',
+                'employment_type',
+                [''],
+            ),
+            'typeOptions' => $this->getSelectItemsForTcaManagedTableField(
+                $this->localizationUtility,
+                'academic_jobs',
+                'tx_academicjobs_domain_model_job',
+                'type',
+                [''],
+            ),
             'data' => $this->getCurrentContentObjectRenderer()?->data,
         ]);
         return $this->htmlResponse();
@@ -152,6 +162,10 @@ final class JobController extends ActionController
         }
     }
 
+    /**
+     * @todo It's not a really good practice to use persisting extbase models directly, this should be a DTO object,
+     *       see `EXT:academic_persons_edit` for examples.
+     */
     #[Validate([
         'param' => 'job',
         'validator' => JobValidator::class,
@@ -162,7 +176,7 @@ final class JobController extends ActionController
             return $this->redirect('new');
         }
 
-        $job->setHidden((int)self::JOB_HIDDEN);
+        $job->setHidden(1);
         $this->jobRepository->add($job);
         $this->persistenceManager->persistAll();
 
