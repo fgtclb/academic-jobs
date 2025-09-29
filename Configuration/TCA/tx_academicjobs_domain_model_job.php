@@ -294,8 +294,7 @@ return [
             'description' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_job.contact.additional_information.description',
             'config' => [
                 'type' => 'text',
-                'cols' => 40,
-                'rows' => 15,
+                'rows' => 5,
                 'eval' => 'trim',
                 'default' => '',
             ],
@@ -314,12 +313,9 @@ return [
                 --linebreak--,
                 description,
                 --linebreak--,
-                employment_start_date,
-                --linebreak--,
                 work_location,
-                --linebreak--,
                 link,
-
+                employment_start_date,
             ',
         ],
         'company' => [
@@ -340,6 +336,7 @@ return [
                 contact_name,
                 contact_email,
                 contact_phone,
+                --linebreak--,
                 contact_additional_information,
             ',
         ],
