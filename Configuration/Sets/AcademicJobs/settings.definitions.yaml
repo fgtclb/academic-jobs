@@ -2,42 +2,67 @@ categories:
   academic:
     label: 'Academic'
   academic.jobs:
-    label: 'Persons'
+    label: 'Jobs'
     parent: academic
 
 settings:
   plugin.tx_academicjobs.persistence.storagePid:
-    label: 'Storage page'
+    label: 'Default storage PID'
     category: academic.jobs
     type: int
     default: 0
   plugin.tx_academicjobs.detailPid:
-    label: 'Detail page'
+    label: 'Default detail page PID'
     category: academic.jobs
     type: int
     default: 0
   plugin.tx_academicjobs.listPid:
-    label: 'List page'
+    label: 'Default list page PID'
     category: academic.jobs
     type: int
     default: 0
-  plugin.tx_academicjobs.email.recipientEmail:
-    label: 'Recipient Email'
+  plugin.tx_academicjobs.email.from:
+    label: 'Sender email address'
     category: academic.jobs
     type: string
     default: ''
-  plugin.tx_academicjobs.email.from:
-    label: 'Sender Email'
+  plugin.tx_academicjobs.email.recipientEmail:
+    label: 'Recipient email address'
     category: academic.jobs
     type: string
     default: ''
   plugin.tx_academicjobs.email.subject:
-    label: 'Email Subject'
+    label: 'Email subject'
     category: academic.jobs
     type: string
-    default: ''
+    default: 'New job application'
   plugin.tx_academicjobs.email.template:
-    label: 'Email Content'
+    label: 'Email content'
     category: academic.jobs
     type: string
-    default: ''
+    default: 'A new job application has been submitted. Please check the backend.'
+  plugin.tx_academicjobs.saveForm.fallbackRedirectPageId:
+    label: 'Default redirect page PID, can be overruled in plugin'
+    category: academic.jobs
+    type: int
+    default: 0
+  plugin.tx_academicjobs.saveForm.fallbackFlashMessageCreationMode:
+    label: 'Flash message creation mode'
+    category: academic.jobs
+    type: int
+    default: 0
+  plugin.tx_academicjobs.jobAvatarImage.uploadFolder:
+    label: 'An upload folder'
+    category: academic.jobs
+    type: string
+    default: '1:/global-content/jobs/logos/'
+  plugin.tx_academicjobs.jobAvatarImage.validation.fileSize.maximum:
+    label: 'The maximum file size to accept'
+    category: academic.jobs
+    type: string
+    default: '2M'
+  plugin.tx_academicjobs.jobAvatarImage.validation.mimeType.allowedMimeTypes:
+    label: 'Allowed mime types (using */* IANA media types)'
+    category: academic.jobs
+    type: string
+    default: 'image/jpeg,image/png,image/webp,image/svg+xml'

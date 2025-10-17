@@ -19,9 +19,13 @@ plugin.tx_academicjobs {
     listPid =
 
     email {
+        # cat=plugin.tx_academicjobs_createjob//a; type=string; label=Sender email address
         from =
+        # cat=plugin.tx_academicjobs_createjob//a; type=string; label=Recipient email address
         recipientEmail =
+        # cat=plugin.tx_academicjobs_createjob//a; type=string; label=Email subject
         subject = New job application
+        # cat=plugin.tx_academicjobs_createjob//a; type=string; label=Email content
         template = A new job application has been submitted. Please check the backend.
     }
 
