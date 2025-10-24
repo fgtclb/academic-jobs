@@ -52,3 +52,4 @@ and a detail view for the frontend.
     Configuration/Index
     Templates/Index
     KnownProblems/Index
+    Changelog/Changelog-2
