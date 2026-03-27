@@ -12,8 +12,8 @@
     ],
     "require": {
         "typo3/cms-core": "^12.4.22 || ^13.4",
-        "fgtclb/academic-jobs": "~2.2.1@dev",
-        "fgtclb/academic-base": "~2.2.1@dev"
+        "fgtclb/academic-jobs": "2.3.0@dev",
+        "fgtclb/academic-base": "2.3.0@dev"
     },
     "extra": {
         "typo3/cms": {
