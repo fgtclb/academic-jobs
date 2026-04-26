@@ -46,7 +46,7 @@
             "extension-key": "academic_jobs"
         },
         "branch-alias": {
-            "dev-main": "2.3.3-dev"
+            "dev-main": "2.3.x-dev"
         }
     }
 }
