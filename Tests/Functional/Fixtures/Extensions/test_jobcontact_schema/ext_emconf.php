@@ -3,21 +3,16 @@
 $EM_CONF[$_EXTKEY] = [
     'title' => 'TESTS: Academic Jobs TCA',
     'description' => 'Extension providing TCA for tests',
-    'category' => 'fe,be',
-    'author' => 'Stefan Bürk',
-    'author_email' => 'stefan@buerk.tech',
-    'author_company' => 'web-vision GmbH',
+    'version' => '2.3.2',
+    'category' => 'misc',
     'state' => 'beta',
-    'version' => '2.3.1',
-    'clearCacheOnLoad' => true,
+    'author' => 'Stefan Bürk',
+    'author_email' => 'hello@fgtclb.com',
+    'author_company' => 'FGTCLB GmbH',
     'constraints' => [
         'depends' => [
             'typo3' => '12.4.22-13.4.99',
             'academic_jobs' => '2.3.2',
-        ],
-        'conflicts' => [
-        ],
-        'suggests' => [
         ],
     ],
 ];
