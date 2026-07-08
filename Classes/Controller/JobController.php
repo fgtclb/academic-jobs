@@ -48,11 +48,12 @@ final class JobController extends ActionController
     public function listAction(): ResponseInterface
     {
         $jobType = $this->settings['job']['type'] ?? 0;
+        $showHiddenRecords = (bool)($this->settings['showHiddenRecords'] ?? false);
 
         if ($jobType > 0) {
-            $jobs = $this->jobRepository->findByJobType((int)$jobType);
+            $jobs = $this->jobRepository->findByJobType((int)$jobType, $showHiddenRecords);
         } else {
-            $jobs = $this->jobRepository->findAll();
+            $jobs = $this->jobRepository->findAllJobs($showHiddenRecords);
         }
 
         $this->view->assignMultiple([

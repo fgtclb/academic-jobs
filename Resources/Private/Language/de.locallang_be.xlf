@@ -22,6 +22,15 @@
 				<target>Job Type</target>
 			</trans-unit>
 
+			<trans-unit id="flexform.showHiddenRecords.label">
+				<source>Show hidden records</source>
+				<target>Versteckte Datensätze anzeigen</target>
+			</trans-unit>
+			<trans-unit id="flexform.showHiddenRecords.description">
+				<source>When enabled, hidden (disabled) records are included in the frontend output, independent of the backend preview settings.</source>
+				<target>Wenn aktiviert, werden versteckte (deaktivierte) Datensätze unabhängig von den Backend-Vorschaueinstellungen im Frontend ausgegeben.</target>
+			</trans-unit>
+
 			<!-- Flexform Plugin NewJobForm -->
 			<trans-unit id="tx_academicjobs_domain_model_job.newJobForm.redirectPageId.label">
 				<source>Redirect page after job creation</source>

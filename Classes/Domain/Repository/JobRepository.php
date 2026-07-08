@@ -19,14 +19,43 @@ class JobRepository extends Repository
     ];
 
     /**
-     * @return QueryResultInterface<Job>
+     * @return QueryResultInterface<int, Job>
      */
-    public function findByJobType(int $jobType): QueryResultInterface
+    public function findByJobType(int $jobType, bool $includeHidden = false): QueryResultInterface
     {
         $query = $this->createQuery();
+        if ($includeHidden) {
+            $this->includeHiddenRecords($query);
+        }
         $query->matching(
             $query->equals('type', $jobType)
         );
         return $query->execute();
+    }
+
+    /**
+     * @return QueryResultInterface<int, Job>
+     */
+    public function findAllJobs(bool $includeHidden = false): QueryResultInterface
+    {
+        $query = $this->createQuery();
+        if ($includeHidden) {
+            $this->includeHiddenRecords($query);
+        }
+        return $query->execute();
+    }
+
+    /**
+     * Include hidden (disabled) records in the query, independent of the
+     * Context API visibility settings. Only the "hidden" enable column is
+     * ignored; deleted/starttime/endtime/fe_group restrictions stay intact.
+     *
+     * @param QueryInterface<Job> $query
+     */
+    private function includeHiddenRecords(QueryInterface $query): void
+    {
+        $querySettings = $query->getQuerySettings();
+        $querySettings->setIgnoreEnableFields(true);
+        $querySettings->setEnableFieldsToBeIgnored(['disabled']);
     }
 }
