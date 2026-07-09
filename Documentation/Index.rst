@@ -1,10 +1,8 @@
-..  include:: /Includes.rst.txt
+..  _start:
 
-.. _start:
-
-================
+=============
 Academic Jobs
-================
+=============
 
 :Extension key:
     academic_jobs
@@ -35,17 +33,48 @@ This TYPO3 extension allows the entry of external job offers by front-end users
 in TYPO3 using a form. The job offers can then be checked and published through
 an approval process.
 
-Records can be created, edit and displayed in the frontend and there are a list-
-and a detail view for the frontend.
+Records can be created, edited and displayed in the frontend, with both a list
+and a detail view available.
 
 ----
 
-**Table of Contents:**
+..  card-grid::
+    :columns: 1
+    :columns-md: 2
+    :gap: 4
+    :class: pb-4
+    :card-height: 100
+
+    ..  card:: :ref:`Introduction <introduction>`
+
+        What the extension does and the main concepts behind it.
+
+    ..  card:: :ref:`Installation <installation>`
+
+        Install :guilabel:`academic_jobs` via Composer, the Extension
+        Manager or a TER upload.
+
+    ..  card:: :ref:`Configuration <configuration>`
+
+        Configure the extension and its plugins for your installation.
+
+    ..  card:: :ref:`Templates <templates>`
+
+        Override and customise the frontend templates.
+
+    ..  card:: :ref:`Known problems <known-problems>`
+
+        Known issues and information about them.
+
+    ..  card:: :ref:`Changelog <changelog-v2>`
+
+        Learn about what has changed and which actions are required to
+        upgrade.
 
 ..  toctree::
-    :maxdepth: 5
+    :maxdepth: 2
     :titlesonly:
-    :glob:
+    :hidden:
 
     Introduction/Index
     Installation/Index
@@ -53,3 +82,10 @@ and a detail view for the frontend.
     Templates/Index
     KnownProblems/Index
     Changelog/Changelog-2
+
+..  Meta Menu
+
+..  toctree::
+    :hidden:
+
+    Sitemap
