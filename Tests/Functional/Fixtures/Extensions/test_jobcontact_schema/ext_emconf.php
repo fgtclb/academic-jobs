@@ -3,7 +3,7 @@
 $EM_CONF[$_EXTKEY] = [
     'title' => 'TESTS: Academic Jobs TCA',
     'description' => 'Extension providing TCA for tests',
-    'version' => '2.4.0',
+    'version' => '3.0.0',
     'category' => 'misc',
     'state' => 'beta',
     'author' => 'Stefan Bürk',
@@ -12,7 +12,7 @@ $EM_CONF[$_EXTKEY] = [
     'constraints' => [
         'depends' => [
             'typo3' => '12.4.22-13.4.99',
-            'academic_jobs' => '2.4.0',
+            'academic_jobs' => '3.0.0',
         ],
     ],
 ];
