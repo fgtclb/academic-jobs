@@ -35,7 +35,6 @@ if (!defined('TYPO3')) {
         'FILE:EXT:academic_jobs/Configuration/FlexForms/Plugin_NewJobForm.xml',
         'academicjobs_newjobform'
     );
-    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['academicjobs_newjobform'] = 'pi_flexform';
 
     //==================================================================================================================
     // Plugin: academicjobs_list
@@ -64,8 +63,6 @@ if (!defined('TYPO3')) {
         'FILE:EXT:academic_jobs/Configuration/FlexForms/PluginList.xml',
         'academicjobs_list'
     );
-    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['academicjobs_list'] = 'pages,layout,select_key,recursive';
-    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['academicjobs_list'] = 'pi_flexform';
 
     //==================================================================================================================
     // Plugin: academicjobs_detail
