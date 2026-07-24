@@ -30,7 +30,6 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 final class JobController extends ActionController
 {
@@ -432,11 +431,7 @@ final class JobController extends ActionController
      */
     private function determineCurrentPageId(): int
     {
-        $frontendController = $this->request->getAttribute('frontend.controller');
-        if ($frontendController instanceof TypoScriptFrontendController) {
-            return (int)$frontendController->id;
-        }
-        return 0;
+        return (int)($this->request->getAttribute('frontend.page.information')?->getId() ?? 0);
     }
 
     /**
