@@ -16,6 +16,7 @@ use FGTCLB\AcademicJobs\Registry\AcademicJobsSettingsRegistry;
 use FGTCLB\AcademicJobs\SaveForm\FlashMessageCreationMode;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
+use TYPO3\CMS\Core\Mail\MailerInterface;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
@@ -42,6 +43,7 @@ final class JobController extends ActionController
         private readonly LocalizationUtility $localizationUtility,
         protected readonly BackendUriBuilder $backendUriBuilder,
         protected AcademicJobsSettingsRegistry $settingsRegistry,
+        protected readonly MailerInterface $mailer,
     ) {}
 
     public function listAction(): ResponseInterface
@@ -335,7 +337,11 @@ final class JobController extends ActionController
         $mail->subject($this->settings['email']['subject']);
         $mail->text('A new job has been posted. Please check the TYPO3 backend: ' . $url);
 
-        return $mail->send();
+        // MailMessage::send() was removed in TYPO3 v14; send through the mailer
+        // service instead (available as an alias in v13 and v14).
+        $this->mailer->send($mail);
+
+        return true;
     }
 
     public function buildUrl(int $recordId): string
