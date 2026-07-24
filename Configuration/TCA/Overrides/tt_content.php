@@ -1,6 +1,5 @@
 <?php
 
-use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
@@ -9,8 +8,6 @@ if (!defined('TYPO3')) {
 }
 
 (static function (): void {
-    $typo3MajorVersion = (new Typo3Version())->getMajorVersion();
-
     //==================================================================================================================
     // Plugin: academicjobs_newjobform
     //==================================================================================================================
@@ -35,7 +32,7 @@ if (!defined('TYPO3')) {
     );
     ExtensionManagementUtility::addPiFlexFormValue(
         '',
-        sprintf('FILE:EXT:academic_jobs/Configuration/Flexforms/Core%s/Plugin_NewJobForm.xml', $typo3MajorVersion),
+        'FILE:EXT:academic_jobs/Configuration/FlexForms/Plugin_NewJobForm.xml',
         'academicjobs_newjobform'
     );
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['academicjobs_newjobform'] = 'pi_flexform';
@@ -64,7 +61,7 @@ if (!defined('TYPO3')) {
     );
     ExtensionManagementUtility::addPiFlexFormValue(
         '',
-        sprintf('FILE:EXT:academic_jobs/Configuration/Flexforms/Core%s/PluginList.xml', $typo3MajorVersion),
+        'FILE:EXT:academic_jobs/Configuration/FlexForms/PluginList.xml',
         'academicjobs_list'
     );
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['academicjobs_list'] = 'pages,layout,select_key,recursive';
