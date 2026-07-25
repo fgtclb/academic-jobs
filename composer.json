@@ -29,7 +29,10 @@
     "autoload": {
         "psr-4": {
             "FGTCLB\\AcademicJobs\\": "Classes/"
-        }
+        },
+        "files": [
+            "EXT_CONSTANTS.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
@@ -46,7 +49,11 @@
         "typo3/cms": {
             "web-dir": ".Build/Web",
             "app-dir": ".Build",
-            "extension-key": "academic_jobs"
+            "extension-key": "academic_jobs",
+            "version": "3.0.0-dev",
+            "Package": {
+                "providesPackages": {}
+            }
         },
         "branch-alias": {
             "dev-main": "3.0.x-dev"

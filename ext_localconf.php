@@ -7,6 +7,15 @@ if (!defined('TYPO3')) {
     die('Not authorized');
 }
 
+// Define ACADEMIC_JOBS_CASCADE_REMOVE for Classic (non-Composer) mode, where
+// composer.json `autoload.files` is not processed. In Composer mode the constant
+// is already defined via autoload.files, so this is skipped. ext_localconf.php is
+// cached/concatenated by TYPO3 (so __DIR__ is unreliable) — use extPath().
+// @todo Remove together with EXT_CONSTANTS.php once TYPO3 v13 support is dropped.
+if (!defined('ACADEMIC_JOBS_CASCADE_REMOVE')) {
+    require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('academic_jobs') . 'EXT_CONSTANTS.php';
+}
+
 (static function (): void {
     ExtensionUtility::configurePlugin(
         'AcademicJobs',

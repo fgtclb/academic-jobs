@@ -17,7 +17,11 @@
     },
     "extra": {
         "typo3/cms": {
-            "extension-key": "test_jobcontact_schema"
+            "extension-key": "test_jobcontact_schema",
+            "version": "3.0.0-dev",
+            "Package": {
+                "providesPackages": []
+            }
         }
     }
 }

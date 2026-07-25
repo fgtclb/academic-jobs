@@ -13,7 +13,7 @@ class Job extends AbstractEntity
     protected string $title = '';
     protected ?\DateTime $employmentStartDate = null;
     protected string $description = '';
-    #[Extbase\ORM\Cascade(['value' => 'remove'])]
+    #[Extbase\ORM\Cascade(ACADEMIC_JOBS_CASCADE_REMOVE)]
     protected ?FileReference $image = null;
     protected string $companyName = '';
     protected string $sector = '';

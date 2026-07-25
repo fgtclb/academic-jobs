@@ -9,6 +9,7 @@ use SBUERK\TYPO3\Testing\TestCase\FunctionalTestCase;
 abstract class AbstractAcademicJobsTestCase extends FunctionalTestCase
 {
     protected array $coreExtensionsToLoad = [
+        'typo3/cms-fluid-styled-content',
         'typo3/cms-install',
         'typo3/cms-rte-ckeditor',
     ];
