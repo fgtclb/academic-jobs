@@ -29,11 +29,8 @@ if (!defined('TYPO3')) {
         'academicjobs_newjobform',
         'after:header'
     );
-    ExtensionManagementUtility::addPiFlexFormValue(
-        '',
-        'FILE:EXT:academic_jobs/Configuration/FlexForms/Plugin_NewJobForm.xml',
-        'academicjobs_newjobform'
-    );
+    $GLOBALS['TCA']['tt_content']['types']['academicjobs_newjobform']['columnsOverrides']['pi_flexform']['config']['ds']
+        = 'FILE:EXT:academic_jobs/Configuration/FlexForms/Plugin_NewJobForm.xml';
 
     //==================================================================================================================
     // Plugin: academicjobs_list
@@ -56,11 +53,8 @@ if (!defined('TYPO3')) {
         'academicjobs_list',
         'after:header'
     );
-    ExtensionManagementUtility::addPiFlexFormValue(
-        '',
-        'FILE:EXT:academic_jobs/Configuration/FlexForms/PluginList.xml',
-        'academicjobs_list'
-    );
+    $GLOBALS['TCA']['tt_content']['types']['academicjobs_list']['columnsOverrides']['pi_flexform']['config']['ds']
+        = 'FILE:EXT:academic_jobs/Configuration/FlexForms/PluginList.xml';
 
     //==================================================================================================================
     // Plugin: academicjobs_detail

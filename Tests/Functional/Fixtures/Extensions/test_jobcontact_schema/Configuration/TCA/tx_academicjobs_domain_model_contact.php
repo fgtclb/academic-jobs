@@ -16,7 +16,6 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-        'searchFields' => 'name,email,phone,additional_information',
         'iconfile' => 'EXT:academic_jobs/Resources/Public/Icons/tx_academicjobs_domain_model_contact.svg',
         'security' => [
             'ignorePageTypeRestriction' => true,

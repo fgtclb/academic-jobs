@@ -1,6 +1,6 @@
 <?php
 
-return [
+$tcaConfiguration = [
     'ctrl' => [
         'title' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_job',
         'label' => 'title',
@@ -16,7 +16,6 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-        'searchFields' => 'title,description,company_name,sector,work_location,link,slug',
         'iconfile' => 'EXT:academic_jobs/Resources/Public/Icons/tx_academicjobs_domain_model_job.svg',
         'security' => [
             'ignorePageTypeRestriction' => true,
@@ -383,3 +382,13 @@ return [
         ],
     ],
 ];
+
+// The 'searchFields' TCA ctrl option was removed in TYPO3 v14 (Breaking #106972);
+// v14 makes suitable field types searchable by default. Keep the explicit
+// inclusion list on v13, which still evaluates 'searchFields'.
+// @todo Remove once TYPO3 v13 support is dropped.
+if ((new \TYPO3\CMS\Core\Information\Typo3Version())->getMajorVersion() < 14) {
+    $tcaConfiguration['ctrl']['searchFields'] = 'title,description,company_name,sector,work_location,link,slug';
+}
+
+return $tcaConfiguration;
