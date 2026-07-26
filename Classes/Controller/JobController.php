@@ -16,6 +16,7 @@ use FGTCLB\AcademicJobs\Registry\AcademicJobsSettingsRegistry;
 use FGTCLB\AcademicJobs\SaveForm\FlashMessageCreationMode;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
+use TYPO3\CMS\Core\Http\NormalizedParams;
 use TYPO3\CMS\Core\Mail\MailerInterface;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
@@ -431,11 +432,11 @@ final class JobController extends ActionController
                             $recordId => 'edit',
                         ],
                     ],
-                    'returnUrl' => GeneralUtility::getIndpEnv('REQUEST_URI'),
+                    'returnUrl' => $this->getNormalizedParams()?->getRequestUri() ?? '',
                 ]
             );
 
-        return GeneralUtility::getIndpEnv('TYPO3_REQUEST_HOST') . $path;
+        return ($this->getNormalizedParams()?->getRequestHost() ?? '') . $path;
     }
 
     private function translateAlert(
@@ -559,6 +560,17 @@ final class JobController extends ActionController
         );
 
         $this->getFlashMessageQueue($queueIdentifier)->enqueue($flashMessage);
+    }
+
+    /**
+     * `GeneralUtility::getIndpEnv()` is deprecated since TYPO3 v14.3; `NormalizedParams`
+     * is the documented replacement and exists unchanged in TYPO3 v13.4 and v14.
+     */
+    private function getNormalizedParams(): ?NormalizedParams
+    {
+        $normalizedParams = $this->request->getAttribute('normalizedParams');
+
+        return $normalizedParams instanceof NormalizedParams ? $normalizedParams : null;
     }
 
     private function getCurrentContentObjectRenderer(): ?ContentObjectRenderer
