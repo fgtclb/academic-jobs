@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FGTCLB\AcademicJobs\Controller;
 
+use FGTCLB\AcademicBase\Controller\GetCurrentContentRecordMethodTrait;
 use FGTCLB\AcademicBase\Controller\GetSelectItemsForTcaManagedTableFieldMethodTrait;
 use FGTCLB\AcademicBase\Domain\Model\Dto\PluginControllerActionContext;
 use FGTCLB\AcademicJobs\Domain\Model\Job;
@@ -36,6 +37,7 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 final class JobController extends ActionController
 {
+    use GetCurrentContentRecordMethodTrait;
     use GetSelectItemsForTcaManagedTableFieldMethodTrait;
 
     public function __construct(
@@ -62,6 +64,7 @@ final class JobController extends ActionController
         $this->view->assignMultiple([
             'jobs' => $jobs,
             'data' => $this->getCurrentContentObjectRenderer()?->data,
+            'record' => $this->getCurrentContentRecord($this->getCurrentContentObjectRenderer()),
         ]);
 
         return $this->htmlResponse();
@@ -106,6 +109,7 @@ final class JobController extends ActionController
         $this->view->assignMultiple([
             'job' => $job,
             'data' => $this->getCurrentContentObjectRenderer()?->data,
+            'record' => $this->getCurrentContentRecord($this->getCurrentContentObjectRenderer()),
         ]);
 
         return $this->htmlResponse();
@@ -135,6 +139,7 @@ final class JobController extends ActionController
                 [''],
             ),
             'data' => $this->getCurrentContentObjectRenderer()?->data,
+            'record' => $this->getCurrentContentRecord($this->getCurrentContentObjectRenderer()),
         ]);
 
         // As an object is passed to this event and objects are passed by reference in PHP,

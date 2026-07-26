@@ -1,0 +1,21 @@
+plugin.tx_academicjobs {
+    persistence {
+        storagePid = 100
+    }
+    email {
+        from = sender@example.com
+        recipientEmail = recipient@example.com
+        subject = New job application
+    }
+    jobAvatarImage {
+        uploadFolder = 1:/job-logos/
+        validation {
+            fileSize {
+                maximum = 2M
+            }
+            mimeType {
+                allowedMimeTypes = image/jpeg,image/png
+            }
+        }
+    }
+}
