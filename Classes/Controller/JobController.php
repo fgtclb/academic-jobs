@@ -6,7 +6,6 @@ namespace FGTCLB\AcademicJobs\Controller;
 
 use FGTCLB\AcademicBase\Controller\GetSelectItemsForTcaManagedTableFieldMethodTrait;
 use FGTCLB\AcademicBase\Domain\Model\Dto\PluginControllerActionContext;
-use FGTCLB\AcademicBase\Extbase\Property\TypeConverter\FileUploadConverter;
 use FGTCLB\AcademicJobs\Domain\Model\Job;
 use FGTCLB\AcademicJobs\Domain\Repository\JobRepository;
 use FGTCLB\AcademicJobs\Domain\Validator\JobValidator;
@@ -26,10 +25,13 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Annotation\Validate;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Mvc\Controller\FileUploadConfiguration;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Extbase\Validation\Validator\FileSizeValidator;
+use TYPO3\CMS\Extbase\Validation\Validator\MimeTypeValidator;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 final class JobController extends ActionController
@@ -172,18 +174,50 @@ final class JobController extends ActionController
                     );
             }
 
-            GeneralUtility::makeInstance(FileUploadConverter::class)
-                ->setArgumentTypeConverterConfiguration(
-                    $this->arguments,
-                    'job',
-                    'image',
-                    [
-                        FileUploadConverter::CONFIGURATION_UPLOAD_FOLDER => $this->settings['jobAvatarImage']['uploadFolder'] ?? '1:user_upload/',
-                        FileUploadConverter::CONFIGURATION_VALIDATION_FILESIZE_MAXIMUM => $this->settings['jobAvatarImage']['validation']['fileSize']['maximum'] ?? PHP_INT_MAX . 'B',
-                        FileUploadConverter::CONFIGURATION_VALIDATION_MIME_TYPE_ALLOWED_MIME_TYPES => $this->settings['jobAvatarImage']['validation']['mimeType']['allowedMimeTypes'] ?? null,
-                    ],
-                );
+            $this->configureImageFileUpload();
         }
+    }
+
+    /**
+     * Registers the native Extbase file upload handling for the job avatar image.
+     *
+     * The upload folder and both validation limits stay TypoScript driven
+     * (`settings.jobAvatarImage.*`), which is why the configuration is built here
+     * instead of using the static `#[FileUpload]` attribute on the domain model.
+     */
+    private function configureImageFileUpload(): void
+    {
+        $jobArgument = $this->arguments->getArgument('job');
+
+        $fileUploadConfiguration = (new FileUploadConfiguration('image'))
+            ->setMaxFiles(1)
+            ->setUploadFolder(
+                (string)($this->settings['jobAvatarImage']['uploadFolder'] ?? '1:/user_upload/')
+            );
+
+        $fileSizeValidator = GeneralUtility::makeInstance(FileSizeValidator::class);
+        $fileSizeValidator->setOptions([
+            'maximum' => (string)($this->settings['jobAvatarImage']['validation']['fileSize']['maximum'] ?? PHP_INT_MAX . 'B'),
+        ]);
+        $fileUploadConfiguration->addValidator($fileSizeValidator);
+
+        // An empty list means "no mime type restriction". `MimeTypeValidator` throws
+        // for an empty `allowedMimeTypes` option, so it is only added when configured.
+        $allowedMimeTypes = GeneralUtility::trimExplode(
+            ',',
+            (string)($this->settings['jobAvatarImage']['validation']['mimeType']['allowedMimeTypes'] ?? ''),
+            true
+        );
+        if ($allowedMimeTypes !== []) {
+            $mimeTypeValidator = GeneralUtility::makeInstance(MimeTypeValidator::class);
+            $mimeTypeValidator->setOptions(['allowedMimeTypes' => $allowedMimeTypes]);
+            $fileUploadConfiguration->addValidator($mimeTypeValidator);
+        }
+
+        $jobArgument->getFileHandlingServiceConfiguration()
+            ->addFileUploadConfiguration($fileUploadConfiguration);
+        // The upload is handled by the file handling service, not by the property mapper.
+        $jobArgument->getPropertyMappingConfiguration()->skipProperties('image');
     }
 
     /**
