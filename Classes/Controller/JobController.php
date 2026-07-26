@@ -22,7 +22,6 @@ use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
-use TYPO3\CMS\Extbase\Annotation\Validate;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\FileUploadConfiguration;
@@ -30,6 +29,7 @@ use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Extbase\Validation\Validator\ConjunctionValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\FileSizeValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\MimeTypeValidator;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
@@ -175,6 +175,7 @@ final class JobController extends ActionController
             }
 
             $this->configureImageFileUpload();
+            $this->addJobValidator();
         }
     }
 
@@ -221,13 +222,49 @@ final class JobController extends ActionController
     }
 
     /**
+     * Adds the `JobValidator` to the validators Extbase already built for the
+     * `job` argument.
+     *
+     * This is done programmatically instead of with a `#[Validate]` attribute,
+     * because both attribute forms usable on TYPO3 v13 are deprecated on v14 and
+     * will be removed in v15: passing an array of configuration values, and
+     * naming the validated parameter. The documented replacement — placing the
+     * attribute on the method parameter — requires `Attribute::TARGET_PARAMETER`,
+     * which TYPO3 v13 does not declare, so it cannot be used while v13 is
+     * supported. The API used here emits no deprecation on either version.
+     *
+     * `initializeActionMethodValidators()` runs before this method and already
+     * put a `ConjunctionValidator` holding the base validation on the argument,
+     * so it is extended rather than replaced — replacing it would silently drop
+     * the model level validation.
+     */
+    private function addJobValidator(): void
+    {
+        $jobArgument = $this->arguments->getArgument('job');
+        $jobValidator = $this->validatorResolver->createValidator(JobValidator::class);
+        if ($jobValidator === null) {
+            return;
+        }
+
+        $validator = $jobArgument->getValidator();
+        if ($validator instanceof ConjunctionValidator) {
+            $validator->addValidator($jobValidator);
+            return;
+        }
+
+        /** @var ConjunctionValidator $conjunctionValidator */
+        $conjunctionValidator = $this->validatorResolver->createValidator(ConjunctionValidator::class);
+        if ($validator !== null) {
+            $conjunctionValidator->addValidator($validator);
+        }
+        $conjunctionValidator->addValidator($jobValidator);
+        $jobArgument->setValidator($conjunctionValidator);
+    }
+
+    /**
      * @todo It's not a really good practice to use persisting extbase models directly, this should be a DTO object,
      *       see `EXT:academic_persons_edit` for examples.
      */
-    #[Validate([
-        'param' => 'job',
-        'validator' => JobValidator::class,
-    ])]
     public function createAction(?Job $job = null): ResponseInterface
     {
         if ($job === null) {
