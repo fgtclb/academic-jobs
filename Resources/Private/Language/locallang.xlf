@@ -1,232 +1,232 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-	<file
-		source-language="en"
-		datatype="plaintext"
-		original="EXT:academic_jobs/Resources/Private/Language/locallang.xlf"
-		date="2023-09-02T12:17:09Z"
-		product-name="academic_jobs"
-	>
-		<header/>
-		<body>
-			<!-- Backend: TypoScript Constants Editor -->
+  <file
+    source-language="en"
+    datatype="plaintext"
+    original="EXT:academic_jobs/Resources/Private/Language/locallang.xlf"
+    date="2023-09-02T12:17:09Z"
+    product-name="academic_jobs"
+  >
+    <header/>
+    <body>
+      <!-- Backend: TypoScript Constants Editor -->
 
-			<trans-unit id="saveForm.flashMessageCreationMode.label">
-				<source>Flashmessage creation mode when persisting new jobs (FE)</source>
-			</trans-unit>
-			<trans-unit id="saveForm.flashMessageCreationMode.use_global_setting">
-				<source>Fallback - Use TypoScript settings</source>
-			</trans-unit>
-			<trans-unit id="saveForm.flashMessageCreationMode.option_always">
-				<source>always</source>
-			</trans-unit>
-			<trans-unit id="saveForm.flashMessageCreationMode.option_never">
-				<source>never</source>
-			</trans-unit>
-			<trans-unit id="saveForm.flashMessageCreationMode.option_suppressWhenRedirectPageIsSelected">
-				<source>suppress when list pid has been configured</source>
-			</trans-unit>
+      <trans-unit id="saveForm.flashMessageCreationMode.label">
+        <source>Flashmessage creation mode when persisting new jobs (FE)</source>
+      </trans-unit>
+      <trans-unit id="saveForm.flashMessageCreationMode.use_global_setting">
+        <source>Fallback - Use TypoScript settings</source>
+      </trans-unit>
+      <trans-unit id="saveForm.flashMessageCreationMode.option_always">
+        <source>always</source>
+      </trans-unit>
+      <trans-unit id="saveForm.flashMessageCreationMode.option_never">
+        <source>never</source>
+      </trans-unit>
+      <trans-unit id="saveForm.flashMessageCreationMode.option_suppressWhenRedirectPageIsSelected">
+        <source>suppress when list pid has been configured</source>
+      </trans-unit>
 
-			<!-- Frontend -->
+      <!-- Frontend -->
 
-			<trans-unit id="jobs.back">
-				<source>Back to job list</source>
-			</trans-unit>
-			<trans-unit id="create.job.contactName.label">
-				<source>Contact name</source>
-			</trans-unit>
-			<trans-unit id="create.job.contactEmail.label">
-				<source>E-Mail</source>
-			</trans-unit>
-			<trans-unit id="create.job.contactPhone.label">
-				<source>Phone number</source>
-			</trans-unit>
-			<trans-unit id="create.job.contactAdditionalInformation.label">
-				<source>Additional information</source>
-			</trans-unit>
-			<trans-unit id="create.job.starttime.label">
-				<source>When</source>
-			</trans-unit>
-			<trans-unit id="create.job.endtime.label">
-				<source>Application deadline</source>
-			</trans-unit>
-			<trans-unit id="create.job.companyName.label">
-				<source>Organization</source>
-			</trans-unit>
-			<trans-unit id="create.job.employmentType.label">
-				<source>Working hours</source>
-			</trans-unit>
-			<trans-unit id="create.job.employmentType.1">
-				<source>Full-Time</source>
-			</trans-unit>
-			<trans-unit id="create.job.employmentType.2">
-				<source>Part-Time</source>
-			</trans-unit>
-			<trans-unit id="create.job.employmentStartDate.label">
-				<source>Employment Start Date</source>
-			</trans-unit>
-			<trans-unit id="create.job.type.label">
-				<source>Job Type</source>
-			</trans-unit>
-			<trans-unit id="create.job.type.1">
-				<source>Type of job</source>
-			</trans-unit>
-			<trans-unit id="create.job.type.2">
-				<source>Sidejob</source>
-			</trans-unit>
-			<trans-unit id="create.job.type.3">
-				<source>Thesis</source>
-			</trans-unit>
-			<trans-unit id="create.job.workLocation.label">
-				<source>Location</source>
-			</trans-unit>
-			<trans-unit id="create.job.image.label">
-				<source>Logo</source>
-			</trans-unit>
-			<trans-unit id="create.job.title.label">
-				<source>Job title / Thesis title</source>
-			</trans-unit>
-			<trans-unit id="create.job.sector.label">
-				<source>Industry</source>
-			</trans-unit>
-			<trans-unit id="create.job.requiredDegree.label">
-				<source>Required degree</source>
-			</trans-unit>
-			<trans-unit id="create.job.contractualRelationship.label">
-				<source>Contractual relationship</source>
-			</trans-unit>
-			<trans-unit id="create.job.description.label">
-				<source>Job description</source>
-			</trans-unit>
-			<trans-unit id="create.job.link.label">
-				<source>Link</source>
-			</trans-unit>
-			<trans-unit id="create.job.alumniRecommend.label">
-				<source>Created by Alumni</source>
-			</trans-unit>
-			<trans-unit id="create.job.incorrectValues">
-				<source>One or more fields have not been filled out correctly.</source>
-			</trans-unit>
-			<trans-unit id="jobs.submit">
-				<source>Submit</source>
-			</trans-unit>
-			<trans-unit id="upload.error.150530345">
-				<source>Maximum file size exceeded.</source>
-			</trans-unit>
-			<trans-unit id="upload.error.150530346">
-				<source>Upload failed. The file was only partially uploaded, please try again.</source>
-			</trans-unit>
-			<trans-unit id="upload.error.150530347">
-				<source>No file was uploaded.</source>
-			</trans-unit>
-			<trans-unit id="upload.error.150530348">
-				<source>Upload failed.</source>
-			</trans-unit>
-			<trans-unit id="validation.error.1471708998">
-				<source>You entered an incorrect media type, "%s" is not allowed for this file. Please refer to the description of this field.</source>
-			</trans-unit>
+      <trans-unit id="jobs.back">
+        <source>Back to job list</source>
+      </trans-unit>
+      <trans-unit id="create.job.contactName.label">
+        <source>Contact name</source>
+      </trans-unit>
+      <trans-unit id="create.job.contactEmail.label">
+        <source>E-Mail</source>
+      </trans-unit>
+      <trans-unit id="create.job.contactPhone.label">
+        <source>Phone number</source>
+      </trans-unit>
+      <trans-unit id="create.job.contactAdditionalInformation.label">
+        <source>Additional information</source>
+      </trans-unit>
+      <trans-unit id="create.job.starttime.label">
+        <source>When</source>
+      </trans-unit>
+      <trans-unit id="create.job.endtime.label">
+        <source>Application deadline</source>
+      </trans-unit>
+      <trans-unit id="create.job.companyName.label">
+        <source>Organization</source>
+      </trans-unit>
+      <trans-unit id="create.job.employmentType.label">
+        <source>Working hours</source>
+      </trans-unit>
+      <trans-unit id="create.job.employmentType.1">
+        <source>Full-Time</source>
+      </trans-unit>
+      <trans-unit id="create.job.employmentType.2">
+        <source>Part-Time</source>
+      </trans-unit>
+      <trans-unit id="create.job.employmentStartDate.label">
+        <source>Employment Start Date</source>
+      </trans-unit>
+      <trans-unit id="create.job.type.label">
+        <source>Job Type</source>
+      </trans-unit>
+      <trans-unit id="create.job.type.1">
+        <source>Type of job</source>
+      </trans-unit>
+      <trans-unit id="create.job.type.2">
+        <source>Sidejob</source>
+      </trans-unit>
+      <trans-unit id="create.job.type.3">
+        <source>Thesis</source>
+      </trans-unit>
+      <trans-unit id="create.job.workLocation.label">
+        <source>Location</source>
+      </trans-unit>
+      <trans-unit id="create.job.image.label">
+        <source>Logo</source>
+      </trans-unit>
+      <trans-unit id="create.job.title.label">
+        <source>Job title / Thesis title</source>
+      </trans-unit>
+      <trans-unit id="create.job.sector.label">
+        <source>Industry</source>
+      </trans-unit>
+      <trans-unit id="create.job.requiredDegree.label">
+        <source>Required degree</source>
+      </trans-unit>
+      <trans-unit id="create.job.contractualRelationship.label">
+        <source>Contractual relationship</source>
+      </trans-unit>
+      <trans-unit id="create.job.description.label">
+        <source>Job description</source>
+      </trans-unit>
+      <trans-unit id="create.job.link.label">
+        <source>Link</source>
+      </trans-unit>
+      <trans-unit id="create.job.alumniRecommend.label">
+        <source>Created by Alumni</source>
+      </trans-unit>
+      <trans-unit id="create.job.incorrectValues">
+        <source>One or more fields have not been filled out correctly.</source>
+      </trans-unit>
+      <trans-unit id="jobs.submit">
+        <source>Submit</source>
+      </trans-unit>
+      <trans-unit id="upload.error.150530345">
+        <source>Maximum file size exceeded.</source>
+      </trans-unit>
+      <trans-unit id="upload.error.150530346">
+        <source>Upload failed. The file was only partially uploaded, please try again.</source>
+      </trans-unit>
+      <trans-unit id="upload.error.150530347">
+        <source>No file was uploaded.</source>
+      </trans-unit>
+      <trans-unit id="upload.error.150530348">
+        <source>Upload failed.</source>
+      </trans-unit>
+      <trans-unit id="validation.error.1471708998">
+        <source>You entered an incorrect media type, "%s" is not allowed for this file. Please refer to the description of this field.</source>
+      </trans-unit>
 
-			<!-- Alerts -->
+      <!-- Alerts -->
 
-			<trans-unit id="tx_academicjobs.fe.alert.job_created.body">
-				<source>We are automatically notified that you have created a job advert. After a review, we will activate your job advert.</source>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.alert.job_created.title">
-				<source>Your job advert has been successfully created</source>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.alert.job_created_no_email.body">
-				<source>Your job advert has been successfully created, but no notification could be sent to us. Please contact us to have your job advert activated.</source>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.alert.job_created_no_email.title">
-				<source>Notification email could not be sent</source>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.alert.job_not_created.body">
-				<source>An unknown error has occurred. Please try again. Please let us know if the problem persists.</source>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.alert.job_not_created.title">
-				<source>Your job advert could not be created</source>
-			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.alert.job_not_found.body">
-				<source>No job advert could be found.</source>
-			</trans-unit>
-			<trans-unit id="create.job.noLink">
-				<source>The link to this job avert is broken. Please contact us.</source>
-			</trans-unit>
+      <trans-unit id="tx_academicjobs.fe.alert.job_created.body">
+        <source>We are automatically notified that you have created a job advert. After a review, we will activate your job advert.</source>
+      </trans-unit>
+      <trans-unit id="tx_academicjobs.fe.alert.job_created.title">
+        <source>Your job advert has been successfully created</source>
+      </trans-unit>
+      <trans-unit id="tx_academicjobs.fe.alert.job_created_no_email.body">
+        <source>Your job advert has been successfully created, but no notification could be sent to us. Please contact us to have your job advert activated.</source>
+      </trans-unit>
+      <trans-unit id="tx_academicjobs.fe.alert.job_created_no_email.title">
+        <source>Notification email could not be sent</source>
+      </trans-unit>
+      <trans-unit id="tx_academicjobs.fe.alert.job_not_created.body">
+        <source>An unknown error has occurred. Please try again. Please let us know if the problem persists.</source>
+      </trans-unit>
+      <trans-unit id="tx_academicjobs.fe.alert.job_not_created.title">
+        <source>Your job advert could not be created</source>
+      </trans-unit>
+      <trans-unit id="tx_academicjobs.fe.alert.job_not_found.body">
+        <source>No job advert could be found.</source>
+      </trans-unit>
+      <trans-unit id="create.job.noLink">
+        <source>The link to this job avert is broken. Please contact us.</source>
+      </trans-unit>
 
-			<!-- Job List -->
+      <!-- Job List -->
 
-			<trans-unit id="jobs.contactName">
-				<source>Contact name</source>
-			</trans-unit>
-			<trans-unit id="jobs.contactEmail">
-				<source>E-Mail</source>
-			</trans-unit>
-			<trans-unit id="jobs.contactPhone">
-				<source>Phone number</source>
-			</trans-unit>
-			<trans-unit id="jobs.contactAdditionalInformation">
-				<source>Additional information</source>
-			</trans-unit>
-			<trans-unit id="jobs.starttime">
-				<source>When</source>
-			</trans-unit>
-			<trans-unit id="jobs.endtime">
-				<source>Application deadline</source>
-			</trans-unit>
-			<trans-unit id="jobs.companyName">
-				<source>Organization</source>
-			</trans-unit>
-			<trans-unit id="jobs.employmentType">
-				<source>Working hours</source>
-			</trans-unit>
-			<trans-unit id="jobs.employmentType.1">
-				<source>Full-Time</source>
-			</trans-unit>
-			<trans-unit id="jobs.employmentType.2">
-				<source>Part-Time</source>
-			</trans-unit>
-			<trans-unit id="jobs.workLocation">
-				<source>Location</source>
-			</trans-unit>
-			<trans-unit id="jobs.employmentStartDate">
-				<source>Employment Start Date</source>
-			</trans-unit>
-			<trans-unit id="jobs.type">
-				<source>Type of job</source>
-			</trans-unit>
-			<trans-unit id="jobs.type.1">
-				<source>Job</source>
-			</trans-unit>
-			<trans-unit id="jobs.type.2">
-				<source>Sidejob</source>
-			</trans-unit>
-			<trans-unit id="jobs.type.3">
-				<source>Thesis</source>
-			</trans-unit>
-			<trans-unit id="jobs.title">
-				<source>Job title / Thesis title</source>
-			</trans-unit>
-			<trans-unit id="jobs.sector">
-				<source>Industry</source>
-			</trans-unit>
-			<trans-unit id="jobs.requiredDegree">
-				<source>Required degree</source>
-			</trans-unit>
-			<trans-unit id="jobs.contractualRelationship">
-				<source>Contractual relationship</source>
-			</trans-unit>
-			<trans-unit id="jobs.description">
-				<source>Job description</source>
-			</trans-unit>
-			<trans-unit id="jobs.link">
-				<source>Link</source>
-			</trans-unit>
+      <trans-unit id="jobs.contactName">
+        <source>Contact name</source>
+      </trans-unit>
+      <trans-unit id="jobs.contactEmail">
+        <source>E-Mail</source>
+      </trans-unit>
+      <trans-unit id="jobs.contactPhone">
+        <source>Phone number</source>
+      </trans-unit>
+      <trans-unit id="jobs.contactAdditionalInformation">
+        <source>Additional information</source>
+      </trans-unit>
+      <trans-unit id="jobs.starttime">
+        <source>When</source>
+      </trans-unit>
+      <trans-unit id="jobs.endtime">
+        <source>Application deadline</source>
+      </trans-unit>
+      <trans-unit id="jobs.companyName">
+        <source>Organization</source>
+      </trans-unit>
+      <trans-unit id="jobs.employmentType">
+        <source>Working hours</source>
+      </trans-unit>
+      <trans-unit id="jobs.employmentType.1">
+        <source>Full-Time</source>
+      </trans-unit>
+      <trans-unit id="jobs.employmentType.2">
+        <source>Part-Time</source>
+      </trans-unit>
+      <trans-unit id="jobs.workLocation">
+        <source>Location</source>
+      </trans-unit>
+      <trans-unit id="jobs.employmentStartDate">
+        <source>Employment Start Date</source>
+      </trans-unit>
+      <trans-unit id="jobs.type">
+        <source>Type of job</source>
+      </trans-unit>
+      <trans-unit id="jobs.type.1">
+        <source>Job</source>
+      </trans-unit>
+      <trans-unit id="jobs.type.2">
+        <source>Sidejob</source>
+      </trans-unit>
+      <trans-unit id="jobs.type.3">
+        <source>Thesis</source>
+      </trans-unit>
+      <trans-unit id="jobs.title">
+        <source>Job title / Thesis title</source>
+      </trans-unit>
+      <trans-unit id="jobs.sector">
+        <source>Industry</source>
+      </trans-unit>
+      <trans-unit id="jobs.requiredDegree">
+        <source>Required degree</source>
+      </trans-unit>
+      <trans-unit id="jobs.contractualRelationship">
+        <source>Contractual relationship</source>
+      </trans-unit>
+      <trans-unit id="jobs.description">
+        <source>Job description</source>
+      </trans-unit>
+      <trans-unit id="jobs.link">
+        <source>Link</source>
+      </trans-unit>
 
-			<!-- Details -->
+      <!-- Details -->
 
-			<trans-unit id="jobs.contact">
-				<source>Contact</source>
-			</trans-unit>
-		</body>
-	</file>
+      <trans-unit id="jobs.contact">
+        <source>Contact</source>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>
