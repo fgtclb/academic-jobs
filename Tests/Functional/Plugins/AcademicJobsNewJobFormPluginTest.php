@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace FGTCLB\AcademicJobs\Tests\Functional\Plugins;
 
 use FGTCLB\AcademicJobs\Tests\Functional\AbstractAcademicJobsTestCase;
+use FGTCLB\TestingHelper\FunctionalTestCase\FrontendPluginRenderingTrait;
 use PHPUnit\Framework\Attributes\Test;
 use SBUERK\TYPO3\Testing\SiteHandling\SiteBasedTestTrait;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
-use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequestContext;
 
 /**
  * Renders the `academicjobs_newjobform` plugin in the frontend.
@@ -22,30 +20,26 @@ use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequestCon
  */
 final class AcademicJobsNewJobFormPluginTest extends AbstractAcademicJobsTestCase
 {
+    use FrontendPluginRenderingTrait;
     use SiteBasedTestTrait;
-
-    protected array $configurationToUseInTestInstance = [
-        'SYS' => [
-            'encryptionKey' => '4408d27a916d51e624b69af3554f516dbab61037a9f7b9fd6f81b4d3bedeccb6',
-            'features' => [
-                'subrequestPageErrors' => true,
-            ],
-        ],
-        'MAIL' => [
-            'transport' => 'null',
-        ],
-        'FE' => [
-            'debug' => false,
-        ],
-    ];
 
     protected const LANGUAGE_PRESETS = [
         'EN' => ['id' => 0, 'title' => 'English', 'locale' => 'en_US.UTF8', 'iso' => 'en', 'hrefLang' => 'en-US', 'direction' => ''],
     ];
 
+    protected function setUp(): void
+    {
+        $this->configurationToUseInTestInstance = $this->frontendPluginTestConfiguration([
+            'MAIL' => [
+                'transport' => 'null',
+            ],
+        ]);
+        parent::setUp();
+    }
+
     protected function tearDown(): void
     {
-        GeneralUtility::rmdir($this->instancePath . '/typo3conf/sites', true);
+        $this->removeWrittenSiteConfiguration();
         parent::tearDown();
     }
 
@@ -72,30 +66,17 @@ final class AcademicJobsNewJobFormPluginTest extends AbstractAcademicJobsTestCas
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/AcademicJobsNewJobFormPlugin/newJobFormPage.csv');
         $this->setUpFrontendRootPageForTestCase();
-        $this->writeSiteConfiguration(
-            identifier: 'acme',
-            site: $this->buildSiteConfiguration(
-                rootPageId: 1,
-                base: 'https://www.acme.com/',
+        $this->writeFrontendPluginTestSite([
+            $this->buildDefaultLanguageConfiguration(
+                identifier: 'EN',
+                base: '/',
             ),
-            languages: [
-                $this->buildDefaultLanguageConfiguration(
-                    identifier: 'EN',
-                    base: '/',
-                ),
-            ],
-        );
+        ]);
     }
 
     private function renderHomePage(): string
     {
-        $response = $this->executeFrontendSubRequest(
-            new InternalRequest('https://www.acme.com/home'),
-            new InternalRequestContext(),
-        );
-        $this->assertSame(200, $response->getStatusCode());
-
-        return (string)$response->getBody();
+        return $this->renderFrontendPage('https://www.acme.com/home');
     }
 
     #[Test]

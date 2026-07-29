@@ -5,15 +5,14 @@ declare(strict_types=1);
 namespace FGTCLB\AcademicJobs\Tests\Functional\Plugins;
 
 use FGTCLB\AcademicJobs\Tests\Functional\AbstractAcademicJobsTestCase;
+use FGTCLB\TestingHelper\FunctionalTestCase\FrontendPluginRenderingTrait;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Psr\Http\Message\ResponseInterface;
 use SBUERK\TYPO3\Testing\SiteHandling\SiteBasedTestTrait;
 use TYPO3\CMS\Core\Http\Stream;
 use TYPO3\CMS\Core\Http\UploadedFile;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
-use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequestContext;
 
 /**
  * Submits the `academicjobs_newjobform` plugin with a file upload and verifies the
@@ -33,30 +32,26 @@ use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequestCon
 #[Group('not-core-13')]
 final class AcademicJobsNewJobFormUploadTest extends AbstractAcademicJobsTestCase
 {
+    use FrontendPluginRenderingTrait;
     use SiteBasedTestTrait;
-
-    protected array $configurationToUseInTestInstance = [
-        'SYS' => [
-            'encryptionKey' => '4408d27a916d51e624b69af3554f516dbab61037a9f7b9fd6f81b4d3bedeccb6',
-            'features' => [
-                'subrequestPageErrors' => true,
-            ],
-        ],
-        'MAIL' => [
-            'transport' => 'null',
-        ],
-        'FE' => [
-            'debug' => false,
-        ],
-    ];
 
     protected const LANGUAGE_PRESETS = [
         'EN' => ['id' => 0, 'title' => 'English', 'locale' => 'en_US.UTF8', 'iso' => 'en', 'hrefLang' => 'en-US', 'direction' => ''],
     ];
 
+    protected function setUp(): void
+    {
+        $this->configurationToUseInTestInstance = $this->frontendPluginTestConfiguration([
+            'MAIL' => [
+                'transport' => 'null',
+            ],
+        ]);
+        parent::setUp();
+    }
+
     protected function tearDown(): void
     {
-        GeneralUtility::rmdir($this->instancePath . '/typo3conf/sites', true);
+        $this->removeWrittenSiteConfiguration();
         parent::tearDown();
     }
 
@@ -78,19 +73,12 @@ final class AcademicJobsNewJobFormUploadTest extends AbstractAcademicJobsTestCas
                 ],
             ],
         );
-        $this->writeSiteConfiguration(
-            identifier: 'acme',
-            site: $this->buildSiteConfiguration(
-                rootPageId: 1,
-                base: 'https://www.acme.com/',
+        $this->writeFrontendPluginTestSite([
+            $this->buildDefaultLanguageConfiguration(
+                identifier: 'EN',
+                base: '/',
             ),
-            languages: [
-                $this->buildDefaultLanguageConfiguration(
-                    identifier: 'EN',
-                    base: '/',
-                ),
-            ],
-        );
+        ]);
     }
 
     /**
@@ -102,12 +90,7 @@ final class AcademicJobsNewJobFormUploadTest extends AbstractAcademicJobsTestCas
      */
     private function renderFormAndExtractSubmitData(): array
     {
-        $response = $this->executeFrontendSubRequest(
-            new InternalRequest('https://www.acme.com/home'),
-            new InternalRequestContext(),
-        );
-        $this->assertSame(200, $response->getStatusCode());
-        $content = (string)$response->getBody();
+        $content = $this->renderFrontendPage('https://www.acme.com/home');
 
         $this->assertSame(1, preg_match('@<form [^>]*action="([^"]+)"@', $content, $actionMatch));
 
@@ -183,7 +166,7 @@ final class AcademicJobsNewJobFormUploadTest extends AbstractAcademicJobsTestCas
                 ],
             ]);
 
-        return $this->executeFrontendSubRequest($request, new InternalRequestContext());
+        return $this->requestFrontendPage($request);
     }
 
     /**
