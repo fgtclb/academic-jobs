@@ -1,0 +1,16 @@
+"pages",
+,"uid","pid","doktype","deleted","hidden","sys_language_uid","l10n_parent","l18n_cfg","slug","title"
+,1,0,1,0,0,0,0,0,"/","Site Root"
+,2,1,1,0,0,0,0,0,"/home","Home (EN)"
+,3,1,1,0,0,0,0,0,"/job-detail","Job detail"
+,100,1,254,0,0,0,0,0,"/sysfolder-records","Recordcollection"
+"tx_academicjobs_domain_model_job",
+,"uid","pid","sys_language_uid","hidden","deleted","starttime","endtime","type","employment_type","title","slug","description","company_name","work_location","contact_name","contact_email","contact_phone"
+,1,100,0,0,0,0,0,1,1,"Research Assistant Position","research-assistant-position","<p>Join our quantum optics group.</p>","Acme University","Munich","Dr. Ada Lovelace","ada@example.org","+49 89 1234"
+,2,100,0,0,0,0,0,2,2,"Student Assistant Sidejob","student-assistant-sidejob","<p>Support our lab courses.</p>","Acme University","Munich","","",""
+,3,100,0,0,0,0,0,3,0,"Master Thesis Topic","master-thesis-topic","<p>Thesis on photonic crystals.</p>","Acme Institute","Berlin","","",""
+,4,100,0,1,0,0,0,1,1,"Archived Position","archived-position","<p>No longer offered.</p>","Acme University","Munich","","",""
+"tt_content",
+,"uid","pid","deleted","hidden","sys_language_uid","l18n_parent","CType","header","header_layout","subheader","pi_flexform"
+,1,2,0,0,0,0,"academicjobs_list","",0,"","<?xml version=""1.0"" encoding=""utf-8"" standalone=""yes"" ?><T3FlexForms><data><sheet index=""sDEF""><language index=""lDEF""><field index=""settings.job.type""><value index=""vDEF"">0</value></field><field index=""settings.showHiddenRecords""><value index=""vDEF"">1</value></field></language></sheet></data></T3FlexForms>"
+,2,3,0,0,0,0,"academicjobs_detail","",0,"",""
