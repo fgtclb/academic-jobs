@@ -34,7 +34,7 @@
             }"
         />
 
-        <f:variable name="contact" value="{f:if(condition: job.contactName || job.contactEmail || job.contactPhone)}"/>
+        <f:variable name="contact" value="{f:if(condition: '{job.contactName} || {job.contactEmail} || {job.contactPhone}', then: 1, else: 0)}"/>
 
         <div class="row">
             <div class="col-12 {f:if(condition: contact, then: 'col-lg-8')}">
