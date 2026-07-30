@@ -73,6 +73,16 @@ final class JobController extends ActionController
 
     public function showAction(?Job $job = null): ResponseInterface
     {
+        // Assigned before the early return below: the template renders the
+        // `EXT:fluid_styled_content` header partial in both cases, and on TYPO3 v14 that
+        // partial resolves the header through `record`. Leaving it unassigned made a
+        // request without a resolvable job fail with an exception instead of rendering the
+        // "not found" message.
+        $this->view->assignMultiple([
+            'data' => $this->getCurrentContentObjectRenderer()?->data,
+            'record' => $this->getCurrentContentRecord($this->getCurrentContentObjectRenderer()),
+        ]);
+
         if ($job === null) {
             $this->addFlashMessage(
                 $this->translateAlert('job_not_found.body', 'Job not found.'),
@@ -107,11 +117,7 @@ final class JobController extends ActionController
 
         $this->setMetaTags($metaTags);
 
-        $this->view->assignMultiple([
-            'job' => $job,
-            'data' => $this->getCurrentContentObjectRenderer()?->data,
-            'record' => $this->getCurrentContentRecord($this->getCurrentContentObjectRenderer()),
-        ]);
+        $this->view->assign('job', $job);
 
         return $this->htmlResponse();
     }
