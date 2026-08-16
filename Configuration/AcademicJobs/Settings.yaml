@@ -1,12 +1,33 @@
+#-----------------------------------------------------------------------------------------------------------------------
+# EXT:academic_jobs - Field validation configuration for the frontend "new job" form.
+#
+# This is a separate mechanism from the one shipped by EXT:academic_persons and does not share its
+# behaviour. It is read by AcademicJobsSettingsRegistry and reaches the frontend form and the Extbase
+# validator only - it is NOT applied to the TYPO3 backend.
+#
+# Documented at:
+# https://docs.typo3.org/p/fgtclb/academic-jobs/main/en-us/Configuration/Validations/Index.html
+#-----------------------------------------------------------------------------------------------------------------------
+# @internal The syntax of this configuration file is considered experimental and may still change.
+#-----------------------------------------------------------------------------------------------------------------------
 validations:
   # @todo We either need a translation map (to TCA) or simply matching convention which resolves needs to be added.
   # @todo Syntax and build-up is more than sub-optimal and needs a complete redesign and implementation.
+  # @todo The three readers understand three different keyword sets, see ACE-429. "url" produces a
+  #       validator but no TCA configuration, "number" produces TCA configuration but no validator.
+  #
   # <identifier>:
   #   <propertyName>:
-  #      - required
-  #      - email
-  #      - disabled
-  #      - readonly
+  #      - required   # must not be empty; also marks the field in the form
+  #      - email      # must be an email address; renders an email input
+  #      - url        # must be a URL; renders a url input
+  #      - number     # renders a number input; NOT validated server side
+  #
+  # Keywords are matched case sensitively here - always write them in lower case.
+  #
+  # "disabled" and "readonly" are NOT supported by this extension. No reader understands them, and
+  # the form emits the first keyword that is not "required" verbatim as the HTML input type, so they
+  # would render as <input type="disabled">. Use them only in EXT:academic_persons.
   job:
     title:
       - required
