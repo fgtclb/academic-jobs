@@ -8,7 +8,7 @@ routeEnhancers:
         _controller: 'Job::show'
         _arguments:
           job_title: 'job'
-    defaultController: 'Job::list'
+    defaultController: 'Job::show'
     aspects:
       job_title:
         type: PersistedAliasMapper
