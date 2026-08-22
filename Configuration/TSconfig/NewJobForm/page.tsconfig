@@ -1,0 +1,23 @@
+# Page TSconfig of the new job form content element.
+#
+# Delivered by the set "fgtclb/academic-jobs-new-job-form" and registered for
+# the page field "Page TSconfig" by "Configuration/TCA/Overrides/pages.php" -
+# one physical copy, two ways to it.
+#
+# The content element is hidden for the whole installation by
+# "Configuration/page.tsconfig"; this file is what makes it selectable again,
+# so it applies where the component is actually wanted instead of everywhere.
+TCEFORM.tt_content.CType.removeItems := removeFromList(academicjobs_newjobform)
+
+mod.wizards.newContentElement.wizardItems.academic {
+  elements {
+    academicjobs_newjobform {
+      iconIdentifier = academic_jobs_icon
+      title = LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:newContentElement.wizardItems.academic.newjobform.title
+      description = LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:newContentElement.wizardItems.academic.newjobform.description
+      tt_content_defValues {
+        CType = academicjobs_newjobform
+      }
+    }
+  }
+}

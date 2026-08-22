@@ -1,0 +1,23 @@
+# Renders what the extension contributed to the TypoScript of this site, and nothing
+# else. The constant is what "constants.typoscript" of the shared block assigns, the
+# copied value is what its "setup.typoscript" assigns - so a delivery mechanism that did
+# not reach this site renders an empty or a literal value here.
+#
+# The constant is deliberately one that "settings.definitions.yaml" does NOT declare. A
+# site set contributes its settings as constants after it contributed the constants of
+# its "typoscript" folder, so a declared setting renders here even when
+# "constants.typoscript" was never read.
+page = PAGE
+page {
+  10 = TEXT
+  10.value = {$plugin.tx_academicjobs.view.templateRootPath}
+  10.wrap = <div id="constant">|</div>
+
+  20 = TEXT
+  20.value < plugin.tx_academicjobs.view.partialRootPaths.10
+  20.wrap = <div id="setup">|</div>
+
+  30 = TEXT
+  30.value < plugin.tx_academicjobs.settings.detailPid
+  30.wrap = <div id="detailPid">|</div>
+}

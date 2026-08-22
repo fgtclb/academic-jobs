@@ -29,7 +29,10 @@ the extension were updated in the same change, so an installation that only
 installs the extension has nothing to do.
 
 **An integrator who references these paths from their own configuration has to
-update them**, because the old path no longer exists:
+update them**, because the old path no longer exists. The files below the
+directory were reorganised in the same release, so the new path is not the old
+one with the spelling corrected — take it from the table in
+:ref:`breaking-site-sets-and-static-templates-restructured`:
 
 ..  code-block:: typoscript
     :caption: Page TSconfig of your own site package
@@ -37,12 +40,12 @@ update them**, because the old path no longer exists:
     # before
     @import 'EXT:academic_jobs/Configuration/TSConfig/page.tsconfig'
     # after
-    @import 'EXT:academic_jobs/Configuration/TSconfig/page.tsconfig'
+    @import 'EXT:academic_jobs/Configuration/TSconfig/Full/page.tsconfig'
 
     # before
     @import 'EXT:academic_jobs/Configuration/TSConfig/Plugins/*.tsconfig'
     # after
-    @import 'EXT:academic_jobs/Configuration/TSconfig/Plugins/*.tsconfig'
+    @import 'EXT:academic_jobs/Configuration/TSconfig/Full/page.tsconfig'
 
 Affected Installations
 ======================

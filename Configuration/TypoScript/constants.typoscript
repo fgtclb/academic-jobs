@@ -1,3 +1,17 @@
+# The constants of the plugin configuration all content elements of this extension share.
+#
+# The three content elements are driven by one Extbase plugin namespace,
+# "plugin.tx_academicjobs", so there is one physical copy of this block and every
+# component folder names it in its own "include_static_file.txt" instead of
+# repeating it. The block keeps the folder "Configuration/TypoScript" because
+# that is the value stored in every "sys_template" record that selected it so
+# far - the component folders are subfolders of it, and each of them reaches it
+# through its own "include_static_file.txt".
+#
+# Every default below is also declared in the "settings.definitions.yaml" of the
+# aggregate set, and the two have to stay identical: a site that uses the site
+# set and the static template reads this file after the site settings, so a
+# default that differs here silently resets what the integrator configured.
 plugin.tx_academicjobs {
     view {
         # cat=plugin.tx_academicjobs_createjob/file; type=string; label=Path to template root (FE)
@@ -10,13 +24,13 @@ plugin.tx_academicjobs {
 
     persistence {
         # cat=plugin.tx_academicjobs_createjob//a; type=string; label=Default storage PID
-        storagePid =
+        storagePid = 0
     }
 
     # cat=plugin.tx_academicjobs_createjob//a; type=string; label=Default detail page PID
-    detailPid =
+    detailPid = 0
     # cat=plugin.tx_academicjobs_createjob//a; type=string; label=Default list page PID
-    listPid =
+    listPid = 0
 
     email {
         # cat=plugin.tx_academicjobs_createjob//a; type=string; label=Sender email address
@@ -31,7 +45,7 @@ plugin.tx_academicjobs {
 
     saveForm {
         # cat=plugin.tx_academicjobs_createjob//a; type=string; label=Default redirect page PID, can be overruled in plugin
-        fallbackRedirectPageId =
+        fallbackRedirectPageId = 0
         # cat=plugin.tx_academicjobs_createjob//a; type=options [LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:saveForm.flashMessageCreationMode.option_always=1,LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:saveForm.flashMessageCreationMode.option_suppressWhenRedirectPageIsSelected=0,LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:saveForm.flashMessageCreationMode.option_never=2]; label=LLL:EXT:academic_jobs/Resources/Private/Language/locallang.xlf:saveForm.flashMessageCreationMode.label
         fallbackFlashMessageCreationMode = 0
     }
