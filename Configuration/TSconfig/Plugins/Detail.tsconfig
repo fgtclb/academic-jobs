@@ -9,6 +9,5 @@ mod.wizards.newContentElement.wizardItems.academic {
       }
     }
   }
-  show := addToList(academicjobs_detail)
 }
 
