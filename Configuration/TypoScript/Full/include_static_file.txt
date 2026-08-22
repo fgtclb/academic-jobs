@@ -1,0 +1,3 @@
+EXT:academic_jobs/Configuration/TypoScript/NewJobForm,
+EXT:academic_jobs/Configuration/TypoScript/List,
+EXT:academic_jobs/Configuration/TypoScript/Detail

@@ -1,0 +1,20 @@
+# The new job form content element, the frontend form a job offer is entered with.
+#
+# "typoscript" points at the folder that "Configuration/TCA/Overrides/sys_template.php"
+# registers as a static template, and "pagets" at the file that
+# "Configuration/TCA/Overrides/pages.php" registers - there is exactly one
+# physical copy of each, so the two delivery mechanisms can never drift apart.
+#
+# The TypoScript folder holds nothing but an "include_static_file.txt" naming
+# "Configuration/TypoScript": all three content elements of this extension are
+# driven by the one plugin namespace "plugin.tx_academicjobs", and that block is
+# shipped once instead of three times.
+#
+# Site sets arrived in TYPO3 v13.1. On v12 this file is never read - the static
+# template and the page TSconfig registration above are the delivery there.
+name: fgtclb/academic-jobs-new-job-form
+label: 'Academic Jobs: Jobs New'
+dependencies:
+  - fgtclb/academic-base-ctype-group
+typoscript: 'EXT:academic_jobs/Configuration/TypoScript/NewJobForm/'
+pagets: 'EXT:academic_jobs/Configuration/TSconfig/NewJobForm/page.tsconfig'

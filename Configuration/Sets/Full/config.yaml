@@ -1,0 +1,20 @@
+# Aggregate set: everything this extension ships, in one dependency.
+#
+# It carries no TypoScript and no page TSconfig of its own - each component is
+# delivered by the set that owns it, and listing a payload here would parse the
+# same files a second time.
+#
+# What it does carry is "settings.definitions.yaml": the settings belong to the
+# shared "plugin.tx_academicjobs" block, not to any single content element, and
+# a set definition can only declare them next to its own "config.yaml". A site
+# that depends on a component set alone therefore still gets the defaults of
+# "Configuration/TypoScript/constants.typoscript", but cannot override them
+# through site settings - depend on this set for that.
+#
+# Site sets arrived in TYPO3 v13.1 and are never read on TYPO3 v12.
+name: fgtclb/academic-jobs
+label: Academic Jobs
+dependencies:
+  - fgtclb/academic-jobs-new-job-form
+  - fgtclb/academic-jobs-list
+  - fgtclb/academic-jobs-detail

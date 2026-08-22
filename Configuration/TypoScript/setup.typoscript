@@ -1,3 +1,8 @@
+# The setup of the plugin configuration all content elements of this extension share.
+#
+# It belongs to the same folder as "constants.typoscript" next to it: one
+# physical copy, named by every component folder's "include_static_file.txt" and
+# by the "typoscript" key of no set directly.
 page {
   10 {
     templateRootPaths {

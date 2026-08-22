@@ -1,0 +1,8 @@
+# Aggregate page TSconfig: every component this extension ships.
+#
+# The counterpart of the set "fgtclb/academic-jobs" for installations that
+# include page TSconfig through the page field "Page TSconfig" instead of
+# through a site set - which is every installation on TYPO3 v12.
+@import 'EXT:academic_jobs/Configuration/TSconfig/NewJobForm/page.tsconfig'
+@import 'EXT:academic_jobs/Configuration/TSconfig/List/page.tsconfig'
+@import 'EXT:academic_jobs/Configuration/TSconfig/Detail/page.tsconfig'
