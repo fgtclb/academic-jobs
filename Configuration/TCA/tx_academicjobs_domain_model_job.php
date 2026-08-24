@@ -9,6 +9,7 @@ $tcaConfiguration = [
         'versioningWS' => true,
         'languageField' => 'sys_language_uid',
         'transOrigPointerField' => 'l10n_parent',
+        'translationSource' => 'l10n_source',
         'transOrigDiffSourceField' => 'l10n_diffsource',
         'delete' => 'deleted',
         'enablecolumns' => [
@@ -44,6 +45,11 @@ $tcaConfiguration = [
                 'foreign_table' => 'tx_academicjobs_domain_model_job',
                 'foreign_table_where' => 'AND {#tx_academicjobs_domain_model_job}.{#pid}=###CURRENT_PID### AND {#tx_academicjobs_domain_model_job}.{#sys_language_uid} IN (-1,0)',
                 'default' => 0,
+            ],
+        ],
+        'l10n_source' => [
+            'config' => [
+                'type' => 'passthrough',
             ],
         ],
         'l10n_diffsource' => [
