@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace FGTCLB\AcademicJobs\Tests\Functional\Core13\SiteSet;
 
 use FGTCLB\AcademicJobs\Tests\Functional\AbstractAcademicJobsTestCase;
-use FGTCLB\AcademicJobs\Tests\Functional\Delivery\DeliveryProbeTrait;
+use FGTCLB\AcademicJobs\Tests\Functional\SiteSet\DeliveryProbeTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
@@ -29,7 +29,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * do not exist there, and the group excludes the class from PHPUnit but not from PHPStan,
  * which analyses the sources against the installed core. The static template half of the
  * same delivery is tested for both core versions in
- * `Tests/Functional/Delivery/StaticTemplateDeliveryTest.php`.
+ * `Tests/Functional/SiteSet/StaticTemplateDeliveryTest.php`.
  */
 #[Group('not-core-12')]
 final class SiteSetDeliveryTest extends AbstractAcademicJobsTestCase
