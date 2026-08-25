@@ -50,6 +50,46 @@ the job detail plugin:
     imports:
       - resource: 'EXT:academic_jobs/Configuration/Routes/Detail.yaml'
 
+Limiting the enhancer to its page
+---------------------------------
+
+TYPO3 offers every enhancer declared in a site configuration to **every** page
+of that site unless the enhancer says otherwise, and it takes the first
+candidate route whose path matches *and* whose aspects resolve. Distinct
+enhancer keys keep the entries apart in the YAML — they are not what keeps
+their routes apart while a URL is resolved.
+
+The route of this extension is :yaml:`/{job_title}`. Its path variable comes
+from an aspect and carries no :yaml:`requirements` entry of its own, which
+makes it compile to :yaml:`.+` — a pattern that crosses slashes. What keeps it
+from answering a URL meant for another extension is only that its
+:yaml:`PersistedAliasMapper` rejects a segment which is not a job slug, so the
+candidate is skipped and the next one is tried. That is a thin guarantee: a
+slug value that exists in both tables makes the two routes compete, and the
+enhancer imported first wins.
+
+:yaml:`limitToPages` settles it by naming the pages the enhancer applies to:
+
+..  code-block:: yaml
+    :caption: config/sites/my_site/config.yaml
+
+    imports:
+      - resource: 'EXT:academic_jobs/Configuration/Routes/Detail.yaml'
+
+    routeEnhancers:
+      AcademicJobsDetailPlugin:
+        limitToPages: [17]
+
+The uid is the one of the page carrying the detail plugin, and it is the uid of
+the **default language**: matching derives the page as :php:`l10n_parent ?: uid`,
+so a single entry covers every translation of that page. Plain page uids work
+on every TYPO3 version this extension supports.
+
+In :guilabel:`academic_persons` the same mechanism is not a precaution but a
+requirement — that extension ships three enhancers whose routes overlap each
+other by construction. See `its route enhancer documentation
+<https://docs.typo3.org/p/fgtclb/academic-persons/main/en-us/Configuration/RouteEnhancers/Index.html>`__.
+
 What the URLs look like
 -----------------------
 
