@@ -14,8 +14,14 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  */
 class JobRepository extends Repository
 {
+    /**
+     * `starttime` is `0` for every job that was never scheduled, so on its own it leaves
+     * most of the list in DBMS row order - which is not the same list twice on PostgreSQL
+     * (ACE-491). `uid` settles those ties deterministically.
+     */
     protected $defaultOrderings = [
         'starttime' => QueryInterface::ORDER_ASCENDING,
+        'uid' => QueryInterface::ORDER_ASCENDING,
     ];
 
     /**
