@@ -17,7 +17,9 @@ $tcaConfiguration = [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-        'iconfile' => 'EXT:academic_jobs/Resources/Public/Icons/tx_academicjobs_domain_model_job.svg',
+        'typeicon_classes' => [
+            'default' => 'tx_academicjobs_domain_model_job',
+        ],
         'security' => [
             'ignorePageTypeRestriction' => true,
         ],
