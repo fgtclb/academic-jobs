@@ -67,6 +67,10 @@
 				<source>Working hours</source>
 				<target>Arbeitszeit</target>
 			</trans-unit>
+			<trans-unit id="create.job.employmentType.none">
+				<source>Please choose</source>
+				<target>Bitte wählen</target>
+			</trans-unit>
 			<trans-unit id="create.job.employmentType.1">
 				<source>Full-Time</source>
 				<target>Vollzeit</target>
@@ -86,6 +90,10 @@
 			<trans-unit id="create.job.type.label">
 				<source>Job Type</source>
 				<target>Jobtyp</target>
+			</trans-unit>
+			<trans-unit id="create.job.type.none">
+				<source>Please choose</source>
+				<target>Bitte wählen</target>
 			</trans-unit>
 			<trans-unit id="create.job.type.1">
 				<source>Type of job</source>
