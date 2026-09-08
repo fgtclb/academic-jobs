@@ -90,6 +90,53 @@ final class AcademicJobsNewJobFormPluginTest extends AbstractAcademicJobsTestCas
         $this->assertStringContainsString('tx_academicjobs_newjobform[job][title]', $content);
     }
 
+    /**
+     * Both selects of the form are single valued `int` properties whose item
+     * sets start at 1, so without an option for "nothing chosen" the browser
+     * selects the first real one and a visitor who never touched the control
+     * still submits it. The prepended option carries the value `0`, which is
+     * what the column holds for an unset field and what the `int` property
+     * accepts - an empty string reaches `IntegerConverter` as `null` and the
+     * setter raises a `TypeError` the property mapper turns into an exception.
+     */
+    #[Test]
+    public function bothSelectsOfTheFormOpenOnAnUnchosenOption(): void
+    {
+        $this->setUpTestCase();
+
+        $content = $this->renderHomePage();
+
+        $document = new \DOMDocument();
+        $this->assertTrue($document->loadHTML($content, LIBXML_NOERROR | LIBXML_NOWARNING));
+        $xpath = new \DOMXPath($document);
+        foreach (['employmentType', 'type'] as $identifier) {
+            $selects = $xpath->query(sprintf('//select[@id="job.%s"]', $identifier));
+            $this->assertNotFalse($selects);
+            $this->assertSame(1, $selects->length, sprintf('Missing select for "%s".', $identifier));
+            $options = $xpath->query('.//option', $selects->item(0));
+            $this->assertNotFalse($options);
+            $unchosen = $options->item(0);
+            $this->assertInstanceOf(\DOMElement::class, $unchosen);
+            $this->assertSame(
+                '0',
+                $unchosen->getAttribute('value'),
+                sprintf('Select "%s" does not open on the unchosen value.', $identifier),
+            );
+            $this->assertSame(
+                'Please choose',
+                $unchosen->textContent,
+                sprintf('Select "%s" does not label its unchosen option.', $identifier),
+            );
+            $selected = $xpath->query('.//option[@selected]', $selects->item(0));
+            $this->assertNotFalse($selected);
+            $this->assertSame(
+                0,
+                $selected->length,
+                sprintf('Select "%s" preselects an option.', $identifier),
+            );
+        }
+    }
+
     #[Test]
     public function newJobFormPluginRendersContentElementHeader(): void
     {
