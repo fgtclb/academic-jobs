@@ -221,11 +221,20 @@
 			<trans-unit id="jobs.contractualRelationship">
 				<source>Contractual relationship</source>
 			</trans-unit>
+			<trans-unit id="jobs.internationalsWelcome">
+				<source>International applicants welcome</source>
+			</trans-unit>
+			<trans-unit id="jobs.alumniRecommend">
+				<source>Recommended by alumni</source>
+			</trans-unit>
 			<trans-unit id="jobs.description">
 				<source>Job description</source>
 			</trans-unit>
 			<trans-unit id="jobs.link">
 				<source>Link</source>
+			</trans-unit>
+			<trans-unit id="jobs.linkText">
+				<source>To the job posting</source>
 			</trans-unit>
 
 			<!-- Details -->
