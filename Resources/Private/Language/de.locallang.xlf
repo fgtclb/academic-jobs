@@ -285,6 +285,14 @@
         <source>Contractual relationship</source>
         <target>Vertragsverhältnis</target>
       </trans-unit>
+      <trans-unit id="jobs.internationalsWelcome">
+        <source>International applicants welcome</source>
+        <target>Internationale Bewerbungen willkommen</target>
+      </trans-unit>
+      <trans-unit id="jobs.alumniRecommend">
+        <source>Recommended by alumni</source>
+        <target>Von Alumni empfohlen</target>
+      </trans-unit>
       <trans-unit id="jobs.description">
         <source>Job description</source>
         <target>Stellenbeschreibung</target>
@@ -292,6 +300,10 @@
       <trans-unit id="jobs.link">
         <source>Link</source>
         <target>Link</target>
+      </trans-unit>
+      <trans-unit id="jobs.linkText">
+        <source>To the job posting</source>
+        <target>Zur Stellenausschreibung</target>
       </trans-unit>
 
       <!-- Details -->

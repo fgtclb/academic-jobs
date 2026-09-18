@@ -33,6 +33,7 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
 
     protected const LANGUAGE_PRESETS = [
         'EN' => ['id' => 0, 'title' => 'English', 'locale' => 'en_US.UTF8', 'iso' => 'en', 'hrefLang' => 'en-US', 'direction' => ''],
+        'DE' => ['id' => 1, 'title' => 'Deutsch', 'locale' => 'de_DE.UTF8', 'iso' => 'de', 'hrefLang' => 'de-DE', 'direction' => ''],
     ];
 
     protected function setUp(): void
@@ -47,7 +48,12 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
         parent::tearDown();
     }
 
-    private function setUpTestCase(string $dataSet): void
+    /**
+     * @param bool $withGermanLanguage Adds a German site language that falls back to the
+     *        English records, so a German rendering needs no translated fixtures — what it
+     *        exercises is the label file, not the record localization.
+     */
+    private function setUpTestCase(string $dataSet, bool $withGermanLanguage = false): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/AcademicJobsListAndDetailPlugin/' . $dataSet . '.csv');
         $this->setUpFrontendRootPage(
@@ -65,17 +71,26 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
                 ],
             ],
         );
-        $this->writeFrontendPluginTestSite([
+        $languages = [
             $this->buildDefaultLanguageConfiguration(
                 identifier: 'EN',
                 base: '/',
             ),
-        ]);
+        ];
+        if ($withGermanLanguage) {
+            $languages[] = $this->buildLanguageConfiguration(
+                identifier: 'DE',
+                base: '/de/',
+                fallbackIdentifiers: ['EN'],
+                fallbackType: 'fallback',
+            );
+        }
+        $this->writeFrontendPluginTestSite($languages);
     }
 
-    private function renderListPage(): string
+    private function renderListPage(string $url = 'https://www.acme.com/home'): string
     {
-        return $this->renderFrontendPage('https://www.acme.com/home');
+        return $this->renderFrontendPage($url);
     }
 
     private function setContentElementHeader(int $uid, string $header): void
@@ -303,5 +318,115 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
         $content = $this->renderFrontendPage('https://www.acme.com/job-detail');
         $this->assertStringContainsString('academic-jobs-detail', $content);
         $this->assertStringContainsString('No job advert could be found.', $content);
+    }
+
+    #[Test]
+    public function detailPluginRendersJobFlagsAsLabelsWithoutTheirValue(): void
+    {
+        $this->setUpTestCase('jobPages_flagsAndLink');
+
+        $content = $this->renderDetailPageOfJob($this->renderListPage(), 1);
+        // The two flags carry no unit and no value a visitor could read, so the row is the
+        // label alone: the closing `</li>` right behind it is what proves the stored `1`
+        // is gone.
+        $this->assertMatchesRegularExpression(
+            '#<b>International applicants welcome</b>\s*</li>#',
+            $content,
+        );
+        $this->assertMatchesRegularExpression(
+            '#<b>Recommended by alumni</b>\s*</li>#',
+            $content,
+        );
+        // An untranslated key renders as an empty label, which is the shape of the defect.
+        $this->assertStringNotContainsString('<b>:</b>', $content);
+    }
+
+    #[Test]
+    public function detailPluginOmitsJobFlagsThatAreNotSet(): void
+    {
+        $this->setUpTestCase('jobPages');
+
+        $content = $this->renderDetailPageOfJob($this->renderListPage(), 1);
+        $this->assertStringNotContainsString('International applicants welcome', $content);
+        $this->assertStringNotContainsString('Recommended by alumni', $content);
+    }
+
+    #[Test]
+    public function detailPluginRendersAnExternalJobLinkAsAnchor(): void
+    {
+        $this->setUpTestCase('jobPages_flagsAndLink');
+
+        $content = $this->renderDetailPageOfJob($this->renderListPage(), 1);
+        $this->assertStringContainsString('<b>Link:</b>', $content);
+        $this->assertMatchesRegularExpression(
+            '#<a href="https://jobs\.example\.org/fellowship"[^>]*>\s*To the job posting\s*</a>#',
+            $content,
+        );
+    }
+
+    #[Test]
+    public function detailPluginResolvesAPageLinkOfTheJob(): void
+    {
+        $this->setUpTestCase('jobPages_flagsAndLink');
+
+        // `link` is a TCA `link` field, so an editor picking a page stores a `t3://`
+        // reference. Printed as text it is useless to a visitor; typolink resolves it.
+        $content = $this->renderDetailPageOfJob($this->renderListPage(), 2);
+        $this->assertMatchesRegularExpression(
+            '#<a href="/application-form"[^>]*>\s*To the job posting\s*</a>#',
+            $content,
+        );
+        $this->assertStringNotContainsString('t3://', $content);
+    }
+
+    #[Test]
+    public function detailPluginRendersTheGermanFlagAndLinkLabels(): void
+    {
+        $this->setUpTestCase('jobPages_flagsAndLink', withGermanLanguage: true);
+
+        $content = $this->renderDetailPageOfJob(
+            $this->renderListPage('https://www.acme.com/de/home'),
+            1,
+        );
+        $this->assertMatchesRegularExpression(
+            '#<b>Internationale Bewerbungen willkommen</b>\s*</li>#',
+            $content,
+        );
+        $this->assertMatchesRegularExpression(
+            '#<b>Von Alumni empfohlen</b>\s*</li>#',
+            $content,
+        );
+        $this->assertMatchesRegularExpression(
+            '#<a href="https://jobs\.example\.org/fellowship"[^>]*>\s*Zur Stellenausschreibung\s*</a>#',
+            $content,
+        );
+    }
+
+    #[Test]
+    public function listPluginRendersTheFlagsAndTheLinkOfEachJob(): void
+    {
+        $this->setUpTestCase('jobPages_flagsAndLink');
+
+        // `Partials/Job/Item.html` carries the same loop as `Partials/Job/Information.html`,
+        // so the list has to render both of them the same way the detail view does.
+        $content = $this->renderListPage();
+        $this->assertSame(
+            2,
+            preg_match_all('#<b>International applicants welcome</b>\s*</li>#', $content),
+        );
+        $this->assertSame(
+            2,
+            preg_match_all('#<b>Recommended by alumni</b>\s*</li>#', $content),
+        );
+        $this->assertStringNotContainsString('<b>:</b>', $content);
+        $this->assertMatchesRegularExpression(
+            '#<a href="https://jobs\.example\.org/fellowship"[^>]*>\s*To the job posting\s*</a>#',
+            $content,
+        );
+        $this->assertMatchesRegularExpression(
+            '#<a href="/application-form"[^>]*>\s*To the job posting\s*</a>#',
+            $content,
+        );
+        $this->assertStringNotContainsString('t3://', $content);
     }
 }
