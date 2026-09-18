@@ -26,7 +26,11 @@
                 <li>
                     <core:icon identifier="phone" alternativeMarkupIdentifier="inline"/>
 
-                    <a href="tel:{job.contactPhone}">{job.contactPhone}</a>
+                    <f:comment>
+                        A `tel:` URI carries no spaces, while the stored number is written for
+                        a reader - so the link target drops them and the label keeps them.
+                    </f:comment>
+                    <a href="tel:{f:replace(value: job.contactPhone, search: ' ', replace: '')}">{job.contactPhone}</a>
                 </li>
             </f:if>
 

@@ -268,8 +268,35 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
         $content = $this->renderDetailPageOfJob($this->renderListPage(), 1);
         $this->assertStringContainsString('academic-jobs-contact', $content);
         $this->assertStringContainsString('Dr. Ada Lovelace', $content);
-        $this->assertStringContainsString('href="tel:+49 89 1234"', $content);
+        // A `tel:` URI carries no spaces, while the stored number is written for a reader —
+        // so the link target drops them and the label keeps them.
+        $this->assertStringContainsString('href="tel:+49891234">+49 89 1234</a>', $content);
         $this->assertStringContainsString('ada@example.org', $content);
+    }
+
+    #[Test]
+    public function detailPluginRendersAContactPhoneStoredWithoutSpacesUnchanged(): void
+    {
+        $this->setUpTestCase('jobPages_contactPhone');
+
+        $this->assertStringContainsString(
+            'href="tel:+49891234">+49891234</a>',
+            $this->renderDetailPageOfJob($this->renderListPage(), 1),
+        );
+    }
+
+    #[Test]
+    public function detailPluginRendersNoPhoneLinkForAContactWithoutAPhoneNumber(): void
+    {
+        $this->setUpTestCase('jobPages_contactPhone');
+
+        // The contact block renders for the name and the e-mail; only the phone row is
+        // left out. `detailPluginOmitsContactBlockForJobWithoutContact()` covers the case
+        // where there is no contact at all and therefore no block either.
+        $content = $this->renderDetailPageOfJob($this->renderListPage(), 2);
+        $this->assertStringContainsString('academic-jobs-contact', $content);
+        $this->assertStringContainsString('grace@example.org', $content);
+        $this->assertStringNotContainsString('tel:', $content);
     }
 
     #[Test]
