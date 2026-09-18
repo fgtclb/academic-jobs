@@ -18,7 +18,8 @@ use SBUERK\TYPO3\Testing\SiteHandling\SiteBasedTestTrait;
  *
  * The class exists since the backport of ACE-596 and covers what that change asserts —
  * the two job flags and the job link — plus a baseline that the two plugins render at
- * all. It is deliberately narrower than its counterpart on `main`.
+ * all and, since ACE-686, the contact block. It is deliberately narrower than its
+ * counterpart on `main`.
  */
 final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTestCase
 {
@@ -46,13 +47,16 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
     }
 
     /**
+     * @param string $dataSet The fixture below `Fixtures/AcademicJobsListAndDetailPlugin/`,
+     *        without its extension. The default carries the jobs the flag and link tests
+     *        assert counts against, so a scenario that needs other records brings its own.
      * @param bool $withGermanLanguage Adds a German site language that falls back to the
      *        English records, so a German rendering needs no translated fixtures — what it
      *        exercises is the label file, not the record localization.
      */
-    private function setUpTestCase(bool $withGermanLanguage = false): void
+    private function setUpTestCase(string $dataSet = 'jobPages', bool $withGermanLanguage = false): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/AcademicJobsListAndDetailPlugin/jobPages.csv');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/AcademicJobsListAndDetailPlugin/' . $dataSet . '.csv');
         $this->setUpFrontendRootPage(
             pageId: 1,
             typoScriptFiles: [
@@ -134,6 +138,44 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
         $this->assertStringContainsString('academic-jobs-detail', $content);
         $this->assertStringContainsString('International Research Fellowship', $content);
         $this->assertStringContainsString('Join our quantum optics group.', $content);
+    }
+
+    #[Test]
+    public function detailPluginRendersTheContactPhoneWithADialableLinkTarget(): void
+    {
+        $this->setUpTestCase('jobPages_contactPhone');
+
+        $content = $this->renderDetailPageOfJob($this->renderListPage(), 1);
+        $this->assertStringContainsString('academic-jobs-contact', $content);
+        $this->assertStringContainsString('Dr. Ada Lovelace', $content);
+        // A `tel:` URI carries no spaces, while the stored number is written for a reader —
+        // so the link target drops them and the label keeps them.
+        $this->assertStringContainsString('href="tel:+49891234">+49 89 1234</a>', $content);
+        $this->assertStringContainsString('ada@example.org', $content);
+    }
+
+    #[Test]
+    public function detailPluginRendersAContactPhoneStoredWithoutSpacesUnchanged(): void
+    {
+        $this->setUpTestCase('jobPages_contactPhone');
+
+        $this->assertStringContainsString(
+            'href="tel:+49891234">+49891234</a>',
+            $this->renderDetailPageOfJob($this->renderListPage(), 2),
+        );
+    }
+
+    #[Test]
+    public function detailPluginRendersNoPhoneLinkForAContactWithoutAPhoneNumber(): void
+    {
+        $this->setUpTestCase('jobPages_contactPhone');
+
+        // The contact block renders for the name and the e-mail; only the phone row is
+        // left out.
+        $content = $this->renderDetailPageOfJob($this->renderListPage(), 3);
+        $this->assertStringContainsString('academic-jobs-contact', $content);
+        $this->assertStringContainsString('grace@example.org', $content);
+        $this->assertStringNotContainsString('tel:', $content);
     }
 
     #[Test]
