@@ -1,0 +1,6 @@
+"tx_academicjobs_domain_model_job",
+,"uid","pid","sys_language_uid","hidden","deleted","starttime","endtime","type","title",
+,1,0,0,0,0,500,0,1,"Scheduled late",
+,2,0,0,0,0,0,0,1,"Unscheduled A",
+,3,0,0,0,0,0,0,2,"Unscheduled B",
+,4,0,0,0,0,100,0,2,"Scheduled early",

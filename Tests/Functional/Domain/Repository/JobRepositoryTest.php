@@ -62,4 +62,24 @@ final class JobRepositoryTest extends AbstractAcademicJobsTestCase
         $result = $this->getJobRepository()->findByJobType(1, true);
         $this->assertSame([1, 2], $this->resultUids($result));
     }
+
+    /**
+     * `$defaultOrderings` sorts by `starttime`, but that is `0` for every job that was
+     * never scheduled - the fixture's two unscheduled jobs tie, and without the `uid`
+     * tiebreaker their relative order belonged to the DBMS, which is not the same list
+     * twice on PostgreSQL (ACE-491). The scheduled jobs prove `starttime` still wins:
+     * they come last despite carrying the lowest and highest uid.
+     */
+    #[Test]
+    public function jobsAreOrderedByStarttimeWithUidBreakingTheTies(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/JobRepository/jobsOrdering.csv');
+
+        $uids = [];
+        foreach ($this->getJobRepository()->findAllJobs() as $job) {
+            $uids[] = (int)$job->getUid();
+        }
+
+        $this->assertSame([2, 3, 4, 1], $uids);
+    }
 }
