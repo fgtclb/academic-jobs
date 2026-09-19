@@ -16,10 +16,11 @@ twice. The default orderings now carry :sql:`uid` ascending as a tiebreaker.
 Impact
 ======
 
-No visible change is expected: within equal :sql:`starttime` values,
-:sql:`uid` ascending is the order every supported database returned in
-practice, it is simply guaranteed now rather than coincidental. Jobs with
-different :sql:`starttime` values keep their order.
+No visible change is expected on SQLite, MySQL and MariaDB: within equal
+:sql:`starttime` values, :sql:`uid` ascending is the order they return in
+practice, and it is guaranteed now rather than coincidental. PostgreSQL promises
+no order without one, so an installation on it may see such a list change once.
+Jobs with different :sql:`starttime` values keep their order.
 
 Affected Installations
 ======================
