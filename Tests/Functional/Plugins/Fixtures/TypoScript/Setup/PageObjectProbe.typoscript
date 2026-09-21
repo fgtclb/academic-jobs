@@ -1,0 +1,18 @@
+# Renders the partial root paths this extension contributes to "page.10", the page object
+# of the site package.
+#
+# The other setup fixture next to this one replaces "page.10" wholesale with
+# "styles.content.get", so the block is inert there and nothing would see a key that is
+# wrong or missing. This file is included instead of it, and without a page object of its
+# own: "page.10" then carries configuration but no cObject, renders nothing, and the two
+# copied values are what the test reads.
+page = PAGE
+page {
+  5 = TEXT
+  5.value < page.10.partialRootPaths.-1758484804
+  5.wrap = <div id="shared-partial-path">|</div>
+
+  6 = TEXT
+  6.value < page.10.partialRootPaths.1693651551
+  6.wrap = <div id="own-partial-path">|</div>
+}

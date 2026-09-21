@@ -82,7 +82,20 @@
     </div>
 
     <f:if condition="{job.image}">
-        <f:image image="{job.image}" class="card-img-top img-fluid"/>
+        <f:comment>
+            The shared partial of EXT:academic_base. The job image is a generic image
+            field, so it renders with the "card" preset and the free-ratio "default"
+            crop variant - an employer logo is not cut, and a vector one is passed
+            through unprocessed.
+        </f:comment>
+        <f:render
+            partial="Academic/Image"
+            arguments="{
+                image: job.image,
+                preset: 'card',
+                class: 'card-img-top img-fluid'
+            }"
+        />
     </f:if>
 </div>
 

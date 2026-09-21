@@ -10,6 +10,13 @@ page {
     }
 
     partialRootPaths {
+      # The shared partials of EXT:academic_base ("Academic/Image"), which the "Job/Item"
+      # partial registered below renders. "page.10" belongs to the site package rather
+      # than to this extension, so the key is a negative one of its own: it sorts below
+      # every theme and project path, and it is unique across the academic extensions, so
+      # it can neither replace one of those paths nor win over an override of
+      # "Academic/Image".
+      -1758484804 = EXT:academic_base/Resources/Private/Partials/
       1693651551 = EXT:academic_jobs/Resources/Private/Partials/
     }
 
@@ -54,6 +61,9 @@ plugin.tx_academicjobs {
       20 = {$plugin.tx_academicjobs.view.templateRootPath}
     }
     partialRootPaths {
+      # The shared partials of EXT:academic_base ("Academic/Image"). The key sorts below
+      # every other one, so a partial of this extension or of the project wins over them.
+      -1 = EXT:academic_base/Resources/Private/Partials/
       0 = EXT:fluid_styled_content/Resources/Private/Partials/
       10 = EXT:academic_jobs/Resources/Private/Partials/
       20 = {$plugin.tx_academicjobs.view.partialRootPath}

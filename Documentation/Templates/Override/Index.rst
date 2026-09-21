@@ -72,3 +72,37 @@ copying the partial:
         default.jobs.linkText = To the application form
         de.jobs.linkText = Zum Bewerbungsformular
     }
+
+..  index:: Templates; Images
+
+The image of a job
+------------------
+
+The job list item renders the job image through the shared partial
+:file:`Academic/Image.html` of `EXT:academic_base`, whose arguments and presets
+are documented in the `Templates` chapter of that extension.
+
+It asks for the preset `card` with the crop variant `default`. This extension
+defines no crop variants, so `default` stays free-ratio and an employer logo is
+not cut; an SVG logo is passed through unprocessed whatever the preset says.
+
+Two consequences for an override:
+
+*   Overriding :file:`Job/Item.html` alone changes where the image sits, not
+    how it is rendered. To change the markup, the breakpoints or the widths,
+    place an :file:`Academic/Image.html` of your own in the partial root path
+    above.
+*   The partial root path of `EXT:academic_base` is registered below the
+    constant above, so the copy wins. A view of your own that renders
+    :file:`Job/Item.html` has to list that path itself, or the rendering fails
+    on a partial it cannot resolve. Pick a key of your own rather than the one
+    this extension uses, and list it under `paths` too if your page object is a
+    :typoscript:`PAGEVIEW`, which reads no `partialRootPaths`:
+
+    ..  code-block:: typoscript
+
+        # TypoScript setup
+        page.10 {
+            partialRootPaths.-1700000001 = EXT:academic_base/Resources/Private/Partials/
+            paths.-1700000001 = EXT:academic_base/Resources/Private/
+        }
