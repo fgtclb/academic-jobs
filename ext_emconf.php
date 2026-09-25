@@ -12,9 +12,9 @@ $EM_CONF[$_EXTKEY] = [
     'constraints' => [
         'depends' => [
             'typo3' => '12.4.22-13.4.99',
-            'rte-ckeditor' => '12.4.22-13.4.99',
+            'rte_ckeditor' => '12.4.22-13.4.99',
             'install' => '12.4.22-13.4.99',
-            'fluid-styled-content' => '12.4.22-13.4.99',
+            'fluid_styled_content' => '12.4.22-13.4.99',
             'academic_base' => '2.4.0',
         ],
     ],

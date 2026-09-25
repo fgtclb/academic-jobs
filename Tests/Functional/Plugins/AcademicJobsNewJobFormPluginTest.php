@@ -34,9 +34,6 @@ final class AcademicJobsNewJobFormPluginTest extends AbstractAcademicJobsTestCas
 
     protected function setUp(): void
     {
-        // The abstract case of this extension does not load it, and the test
-        // page renders its content through `styles.content.get`.
-        $this->addCoreExtensionsToLoad('typo3/cms-fluid-styled-content');
         $this->configurationToUseInTestInstance = $this->frontendPluginTestConfiguration([
             'MAIL' => [
                 'transport' => 'null',
