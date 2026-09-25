@@ -6,7 +6,9 @@
 
 <div class="academic-jobs-list">
 
-    <f:render partial="Header/All" arguments="{_all}" />
+    <f:if condition="{settings.renderContentElementHeader}">
+        <f:render partial="Header/All" arguments="{_all}" />
+    </f:if>
 
     <f:flashMessages />
 

@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace FGTCLB\AcademicJobs\Tests\Functional\Plugins;
 
 use FGTCLB\AcademicJobs\Tests\Functional\AbstractAcademicJobsTestCase;
+use FGTCLB\TestingHelper\FunctionalTestCase\ContentElementHeaderAssertionTrait;
 use FGTCLB\TestingHelper\FunctionalTestCase\FrontendPluginRenderingTrait;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use SBUERK\TYPO3\Testing\SiteHandling\SiteBasedTestTrait;
 
@@ -16,20 +18,30 @@ use SBUERK\TYPO3\Testing\SiteHandling\SiteBasedTestTrait;
  * through the link the list plugin renders: `showAction()` takes a `job` argument, so its
  * URI carries a cHash and is not something a test should assemble by hand.
  *
- * Unlike the other extensions of this repository, these templates render the
+ * The header of the content element renders once: by default the content element layout
+ * renders it and the plugins do not. A site whose layout renders no header switches
+ * `renderContentElementHeader` on, and the templates then render the
  * `EXT:fluid_styled_content` `Header/All` partial themselves. On TYPO3 v14 that partial
  * resolves the header through the `record` view variable, which an Extbase view does not
  * assign on its own — `JobController` does it explicitly via
- * `GetCurrentContentRecordMethodTrait`. The header assertions here are what keeps that
+ * `GetCurrentContentRecordMethodTrait`. The switched on header tests are what keeps that
  * working.
  */
 final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTestCase
 {
+    use ContentElementHeaderAssertionTrait;
     use FrontendPluginRenderingTrait;
     use SiteBasedTestTrait;
 
     private const LIST_CONTENT_ELEMENT = 1;
     private const DETAIL_CONTENT_ELEMENT = 2;
+
+    private const HEADER = 'Open positions';
+    private const SUBHEADER = 'Apply by the end of the month';
+    private const LIST_WRAPPER = '//div[contains(concat(" ", normalize-space(@class), " "), " academic-jobs-list ")]';
+    private const DETAIL_WRAPPER = '//div[contains(concat(" ", normalize-space(@class), " "), " academic-jobs-detail ")]';
+    private const RENDER_HEADER_CONSTANTS = 'EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/TypoScript/Constants/RenderContentElementHeader.typoscript';
+    private const LAYOUT_WITHOUT_HEADER_SETUP = 'EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/TypoScript/Setup/LayoutWithoutHeader.typoscript';
 
     protected const LANGUAGE_PRESETS = [
         'EN' => ['id' => 0, 'title' => 'English', 'locale' => 'en_US.UTF8', 'iso' => 'en', 'hrefLang' => 'en-US', 'direction' => ''],
@@ -52,9 +64,15 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
      * @param bool $withGermanLanguage Adds a German site language that falls back to the
      *        English records, so a German rendering needs no translated fixtures — what it
      *        exercises is the label file, not the record localization.
+     * @param string[] $additionalConstantFiles
+     * @param string[] $additionalSetupFiles
      */
-    private function setUpTestCase(string $dataSet, bool $withGermanLanguage = false): void
-    {
+    private function setUpTestCase(
+        string $dataSet,
+        bool $withGermanLanguage = false,
+        array $additionalConstantFiles = [],
+        array $additionalSetupFiles = [],
+    ): void {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/AcademicJobsListAndDetailPlugin/' . $dataSet . '.csv');
         $this->setUpFrontendRootPage(
             pageId: 1,
@@ -63,11 +81,13 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
                     'EXT:fluid_styled_content/Configuration/TypoScript/constants.typoscript',
                     'EXT:academic_jobs/Configuration/TypoScript/constants.typoscript',
                     'EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/TypoScript/Constants/ListAndDetailConfiguration.typoscript',
+                    ...$additionalConstantFiles,
                 ],
                 'setup' => [
                     'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
                     'EXT:academic_jobs/Configuration/TypoScript/setup.typoscript',
                     'EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/TypoScript/Setup/Rendering.typoscript',
+                    ...$additionalSetupFiles,
                 ],
             ],
         );
@@ -93,11 +113,32 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
         return $this->renderFrontendPage($url);
     }
 
-    private function setContentElementHeader(int $uid, string $header): void
+    private function setContentElementHeader(int $uid, int $headerLayout): void
     {
         $this->getConnectionPool()
             ->getConnectionForTable('tt_content')
-            ->update('tt_content', ['header' => $header], ['uid' => $uid]);
+            ->update(
+                'tt_content',
+                ['header' => self::HEADER, 'subheader' => self::SUBHEADER, 'header_layout' => $headerLayout],
+                ['uid' => $uid],
+            );
+    }
+
+    /**
+     * The header layouts "Default", 2 and "Hidden", with the number of times the header and
+     * the subheader have to render: "Default" is the layout the header partial resolves
+     * through a setting, and the one a plugin rendering it without that setting leaves an
+     * empty `<header>` for.
+     *
+     * @return array<string, array{int, int}>
+     */
+    public static function headerLayouts(): array
+    {
+        return [
+            'header layout "Default"' => [0, 1],
+            'header layout 2' => [2, 1],
+            'header layout "Hidden"' => [100, 0],
+        ];
     }
 
     /**
@@ -137,12 +178,34 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
     }
 
     #[Test]
-    public function listPluginRendersContentElementHeader(): void
+    #[DataProvider('headerLayouts')]
+    public function listPluginLeavesTheContentElementHeaderToTheLayout(int $headerLayout, int $expectedHeadings): void
     {
         $this->setUpTestCase('jobPages');
-        $this->setContentElementHeader(self::LIST_CONTENT_ELEMENT, 'Open positions');
+        $this->setContentElementHeader(self::LIST_CONTENT_ELEMENT, $headerLayout);
 
-        $this->assertStringContainsString('Open positions', $this->renderListPage());
+        $content = $this->renderListPage();
+        $this->assertSame($expectedHeadings, $this->countHeadingsReading($content, self::HEADER));
+        $this->assertSame($expectedHeadings, $this->countHeadingsReading($content, self::SUBHEADER));
+        $this->assertSame(0, $this->countHeaderElements($content, self::LIST_WRAPPER));
+    }
+
+    #[Test]
+    #[DataProvider('headerLayouts')]
+    public function listPluginRendersTheContentElementHeaderWhenSwitchedOn(int $headerLayout, int $expectedHeadings): void
+    {
+        $this->setUpTestCase(
+            'jobPages',
+            additionalConstantFiles: [self::RENDER_HEADER_CONSTANTS],
+            additionalSetupFiles: [self::LAYOUT_WITHOUT_HEADER_SETUP],
+        );
+        $this->setContentElementHeader(self::LIST_CONTENT_ELEMENT, $headerLayout);
+
+        $content = $this->renderListPage();
+        $this->assertSame($expectedHeadings, $this->countHeadingsReading($content, self::HEADER));
+        $this->assertSame($expectedHeadings, $this->countHeadingsReading($content, self::HEADER, self::LIST_WRAPPER));
+        $this->assertSame($expectedHeadings, $this->countHeadingsReading($content, self::SUBHEADER));
+        $this->assertSame($expectedHeadings, $this->countHeadingsReading($content, self::SUBHEADER, self::LIST_WRAPPER));
     }
 
     #[Test]
@@ -249,15 +312,34 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
     }
 
     #[Test]
-    public function detailPluginRendersContentElementHeader(): void
+    #[DataProvider('headerLayouts')]
+    public function detailPluginLeavesTheContentElementHeaderToTheLayout(int $headerLayout, int $expectedHeadings): void
     {
         $this->setUpTestCase('jobPages');
-        $this->setContentElementHeader(self::DETAIL_CONTENT_ELEMENT, 'Job description');
+        $this->setContentElementHeader(self::DETAIL_CONTENT_ELEMENT, $headerLayout);
 
-        $this->assertStringContainsString(
-            'Job description',
-            $this->renderDetailPageOfJob($this->renderListPage(), 1),
+        $content = $this->renderDetailPageOfJob($this->renderListPage(), 1);
+        $this->assertSame($expectedHeadings, $this->countHeadingsReading($content, self::HEADER));
+        $this->assertSame($expectedHeadings, $this->countHeadingsReading($content, self::SUBHEADER));
+        $this->assertSame(0, $this->countHeaderElements($content, self::DETAIL_WRAPPER));
+    }
+
+    #[Test]
+    #[DataProvider('headerLayouts')]
+    public function detailPluginRendersTheContentElementHeaderWhenSwitchedOn(int $headerLayout, int $expectedHeadings): void
+    {
+        $this->setUpTestCase(
+            'jobPages',
+            additionalConstantFiles: [self::RENDER_HEADER_CONSTANTS],
+            additionalSetupFiles: [self::LAYOUT_WITHOUT_HEADER_SETUP],
         );
+        $this->setContentElementHeader(self::DETAIL_CONTENT_ELEMENT, $headerLayout);
+
+        $content = $this->renderDetailPageOfJob($this->renderListPage(), 1);
+        $this->assertSame($expectedHeadings, $this->countHeadingsReading($content, self::HEADER));
+        $this->assertSame($expectedHeadings, $this->countHeadingsReading($content, self::HEADER, self::DETAIL_WRAPPER));
+        $this->assertSame($expectedHeadings, $this->countHeadingsReading($content, self::SUBHEADER));
+        $this->assertSame($expectedHeadings, $this->countHeadingsReading($content, self::SUBHEADER, self::DETAIL_WRAPPER));
     }
 
     #[Test]

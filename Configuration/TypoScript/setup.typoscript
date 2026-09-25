@@ -35,6 +35,13 @@ plugin.tx_academicjobs {
     detailPid = {$plugin.tx_academicjobs.detailPid}
     listPid = {$plugin.tx_academicjobs.listPid}
 
+    # The content element layout renders the header of every content element, so the
+    # templates render it only for a site whose layout leaves it out. The header partial
+    # falls back to the type of the header layout "Default" through the setting below,
+    # which plugin settings do not carry the way the settings of `lib.contentElement` do.
+    renderContentElementHeader = {$plugin.tx_academicjobs.renderContentElementHeader}
+    defaultHeaderType = {$styles.content.defaultHeaderType}
+
     email {
       recipientEmail = {$plugin.tx_academicjobs.email.recipientEmail}
       senderEmail = {$plugin.tx_academicjobs.email.from}

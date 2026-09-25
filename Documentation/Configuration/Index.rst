@@ -51,10 +51,10 @@ Every component set depends on `fgtclb/academic-base-ctype-group`, the set of
 extensions sort their elements into.
 
 The site settings of this extension — the storage, detail, list and redirect
-pages, the notification e-mail and the job avatar upload — are declared with the
-aggregate set. A site that depends on a single component set still gets the
-shipped defaults, but can only override them in :guilabel:`Site Settings` when
-it depends on `fgtclb/academic-jobs`.
+pages, the notification e-mail, the job avatar upload and the content element
+header switch — are declared with the aggregate set. A site that depends on a
+single component set still gets the shipped defaults, but can only override them
+in :guilabel:`Site Settings` when it depends on `fgtclb/academic-jobs`.
 
 ..  _configuration-hidden-by-default:
 
@@ -177,8 +177,8 @@ the second read happens after the site settings and after
 :file:`config/sites/<site>/constants.typoscript` — and it resets every constant
 the extension ships a default for back to that default. For this extension that
 is the whole :typoscript:`plugin.tx_academicjobs` constants block: the Fluid
-root paths, the storage and target page ids, the notification e-mail and the job
-avatar upload settings.
+root paths, the storage and target page ids, the notification e-mail, the job
+avatar upload settings and the content element header switch, among others.
 
 Nothing else is damaged: the :guilabel:`Constants` and :guilabel:`Setup` fields
 of the :sql:`sys_template` record, the page TSconfig of a page and the page

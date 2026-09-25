@@ -26,6 +26,11 @@ from the `tt_content` row of the current content element. TYPO3 v13 ignores it,
 its header partial keeps reading `data`, so one implementation serves both core
 versions.
 
+Since 2.4 the templates render the header partial only while
+:typoscript:`renderContentElementHeader` is switched on, see
+:ref:`configuration-general-content-element-header`; that is when they need the
+variable.
+
 Impact
 ======
 
