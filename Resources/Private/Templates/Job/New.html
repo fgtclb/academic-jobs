@@ -17,7 +17,9 @@
 
 <div class="academic-jobs-new">
 
-    <f:render partial="Header/All" arguments="{_all}" />
+    <f:if condition="{settings.renderContentElementHeader}">
+        <f:render partial="Header/All" arguments="{_all}" />
+    </f:if>
 
     <f:render
         partial="Job/Forms/Errors"

@@ -1,0 +1,7 @@
+# A site package whose content element layout renders no header, given to the three
+# job content elements.
+tt_content {
+  academicjobs_list.layoutRootPaths.50 = EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/Layouts/
+  academicjobs_detail.layoutRootPaths.50 = EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/Layouts/
+  academicjobs_newjobform.layoutRootPaths.50 = EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/Layouts/
+}

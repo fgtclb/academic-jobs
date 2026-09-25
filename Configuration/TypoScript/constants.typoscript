@@ -32,6 +32,9 @@ plugin.tx_academicjobs {
     # cat=plugin.tx_academicjobs_createjob//a; type=string; label=Default list page PID
     listPid = 0
 
+    # cat=plugin.tx_academicjobs//a; type=boolean; label=Render the content element header in the plugins: only for a site whose content element layout renders no header
+    renderContentElementHeader = 0
+
     email {
         # cat=plugin.tx_academicjobs_createjob//a; type=string; label=Sender email address
         from =
