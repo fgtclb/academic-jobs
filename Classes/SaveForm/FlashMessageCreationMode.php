@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace FGTCLB\AcademicJobs\SaveForm;
 
+/**
+ * @api
+ */
 enum FlashMessageCreationMode: int
 {
     case SUPPRESS_WITH_CONFIGURED_REDIRECT_PAGE = 0;

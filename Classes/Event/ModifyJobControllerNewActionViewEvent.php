@@ -11,6 +11,8 @@ use TYPO3Fluid\Fluid\View\ViewInterface as FluidViewInterface;
 
 /**
  * Fired in {@see JobController::newAction()} to allow assigning additional values to the view.
+ *
+ * @api
  */
 final class ModifyJobControllerNewActionViewEvent
 {

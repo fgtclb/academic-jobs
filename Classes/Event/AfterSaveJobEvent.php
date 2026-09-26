@@ -8,6 +8,9 @@ use FGTCLB\AcademicJobs\Domain\Model\Job;
 use FGTCLB\AcademicJobs\SaveForm\FlashMessageCreationMode;
 use Psr\Http\Message\ServerRequestInterface;
 
+/**
+ * @api
+ */
 final class AfterSaveJobEvent
 {
     /**
