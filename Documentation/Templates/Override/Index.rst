@@ -73,6 +73,9 @@ copying the partial:
         de.jobs.linkText = Zum Bewerbungsformular
     }
 
+Every label of the extension, and the path of each content element, is listed
+in :ref:`configuration-labels`.
+
 ..  index:: Templates; Images
 
 The image of a job

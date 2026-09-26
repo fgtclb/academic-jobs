@@ -17,6 +17,7 @@ use FGTCLB\AcademicJobs\SaveForm\FlashMessageCreationMode;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
 use TYPO3\CMS\Core\Http\NormalizedParams;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Mail\MailerInterface;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
@@ -445,11 +446,23 @@ final class JobController extends ActionController
         return ($this->getNormalizedParams()?->getRequestHost() ?? '') . $path;
     }
 
+    /**
+     * TYPO3 v14 reads the `_LOCAL_LANG` override of the plugin only from the Extbase request
+     * it is handed; without one, only the override of the extension applies. TYPO3 v13 takes
+     * both from the configuration manager and has no parameter for the request. The argument
+     * list is spread so that one call fits both signatures.
+     *
+     * @todo Pass the request directly once TYPO3 v13 support is dropped.
+     */
     private function translateAlert(
         string $alert,
         string $missing = 'Missing translation!'
     ): string {
-        return LocalizationUtility::translate('tx_academicjobs.fe.alert.' . $alert, 'AcademicJobs') ?? $missing;
+        $parameters = ['tx_academicjobs.fe.alert.' . $alert, 'AcademicJobs', null, null];
+        if ((new Typo3Version())->getMajorVersion() >= 14) {
+            $parameters[] = $this->request;
+        }
+        return LocalizationUtility::translate(...$parameters) ?? $missing;
     }
 
     /**

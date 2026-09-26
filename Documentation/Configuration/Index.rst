@@ -192,3 +192,4 @@ one mechanism per site and the question does not arise.
    General/Index
    Validations/Index
    RouteEnhancers/Index
+   Labels/Index

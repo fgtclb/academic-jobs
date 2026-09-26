@@ -30,10 +30,10 @@
                 <f:if condition="{item} == 'internationalsWelcome' || {item} == 'alumniRecommend'">
                     <f:then>
                         <f:comment>A flag carries no value a visitor can read: its label is the statement.</f:comment>
-                        <b>{f:translate(key: 'jobs.{item}', extensionName: 'academic_jobs')}</b>
+                        <b>{f:translate(key: 'jobs.{item}', extensionName: 'AcademicJobs')}</b>
                     </f:then>
                     <f:else>
-                        <b>{f:translate(key: 'jobs.{item}', extensionName: 'academic_jobs')}:</b>
+                        <b>{f:translate(key: 'jobs.{item}', extensionName: 'AcademicJobs')}:</b>
 
                         <span>
                             <f:if condition="{item} == 'employmentStartDate' || {item} == 'endtime'">
@@ -41,11 +41,11 @@
                                     <f:format.date format="d.m.Y">{job.{item}}</f:format.date>
                                 </f:then>
                                 <f:else if="{item} == 'employmentType' || {item} == 'type'">
-                                    <f:translate key="jobs.{item}.{job.{item}}" />
+                                    <f:translate key="jobs.{item}.{job.{item}}" extensionName="AcademicJobs" />
                                 </f:else>
                                 <f:else if="{item} == 'link'">
                                     <f:link.typolink parameter="{job.link}">
-                                        {f:translate(key: 'jobs.linkText', extensionName: 'academic_jobs')}
+                                        {f:translate(key: 'jobs.linkText', extensionName: 'AcademicJobs')}
                                     </f:link.typolink>
                                 </f:else>
                                 <f:else>
