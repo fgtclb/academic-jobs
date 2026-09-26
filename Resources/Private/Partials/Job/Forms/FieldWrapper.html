@@ -8,7 +8,7 @@
 <f:form.validationResults for="{elementId}" as="validationResults">
     <div class="{f:if(condition:'{validationResults.flattenedErrors}', then:' is-invalid')} {class}">
         <label class="form-label" for="{elementId}">
-            {f:translate(key:'create.{elementId}.label', extensionName: 'academic_jobs')}
+            {f:translate(key:'create.{elementId}.label', extensionName: 'AcademicJobs')}
             <f:if condition="{j:validation.RequiredFromValidation(validations: element.validations, identifier: element.identifier)}">
                 <abbr title="required">*</abbr>
             </f:if>

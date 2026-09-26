@@ -201,3 +201,4 @@ mechanism.
    General/Index
    Validations/Index
    RouteEnhancers/Index
+   Labels/Index

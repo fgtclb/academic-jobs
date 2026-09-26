@@ -72,3 +72,6 @@ copying the partial:
         default.jobs.linkText = To the application form
         de.jobs.linkText = Zum Bewerbungsformular
     }
+
+Every label of the extension, and the path of each content element, is listed
+in :ref:`configuration-labels`.
