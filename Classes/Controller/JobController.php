@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace FGTCLB\AcademicJobs\Controller;
 
+use FGTCLB\AcademicBase\Controller\DispatchModifyPluginViewEventMethodTrait;
 use FGTCLB\AcademicBase\Controller\GetCurrentContentRecordMethodTrait;
 use FGTCLB\AcademicBase\Controller\GetSelectItemsForTcaManagedTableFieldMethodTrait;
-use FGTCLB\AcademicBase\Domain\Model\Dto\PluginControllerActionContext;
 use FGTCLB\AcademicJobs\Domain\Model\Job;
 use FGTCLB\AcademicJobs\Domain\Repository\JobRepository;
 use FGTCLB\AcademicJobs\Domain\Validator\JobValidator;
 use FGTCLB\AcademicJobs\Event\AfterSaveJobEvent;
-use FGTCLB\AcademicJobs\Event\ModifyJobControllerNewActionViewEvent;
 use FGTCLB\AcademicJobs\Registry\AcademicJobsSettingsRegistry;
 use FGTCLB\AcademicJobs\SaveForm\FlashMessageCreationMode;
 use Psr\Http\Message\ResponseInterface;
@@ -39,6 +38,7 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 final class JobController extends ActionController
 {
+    use DispatchModifyPluginViewEventMethodTrait;
     use GetCurrentContentRecordMethodTrait;
     use GetSelectItemsForTcaManagedTableFieldMethodTrait;
 
@@ -68,6 +68,7 @@ final class JobController extends ActionController
             'data' => $this->getCurrentContentObjectRenderer()?->data,
             'record' => $this->getCurrentContentRecord($this->getCurrentContentObjectRenderer()),
         ]);
+        $this->dispatchModifyPluginViewEvent($this->request, $this->settings, $this->view, $this->eventDispatcher);
 
         return $this->htmlResponse();
     }
@@ -91,6 +92,7 @@ final class JobController extends ActionController
                 ContextualFeedbackSeverity::ERROR,
                 true
             );
+            $this->dispatchModifyPluginViewEvent($this->request, $this->settings, $this->view, $this->eventDispatcher);
             return $this->htmlResponse();
         }
 
@@ -119,16 +121,13 @@ final class JobController extends ActionController
         $this->setMetaTags($metaTags);
 
         $this->view->assign('job', $job);
+        $this->dispatchModifyPluginViewEvent($this->request, $this->settings, $this->view, $this->eventDispatcher);
 
         return $this->htmlResponse();
     }
 
     public function newAction(): ResponseInterface
     {
-        $pluginControllerActionContext = new PluginControllerActionContext(
-            request: $this->request,
-            settings: $this->settings,
-        );
         $this->view->assignMultiple([
             'employmentTypeOptions' => $this->getSelectItemsForTcaManagedTableField(
                 $this->request,
@@ -150,15 +149,9 @@ final class JobController extends ActionController
             'record' => $this->getCurrentContentRecord($this->getCurrentContentObjectRenderer()),
         ]);
 
-        // As an object is passed to this event and objects are passed by reference in PHP,
-        // the event listener can modify the view object without needing to assign it afterwards.
-        // Trying to assign it back to the view would break the dual-version support.
-        $this->eventDispatcher->dispatch(new ModifyJobControllerNewActionViewEvent(
-            pluginControllerActionContext: $pluginControllerActionContext,
-            view: $this->view,
-        ));
+        $this->dispatchModifyPluginViewEvent($this->request, $this->settings, $this->view, $this->eventDispatcher);
 
-        // Additional variables which should not be able to be manipulated by the event
+        // Assigned after the event on purpose, so a listener cannot replace them.
         $this->view->assignMultiple(
             [
                 'validations' => $this->settingsRegistry->getValidationsForFrontend('job'),
