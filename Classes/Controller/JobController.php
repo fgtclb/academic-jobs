@@ -7,6 +7,7 @@ namespace FGTCLB\AcademicJobs\Controller;
 use FGTCLB\AcademicBase\Controller\DispatchModifyPluginViewEventMethodTrait;
 use FGTCLB\AcademicBase\Controller\GetCurrentContentRecordMethodTrait;
 use FGTCLB\AcademicBase\Controller\GetSelectItemsForTcaManagedTableFieldMethodTrait;
+use FGTCLB\AcademicBase\Domain\Model\Dto\PluginControllerActionContext;
 use FGTCLB\AcademicJobs\Domain\Model\Job;
 use FGTCLB\AcademicJobs\Domain\Repository\JobRepository;
 use FGTCLB\AcademicJobs\Domain\Validator\JobValidator;
@@ -54,6 +55,7 @@ final class JobController extends ActionController
 
     public function listAction(): ResponseInterface
     {
+        $context = new PluginControllerActionContext($this->request, $this->settings);
         $jobType = $this->settings['job']['type'] ?? 0;
         $showHiddenRecords = (bool)($this->settings['showHiddenRecords'] ?? false);
 
@@ -68,13 +70,14 @@ final class JobController extends ActionController
             'data' => $this->getCurrentContentObjectRenderer()?->data,
             'record' => $this->getCurrentContentRecord($this->getCurrentContentObjectRenderer()),
         ]);
-        $this->dispatchModifyPluginViewEvent($this->request, $this->settings, $this->view, $this->eventDispatcher);
+        $this->dispatchModifyPluginViewEvent($context, $this->view, $this->eventDispatcher);
 
         return $this->htmlResponse();
     }
 
     public function showAction(?Job $job = null): ResponseInterface
     {
+        $context = new PluginControllerActionContext($this->request, $this->settings);
         // Assigned before the early return below: the template renders the
         // `EXT:fluid_styled_content` header partial in both cases, and on TYPO3 v14 that
         // partial resolves the header through `record`. Leaving it unassigned made a
@@ -92,7 +95,7 @@ final class JobController extends ActionController
                 ContextualFeedbackSeverity::ERROR,
                 true
             );
-            $this->dispatchModifyPluginViewEvent($this->request, $this->settings, $this->view, $this->eventDispatcher);
+            $this->dispatchModifyPluginViewEvent($context, $this->view, $this->eventDispatcher);
             return $this->htmlResponse();
         }
 
@@ -121,13 +124,14 @@ final class JobController extends ActionController
         $this->setMetaTags($metaTags);
 
         $this->view->assign('job', $job);
-        $this->dispatchModifyPluginViewEvent($this->request, $this->settings, $this->view, $this->eventDispatcher);
+        $this->dispatchModifyPluginViewEvent($context, $this->view, $this->eventDispatcher);
 
         return $this->htmlResponse();
     }
 
     public function newAction(): ResponseInterface
     {
+        $context = new PluginControllerActionContext($this->request, $this->settings);
         $this->view->assignMultiple([
             'employmentTypeOptions' => $this->getSelectItemsForTcaManagedTableField(
                 $this->request,
@@ -149,7 +153,7 @@ final class JobController extends ActionController
             'record' => $this->getCurrentContentRecord($this->getCurrentContentObjectRenderer()),
         ]);
 
-        $this->dispatchModifyPluginViewEvent($this->request, $this->settings, $this->view, $this->eventDispatcher);
+        $this->dispatchModifyPluginViewEvent($context, $this->view, $this->eventDispatcher);
 
         // Assigned after the event on purpose, so a listener cannot replace them.
         $this->view->assignMultiple(
