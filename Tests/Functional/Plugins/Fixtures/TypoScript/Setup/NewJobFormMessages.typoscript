@@ -1,0 +1,5 @@
+[traverse(page, "uid") == 4]
+    page.20 = COA_INT
+    page.20.10 = FLUIDTEMPLATE
+    page.20.10.file = EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/Templates/NewJobFormMessages.html
+[END]

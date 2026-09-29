@@ -15,6 +15,10 @@ use FGTCLB\AcademicJobs\Event\ModifyJobControllerNewActionViewEvent;
 use FGTCLB\AcademicJobs\Registry\AcademicJobsSettingsRegistry;
 use FGTCLB\AcademicJobs\SaveForm\FlashMessageCreationMode;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mime\Exception\InvalidArgumentException as MimeInvalidArgumentException;
+use Symfony\Component\Mime\Exception\RfcComplianceException;
 use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
@@ -43,6 +47,7 @@ final class JobController extends ActionController
         private readonly LocalizationUtility $localizationUtility,
         protected readonly BackendUriBuilder $backendUriBuilder,
         protected AcademicJobsSettingsRegistry $settingsRegistry,
+        private readonly LoggerInterface $logger,
     ) {}
 
     public function listAction(): ResponseInterface
@@ -326,17 +331,30 @@ final class JobController extends ActionController
         }
     }
 
+    /**
+     * The job is already saved, so a mail that cannot be sent is logged rather than ending
+     * the request: the addresses are checked while the mail is built, the transport fails
+     * while it is sent. Any other error is a defect and is not caught.
+     */
     public function sendEmail(int $recordId): bool
     {
         $url = $this->buildUrl($recordId);
 
-        $mail = GeneralUtility::makeInstance(MailMessage::class);
-        $mail->to($this->settings['email']['recipientEmail']);
-        $mail->from($this->settings['email']['senderEmail']);
-        $mail->subject($this->settings['email']['subject']);
-        $mail->text('A new job has been posted. Please check the TYPO3 backend: ' . $url);
+        try {
+            $mail = GeneralUtility::makeInstance(MailMessage::class);
+            $mail->to($this->settings['email']['recipientEmail']);
+            $mail->from($this->settings['email']['senderEmail']);
+            $mail->subject($this->settings['email']['subject']);
+            $mail->text('A new job has been posted. Please check the TYPO3 backend: ' . $url);
 
-        return $mail->send();
+            return $mail->send();
+        } catch (RfcComplianceException|MimeInvalidArgumentException|TransportExceptionInterface $exception) {
+            $this->logger->error(
+                'The notification mail about the submitted job {uid} could not be sent.',
+                ['uid' => $recordId, 'exception' => $exception],
+            );
+            return false;
+        }
     }
 
     public function buildUrl(int $recordId): string
