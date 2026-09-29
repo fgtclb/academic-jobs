@@ -1,0 +1,4 @@
+plugin.tx_academicjobs.saveForm {
+    fallbackRedirectPageId = 4
+    fallbackFlashMessageCreationMode = 1
+}

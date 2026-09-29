@@ -6,6 +6,7 @@ namespace FGTCLB\AcademicJobs\Tests\Functional\Plugins;
 
 use FGTCLB\AcademicJobs\Tests\Functional\AbstractAcademicJobsTestCase;
 use FGTCLB\TestingHelper\FunctionalTestCase\FrontendPluginRenderingTrait;
+use Psr\Http\Message\ResponseInterface;
 use SBUERK\TYPO3\Testing\SiteHandling\SiteBasedTestTrait;
 
 /**
@@ -80,8 +81,9 @@ abstract class AbstractAcademicJobsNotificationMailTestCase extends AbstractAcad
 
     /**
      * @param string[] $additionalConstantFiles
+     * @param string[] $additionalSetupFiles
      */
-    protected function setUpTestCase(array $additionalConstantFiles = []): void
+    protected function setUpTestCase(array $additionalConstantFiles = [], array $additionalSetupFiles = []): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/AcademicJobsNotificationMail/newJobFormPages.csv');
         $this->setUpFrontendRootPage(
@@ -97,6 +99,7 @@ abstract class AbstractAcademicJobsNotificationMailTestCase extends AbstractAcad
                     'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
                     'EXT:academic_jobs/Configuration/TypoScript/setup.typoscript',
                     'EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/TypoScript/Setup/Rendering.typoscript',
+                    ...$additionalSetupFiles,
                 ],
             ],
         );
@@ -123,6 +126,16 @@ abstract class AbstractAcademicJobsNotificationMailTestCase extends AbstractAcad
      */
     protected function submitJob(string $pageUrl, string $title): int
     {
+        $this->postJob($pageUrl, $title);
+
+        return $this->createdJobUid();
+    }
+
+    /**
+     * Posts a job as `submitJob()` does and returns the response to the post.
+     */
+    protected function postJob(string $pageUrl, string $title): ResponseInterface
+    {
         $document = new \DOMDocument();
         $document->loadHTML(
             '<?xml encoding="UTF-8">' . $this->renderFrontendPage($pageUrl),
@@ -147,18 +160,24 @@ abstract class AbstractAcademicJobsNotificationMailTestCase extends AbstractAcad
 
         $action = $form->getAttribute('action');
         /** @var array<string, mixed> $parsedBody */
-        $this->requestFrontendPage($this->frontendPostRequest(
+        return $this->requestFrontendPage($this->frontendPostRequest(
             str_starts_with($action, '/') ? rtrim(self::FRONTEND_PLUGIN_TEST_BASE, '/') . $action : $action,
             $parsedBody,
         ));
+    }
 
-        $uid = $this->getConnectionPool()
+    /**
+     * The uid of the one job record the post created.
+     */
+    protected function createdJobUid(): int
+    {
+        $uids = $this->getConnectionPool()
             ->getConnectionForTable('tx_academicjobs_domain_model_job')
             ->executeQuery('SELECT uid FROM tx_academicjobs_domain_model_job')
-            ->fetchOne();
-        $this->assertNotFalse($uid, 'No job record was created.');
+            ->fetchFirstColumn();
+        $this->assertCount(1, $uids, 'The post did not create exactly one job record.');
 
-        return (int)$uid;
+        return (int)$uids[0];
     }
 
     /**

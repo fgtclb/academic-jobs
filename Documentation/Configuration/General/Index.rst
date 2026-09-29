@@ -127,8 +127,30 @@ Fluid escapes values in the plain-text template as well. The shipped
 :file:`JobCreated.txt` therefore passes them through :html:`f:format.raw()`, and
 a template of a project should do the same.
 
-..  note::
+..  _configuration-general-notification-mail-failure:
 
-    The mail is sent after the job is saved. A template name that no mail
-    template path holds, or a failing mail transport, ends the request with an
-    error although the job exists.
+When the mail cannot be sent
+----------------------------
+
+The mail is sent after the job is saved. When it cannot be sent, because the
+recipient or the sender address is empty or invalid, because the mail transport
+refuses it or cannot deliver it, or because the template cannot be found or
+rendered, the job stays saved and the visitor gets the same redirect as after
+a sent mail. Where the site shows the messages of the form, the visitor sees
+the warning "Notification email could not be sent" instead of the success
+message.
+
+The failure is logged at level error, with the uid of the job and the
+exception, whose message names for example the missing template and the paths
+looked in. The logger is the one of
+:php:`\FGTCLB\AcademicJobs\Controller\JobController`, so with the default log
+configuration of TYPO3 the entry lands in the log file of the installation, in
+:file:`var/log/` of a Composer based installation and in
+:file:`typo3temp/var/log/` of a classic one. Check it after changing the mail
+configuration of a site.
+
+With a spool, the mail is only queued. A transport that fails later, when the
+queue is sent, is not reported by this extension, and the visitor has already
+seen the success message.
+
+Any other error while the mail is built or sent still ends the request.

@@ -16,6 +16,10 @@ use FGTCLB\AcademicJobs\Registry\AcademicJobsSettingsRegistry;
 use FGTCLB\AcademicJobs\SaveForm\FlashMessageCreationMode;
 use GeorgRinger\NumberedPagination\NumberedPagination;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mime\Exception\InvalidArgumentException as MimeInvalidArgumentException;
+use Symfony\Component\Mime\Exception\RfcComplianceException;
 use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
 use TYPO3\CMS\Core\Http\NormalizedParams;
 use TYPO3\CMS\Core\Information\Typo3Version;
@@ -42,6 +46,7 @@ use TYPO3\CMS\Extbase\Validation\Validator\ConjunctionValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\FileSizeValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\MimeTypeValidator;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use TYPO3Fluid\Fluid\Exception as FluidException;
 
 final class JobController extends ActionController
 {
@@ -57,6 +62,7 @@ final class JobController extends ActionController
         protected readonly BackendUriBuilder $backendUriBuilder,
         protected AcademicJobsSettingsRegistry $settingsRegistry,
         protected readonly MailerInterface $mailer,
+        private readonly LoggerInterface $logger,
     ) {}
 
     public function listAction(): ResponseInterface
@@ -474,24 +480,36 @@ final class JobController extends ActionController
      * Announces a submitted job with the mail template `settings.email.templateName`. The
      * template renders the text of `settings.email.template`, or its own translated default
      * message when that is empty.
+     *
+     * The job is already saved, so a mail that cannot be sent is logged rather than ending
+     * the request: the addresses are checked while the mail is built, the template is
+     * rendered while it is sent. Any other error is a defect and is not caught.
      */
     private function sendEmail(int $recordId, Job $job): bool
     {
         $templateName = trim((string)($this->settings['email']['templateName'] ?? ''));
 
-        $mail = $this->createEmail()
-            ->setTemplate($templateName !== '' ? $templateName : 'JobCreated')
-            ->to($this->settings['email']['recipientEmail'])
-            ->from($this->settings['email']['senderEmail'])
-            ->subject($this->settings['email']['subject'])
-            ->assignMultiple([
-                'job' => $job,
-                'url' => $this->buildUrl($recordId),
-                'settings' => $this->settings,
-                'emailText' => trim((string)($this->settings['email']['template'] ?? '')),
-            ]);
+        try {
+            $mail = $this->createEmail()
+                ->setTemplate($templateName !== '' ? $templateName : 'JobCreated')
+                ->to($this->settings['email']['recipientEmail'])
+                ->from($this->settings['email']['senderEmail'])
+                ->subject($this->settings['email']['subject'])
+                ->assignMultiple([
+                    'job' => $job,
+                    'url' => $this->buildUrl($recordId),
+                    'settings' => $this->settings,
+                    'emailText' => trim((string)($this->settings['email']['template'] ?? '')),
+                ]);
 
-        $this->mailer->send($mail);
+            $this->mailer->send($mail);
+        } catch (RfcComplianceException|MimeInvalidArgumentException|TransportExceptionInterface|FluidException $exception) {
+            $this->logger->error(
+                'The notification mail about the submitted job {uid} could not be sent.',
+                ['uid' => $recordId, 'exception' => $exception],
+            );
+            return false;
+        }
 
         return true;
     }
