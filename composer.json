@@ -58,5 +58,11 @@
         "branch-alias": {
             "dev-main": "3.0.x-dev"
         }
+    },
+    "conflict": {
+        "georgringer/numbered-pagination": "<2.1.0 || >= 3.0.0"
+    },
+    "suggest": {
+        "georgringer/numbered-pagination": "Install to use numbered pagination in the job list. (~2.1)"
     }
 }

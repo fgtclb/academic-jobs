@@ -50,11 +50,12 @@ Every component set depends on `fgtclb/academic-base-ctype-group`, the set of
 :guilabel:`EXT:academic_base` that labels the content element group all academic
 extensions sort their elements into.
 
-The site settings of this extension — the storage, detail, list and redirect
-pages, the notification e-mail, the job avatar upload and the content element
-header switch — are declared with the aggregate set. A site that depends on a
-single component set still gets the shipped defaults, but can only override them
-in :guilabel:`Site Settings` when it depends on `fgtclb/academic-jobs`.
+The site settings of this extension are declared with the aggregate set: the
+storage, detail, list and redirect pages, the notification e-mail, the job
+avatar upload, the content element header switch and the page links of the
+:ref:`list pagination <configuration-list-pagination>`. A site that depends on
+a single component set still gets the shipped defaults, but can only override
+them in :guilabel:`Site Settings` when it depends on `fgtclb/academic-jobs`.
 
 ..  _configuration-hidden-by-default:
 
@@ -165,6 +166,47 @@ Edit the page record of the site root, tab :guilabel:`Resources`, field
         -   Every component this extension ships, in one entry.
 
 The setting is inherited by every page below the one it is set on.
+
+..  _configuration-list-pagination:
+
+Pagination of the job list
+==========================
+
+The :guilabel:`Jobs List` content element can split its jobs into pages.
+Whether it does, and how many jobs a page holds, is set on each content
+element, tab :guilabel:`Pagination`:
+
+..  list-table::
+    :header-rows: 1
+
+    *   -   Field
+        -   Default
+        -   Meaning
+    *   -   :guilabel:`Enable pagination`
+        -   off
+        -   Off, the list renders every job of its job type.
+    *   -   :guilabel:`Results per page`
+        -   10
+        -   The number of jobs on one page.
+
+How many page numbers the navigation links at once is one value for the whole
+site:
+
+..  list-table::
+    :header-rows: 1
+
+    *   -   Site setting and constant
+        -   Default
+        -   Meaning
+    *   -   :typoscript:`plugin.tx_academicjobs.pagination.numberOfLinks`
+        -   5
+        -   The most page numbers the navigation links around the current page.
+            Read with `georgringer/numbered-pagination` only. Without it, the
+            core pagination links every page.
+
+The site setting is declared by the aggregate set `fgtclb/academic-jobs`, like
+every other setting of this extension. A site configured through static
+templates sets the constant instead.
 
 ..  _one-mechanism-per-site:
 

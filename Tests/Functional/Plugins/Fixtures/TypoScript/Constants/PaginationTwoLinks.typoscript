@@ -1,0 +1,2 @@
+# Numbered pagination links two pages at most, so a list of three pages leaves one out.
+plugin.tx_academicjobs.pagination.numberOfLinks = 2

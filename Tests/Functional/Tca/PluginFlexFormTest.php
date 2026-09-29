@@ -34,4 +34,51 @@ final class PluginFlexFormTest extends AbstractAcademicJobsTestCase
     {
         $this->assertPluginFlexFormIsResolved($cType);
     }
+
+    /**
+     * The existing fields keep the first sheet, so the values stored before the
+     * pagination sheet existed stay where the data structure expects them.
+     */
+    #[Test]
+    public function listKeepsItsFieldsOnTheFirstSheet(): void
+    {
+        $this->assertSame(
+            ['settings.job.type', 'settings.showHiddenRecords'],
+            $this->fieldNames('academicjobs_list', 'sDEF'),
+        );
+    }
+
+    #[Test]
+    public function listOffersPaginationOnASheetOfItsOwn(): void
+    {
+        $this->assertPluginFlexFormIsResolved('academicjobs_list', 'pagination');
+        $this->assertSame(
+            ['settings.paginationEnabled', 'settings.pagination.resultsPerPage'],
+            $this->fieldNames('academicjobs_list', 'pagination'),
+        );
+    }
+
+    /**
+     * What an element gets that nobody configured: no pagination, and ten jobs a page
+     * once it is switched on. A results per page below one is not accepted.
+     */
+    #[Test]
+    public function paginationFieldsDefaultToOffAndTen(): void
+    {
+        $fields = $this->resolvePluginFlexFormDataStructure('academicjobs_list')['sheets']['pagination']['ROOT']['el'] ?? [];
+
+        $this->assertSame('0', (string)($fields['settings.paginationEnabled']['config']['default'] ?? null));
+        $this->assertSame('10', (string)($fields['settings.pagination.resultsPerPage']['config']['default'] ?? null));
+        $this->assertSame('1', (string)($fields['settings.pagination.resultsPerPage']['config']['range']['lower'] ?? null));
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function fieldNames(string $cType, string $sheetName): array
+    {
+        $dataStructure = $this->resolvePluginFlexFormDataStructure($cType);
+
+        return array_map(strval(...), array_keys($dataStructure['sheets'][$sheetName]['ROOT']['el'] ?? []));
+    }
 }

@@ -14,6 +14,7 @@ use FGTCLB\AcademicJobs\Domain\Validator\JobValidator;
 use FGTCLB\AcademicJobs\Event\AfterSaveJobEvent;
 use FGTCLB\AcademicJobs\Registry\AcademicJobsSettingsRegistry;
 use FGTCLB\AcademicJobs\SaveForm\FlashMessageCreationMode;
+use GeorgRinger\NumberedPagination\NumberedPagination;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
 use TYPO3\CMS\Core\Http\NormalizedParams;
@@ -22,13 +23,17 @@ use TYPO3\CMS\Core\Mail\MailerInterface;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
+use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\FileUploadConfiguration;
+use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -70,9 +75,65 @@ final class JobController extends ActionController
             'data' => $this->getCurrentContentObjectRenderer()?->data,
             'record' => $this->getCurrentContentRecord($this->getCurrentContentObjectRenderer()),
         ]);
+        $this->assignPagination($jobs, $this->requestedPage());
         $this->dispatchModifyPluginViewEvent($context, $this->view, $this->eventDispatcher);
 
         return $this->htmlResponse();
+    }
+
+    /**
+     * The page a pagination link asked for, read here rather than as an action argument:
+     * a value that is no integer would fail the argument validation and answer every
+     * request to the list with an error, whether it is paginated or not. Such a value, and
+     * one below one, is the first page. The paginator shows the last page for one beyond it.
+     */
+    private function requestedPage(): int
+    {
+        if (!$this->request->hasArgument('currentPage')) {
+            return 1;
+        }
+        $currentPage = $this->request->getArgument('currentPage');
+        if (!MathUtility::canBeInterpretedAsInteger($currentPage)) {
+            return 1;
+        }
+
+        return max(1, (int)$currentPage);
+    }
+
+    /**
+     * Splits the list into pages when the content element enables it, the way the partner
+     * list of `academic_partners` does: numbered page links when `numbered_pagination` is
+     * loaded, the core pagination otherwise. The paginator refuses fewer than one result
+     * per page, and the numbered pagination would take ten links for fewer than one, so
+     * both fall back to the default of their field.
+     *
+     * @param QueryResultInterface<int, Job> $jobs
+     */
+    private function assignPagination(QueryResultInterface $jobs, int $currentPage): void
+    {
+        if (!(bool)($this->settings['paginationEnabled'] ?? false)) {
+            return;
+        }
+        $resultsPerPage = (int)($this->settings['pagination']['resultsPerPage'] ?? 0);
+        $numberOfLinks = (int)($this->settings['pagination']['numberOfLinks'] ?? 0);
+
+        $paginator = new QueryResultPaginator(
+            $jobs,
+            $currentPage,
+            $resultsPerPage > 0 ? $resultsPerPage : 10,
+        );
+        if (ExtensionManagementUtility::isLoaded('numbered_pagination')
+            && class_exists(NumberedPagination::class)
+        ) {
+            $pagination = new NumberedPagination($paginator, $numberOfLinks > 0 ? $numberOfLinks : 5);
+        } else {
+            $pagination = new SimplePagination($paginator);
+        }
+
+        $this->view->assignMultiple([
+            'paginator' => $paginator,
+            'pagination' => $pagination,
+        ]);
     }
 
     public function showAction(?Job $job = null): ResponseInterface

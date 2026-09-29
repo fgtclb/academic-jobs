@@ -17,5 +17,8 @@ $EM_CONF[$_EXTKEY] = [
             'fluid_styled_content' => '13.4.0-14.3.99',
             'academic_base' => '3.0.0',
         ],
+        'suggests' => [
+            'numbered_pagination' => '2.1.0-2.99.99',
+        ],
     ],
 ];

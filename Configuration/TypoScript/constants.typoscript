@@ -35,6 +35,11 @@ plugin.tx_academicjobs {
     # cat=plugin.tx_academicjobs//a; type=boolean; label=Render the content element header in the plugins: only for a site whose content element layout renders no header
     renderContentElementHeader = 0
 
+    pagination {
+        # cat=plugin.tx_academicjobs//a; type=int+; label=Pagination: the most page numbers the job list links at once (numbered pagination only)
+        numberOfLinks = 5
+    }
+
     email {
         # cat=plugin.tx_academicjobs_createjob//a; type=string; label=Sender email address
         from =

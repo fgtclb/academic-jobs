@@ -42,6 +42,12 @@ plugin.tx_academicjobs {
     renderContentElementHeader = {$plugin.tx_academicjobs.renderContentElementHeader}
     defaultHeaderType = {$styles.content.defaultHeaderType}
 
+    # The page links of a paginated job list. Pagination itself and the results per
+    # page are set on each content element (FlexForm sheet "Pagination").
+    pagination {
+      numberOfLinks = {$plugin.tx_academicjobs.pagination.numberOfLinks}
+    }
+
     email {
       recipientEmail = {$plugin.tx_academicjobs.email.recipientEmail}
       senderEmail = {$plugin.tx_academicjobs.email.from}

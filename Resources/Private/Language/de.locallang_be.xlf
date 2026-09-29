@@ -30,6 +30,26 @@
         <source>When enabled, hidden (disabled) records are included in the frontend output, independent of the backend preview settings.</source>
         <target>Wenn aktiviert, werden versteckte (deaktivierte) Datensätze unabhängig von den Backend-Vorschaueinstellungen im Frontend ausgegeben.</target>
       </trans-unit>
+      <trans-unit id="flexform.sheet.pagination">
+        <source>Pagination</source>
+        <target>Paginierung</target>
+      </trans-unit>
+      <trans-unit id="flexform.paginationEnabled.label">
+        <source>Enable pagination</source>
+        <target>Paginierung aktivieren</target>
+      </trans-unit>
+      <trans-unit id="flexform.paginationEnabled.description">
+        <source>Splits the list into pages and shows a navigation between them.</source>
+        <target>Teilt die Liste in Seiten auf und zeigt eine Navigation zwischen ihnen an.</target>
+      </trans-unit>
+      <trans-unit id="flexform.pagination.resultsPerPage.label">
+        <source>Results per page</source>
+        <target>Ergebnisse pro Seite</target>
+      </trans-unit>
+      <trans-unit id="flexform.pagination.resultsPerPage.description">
+        <source>How many jobs a page of the list shows.</source>
+        <target>Wie viele Stellen eine Seite der Liste anzeigt.</target>
+      </trans-unit>
 
       <!-- Flexform Plugin NewJobForm -->
       <trans-unit id="tx_academicjobs_domain_model_job.newJobForm.redirectPageId.label">

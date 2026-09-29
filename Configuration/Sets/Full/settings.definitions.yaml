@@ -40,6 +40,12 @@ settings:
     category: academic.jobs
     type: bool
     default: false
+  plugin.tx_academicjobs.pagination.numberOfLinks:
+    label: 'Job list | Pagination: number of page links'
+    description: 'The most page numbers the navigation of a paginated job list links at once. Used with georgringer/numbered-pagination only. Without it, every page is linked. Pagination itself and the results per page are set on each content element.'
+    category: academic.jobs
+    type: int
+    default: 5
   plugin.tx_academicjobs.email.from:
     label: 'Sender email address'
     category: academic.jobs

@@ -312,6 +312,10 @@
         <source>Contact</source>
         <target>Ansprechpartner</target>
       </trans-unit>
+      <trans-unit id="list.pagination.label">
+        <source>Pages of the job list</source>
+        <target>Seiten der Stellenliste</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -12,14 +12,37 @@
 
     <f:flashMessages />
 
+    <f:comment>
+        A paginated list renders the jobs of the current page, and the navigation between
+        the pages below them when there is more than one.
+    </f:comment>
+    <f:if condition="{paginator}">
+        <f:then>
+            <f:variable name="jobsToList" value="{paginator.paginatedItems}" />
+        </f:then>
+        <f:else>
+            <f:variable name="jobsToList" value="{jobs}" />
+        </f:else>
+    </f:if>
+
     <div class="academic-jobs-itemlist">
-        <f:for each="{jobs}" as="job">
+        <f:for each="{jobsToList}" as="job">
             <f:render
                 partial="Job/Item"
                 arguments="{_all}"
             />
         </f:for>
     </div>
+
+    <f:if condition="{pagination.lastPageNumber} > 1">
+        <f:render
+            partial="Job/Pagination"
+            arguments="{
+                paginator: paginator,
+                pagination: pagination
+            }"
+        />
+    </f:if>
 </div>
 
 </html>

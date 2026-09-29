@@ -242,6 +242,9 @@
       <trans-unit id="jobs.contact">
         <source>Contact</source>
       </trans-unit>
+      <trans-unit id="list.pagination.label">
+        <source>Pages of the job list</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

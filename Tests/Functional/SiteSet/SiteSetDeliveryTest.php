@@ -353,6 +353,7 @@ final class SiteSetDeliveryTest extends AbstractAcademicJobsTestCase
                 'plugin.tx_academicjobs.detailPid' => 0,
                 'plugin.tx_academicjobs.listPid' => 0,
                 'plugin.tx_academicjobs.renderContentElementHeader' => false,
+                'plugin.tx_academicjobs.pagination.numberOfLinks' => 5,
                 'plugin.tx_academicjobs.email.from' => '',
                 'plugin.tx_academicjobs.email.recipientEmail' => '',
                 'plugin.tx_academicjobs.email.subject' => 'New job application',
