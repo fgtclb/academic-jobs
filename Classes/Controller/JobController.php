@@ -19,8 +19,9 @@ use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
 use TYPO3\CMS\Core\Http\NormalizedParams;
 use TYPO3\CMS\Core\Information\Typo3Version;
+use TYPO3\CMS\Core\Mail\FluidEmail;
 use TYPO3\CMS\Core\Mail\MailerInterface;
-use TYPO3\CMS\Core\Mail\MailMessage;
+use TYPO3\CMS\Core\Mail\TemplatedEmailFactory;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
@@ -375,7 +376,7 @@ final class JobController extends ActionController
         $redirectPageId = $afterSaveJobEvent->getRedirectPageId();
         $flashMessageCreationMode = $afterSaveJobEvent->getFlashMessageCreationMode();
         $listPid = $this->settings['listPid'] ? (int)$this->settings['listPid'] : null;
-        $mailWasSent = $this->sendEmail($uid);
+        $mailWasSent = $this->sendEmail($uid, $job);
 
         $useRedirectPageId = $redirectPageId;
         if ($useRedirectPageId === null && $listPid !== null && $listPid > 0) {
@@ -469,21 +470,46 @@ final class JobController extends ActionController
         }
     }
 
-    public function sendEmail(int $recordId): bool
+    /**
+     * Announces a submitted job with the mail template `settings.email.templateName`. The
+     * template renders the text of `settings.email.template`, or its own translated default
+     * message when that is empty.
+     */
+    private function sendEmail(int $recordId, Job $job): bool
     {
-        $url = $this->buildUrl($recordId);
+        $templateName = trim((string)($this->settings['email']['templateName'] ?? ''));
 
-        $mail = GeneralUtility::makeInstance(MailMessage::class);
-        $mail->to($this->settings['email']['recipientEmail']);
-        $mail->from($this->settings['email']['senderEmail']);
-        $mail->subject($this->settings['email']['subject']);
-        $mail->text('A new job has been posted. Please check the TYPO3 backend: ' . $url);
+        $mail = $this->createEmail()
+            ->setTemplate($templateName !== '' ? $templateName : 'JobCreated')
+            ->to($this->settings['email']['recipientEmail'])
+            ->from($this->settings['email']['senderEmail'])
+            ->subject($this->settings['email']['subject'])
+            ->assignMultiple([
+                'job' => $job,
+                'url' => $this->buildUrl($recordId),
+                'settings' => $this->settings,
+                'emailText' => trim((string)($this->settings['email']['template'] ?? '')),
+            ]);
 
-        // MailMessage::send() was removed in TYPO3 v14; send through the mailer
-        // service instead (available as an alias in v13 and v14).
         $this->mailer->send($mail);
 
         return true;
+    }
+
+    /**
+     * TYPO3 v14 creates mails through `TemplatedEmailFactory`, which adds the mail template
+     * paths and the format a site sets in the site set `typo3/email`. TYPO3 v13 has no
+     * factory and no such site settings, and gets the mail of the global configuration.
+     *
+     * @todo Inject the factory once TYPO3 v13 support is dropped.
+     */
+    private function createEmail(): FluidEmail
+    {
+        if (class_exists(TemplatedEmailFactory::class)) {
+            return GeneralUtility::makeInstance(TemplatedEmailFactory::class)->createFromRequest($this->request);
+        }
+
+        return GeneralUtility::makeInstance(FluidEmail::class)->setRequest($this->request);
     }
 
     public function buildUrl(int $recordId): string

@@ -1,0 +1,13 @@
+<f:layout name="SystemEmail" />
+<f:section name="Title">{job.title}</f:section>
+<f:section name="Main">
+    <p>
+        <f:if condition="{emailText}">
+            <f:then>{emailText}</f:then>
+            <f:else><f:translate key="email.jobCreated.message" extensionName="AcademicJobs" /></f:else>
+        </f:if>
+    </p>
+    <p>
+        <a href="{url}"><f:translate key="email.jobCreated.link" extensionName="AcademicJobs" /></a>
+    </p>
+</f:section>

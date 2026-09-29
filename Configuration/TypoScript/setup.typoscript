@@ -53,6 +53,7 @@ plugin.tx_academicjobs {
       senderEmail = {$plugin.tx_academicjobs.email.from}
       subject = {$plugin.tx_academicjobs.email.subject}
       template = {$plugin.tx_academicjobs.email.template}
+      templateName = {$plugin.tx_academicjobs.email.templateName}
     }
 
     saveForm {

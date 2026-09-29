@@ -186,6 +186,15 @@
         <source>Notification email could not be sent</source>
         <target>Benachrichtigungs-E-Mail konnte nicht gesendet werden</target>
       </trans-unit>
+      <!-- Frontend: notification mail about a submitted job -->
+      <trans-unit id="email.jobCreated.message">
+        <source>A new job advert has been submitted. Please review it in the TYPO3 backend.</source>
+        <target>Eine neue Stellenanzeige wurde eingereicht. Bitte prüfen Sie sie im TYPO3-Backend.</target>
+      </trans-unit>
+      <trans-unit id="email.jobCreated.link">
+        <source>Open the job advert in the TYPO3 backend</source>
+        <target>Stellenanzeige im TYPO3-Backend öffnen</target>
+      </trans-unit>
       <trans-unit id="tx_academicjobs.fe.alert.job_not_created.body">
         <source>An unknown error has occurred. Please try again. Please let us know if the problem persists.</source>
         <target>Ein unbekannter Fehler ist aufgetreten. Bitte versuchen Sie es erneut. Bitte informieren Sie uns, wenn das Problem weiterhin besteht.</target>

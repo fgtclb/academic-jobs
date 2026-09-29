@@ -17,6 +17,11 @@ if (!defined('ACADEMIC_JOBS_CASCADE_REMOVE')) {
 }
 
 (static function (): void {
+    // A low key on purpose: core ships no template of these names, and any path a site
+    // package or a site registers with a key above 20 replaces `JobCreated`, the key
+    // 100 of the core examples included.
+    $GLOBALS['TYPO3_CONF_VARS']['MAIL']['templateRootPaths'][20] = 'EXT:academic_jobs/Resources/Private/Templates/Email/';
+
     ExtensionUtility::configurePlugin(
         'AcademicJobs',
         'NewJobForm',

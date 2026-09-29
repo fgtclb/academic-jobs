@@ -146,6 +146,13 @@
       <trans-unit id="tx_academicjobs.fe.alert.job_created_no_email.title">
         <source>Notification email could not be sent</source>
       </trans-unit>
+      <!-- Frontend: notification mail about a submitted job -->
+      <trans-unit id="email.jobCreated.message">
+        <source>A new job advert has been submitted. Please review it in the TYPO3 backend.</source>
+      </trans-unit>
+      <trans-unit id="email.jobCreated.link">
+        <source>Open the job advert in the TYPO3 backend</source>
+      </trans-unit>
       <trans-unit id="tx_academicjobs.fe.alert.job_not_created.body">
         <source>An unknown error has occurred. Please try again. Please let us know if the problem persists.</source>
       </trans-unit>

@@ -36,3 +36,99 @@ mapped from the constant :typoscript:`styles.content.defaultHeaderType` of
 :guilabel:`EXT:fluid_styled_content`. A site that does not include the
 TypoScript of :guilabel:`EXT:fluid_styled_content` sets the setting itself;
 without it, such a header renders as an empty :html:`<header>` element.
+
+..  _configuration-general-notification-mail:
+
+The notification mail about a submitted job
+===========================================
+
+When a visitor submits a job through the :guilabel:`Jobs New` content element,
+the job is saved hidden and one mail announces it. The mail is rendered from a
+Fluid mail template into an HTML and a plain-text part, on the core layout
+:file:`SystemEmail` that the mails of TYPO3 itself use, and it is sent through
+the mail configuration of the installation.
+
+..  list-table::
+    :header-rows: 1
+
+    *   -   Site setting and constant
+        -   Default
+        -   Meaning
+    *   -   :typoscript:`plugin.tx_academicjobs.email.from`
+        -   empty
+        -   The sender address.
+    *   -   :typoscript:`plugin.tx_academicjobs.email.recipientEmail`
+        -   empty
+        -   The address the mail is sent to.
+    *   -   :typoscript:`plugin.tx_academicjobs.email.subject`
+        -   `New job application`
+        -   The subject of the mail.
+    *   -   :typoscript:`plugin.tx_academicjobs.email.template`
+        -   empty
+        -   The message of the mail. When it is empty, the template renders
+            its default message in the language of the page the form was
+            submitted on. English and German are shipped.
+    *   -   :typoscript:`plugin.tx_academicjobs.email.templateName`
+        -   `JobCreated`
+        -   The name of the mail template. Empty falls back to `JobCreated`.
+
+The site settings are declared by the aggregate set `fgtclb/academic-jobs`. A
+site configured through static templates sets the constants instead.
+
+..  _configuration-general-notification-mail-template:
+
+Changing the mail template
+--------------------------
+
+The extension registers its template path as
+:php:`$GLOBALS['TYPO3_CONF_VARS']['MAIL']['templateRootPaths'][20]`, a low key
+on purpose. A site package replaces the shipped template with a path of its
+own under any higher key, holding a :file:`JobCreated.html` and a
+:file:`JobCreated.txt`:
+
+..  code-block:: php
+    :caption: EXT:my_sitepackage/ext_localconf.php
+
+    $GLOBALS['TYPO3_CONF_VARS']['MAIL']['templateRootPaths'][100]
+        = 'EXT:my_sitepackage/Resources/Private/Templates/Email/';
+
+A template of another name in any mail template path is selected with
+:typoscript:`plugin.tx_academicjobs.email.templateName`.
+
+On TYPO3 v14, a site that uses the core site set `typo3/email` can list the
+path in its site setting :yaml:`email.templateRootPaths` instead. A list is
+added above every global path. The mail then also follows the site setting
+:yaml:`email.format` of that set, as every mail TYPO3 sends for the site
+does. TYPO3 v13 has no such site set.
+
+The template uses the core layout :file:`SystemEmail`, which adds the TYPO3
+logo, loaded from the site URL, and an English footer naming the site. A
+template of a project can use a layout of its own.
+
+The template receives these variables, next to those every Fluid mail of the
+core gets, such as :html:`{normalizedParams}`:
+
+..  list-table::
+    :header-rows: 1
+
+    *   -   Variable
+        -   Content
+    *   -   :html:`{job}`
+        -   The submitted job, :php:`\FGTCLB\AcademicJobs\Domain\Model\Job`.
+    *   -   :html:`{url}`
+        -   The link to the edit form of the job in the TYPO3 backend.
+    *   -   :html:`{settings}`
+        -   The settings of the plugin.
+    *   -   :html:`{emailText}`
+        -   The value of :typoscript:`plugin.tx_academicjobs.email.template`,
+            empty when it is not set.
+
+Fluid escapes values in the plain-text template as well. The shipped
+:file:`JobCreated.txt` therefore passes them through :html:`f:format.raw()`, and
+a template of a project should do the same.
+
+..  note::
+
+    The mail is sent after the job is saved. A template name that no mail
+    template path holds, or a failing mail transport, ends the request with an
+    error although the job exists.

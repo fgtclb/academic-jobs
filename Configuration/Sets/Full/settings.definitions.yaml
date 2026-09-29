@@ -63,9 +63,16 @@ settings:
     default: 'New job application'
   plugin.tx_academicjobs.email.template:
     label: 'Email content'
+    description: 'The message of the notification mail. Empty renders the translated default message of the mail template.'
     category: academic.jobs
     type: string
-    default: 'A new job application has been submitted. Please check the backend.'
+    default: ''
+  plugin.tx_academicjobs.email.templateName:
+    label: 'Email template name'
+    description: 'The Fluid mail template the notification is rendered from, looked up in the mail template paths of the installation.'
+    category: academic.jobs
+    type: string
+    default: 'JobCreated'
   plugin.tx_academicjobs.saveForm.fallbackRedirectPageId:
     label: 'Default redirect page PID, can be overruled in plugin'
     category: academic.jobs
