@@ -135,9 +135,13 @@
         <source>Link</source>
         <target>Link</target>
       </trans-unit>
+      <trans-unit id="create.job.internationalsWelcome.label">
+        <source>International applicants welcome</source>
+        <target>Internationale Bewerbungen willkommen</target>
+      </trans-unit>
       <trans-unit id="create.job.alumniRecommend.label">
-        <source>Created by Alumni</source>
-        <target>Erstellt von Alumni</target>
+        <source>Recommended by alumni</source>
+        <target>Von Alumni empfohlen</target>
       </trans-unit>
       <trans-unit id="create.job.incorrectValues">
         <source>One or more fields have not been filled out correctly.</source>

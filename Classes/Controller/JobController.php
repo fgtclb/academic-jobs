@@ -252,9 +252,30 @@ final class JobController extends ActionController
                     );
             }
 
+            $this->mapUncheckedFlagsToZero();
             $this->configureImageFileUpload();
             $this->addJobValidator();
         }
+    }
+
+    /**
+     * An unchecked checkbox submits the empty value of the hidden field the checkbox view
+     * helper renders with it, and Extbase converts an empty value to `null` for an `int`
+     * property. The setters of both job flags take an `int`, so the empty value becomes
+     * `0` before the arguments are mapped.
+     */
+    private function mapUncheckedFlagsToZero(): void
+    {
+        $job = $this->request->getArgument('job');
+        if (!is_array($job)) {
+            return;
+        }
+        foreach (['internationalsWelcome', 'alumniRecommend'] as $flag) {
+            if (($job[$flag] ?? null) === '') {
+                $job[$flag] = '0';
+            }
+        }
+        $this->request = $this->request->withArgument('job', $job);
     }
 
     /**

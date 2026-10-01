@@ -140,6 +140,30 @@
             />
         </div>
 
+        <div class="col-12 col-md-6">
+            <f:render
+                partial="Job/Forms/Checkbox"
+                arguments="{
+                    element: {
+                        identifier: 'internationalsWelcome',
+                        validations: validations
+                    }
+                }"
+            />
+        </div>
+
+        <div class="col-12 col-md-6">
+            <f:render
+                partial="Job/Forms/Checkbox"
+                arguments="{
+                    element: {
+                        identifier: 'alumniRecommend',
+                        validations: validations
+                    }
+                }"
+            />
+        </div>
+
         <div class="col-12 col-md-4">
             <f:render
                 partial="Job/Forms/DateTime"

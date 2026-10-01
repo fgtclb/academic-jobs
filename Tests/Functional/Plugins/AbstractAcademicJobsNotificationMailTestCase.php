@@ -36,6 +36,11 @@ abstract class AbstractAcademicJobsNotificationMailTestCase extends AbstractAcad
         'type' => '1',
     ];
 
+    /**
+     * The form of the plugin, inside its wrapper.
+     */
+    protected const JOB_FORM = '//div[contains(concat(" ", normalize-space(@class), " "), " academic-jobs-new ")]//form';
+
     protected const ENGLISH_MESSAGE = 'A new job advert has been submitted. Please review it in the TYPO3 backend.';
     protected const GERMAN_MESSAGE = 'Eine neue Stellenanzeige wurde eingereicht. Bitte prüfen Sie sie im TYPO3-Backend.';
 
@@ -120,29 +125,31 @@ abstract class AbstractAcademicJobsNotificationMailTestCase extends AbstractAcad
     /**
      * Posts a job with the given title through the form rendered on `$pageUrl`, with the
      * hidden fields the form carries, and returns the uid of the job record it created.
+     * `$values` adds further form values by their field name. They are added after the
+     * hidden fields of the form and therefore replace a hidden field of the same name,
+     * such as the empty value a checkbox renders for itself.
      *
      * The response is not asserted: TYPO3 v13 sends the redirect a plugin action returns
      * with `header()` and answers 200, TYPO3 v14 answers the redirect itself.
+     *
+     * @param array<string, string> $values
      */
-    protected function submitJob(string $pageUrl, string $title): int
+    protected function submitJob(string $pageUrl, string $title, array $values = []): int
     {
-        $this->postJob($pageUrl, $title);
+        $this->postJob($pageUrl, $title, $values);
 
         return $this->createdJobUid();
     }
 
     /**
      * Posts a job as `submitJob()` does and returns the response to the post.
+     *
+     * @param array<string, string> $values
      */
-    protected function postJob(string $pageUrl, string $title): ResponseInterface
+    protected function postJob(string $pageUrl, string $title, array $values = []): ResponseInterface
     {
-        $document = new \DOMDocument();
-        $document->loadHTML(
-            '<?xml encoding="UTF-8">' . $this->renderFrontendPage($pageUrl),
-            LIBXML_NOERROR | LIBXML_NOWARNING,
-        );
-        $xpath = new \DOMXPath($document);
-        $forms = $xpath->query('//div[contains(concat(" ", normalize-space(@class), " "), " academic-jobs-new ")]//form');
+        $xpath = $this->renderedPage($pageUrl);
+        $forms = $xpath->query(self::JOB_FORM);
         $this->assertNotFalse($forms);
         $form = $forms->item(0);
         $this->assertInstanceOf(\DOMElement::class, $form, 'The page renders no job form.');
@@ -156,6 +163,9 @@ abstract class AbstractAcademicJobsNotificationMailTestCase extends AbstractAcad
         foreach (['title' => $title] + self::REQUIRED_JOB_VALUES as $property => $value) {
             $fields[] = rawurlencode('tx_academicjobs_newjobform[job][' . $property . ']') . '=' . rawurlencode($value);
         }
+        foreach ($values as $name => $value) {
+            $fields[] = rawurlencode($name) . '=' . rawurlencode($value);
+        }
         parse_str(implode('&', $fields), $parsedBody);
 
         $action = $form->getAttribute('action');
@@ -164,6 +174,22 @@ abstract class AbstractAcademicJobsNotificationMailTestCase extends AbstractAcad
             str_starts_with($action, '/') ? rtrim(self::FRONTEND_PLUGIN_TEST_BASE, '/') . $action : $action,
             $parsedBody,
         ));
+    }
+
+    /**
+     * The page rendered for `$pageUrl`, ready to be queried.
+     */
+    protected function renderedPage(string $pageUrl): \DOMXPath
+    {
+        return $this->documentXPath($this->renderFrontendPage($pageUrl));
+    }
+
+    protected function documentXPath(string $html): \DOMXPath
+    {
+        $document = new \DOMDocument();
+        $document->loadHTML('<?xml encoding="UTF-8">' . $html, LIBXML_NOERROR | LIBXML_NOWARNING);
+
+        return new \DOMXPath($document);
     }
 
     /**

@@ -107,8 +107,11 @@
       <trans-unit id="create.job.link.label">
         <source>Link</source>
       </trans-unit>
+      <trans-unit id="create.job.internationalsWelcome.label">
+        <source>International applicants welcome</source>
+      </trans-unit>
       <trans-unit id="create.job.alumniRecommend.label">
-        <source>Created by Alumni</source>
+        <source>Recommended by alumni</source>
       </trans-unit>
       <trans-unit id="create.job.incorrectValues">
         <source>One or more fields have not been filled out correctly.</source>
