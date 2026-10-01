@@ -14,8 +14,8 @@ services:
         identifier: generateJobSlug
         event: FGTCLB\AcademicJobs\Event\AfterSaveJobEvent
 
-  FGTCLB\AcademicJobs\Registry\AcademicJobsSettingsRegistry:
+  FGTCLB\AcademicJobs\Settings\AcademicJobsSettings:
     public: true
     factory:
-      - '@FGTCLB\AcademicJobs\Loader\AcademicJobsSettingsLoader'
-      - 'load'
+      - '@FGTCLB\AcademicJobs\Settings\AcademicJobsSettingsFactory'
+      - 'get'

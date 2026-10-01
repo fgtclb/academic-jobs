@@ -12,8 +12,8 @@ use FGTCLB\AcademicJobs\Domain\Model\Job;
 use FGTCLB\AcademicJobs\Domain\Repository\JobRepository;
 use FGTCLB\AcademicJobs\Domain\Validator\JobValidator;
 use FGTCLB\AcademicJobs\Event\AfterSaveJobEvent;
-use FGTCLB\AcademicJobs\Registry\AcademicJobsSettingsRegistry;
 use FGTCLB\AcademicJobs\SaveForm\FlashMessageCreationMode;
+use FGTCLB\AcademicJobs\Settings\AcademicJobsSettings;
 use GeorgRinger\NumberedPagination\NumberedPagination;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
@@ -60,7 +60,7 @@ final class JobController extends ActionController
         private readonly ImageService $imageService,
         private readonly LocalizationUtility $localizationUtility,
         protected readonly BackendUriBuilder $backendUriBuilder,
-        protected AcademicJobsSettingsRegistry $settingsRegistry,
+        private readonly AcademicJobsSettings $academicJobsSettings,
         protected readonly MailerInterface $mailer,
         private readonly LoggerInterface $logger,
     ) {}
@@ -226,7 +226,7 @@ final class JobController extends ActionController
         // Assigned after the event on purpose, so a listener cannot replace them.
         $this->view->assignMultiple(
             [
-                'validations' => $this->settingsRegistry->getValidationsForFrontend('job'),
+                'validations' => $this->academicJobsSettings->getValidationSet('job')->validations,
             ]
         );
         return $this->htmlResponse();

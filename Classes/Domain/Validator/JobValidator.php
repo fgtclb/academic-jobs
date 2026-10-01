@@ -4,21 +4,22 @@ declare(strict_types=1);
 
 namespace FGTCLB\AcademicJobs\Domain\Validator;
 
+use FGTCLB\AcademicBase\Settings\Exception\UnknownValidatorException;
+use FGTCLB\AcademicBase\Settings\Exception\UnsuitableValidatorException;
 use FGTCLB\AcademicJobs\Domain\Model\Job;
-use FGTCLB\AcademicJobs\Exception\UnknownValidatorException;
-use FGTCLB\AcademicJobs\Exception\UnsuitableValidatorException;
-use FGTCLB\AcademicJobs\Registry\AcademicJobsSettingsRegistry as SettingsRegistry;
+use FGTCLB\AcademicJobs\Settings\AcademicJobsSettings;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
+use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 
 final class JobValidator extends AbstractValidator
 {
-    private SettingsRegistry $settingsRegistry;
+    private AcademicJobsSettings $academicJobsSettings;
 
-    public function injectSettingsRegistry(SettingsRegistry $settingsRegistry): void
+    public function injectAcademicJobsSettings(AcademicJobsSettings $academicJobsSettings): void
     {
-        $this->settingsRegistry = $settingsRegistry;
+        $this->academicJobsSettings = $academicJobsSettings;
     }
 
     /**
@@ -38,29 +39,30 @@ final class JobValidator extends AbstractValidator
     }
 
     /**
-     * @param object $subject
-     * @param string $validationsIdentifier
+     * Runs the validators of every field of the validation set `$validationsIdentifier`
+     * against the property of the same name. A field `$subject` has no property for is
+     * left out, so a settings entry without one cannot refuse every submission.
+     *
      * @throws UnknownValidatorException
      */
     public function processValidations(object $subject, string $validationsIdentifier): void
     {
-        $validations = $this->settingsRegistry->getValidationsForValidator($validationsIdentifier);
-        foreach ($validations as $property => $validators) {
-            foreach ($validators as $validator) {
-                $value = ObjectAccess::getPropertyPath($subject, $property);
-                $validator = GeneralUtility::makeInstance($validator);
-                if (method_exists($validator, 'validate')) {
-                    $validationResult = $validator->validate($value);
-                    if ($validationResult->hasErrors()) {
-                        foreach ($validationResult->getErrors() as $error) {
-                            $this->result->forProperty($property)->addError($error);
-                        }
-                    }
-                } else {
+        $validationSet = $this->academicJobsSettings->getValidationSet($validationsIdentifier);
+        foreach ($validationSet->validations as $property => $validation) {
+            if (!ObjectAccess::isPropertyGettable($subject, $property)) {
+                continue;
+            }
+            $value = ObjectAccess::getProperty($subject, $property);
+            foreach ($validation->validatorClassNames as $validatorClassName) {
+                $validator = GeneralUtility::makeInstance($validatorClassName);
+                if (!$validator instanceof ValidatorInterface) {
                     throw new UnknownValidatorException(
                         'Unknown validator',
                         1753702335
                     );
+                }
+                foreach ($validator->validate($value)->getErrors() as $error) {
+                    $this->result->forProperty($property)->addError($error);
                 }
             }
         }

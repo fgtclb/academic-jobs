@@ -1,33 +1,32 @@
 #-----------------------------------------------------------------------------------------------------------------------
-# EXT:academic_jobs - Field validation configuration for the frontend "new job" form.
+# EXT:academic_jobs - Field validation configuration of a job.
 #
-# This is a separate mechanism from the one shipped by EXT:academic_persons and does not share its
-# behaviour. It is read by AcademicJobsSettingsRegistry and reaches the frontend form and the Extbase
-# validator only - it is NOT applied to the TYPO3 backend.
+# Read by the shared settings classes of EXT:academic_base, the same ones EXT:academic_persons uses. The flags of a
+# field apply in three places: the frontend "new job" form, the check of a submitted job, and the TYPO3 backend record
+# editor of a job.
 #
 # Documented at:
 # https://docs.typo3.org/p/fgtclb/academic-jobs/main/en-us/Configuration/Validations/Index.html
 #-----------------------------------------------------------------------------------------------------------------------
-# @internal The syntax of this configuration file is considered experimental and may still change.
+# The same file of every active package is merged in package loading order. A package names only the fields it
+# changes: a list replaces the flags of that field, an empty list `[]` drops them, and `~` removes the field.
+#
+# <identifier>:
+#   <propertyName>:
+#      - required   # must not be empty: marked in the form, checked on submit, required in the backend
+#      - readonly   # read only in the backend and not required anywhere, the form keeps offering the field
+#      - disabled   # the same as readonly
+#      - frontendreadonly # not required in the form and on submit, the backend keeps what the other flags say
+#      - email      # must be an e-mail address: an e-mail input, an `email` column in the backend
+#      - url        # must be a URL: a URL input
+#      - number     # a number input and a `number` column in the backend, NOT checked on submit
+#      - tel        # a telephone input, nothing else
+#      - date       # a date input on a text field, nothing else
+#
+# Flags are read regardless of case. A flag outside the vocabulary of EXT:academic_persons is ignored, and `textarea`
+# and `html` do not belong in this file.
 #-----------------------------------------------------------------------------------------------------------------------
 validations:
-  # @todo We either need a translation map (to TCA) or simply matching convention which resolves needs to be added.
-  # @todo Syntax and build-up is more than sub-optimal and needs a complete redesign and implementation.
-  # @todo The three readers understand three different keyword sets, see ACE-429. "url" produces a
-  #       validator but no TCA configuration, "number" produces TCA configuration but no validator.
-  #
-  # <identifier>:
-  #   <propertyName>:
-  #      - required   # must not be empty; also marks the field in the form
-  #      - email      # must be an email address; renders an email input
-  #      - url        # must be a URL; renders a url input
-  #      - number     # renders a number input; NOT validated server side
-  #
-  # Keywords are matched case sensitively here - always write them in lower case.
-  #
-  # "disabled" and "readonly" are NOT supported by this extension. No reader understands them, and
-  # the form emits the first keyword that is not "required" verbatim as the HTML input type, so they
-  # would render as <input type="disabled">. Use them only in EXT:academic_persons.
   job:
     title:
       - required
@@ -46,4 +45,4 @@ validations:
     contactEmail:
       - email
     contactPhone:
-      - number
+      - tel

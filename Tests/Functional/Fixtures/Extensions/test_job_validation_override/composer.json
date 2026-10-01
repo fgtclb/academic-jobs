@@ -1,0 +1,24 @@
+{
+    "name": "tests/job-validation-override",
+    "description": "A site package that overrides the jobs validation settings and the job TCA, for the functional tests of the settings",
+    "type": "typo3-cms-extension",
+    "license": "GPL-2.0-or-later",
+    "require": {
+        "typo3/cms-core": "~13.4.0@dev || ~14.3.6@dev",
+        "fgtclb/academic-jobs": "~3.0.0@dev"
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "test_job_validation_override",
+            "version": "3.0.0-dev",
+            "Package": {
+                "providesPackages": []
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "TESTS\\TestJobValidationOverride\\": "Classes/"
+        }
+    }
+}

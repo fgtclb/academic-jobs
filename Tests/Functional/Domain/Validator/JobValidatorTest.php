@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace FGTCLB\AcademicJobs\Tests\Functional\Domain\Validator;
 
+use FGTCLB\AcademicBase\Settings\Exception\UnsuitableValidatorException;
 use FGTCLB\AcademicJobs\Domain\Model\Job;
 use FGTCLB\AcademicJobs\Domain\Validator\JobValidator;
-use FGTCLB\AcademicJobs\Exception\UnsuitableValidatorException;
 use FGTCLB\AcademicJobs\Tests\Functional\AbstractAcademicJobsTestCase;
 use PHPUnit\Framework\Attributes\Test;
 use TYPO3\CMS\Extbase\Error\Result;
@@ -20,15 +20,15 @@ use TYPO3\CMS\Extbase\Validation\ValidatorResolver;
  *
  * The validator is built the way the controller builds it —
  * `ValidatorResolver::createValidator()`, i.e. `GeneralUtility::makeInstance()` through
- * the container — because `injectSettingsRegistry()` is a dependency injection setter. A
- * validator constructed with `new` has no registry and fails on an uninitialized typed
+ * the container, because `injectAcademicJobsSettings()` is a dependency injection setter. A
+ * validator constructed with `new` has no settings and fails on an uninitialized typed
  * property, so the container round trip is a load-bearing part of what is asserted here,
  * not a convenience.
  *
  * The rules themselves come from the shipped
- * `Configuration/AcademicJobs/Settings.yaml` via `AcademicJobsSettingsRegistry` — see
- * `Tests/Functional/Registry/AcademicJobsSettingsRegistryTest` for the mapping from
- * keyword to validator class.
+ * `Configuration/AcademicJobs/Settings.yaml` via `AcademicJobsSettings`. See
+ * `Tests/Functional/Settings/AcademicJobsSettingsFactoryTest` for the mapping from
+ * flag to validator class.
  */
 final class JobValidatorTest extends AbstractAcademicJobsTestCase
 {
@@ -160,10 +160,9 @@ final class JobValidatorTest extends AbstractAcademicJobsTestCase
     }
 
     /**
-     * `contactPhone` is configured `number` in the shipped settings, and the registry maps
-     * no validator class for that keyword. Nothing therefore checks the value here, no
-     * matter what is submitted. The frontend reader hands `number` to the template, so the
-     * form may well mark the field — the server side does not.
+     * `contactPhone` is configured `tel` in the shipped settings, which chooses the input
+     * type of the form and no validator. A phone number has too many valid forms to check
+     * one, so nothing checks the value here, whatever is submitted.
      */
     #[Test]
     public function contactPhoneIsNotValidatedAtAll(): void

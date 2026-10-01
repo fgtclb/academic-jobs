@@ -1,0 +1,26 @@
+# Names only the fields it changes. Every other field keeps what academic_jobs
+# ships. The start date loses its flags with an empty list, the work location
+# becomes a number column, the required degree is required and disabled,
+# `contactName` becomes an e-mail column through its flag, and `salary` names a
+# column the job table does not have.
+validations:
+  job:
+    title:
+      - required
+      - disabledd
+    companyName:
+      - required
+      - readonly
+    sector:
+      - ' Required '
+    description: ~
+    employmentStartDate: []
+    workLocation:
+      - number
+    requiredDegree:
+      - required
+      - disabled
+    contactName:
+      - email
+    salary:
+      - required
