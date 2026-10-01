@@ -109,3 +109,41 @@ Two consequences for an override:
             partialRootPaths.-1700000001 = EXT:academic_base/Resources/Private/Partials/
             paths.-1700000001 = EXT:academic_base/Resources/Private/
         }
+
+..  index:: Templates; New job form
+..  _templates-override-new-job-form:
+
+Add a field to the new job form
+-------------------------------
+
+The :guilabel:`New job form` renders the partial
+:file:`Job/Forms/AdditionalFields.html` between the job properties and the
+submit button. The partial the extension ships renders nothing, so a field such
+as a captcha is added by placing a :file:`Job/Forms/AdditionalFields.html` of
+your own in the partial root path above, without copying
+:file:`Templates/Job/New.html` or :file:`Partials/Job/Properties/Job.html`. The
+partial receives every variable of the form template.
+
+Name such a field outside the ``job`` argument of the form. The field below is
+submitted as ``tx_academicjobs_newjobform[captcha]`` and is not mapped to the
+job. A field bound to the job with ``property`` must name a property the job
+model has: the property mapping rejects any other one and the submission fails.
+
+..  code-block:: html
+
+    <html
+        lang="en"
+        xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+        data-namespace-typo3-fluid="true"
+    >
+
+    <div class="form-textfield-wrap">
+        <label class="form-label" for="job-form-captcha">Captcha</label>
+        <f:form.textfield name="captcha" id="job-form-captcha" class="form-control" />
+    </div>
+
+    </html>
+
+The partial only renders the field. The extension neither checks its value nor
+dispatches an event before the job is stored, so a site checks a captcha answer
+before the request reaches the plugin, in a middleware for example.

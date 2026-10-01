@@ -1,0 +1,15 @@
+<html
+    lang="en"
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true"
+>
+
+<f:comment>
+    Renders nothing. The new-job form renders this partial before its submit
+    button, so a site adds fields such as a captcha by overriding it. A field
+    named outside the "job" argument, for example with name="captcha", is not
+    mapped to the job. A field bound to a property the job does not have makes
+    the submission fail.
+</f:comment>
+
+</html>

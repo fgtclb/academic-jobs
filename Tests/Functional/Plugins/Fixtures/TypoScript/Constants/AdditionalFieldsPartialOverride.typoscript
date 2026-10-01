@@ -1,0 +1,3 @@
+# A project that adds a field to the new-job form by overriding the empty
+# additional fields partial through the partial root path constant.
+plugin.tx_academicjobs.view.partialRootPath = EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/AcademicJobsNewJobForm/Partials/
