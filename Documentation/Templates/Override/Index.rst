@@ -110,6 +110,22 @@ Two consequences for an override:
             paths.-1700000001 = EXT:academic_base/Resources/Private/
         }
 
+..  index:: Templates; Form fields
+..  _templates-override-form-fields:
+
+Change the fields of the new job form
+-------------------------------------
+
+Every field of the :guilabel:`New job form` is rendered by a partial below
+:file:`Job/Forms/`: :file:`Textfield.html`, :file:`Textarea.html`,
+:file:`Select.html`, :file:`Checkbox.html`, :file:`DateTime.html` and
+:file:`Upload.html`, each wrapped by :file:`FieldWrapper.html`, and the alert
+above the form by :file:`Errors.html`. Override these names. They render the
+shared form partials of :guilabel:`EXT:academic_base`, described in its
+:guilabel:`Templates` chapter, and pass :file:`Job/Forms/FieldWrapper` on as
+the wrapper, so an override of :file:`Job/Forms/FieldWrapper.html` changes the
+label and the required mark of every field at once.
+
 ..  index:: Templates; New job form
 ..  _templates-override-new-job-form:
 

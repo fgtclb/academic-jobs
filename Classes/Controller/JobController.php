@@ -8,11 +8,11 @@ use FGTCLB\AcademicBase\Controller\DispatchModifyPluginViewEventMethodTrait;
 use FGTCLB\AcademicBase\Controller\GetCurrentContentRecordMethodTrait;
 use FGTCLB\AcademicBase\Controller\GetSelectItemsForTcaManagedTableFieldMethodTrait;
 use FGTCLB\AcademicBase\Domain\Model\Dto\PluginControllerActionContext;
+use FGTCLB\AcademicBase\Form\AfterSaveResolver;
 use FGTCLB\AcademicJobs\Domain\Model\Job;
 use FGTCLB\AcademicJobs\Domain\Repository\JobRepository;
 use FGTCLB\AcademicJobs\Domain\Validator\JobValidator;
 use FGTCLB\AcademicJobs\Event\AfterSaveJobEvent;
-use FGTCLB\AcademicJobs\SaveForm\FlashMessageCreationMode;
 use FGTCLB\AcademicJobs\Settings\AcademicJobsSettings;
 use GeorgRinger\NumberedPagination\NumberedPagination;
 use Psr\Http\Message\ResponseInterface;
@@ -63,6 +63,7 @@ final class JobController extends ActionController
         private readonly AcademicJobsSettings $academicJobsSettings,
         protected readonly MailerInterface $mailer,
         private readonly LoggerInterface $logger,
+        private readonly AfterSaveResolver $afterSaveResolver,
     ) {}
 
     public function listAction(): ResponseInterface
@@ -386,8 +387,8 @@ final class JobController extends ActionController
         }
 
         $currentPageId = $this->determineCurrentPageId();
-        $redirectPageId = $this->resolveRedirectPageId();
-        $flashMessageCreationMode = $this->resolveFlashMessageCreationMode();
+        $redirectPageId = $this->afterSaveResolver->redirectPageId($this->settings);
+        $flashMessageCreationMode = $this->afterSaveResolver->flashMessageCreationMode($this->settings);
 
         $afterSaveJobEvent = new AfterSaveJobEvent(
             request: $this->request,
@@ -438,7 +439,8 @@ final class JobController extends ActionController
         // <f:flashMessages queueIdentifier="extbase.flashmessages.tx_academicjobs_newjobform"/>
         // ```
         // @todo Make flashmessage queue identifier configurable or at least use a dedicated identifer when redirecting.
-        if ($flashMessageCreationMode->shouldBeCreated($currentPageId, $useRedirectPageId)) {
+        $afterSaveDecision = $this->afterSaveResolver->decide($currentPageId, $useRedirectPageId, $flashMessageCreationMode);
+        if ($afterSaveDecision->createFlashMessage) {
             if ($mailWasSent) {
                 $this->addFlashMessageToQueue(
                     $this->translateAlert('job_created.body', 'Job created and email sent.'),
@@ -456,8 +458,8 @@ final class JobController extends ActionController
             }
         }
 
-        if ($useRedirectPageId !== null) {
-            $uri = $this->uriBuilder->setTargetPageUid($useRedirectPageId)->build();
+        if ($afterSaveDecision->redirectPageId !== null) {
+            $uri = $this->uriBuilder->setTargetPageUid($afterSaveDecision->redirectPageId)->build();
             // Since TYPO3v12 redirect method returns a response object. Return it directly.
             return $this->redirectToUri($uri);
         }
@@ -586,69 +588,6 @@ final class JobController extends ActionController
             $parameters[] = $this->request;
         }
         return LocalizationUtility::translate(...$parameters) ?? $missing;
-    }
-
-    /**
-     * Resolves redirect page id to use from different sources, using following priority order:
-     *
-     * 1. Plugin settings (flexform): redirectPageId
-     * 2. TypoScript setting (SETUP/CONSTANTS): plugin.tx_academicjobs.saveForm.fallbackRedirectPageId
-     * 3. return null indicating no external page redirect
-     *
-     * @return int|null
-     */
-    private function resolveRedirectPageId(): ?int
-    {
-        // Plugin flexform settings
-        if (isset($this->settings['redirectPageId'])
-            && (is_string($this->settings['redirectPageId']) || is_int($this->settings['redirectPageId']))
-            && MathUtility::canBeInterpretedAsInteger($this->settings['redirectPageId'])
-        ) {
-            // Ensure positive page id
-            $redirectPageId = (int)$this->settings['redirectPageId'];
-            return ($redirectPageId > 0)
-                ? $redirectPageId
-                : null;
-        }
-        // TypoScript SETUP/CONSTANT
-        if (isset($this->settings['saveForm'])
-            && is_array($this->settings['saveForm'])
-            && isset($this->settings['saveForm']['fallbackRedirectPageId'])
-            && (is_string($this->settings['saveForm']['fallbackRedirectPageId']) || is_int($this->settings['saveForm']['fallbackRedirectPageId']))
-            && MathUtility::canBeInterpretedAsInteger($this->settings['saveForm']['fallbackRedirectPageId'])
-        ) {
-            // Ensure positive page id
-            $fallbackRedirectPageId = (int)$this->settings['saveForm']['fallbackRedirectPageId'];
-            return ($fallbackRedirectPageId > 0)
-                ? $fallbackRedirectPageId
-                : null;
-        }
-        return null;
-    }
-
-    private function resolveFlashMessageCreationMode(): FlashMessageCreationMode
-    {
-        // Plugin flexform settings
-        if (isset($this->settings['flashMessageCreationMode'])
-            && (is_string($this->settings['flashMessageCreationMode']) || is_int($this->settings['flashMessageCreationMode']))
-            && MathUtility::canBeInterpretedAsInteger($this->settings['flashMessageCreationMode'])
-            && (int)$this->settings['flashMessageCreationMode'] >= 0
-            && FlashMessageCreationMode::tryFrom((int)$this->settings['flashMessageCreationMode']) !== null
-        ) {
-            return FlashMessageCreationMode::from((int)$this->settings['flashMessageCreationMode']);
-        }
-        // TypoScript SETUP/CONSTANT
-        if (isset($this->settings['saveForm'])
-            && is_array($this->settings['saveForm'])
-            && isset($this->settings['saveForm']['fallbackFlashMessageCreationMode'])
-            && (is_string($this->settings['saveForm']['fallbackFlashMessageCreationMode']) || is_int($this->settings['saveForm']['fallbackFlashMessageCreationMode']))
-            && MathUtility::canBeInterpretedAsInteger($this->settings['saveForm']['fallbackFlashMessageCreationMode'])
-            && (int)$this->settings['saveForm']['fallbackFlashMessageCreationMode'] >= 0
-            && FlashMessageCreationMode::tryFrom((int)$this->settings['saveForm']['fallbackFlashMessageCreationMode']) !== null
-        ) {
-            return FlashMessageCreationMode::from((int)$this->settings['saveForm']['fallbackFlashMessageCreationMode']);
-        }
-        return FlashMessageCreationMode::default();
     }
 
     /**

@@ -4,14 +4,21 @@
     data-namespace-typo3-fluid="true"
 >
 
-<f:variable name="elementId" value="job.{element.identifier}"/>
+<f:comment>
+    One field of the new-job form, rendered by the shared partial
+    "Academic/Form/Upload" of EXT:academic_base. A project overrides this name.
+    The field is wrapped by "Job/Forms/FieldWrapper", so an override of the
+    wrapper reaches every field.
+</f:comment>
 
 <f:render
-    partial="Job/Forms/FieldWrapper"
-    arguments="{element: element, elementId: elementId, class: 'form-upload-wrap'}"
-    contentAs="elementContent"
->
-    <f:form.upload property="{element.identifier}" class="form-control" id="{elementId}"/>
-</f:render>
+    partial="Academic/Form/Upload"
+    arguments="{
+        element: element,
+        objectName: 'job',
+        extensionName: 'AcademicJobs',
+        fieldWrapperPartial: 'Job/Forms/FieldWrapper',
+    }"
+/>
 
 </html>

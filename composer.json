@@ -55,6 +55,11 @@
                 "providesPackages": []
             }
         },
+        "typo3/class-alias-loader": {
+            "class-alias-maps": [
+                "Migrations/Code/ClassAliasMap.php"
+            ]
+        },
         "branch-alias": {
             "dev-main": "3.0.x-dev"
         }

@@ -4,21 +4,21 @@
     data-namespace-typo3-fluid="true"
 >
 
-<f:variable name="elementId" value="job.{element.identifier}"/>
+<f:comment>
+    One field of the new-job form, rendered by the shared partial
+    "Academic/Form/Textarea" of EXT:academic_base. A project overrides this name.
+    The field is wrapped by "Job/Forms/FieldWrapper", so an override of the
+    wrapper reaches every field.
+</f:comment>
 
 <f:render
-    partial="Job/Forms/FieldWrapper"
-    arguments="{element: element, elementId: elementId, class: 'form-textarea-wrap'}"
-    contentAs="elementContent"
->
-    <f:form.textarea
-        property="{element.identifier}"
-        id="{elementId}"
-        class="form-control {f:if(condition: element.richtext, then: 'rich-text')}"
-        disabled="{element.disabled}"
-        placeholder="{f:translate(key:'edit.{elementId}.placeholder', extensionName: 'AcademicJobs')}"
-        rows="5"
-    />
-</f:render>
+    partial="Academic/Form/Textarea"
+    arguments="{
+        element: element,
+        objectName: 'job',
+        extensionName: 'AcademicJobs',
+        fieldWrapperPartial: 'Job/Forms/FieldWrapper',
+    }"
+/>
 
 </html>

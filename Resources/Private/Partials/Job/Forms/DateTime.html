@@ -4,22 +4,21 @@
     data-namespace-typo3-fluid="true"
 >
 
-<f:variable name="elementId" value="job.{element.identifier}"/>
+<f:comment>
+    One field of the new-job form, rendered by the shared partial
+    "Academic/Form/DateTime" of EXT:academic_base. A project overrides this name.
+    The field is wrapped by "Job/Forms/FieldWrapper", so an override of the
+    wrapper reaches every field.
+</f:comment>
 
 <f:render
-    partial="Job/Forms/FieldWrapper"
-    arguments="{element: element, elementId: elementId, class: 'form-date-wrap'}"
-    contentAs="elementContent"
->
-    <f:form.textfield
-        property="{element.identifier}"
-        value="{element.value -> f:format.date(format:'d.m.Y')}"
-        id="{elementId}"
-        class="form-control"
-        disabled="{element.disabled}"
-        data="{render:'datepicker'}"
-        type="date"
-    />
-</f:render>
+    partial="Academic/Form/DateTime"
+    arguments="{
+        element: element,
+        objectName: 'job',
+        extensionName: 'AcademicJobs',
+        fieldWrapperPartial: 'Job/Forms/FieldWrapper',
+    }"
+/>
 
 </html>

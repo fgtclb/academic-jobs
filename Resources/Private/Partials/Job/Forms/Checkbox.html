@@ -4,24 +4,21 @@
     data-namespace-typo3-fluid="true"
 >
 
-<f:variable name="elementId" value="job.{element.identifier}"/>
+<f:comment>
+    One field of the new-job form, rendered by the shared partial
+    "Academic/Form/Checkbox" of EXT:academic_base. A project overrides this name.
+    The field is wrapped by "Job/Forms/FieldWrapper", so an override of the
+    wrapper reaches every field.
+</f:comment>
 
 <f:render
-    partial="Job/Forms/FieldWrapper"
+    partial="Academic/Form/Checkbox"
     arguments="{
         element: element,
-        elementId: elementId,
-        class: 'form-check-wrap',
+        objectName: 'job',
+        extensionName: 'AcademicJobs',
+        fieldWrapperPartial: 'Job/Forms/FieldWrapper',
     }"
-    contentAs="elementContent"
->
-    <f:form.checkbox
-        property="{element.identifier}"
-        id="{elementId}"
-        value="1"
-        disabled="{element.disabled}"
-        class="form-check-input"
-    />
-</f:render>
+/>
 
 </html>

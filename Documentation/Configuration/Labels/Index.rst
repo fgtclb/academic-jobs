@@ -53,7 +53,9 @@ Where the labels are shown
 ==========================
 
 Placeholders in angle brackets stand for a part of the key that the template
-or the code fills in, a category type or a field name for example.
+or the code fills in, a category type or a field name for example. The form
+partials below :file:`Partials/Job/Forms/` render the shared form partials of
+:guilabel:`EXT:academic_base`, which read their keys from this extension.
 
 ..  list-table::
     :header-rows: 1

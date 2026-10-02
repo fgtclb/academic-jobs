@@ -1,0 +1,3 @@
+# A project that overrides the text field partial of the new-job form with a copy
+# of the shipped one, through the partial root path constant.
+plugin.tx_academicjobs.view.partialRootPath = EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/AcademicJobsNewJobFormPartialOverride/TextfieldPartials/

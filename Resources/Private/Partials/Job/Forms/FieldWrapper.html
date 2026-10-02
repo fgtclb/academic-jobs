@@ -1,27 +1,25 @@
 <html
     lang="en"
     xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-    xmlns:p="http://typo3.org/ns/FGTCLB/AcademicBase/ViewHelpers"
     data-namespace-typo3-fluid="true"
 >
 
-<f:variable name="validation" value="{p:validationEnsure(validations: element.validations, identifier: element.identifier)}"/>
+<f:comment>
+    The label, the required mark, the validation state and the help text around
+    every field of the new-job form, rendered by the shared partial
+    "Academic/Form/FieldWrapper" of EXT:academic_base. A project overrides this
+    name. Its arguments are "element", "elementId", "class" and "elementContent".
+</f:comment>
 
-<f:form.validationResults for="{elementId}" as="validationResults">
-    <div class="{f:if(condition:'{validationResults.flattenedErrors}', then:' is-invalid')} {class}">
-        <label class="form-label" for="{elementId}">
-            {f:translate(key:'create.{elementId}.label', extensionName: 'AcademicJobs')}
-            <f:if condition="{validation.required}">
-                <abbr title="required">*</abbr>
-            </f:if>
-        </label>
-
-        {elementContent->f:format.raw()}
-
-        <f:if condition="{element.help}">
-            <div class="form-text">{element.help->f:format.raw()}</div>
-        </f:if>
-    </div>
-</f:form.validationResults>
+<f:render
+    partial="Academic/Form/FieldWrapper"
+    arguments="{
+        element: element,
+        elementId: elementId,
+        class: class,
+        elementContent: elementContent,
+        extensionName: 'AcademicJobs',
+    }"
+/>
 
 </html>

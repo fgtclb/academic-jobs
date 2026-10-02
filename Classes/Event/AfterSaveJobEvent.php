@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace FGTCLB\AcademicJobs\Event;
 
+use FGTCLB\AcademicBase\Form\FlashMessageCreationMode;
 use FGTCLB\AcademicJobs\Domain\Model\Job;
-use FGTCLB\AcademicJobs\SaveForm\FlashMessageCreationMode;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
