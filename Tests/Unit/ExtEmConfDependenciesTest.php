@@ -33,7 +33,9 @@ final class ExtEmConfDependenciesTest extends UnitTestCase
                 continue;
             }
             if ($packageName === 'typo3/cms-core') {
+                // The core is depended on twice: as the "typo3" version and as the extension "core".
                 $expected[] = 'typo3';
+                $expected[] = 'core';
                 continue;
             }
             // "typo3/cms-rte-ckeditor" is "rte_ckeditor", "fgtclb/academic-base" is "academic_base".
