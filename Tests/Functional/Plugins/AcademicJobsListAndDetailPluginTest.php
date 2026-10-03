@@ -31,6 +31,7 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
 {
     use ContentElementHeaderAssertionTrait;
     use FrontendPluginRenderingTrait;
+    use JobContactIconAssertionTrait;
     use SiteBasedTestTrait;
 
     private const LIST_CONTENT_ELEMENT = 1;
@@ -161,6 +162,25 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
         $uri = htmlspecialchars_decode($matches['uri']);
 
         return $this->renderFrontendPage('https://www.acme.com' . $uri);
+    }
+
+    /**
+     * The detail view the contact block belongs to, which holds the property icons.
+     */
+    private function detailViewOf(\DOMElement $contactBlock): \DOMElement
+    {
+        $document = $contactBlock->ownerDocument;
+        $this->assertInstanceOf(\DOMDocument::class, $document);
+        $detailViews = (new \DOMXPath($document))->query(
+            'ancestor::div[contains(concat(" ", normalize-space(@class), " "), " academic-jobs-detail ")]',
+            $contactBlock,
+        );
+        $this->assertNotFalse($detailViews);
+        $this->assertSame(1, $detailViews->length, 'The contact block is not inside exactly one detail view.');
+        $detailView = $detailViews->item(0);
+        $this->assertInstanceOf(\DOMElement::class, $detailView);
+
+        return $detailView;
     }
 
     #[Test]
@@ -379,6 +399,55 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
         $this->assertStringContainsString('academic-jobs-contact', $content);
         $this->assertStringContainsString('grace@example.org', $content);
         $this->assertStringNotContainsString('tel:', $content);
+    }
+
+    #[Test]
+    public function detailPluginRendersTheShippedContactIcons(): void
+    {
+        $this->setUpTestCase('jobPages');
+
+        $block = $this->contactBlock($this->renderDetailPageOfJob($this->renderListPage(), 1));
+        $phoneIcon = $this->iconImage($block, 'academic_jobs-contactPhone');
+        $this->assertNotNull($phoneIcon, 'The phone row renders no shipped phone icon.');
+        $this->assertStringEndsWith('Icons/Phone.svg', $this->iconFilePath($phoneIcon));
+        $this->assertSame('16', $phoneIcon->getAttribute('width'));
+        $this->assertSame('16', $phoneIcon->getAttribute('height'));
+        $emailIcon = $this->iconImage($block, 'academic_jobs-contactEmail');
+        $this->assertNotNull($emailIcon, 'The e-mail row renders no shipped e-mail icon.');
+        $this->assertStringEndsWith('Icons/Email.svg', $this->iconFilePath($emailIcon));
+        $this->assertSame('16', $emailIcon->getAttribute('width'));
+        $this->assertSame('16', $emailIcon->getAttribute('height'));
+        $this->assertContactBlockHasNoMissingIcon($block);
+    }
+
+    #[Test]
+    public function detailPluginRendersOnlyTheEmailIconForAContactWithoutPhone(): void
+    {
+        $this->setUpTestCase('jobPages_contactPhone');
+
+        $block = $this->contactBlock($this->renderDetailPageOfJob($this->renderListPage(), 2));
+        $this->assertNotNull($this->iconImage($block, 'academic_jobs-contactEmail'));
+        $this->assertNull($this->iconImage($block, 'academic_jobs-contactPhone'));
+        // A phone icon under any other identifier would pass the line above, so the block
+        // holds the e-mail icon and nothing else.
+        $this->assertSame(['academic_jobs-contactEmail'], $this->iconIdentifiers($block));
+        $this->assertContactBlockHasNoMissingIcon($block);
+    }
+
+    #[Test]
+    public function detailPluginRendersContactIconsAtThePropertyIconSize(): void
+    {
+        $this->setUpTestCase('jobPages');
+
+        $block = $this->contactBlock($this->renderDetailPageOfJob($this->renderListPage(), 1));
+        $propertyIcon = $this->iconImage($this->detailViewOf($block), 'academic_jobs-workLocation');
+        $this->assertNotNull($propertyIcon, 'The detail view renders no work location icon.');
+        foreach (['academic_jobs-contactPhone', 'academic_jobs-contactEmail'] as $identifier) {
+            $contactIcon = $this->iconImage($block, $identifier);
+            $this->assertNotNull($contactIcon, sprintf('The contact block renders no "%s" image.', $identifier));
+            $this->assertSame($propertyIcon->getAttribute('width'), $contactIcon->getAttribute('width'));
+            $this->assertSame($propertyIcon->getAttribute('height'), $contactIcon->getAttribute('height'));
+        }
     }
 
     #[Test]

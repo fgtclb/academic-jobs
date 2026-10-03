@@ -24,7 +24,7 @@
         <ul>
             <f:if condition="{job.contactPhone}">
                 <li>
-                    <core:icon identifier="phone" alternativeMarkupIdentifier="inline"/>
+                    <core:icon identifier="academic_jobs-contactPhone"/>
 
                     <f:comment>
                         A `tel:` URI carries no spaces, while the stored number is written for
@@ -36,7 +36,7 @@
 
             <f:if condition="{job.contactEmail}">
                 <li>
-                    <core:icon identifier="mail" alternativeMarkupIdentifier="inline"/>
+                    <core:icon identifier="academic_jobs-contactEmail"/>
 
                     <f:link.email email="{job.contactEmail}">{job.contactEmail}</f:link.email>
                 </li>
