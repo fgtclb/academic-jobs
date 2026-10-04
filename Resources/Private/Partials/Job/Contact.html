@@ -2,7 +2,7 @@
     lang="en"
     data-namespace-typo3-fluid="true"
     xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
-    xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+    xmlns:ab="http://typo3.org/ns/FGTCLB/AcademicBase/ViewHelpers"
 >
 
 <div class="academic-jobs-contact bg-grey">
@@ -24,7 +24,7 @@
         <ul>
             <f:if condition="{job.contactPhone}">
                 <li>
-                    <core:icon identifier="academic_jobs-contactPhone"/>
+                    <ab:icon identifier="academic_jobs-contactPhone"/>
 
                     <f:comment>
                         A `tel:` URI carries no spaces, while the stored number is written for
@@ -36,7 +36,7 @@
 
             <f:if condition="{job.contactEmail}">
                 <li>
-                    <core:icon identifier="academic_jobs-contactEmail"/>
+                    <ab:icon identifier="academic_jobs-contactEmail"/>
 
                     <f:link.email email="{job.contactEmail}">{job.contactEmail}</f:link.email>
                 </li>

@@ -1,8 +1,8 @@
 <?php
 
 $EM_CONF[$_EXTKEY] = [
-    'title' => 'TESTS: Academic Jobs contact icon replacement',
-    'description' => 'A site package that replaces the phone icon of the job contact block, for the functional tests of the contact icons',
+    'title' => 'TESTS: Academic Jobs icon replacement',
+    'description' => 'A site package that replaces job icons, two in the right file and two in the wrong one, for the functional tests of the job icons',
     'version' => '3.0.0',
     'category' => 'plugin',
     'state' => 'beta',

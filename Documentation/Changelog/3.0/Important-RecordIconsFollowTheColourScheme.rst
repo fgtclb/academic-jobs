@@ -28,8 +28,10 @@ in a dark colour scheme. It is also addressable by identifier now, which it was
 not before - :html:`<core:icon identifier="tx_academicjobs_domain_model_job" />`
 resolves.
 
-The seventeen :php:`academic_jobs-*` field icons of the job detail view keep the
-core provider and are unchanged.
+The seventeen :php:`academic_jobs-*` field icons of the job views keep the core
+provider. They are frontend icons, registered in
+:file:`Configuration/FrontendIcons.php`, see
+:ref:`breaking-jobs-job-icons-moved-to-the-frontend-icon-registry`.
 
 Affected Installations
 ======================

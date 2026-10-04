@@ -76,6 +76,49 @@ copying the partial:
 Every label of the extension, and the path of each content element, is listed
 in :ref:`configuration-labels`.
 
+..  index:: Templates; Icons
+..  _templates-override-icons:
+
+Replace the icon of a job property
+----------------------------------
+
+The same loop renders an icon in front of every property, under the identifier
+``academic_jobs-<property>``, for example ``academic_jobs-workLocation``. The
+contact block renders ``academic_jobs-contactPhone`` and
+``academic_jobs-contactEmail`` in front of the phone number and the e-mail
+address. The extension also registers ``academic_jobs-starttime``,
+``academic_jobs-contactName`` and ``academic_jobs-contactAdditionalInformation``,
+which no shipped template renders, so an override that adds one of these
+properties to the loop gets an icon without registering one.
+
+These are frontend icons. They are registered in
+:file:`Configuration/FrontendIcons.php` and rendered with the ``ab:icon``
+ViewHelper of :guilabel:`EXT:academic_base`. Replace one by registering a file
+of your own under its identifier in the :file:`Configuration/FrontendIcons.php`
+of your site package, which has to depend on the extension so that its entry is
+read last:
+
+..  code-block:: php
+    :caption: EXT:mysitepackage/Configuration/FrontendIcons.php
+
+    <?php
+
+    use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
+
+    return [
+        'academic_jobs-workLocation' => [
+            'provider' => SvgIconProvider::class,
+            'source' => 'EXT:mysitepackage/Resources/Public/Icons/Location.svg',
+        ],
+    ];
+
+An entry in :file:`Configuration/Icons.php` does not reach the job views. An
+override of :file:`Job/Item.html`, :file:`Job/Information.html` or
+:file:`Job/Contact.html` renders these icons with ``ab:icon`` and declares
+``xmlns:ab="http://typo3.org/ns/FGTCLB/AcademicBase/ViewHelpers"`` in its
+:html:`<html>` tag. With ``core:icon`` it shows TYPO3's not-found icon, see
+:ref:`breaking-jobs-job-icons-moved-to-the-frontend-icon-registry`.
+
 ..  index:: Templates; Images
 
 The image of a job

@@ -44,6 +44,25 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
     private const RENDER_HEADER_CONSTANTS = 'EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/TypoScript/Constants/RenderContentElementHeader.typoscript';
     private const LAYOUT_WITHOUT_HEADER_SETUP = 'EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/TypoScript/Setup/LayoutWithoutHeader.typoscript';
 
+    /**
+     * The twelve properties the list and the detail view show, in the order they show
+     * them, each with its icon.
+     */
+    private const PROPERTY_ICONS = [
+        'academic_jobs-employmentStartDate',
+        'academic_jobs-companyName',
+        'academic_jobs-sector',
+        'academic_jobs-type',
+        'academic_jobs-requiredDegree',
+        'academic_jobs-contractualRelationship',
+        'academic_jobs-employmentType',
+        'academic_jobs-workLocation',
+        'academic_jobs-internationalsWelcome',
+        'academic_jobs-alumniRecommend',
+        'academic_jobs-link',
+        'academic_jobs-endtime',
+    ];
+
     protected const LANGUAGE_PRESETS = [
         'EN' => ['id' => 0, 'title' => 'English', 'locale' => 'en_US.UTF8', 'iso' => 'en', 'hrefLang' => 'en-US', 'direction' => ''],
         'DE' => ['id' => 1, 'title' => 'Deutsch', 'locale' => 'de_DE.UTF8', 'iso' => 'de', 'hrefLang' => 'de-DE', 'direction' => ''],
@@ -183,6 +202,19 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
         return $detailView;
     }
 
+    private function wrapperOf(string $content, string $expression): \DOMElement
+    {
+        $document = new \DOMDocument();
+        $document->loadHTML('<?xml encoding="UTF-8">' . $content, LIBXML_NOERROR | LIBXML_NOWARNING);
+        $wrappers = (new \DOMXPath($document))->query($expression);
+        $this->assertNotFalse($wrappers);
+        $this->assertSame(1, $wrappers->length, 'Expected exactly one node for ' . $expression);
+        $wrapper = $wrappers->item(0);
+        $this->assertInstanceOf(\DOMElement::class, $wrapper);
+
+        return $wrapper;
+    }
+
     #[Test]
     public function listPluginRendersAllVisibleJobs(): void
     {
@@ -245,6 +277,34 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
         $this->assertStringContainsString('Full-Time', $content);
         $this->assertStringContainsString('Part-Time', $content);
         $this->assertStringNotContainsString('jobs.type.1', $content);
+    }
+
+    /**
+     * The icons are frontend icons, rendered by `ab:icon`. An identifier the frontend
+     * registry does not know renders the `default-not-found` placeholder, and the
+     * identifier is gone from the markup, so the second assertion catches a registration
+     * renamed without the template.
+     */
+    #[Test]
+    public function listPluginRendersAResolvableIconForEveryProperty(): void
+    {
+        $this->setUpTestCase('jobPages_allProperties');
+
+        $content = $this->renderListPage();
+        $list = $this->wrapperOf($content, self::LIST_WRAPPER);
+        $this->assertStringNotContainsString('default-not-found', $content);
+        $this->assertSame(self::PROPERTY_ICONS, $this->iconIdentifiers($list));
+    }
+
+    #[Test]
+    public function detailPluginRendersAResolvableIconForEveryProperty(): void
+    {
+        $this->setUpTestCase('jobPages_allProperties');
+
+        $content = $this->renderDetailPageOfJob($this->renderListPage(), 1);
+        $detail = $this->wrapperOf($content, self::DETAIL_WRAPPER);
+        $this->assertStringNotContainsString('default-not-found', $content);
+        $this->assertSame(self::PROPERTY_ICONS, $this->iconIdentifiers($detail));
     }
 
     #[Test]

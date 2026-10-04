@@ -1,6 +1,6 @@
 {
-    "name": "tests/test-job-contact-icon",
-    "description": "A site package that replaces the phone icon of the job contact block, for the functional tests of the contact icons",
+    "name": "tests/job-icons",
+    "description": "A site package that replaces job icons, two in the right file and two in the wrong one, for the functional tests of the job icons",
     "type": "typo3-cms-extension",
     "license": "GPL-2.0-or-later",
     "require": {
@@ -9,7 +9,7 @@
     },
     "extra": {
         "typo3/cms": {
-            "extension-key": "test_job_contact_icon",
+            "extension-key": "test_job_icons",
             "version": "3.0.0-dev",
             "Package": {
                 "providesPackages": []

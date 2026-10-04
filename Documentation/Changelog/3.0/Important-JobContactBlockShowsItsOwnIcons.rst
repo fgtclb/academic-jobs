@@ -44,13 +44,16 @@ A site package that registered :php:`phone` or :php:`mail` to give this block
 an icon now sees the shipped icons in the block. Its registrations stay
 harmless and keep serving its own templates. To keep its own drawing in the
 block, it registers the file under the identifier the block renders, in the
-:file:`Configuration/Icons.php` of the site package. The site package requires
-:composer:`fgtclb/academic-jobs` and lists :php:`academic_jobs` under
-:php:`depends` in its :file:`ext_emconf.php`, so it loads later and its
-registration wins:
+:file:`Configuration/FrontendIcons.php` of the site package. That file belongs
+to the frontend icon registry of :guilabel:`academic_base`, which the block
+renders its icons from, see
+:ref:`breaking-jobs-job-icons-moved-to-the-frontend-icon-registry`. The site
+package requires :composer:`fgtclb/academic-jobs` and lists
+:php:`academic_jobs` under :php:`depends` in its :file:`ext_emconf.php`, so it
+loads later and its registration wins:
 
 ..  code-block:: php
-    :caption: EXT:my_sitepackage/Configuration/Icons.php
+    :caption: EXT:my_sitepackage/Configuration/FrontendIcons.php
 
     use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
 

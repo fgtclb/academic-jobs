@@ -2,7 +2,7 @@
     lang="en"
     data-namespace-typo3-fluid="true"
     xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
-    xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+    xmlns:ab="http://typo3.org/ns/FGTCLB/AcademicBase/ViewHelpers"
 >
 
 <ul>
@@ -25,7 +25,7 @@
     >
         <f:if condition="{job.{item}}">
             <li>
-                <core:icon identifier="academic_jobs-{item}"/>
+                <ab:icon identifier="academic_jobs-{item}"/>
 
                 <f:if condition="{item} == 'internationalsWelcome' || {item} == 'alumniRecommend'">
                     <f:then>
