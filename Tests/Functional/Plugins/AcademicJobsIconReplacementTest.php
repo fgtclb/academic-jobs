@@ -15,14 +15,16 @@ use TYPO3\CMS\Core\Package\PackageManager;
  * A site package replaces an icon of the job views by registering its own file under the
  * identifier the views render, in its own `Configuration/FrontendIcons.php`. A
  * replacement left in `Configuration/Icons.php` does not reach the job views, which show
- * the shipped file.
+ * the shipped glyph.
  *
  * The fixture `tests/job-icons` is that site package: it replaces
- * `academic_jobs-contactPhone` and `academic_jobs-companyName` in the file of the
- * frontend, and `academic_jobs-contactEmail` and `academic_jobs-workLocation` in the file
- * of the backend. The replacement only works from a package that loads after
- * `academic_jobs`, and a TYPO3 v14 test instance orders the packages by their keys, so the
- * first test asserts that order. The shipped icons are covered by
+ * `tx-academicjobs-info-contact-phone` and `tx-academicjobs-info-company-name` in the
+ * file of the frontend, and `tx-academicjobs-info-contact-email` and
+ * `tx-academicjobs-info-work-location` in the file of the backend. It registers its files
+ * with the core provider, so they render as an `<img>`, while the shipped glyphs are
+ * inlined. The replacement only works from a package that loads after `academic_jobs`,
+ * and a TYPO3 v14 test instance orders the packages by their keys, so the first test
+ * asserts that order. The shipped icons are covered by
  * `AcademicJobsListAndDetailPluginTest`, on the same records.
  */
 final class AcademicJobsIconReplacementTest extends AbstractAcademicJobsTestCase
@@ -82,7 +84,7 @@ final class AcademicJobsIconReplacementTest extends AbstractAcademicJobsTestCase
     #[Test]
     public function aFrontendIconOfTheSitePackageReachesTheJobList(): void
     {
-        $this->assertEveryIconShows($this->renderFrontendPage('https://www.acme.com/home'), 'academic_jobs-companyName', 'Icons/SiteCompany.svg');
+        $this->assertEveryIconShowsTheImage($this->renderFrontendPage('https://www.acme.com/home'), 'tx-academicjobs-info-company-name', 'Icons/SiteCompany.svg');
     }
 
     #[Test]
@@ -90,8 +92,8 @@ final class AcademicJobsIconReplacementTest extends AbstractAcademicJobsTestCase
     {
         // The extension no longer registers the identifier there, so this is the
         // replacement of the fixture, read by the backend registry.
-        $this->assertTrue($this->get(IconRegistry::class)->isRegistered('academic_jobs-workLocation'));
-        $this->assertEveryIconShows($this->renderFrontendPage('https://www.acme.com/home'), 'academic_jobs-workLocation', 'Icons/Location.svg');
+        $this->assertTrue($this->get(IconRegistry::class)->isRegistered('tx-academicjobs-info-work-location'));
+        $this->assertEveryIconShowsTheSharedGlyph($this->renderFrontendPage('https://www.acme.com/home'), 'tx-academicjobs-info-work-location', 'location.svg');
     }
 
     #[Test]
@@ -99,40 +101,61 @@ final class AcademicJobsIconReplacementTest extends AbstractAcademicJobsTestCase
     {
         $content = $this->renderDetailPageOfFirstJob();
 
-        $this->assertEveryIconShows($content, 'academic_jobs-companyName', 'Icons/SiteCompany.svg');
-        $this->assertEveryIconShows($content, 'academic_jobs-workLocation', 'Icons/Location.svg');
+        $this->assertEveryIconShowsTheImage($content, 'tx-academicjobs-info-company-name', 'Icons/SiteCompany.svg');
+        $this->assertEveryIconShowsTheSharedGlyph($content, 'tx-academicjobs-info-work-location', 'location.svg');
     }
 
     #[Test]
     public function contactBlockRendersThePhoneIconTheSitePackageRegistered(): void
     {
         $block = $this->contactBlock($this->renderDetailPageOfFirstJob());
-        $phoneIcon = $this->iconImage($block, 'academic_jobs-contactPhone');
-        $this->assertNotNull($phoneIcon, 'The phone row renders no phone icon.');
-        $this->assertStringEndsWith('Icons/SitePhone.svg', $this->iconFilePath($phoneIcon));
-        // Replaced in `Icons.php` only, so the shipped file.
-        $emailIcon = $this->iconImage($block, 'academic_jobs-contactEmail');
-        $this->assertNotNull($emailIcon, 'The e-mail row renders no e-mail icon.');
-        $this->assertStringEndsWith('Icons/Email.svg', $this->iconFilePath($emailIcon));
+        $this->assertIconShowsTheImage($this->iconDrawing($block, 'tx-academicjobs-info-contact-phone'), 'Icons/SitePhone.svg');
+        // Replaced in `Icons.php` only, so the shipped glyph.
+        $this->assertIconShowsTheSharedGlyph($this->iconDrawing($block, 'tx-academicjobs-info-contact-email'), 'email.svg');
         $this->assertContactBlockHasNoMissingIcon($block);
     }
 
     /**
-     * Every icon with the identifier on the page shows the file, and there is at least one.
+     * Every icon with the identifier on the page is an image of the file, and there is at
+     * least one.
      *
      * @param non-empty-string $fileSuffix
      */
-    private function assertEveryIconShows(string $content, string $identifier, string $fileSuffix): void
+    private function assertEveryIconShowsTheImage(string $content, string $identifier, string $fileSuffix): void
+    {
+        foreach ($this->iconDrawingsOnPage($content, $identifier) as $drawing) {
+            $this->assertIconShowsTheImage($drawing, $fileSuffix);
+        }
+    }
+
+    /**
+     * Every icon with the identifier on the page is the inlined shared glyph, and there is
+     * at least one.
+     */
+    private function assertEveryIconShowsTheSharedGlyph(string $content, string $identifier, string $file): void
+    {
+        foreach ($this->iconDrawingsOnPage($content, $identifier) as $drawing) {
+            $this->assertIconShowsTheSharedGlyph($drawing, $file);
+        }
+    }
+
+    /**
+     * @return non-empty-list<\DOMElement>
+     */
+    private function iconDrawingsOnPage(string $content, string $identifier): array
     {
         $document = new \DOMDocument();
         $document->loadHTML('<?xml encoding="UTF-8">' . $content, LIBXML_NOERROR | LIBXML_NOWARNING);
-        $images = (new \DOMXPath($document))->query(sprintf('//*[@data-identifier="%s"]//img', $identifier));
-        $this->assertNotFalse($images);
-        $this->assertGreaterThan(0, $images->length, sprintf('The page renders no "%s" icon.', $identifier));
-        foreach ($images as $image) {
-            $this->assertInstanceOf(\DOMElement::class, $image);
-            $this->assertStringEndsWith($fileSuffix, $this->iconFilePath($image));
+        $nodes = (new \DOMXPath($document))->query(sprintf('//*[@data-identifier="%s"]//*[self::svg or self::img]', $identifier));
+        $this->assertNotFalse($nodes);
+        $drawings = [];
+        foreach ($nodes as $node) {
+            $this->assertInstanceOf(\DOMElement::class, $node);
+            $drawings[] = $node;
         }
+        $this->assertNotSame([], $drawings, sprintf('The page renders no "%s" icon.', $identifier));
+
+        return $drawings;
     }
 
     /**

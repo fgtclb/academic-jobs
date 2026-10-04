@@ -15,7 +15,7 @@ if (!defined('TYPO3')) {
         [
             'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:plugin.newjobform.label',
             'value' => 'academicjobs_newjobform',
-            'icon' => 'academic_jobs_icon',
+            'icon' => 'tx-academicjobs-plugin-jobs',
             'group' => 'academic',
         ],
         'academic_jobs'
@@ -41,7 +41,7 @@ if (!defined('TYPO3')) {
         [
             'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:plugin.list.label',
             'value' => 'academicjobs_list',
-            'icon' => 'academic_jobs_icon',
+            'icon' => 'tx-academicjobs-plugin-jobs',
             'group' => 'academic',
         ],
         'academic_jobs'
@@ -67,7 +67,7 @@ if (!defined('TYPO3')) {
         [
             'label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:plugin.detail.label',
             'value' => 'academicjobs_detail',
-            'icon' => 'academic_jobs_icon',
+            'icon' => 'tx-academicjobs-plugin-jobs',
             'group' => 'academic',
         ],
         'academic_jobs'

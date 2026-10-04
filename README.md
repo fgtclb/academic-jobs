@@ -109,3 +109,7 @@ The full declarations are also included in this repository:
 ## License
 
 This extension is released under the [GPL-2.0-or-later](LICENSE) license.
+
+The icons of this extension draw the Font Awesome Free icons of academic_base,
+licensed under CC BY 4.0 and listed in its `LICENSE-font-awesome.txt`. The
+extension ships no icon file of its own apart from `Extension.svg`.

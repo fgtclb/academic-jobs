@@ -14,10 +14,11 @@ not found" drawing of TYPO3 in front of the contact phone number and the
 contact e-mail address. A real icon only appeared where the site package
 happened to register :php:`phone` and :php:`mail` itself.
 
-The block now renders the two icons the extension ships and has always
-registered, :php:`academic_jobs-contactPhone` and
-:php:`academic_jobs-contactEmail`. They are rendered like the property icons of
-the same view, as an image of 16 by 16 pixels, instead of an inlined SVG:
+The block now renders two icons the extension registers,
+:php:`tx-academicjobs-info-contact-phone` and
+:php:`tx-academicjobs-info-contact-email`. They are rendered like the property
+icons of the same view, as the shared Font Awesome Free glyphs of
+:guilabel:`academic_base`, inlined and drawn in `currentColor`:
 
 ..  code-block:: html
 
@@ -25,20 +26,21 @@ the same view, as an image of 16 by 16 pixels, instead of an inlined SVG:
                   data-identifier="default-not-found" aria-hidden="true">
                 <span class="icon-markup"><svg …>…</svg></span>
             </span>
-    after:  <span class="t3js-icon icon icon-size-small icon-state-default icon-academic_jobs-contactPhone"
-                  data-identifier="academic_jobs-contactPhone" aria-hidden="true">
-                <span class="icon-markup"><img src="…/Icons/Phone.svg" width="16" height="16" alt="" /></span>
+    after:  <span class="t3js-icon icon icon-size-small icon-state-default icon-tx-academicjobs-info-contact-phone"
+                  data-identifier="tx-academicjobs-info-contact-phone" aria-hidden="true">
+                <span class="icon-markup"><svg … width="1em" height="1em" fill="currentColor">…</svg></span>
             </span>
 
-The e-mail row is the same with :php:`academic_jobs-contactEmail` and
-:file:`Icons/Email.svg`. TYPO3 v14 appends a version query string to the image
-source.
+The e-mail row is the same with :php:`tx-academicjobs-info-contact-email`. The
+identifiers are those of
+:ref:`breaking-jobs-job-icons-moved-to-the-frontend-icon-registry`.
 
 Impact
 ======
 
 A stock installation needs nothing, the block shows a phone and an e-mail icon
-where it showed the placeholder.
+where it showed the placeholder. They take the colour of the surrounding text
+and are as large as its font.
 
 A site package that registered :php:`phone` or :php:`mail` to give this block
 an icon now sees the shipped icons in the block. Its registrations stay
@@ -58,23 +60,23 @@ loads later and its registration wins:
     use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
 
     return [
-        'academic_jobs-contactPhone' => [
+        'tx-academicjobs-info-contact-phone' => [
             'provider' => SvgIconProvider::class,
             'source' => 'EXT:my_sitepackage/Resources/Public/Icons/Phone.svg',
         ],
-        'academic_jobs-contactEmail' => [
+        'tx-academicjobs-info-contact-email' => [
             'provider' => SvgIconProvider::class,
             'source' => 'EXT:my_sitepackage/Resources/Public/Icons/Mail.svg',
         ],
     ];
 
-A provider that inlines in both markups, such as
-:php:`\FGTCLB\AcademicBase\Imaging\IconProvider\CurrentColorSvgIconProvider`,
-gives the block an inlined SVG again.
+:php:`SvgIconProvider` renders the file as an image of 16 by 16 pixels. A file
+drawn in `currentColor` and registered with
+:php:`\FGTCLB\AcademicBase\Imaging\IconProvider\CurrentColorSvgIconProvider`
+is inlined like the shipped icons.
 
-A stylesheet that selects :css:`.icon-phone` or :css:`.icon-mail`, or an
-inlined :html:`<svg>` inside :css:`.academic-jobs-contact`, has to select the
-new identifier classes and the :html:`<img>` instead.
+A stylesheet that selects :css:`.icon-phone` or :css:`.icon-mail` has to select
+the new identifier classes instead.
 
 An installation that overrides
 :file:`Resources/Private/Partials/Job/Contact.html` in its own site package

@@ -12,7 +12,7 @@ TCEFORM.tt_content.CType.removeItems := removeFromList(academicjobs_newjobform)
 mod.wizards.newContentElement.wizardItems.academic {
   elements {
     academicjobs_newjobform {
-      iconIdentifier = academic_jobs_icon
+      iconIdentifier = tx-academicjobs-plugin-jobs
       title = LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:newContentElement.wizardItems.academic.newjobform.title
       description = LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:newContentElement.wizardItems.academic.newjobform.description
       tt_content_defValues {

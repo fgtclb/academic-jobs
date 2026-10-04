@@ -39,3 +39,16 @@ The following data is available for job advertisements:
     * Phone number
     * Additional information
     * Link / Slug
+
+..  _third-party-icons:
+
+Third-party icons
+-----------------
+
+The icons of this extension, the property icons of the job views as well as
+the content element and the job record icon, draw the shared icons of
+:guilabel:`academic_base`, which lists them in its own notice. They are
+`Font Awesome Free <https://fontawesome.com>`__ icons by Fonticons, Inc.,
+licensed under the `Creative Commons Attribution 4.0 International license
+<https://creativecommons.org/licenses/by/4.0/>`__. The extension ships no icon
+file of its own apart from :file:`Extension.svg`.

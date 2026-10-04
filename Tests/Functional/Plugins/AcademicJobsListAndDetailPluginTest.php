@@ -46,21 +46,23 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
 
     /**
      * The twelve properties the list and the detail view show, in the order they show
-     * them, each with its icon.
+     * them, each with its icon. The templates map the property name to the identifier, so
+     * this list is what proves the map: `tx-academicjobs-info-` and the property name in
+     * kebab case.
      */
     private const PROPERTY_ICONS = [
-        'academic_jobs-employmentStartDate',
-        'academic_jobs-companyName',
-        'academic_jobs-sector',
-        'academic_jobs-type',
-        'academic_jobs-requiredDegree',
-        'academic_jobs-contractualRelationship',
-        'academic_jobs-employmentType',
-        'academic_jobs-workLocation',
-        'academic_jobs-internationalsWelcome',
-        'academic_jobs-alumniRecommend',
-        'academic_jobs-link',
-        'academic_jobs-endtime',
+        'tx-academicjobs-info-employment-start-date',
+        'tx-academicjobs-info-company-name',
+        'tx-academicjobs-info-sector',
+        'tx-academicjobs-info-type',
+        'tx-academicjobs-info-required-degree',
+        'tx-academicjobs-info-contractual-relationship',
+        'tx-academicjobs-info-employment-type',
+        'tx-academicjobs-info-work-location',
+        'tx-academicjobs-info-internationals-welcome',
+        'tx-academicjobs-info-alumni-recommend',
+        'tx-academicjobs-info-link',
+        'tx-academicjobs-info-endtime',
     ];
 
     protected const LANGUAGE_PRESETS = [
@@ -294,6 +296,7 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
         $list = $this->wrapperOf($content, self::LIST_WRAPPER);
         $this->assertStringNotContainsString('default-not-found', $content);
         $this->assertSame(self::PROPERTY_ICONS, $this->iconIdentifiers($list));
+        $this->assertEveryPropertyIconIsInlined($list);
     }
 
     #[Test]
@@ -305,6 +308,7 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
         $detail = $this->wrapperOf($content, self::DETAIL_WRAPPER);
         $this->assertStringNotContainsString('default-not-found', $content);
         $this->assertSame(self::PROPERTY_ICONS, $this->iconIdentifiers($detail));
+        $this->assertEveryPropertyIconIsInlined($detail);
     }
 
     #[Test]
@@ -467,16 +471,8 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
         $this->setUpTestCase('jobPages');
 
         $block = $this->contactBlock($this->renderDetailPageOfJob($this->renderListPage(), 1));
-        $phoneIcon = $this->iconImage($block, 'academic_jobs-contactPhone');
-        $this->assertNotNull($phoneIcon, 'The phone row renders no shipped phone icon.');
-        $this->assertStringEndsWith('Icons/Phone.svg', $this->iconFilePath($phoneIcon));
-        $this->assertSame('16', $phoneIcon->getAttribute('width'));
-        $this->assertSame('16', $phoneIcon->getAttribute('height'));
-        $emailIcon = $this->iconImage($block, 'academic_jobs-contactEmail');
-        $this->assertNotNull($emailIcon, 'The e-mail row renders no shipped e-mail icon.');
-        $this->assertStringEndsWith('Icons/Email.svg', $this->iconFilePath($emailIcon));
-        $this->assertSame('16', $emailIcon->getAttribute('width'));
-        $this->assertSame('16', $emailIcon->getAttribute('height'));
+        $this->assertIconShowsTheSharedGlyph($this->iconDrawing($block, 'tx-academicjobs-info-contact-phone'), 'phone.svg');
+        $this->assertIconShowsTheSharedGlyph($this->iconDrawing($block, 'tx-academicjobs-info-contact-email'), 'email.svg');
         $this->assertContactBlockHasNoMissingIcon($block);
     }
 
@@ -486,28 +482,60 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
         $this->setUpTestCase('jobPages_contactPhone');
 
         $block = $this->contactBlock($this->renderDetailPageOfJob($this->renderListPage(), 2));
-        $this->assertNotNull($this->iconImage($block, 'academic_jobs-contactEmail'));
-        $this->assertNull($this->iconImage($block, 'academic_jobs-contactPhone'));
+        $this->assertNotNull($this->iconDrawing($block, 'tx-academicjobs-info-contact-email'));
+        $this->assertNull($this->iconDrawing($block, 'tx-academicjobs-info-contact-phone'));
         // A phone icon under any other identifier would pass the line above, so the block
         // holds the e-mail icon and nothing else.
-        $this->assertSame(['academic_jobs-contactEmail'], $this->iconIdentifiers($block));
+        $this->assertSame(['tx-academicjobs-info-contact-email'], $this->iconIdentifiers($block));
         $this->assertContactBlockHasNoMissingIcon($block);
     }
 
+    /**
+     * The icons are inlined and sized by the font of the surrounding text, so the contact
+     * icons and the property icons carry the same size attributes and the same size class
+     * of their wrapper.
+     */
     #[Test]
     public function detailPluginRendersContactIconsAtThePropertyIconSize(): void
     {
         $this->setUpTestCase('jobPages');
 
         $block = $this->contactBlock($this->renderDetailPageOfJob($this->renderListPage(), 1));
-        $propertyIcon = $this->iconImage($this->detailViewOf($block), 'academic_jobs-workLocation');
+        $propertyIcon = $this->iconDrawing($this->detailViewOf($block), 'tx-academicjobs-info-work-location');
         $this->assertNotNull($propertyIcon, 'The detail view renders no work location icon.');
-        foreach (['academic_jobs-contactPhone', 'academic_jobs-contactEmail'] as $identifier) {
-            $contactIcon = $this->iconImage($block, $identifier);
-            $this->assertNotNull($contactIcon, sprintf('The contact block renders no "%s" image.', $identifier));
+        $this->assertIconShowsTheSharedGlyph($propertyIcon, 'location.svg');
+        foreach (['tx-academicjobs-info-contact-phone', 'tx-academicjobs-info-contact-email'] as $identifier) {
+            $contactIcon = $this->iconDrawing($block, $identifier);
+            $this->assertNotNull($contactIcon, sprintf('The contact block renders no "%s" icon.', $identifier));
             $this->assertSame($propertyIcon->getAttribute('width'), $contactIcon->getAttribute('width'));
             $this->assertSame($propertyIcon->getAttribute('height'), $contactIcon->getAttribute('height'));
+            $this->assertSame($this->iconSizeClass($propertyIcon), $this->iconSizeClass($contactIcon));
         }
+    }
+
+    /**
+     * Every property icon is an inlined drawing in the colour of the text, not an image.
+     */
+    private function assertEveryPropertyIconIsInlined(\DOMElement $view): void
+    {
+        foreach (self::PROPERTY_ICONS as $identifier) {
+            $drawing = $this->iconDrawing($view, $identifier);
+            $this->assertNotNull($drawing, sprintf('The "%s" icon renders no drawing.', $identifier));
+            $this->assertSame('svg', $drawing->nodeName, sprintf('The "%s" icon is not inlined.', $identifier));
+            $this->assertSame('currentColor', $drawing->getAttribute('fill'));
+        }
+    }
+
+    /**
+     * The `icon-size-*` class of the wrapper of an icon drawing.
+     */
+    private function iconSizeClass(\DOMElement $drawing): string
+    {
+        $wrapper = $drawing->parentNode?->parentNode;
+        $this->assertInstanceOf(\DOMElement::class, $wrapper);
+        $this->assertSame(1, preg_match('/\bicon-size-[a-z]+\b/', $wrapper->getAttribute('class'), $matches));
+
+        return $matches[0];
     }
 
     #[Test]

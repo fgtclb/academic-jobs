@@ -82,35 +82,65 @@ in :ref:`configuration-labels`.
 Replace the icon of a job property
 ----------------------------------
 
-The same loop renders an icon in front of every property, under the identifier
-``academic_jobs-<property>``, for example ``academic_jobs-workLocation``. The
-contact block renders ``academic_jobs-contactPhone`` and
-``academic_jobs-contactEmail`` in front of the phone number and the e-mail
-address. The extension also registers ``academic_jobs-starttime``,
-``academic_jobs-contactName`` and ``academic_jobs-contactAdditionalInformation``,
-which no shipped template renders, so an override that adds one of these
-properties to the loop gets an icon without registering one.
+The same loop renders an icon in front of every property. Each property has an
+identifier of its own, ``tx-academicjobs-info-`` and the property name in kebab
+case, for example ``tx-academicjobs-info-work-location`` for ``workLocation``.
+The loop lists every property it shows together with the name of its icon:
+
+..  code-block:: html
+
+    <f:for
+        each="{
+            employmentStartDate: 'employment-start-date',
+            companyName: 'company-name',
+            …
+        }"
+        as="iconName"
+        key="item"
+    >
+        <ab:icon identifier="tx-academicjobs-info-{iconName}"/>
+        …
+    </f:for>
+
+The contact block renders ``tx-academicjobs-info-contact-phone`` and
+``tx-academicjobs-info-contact-email`` in front of the phone number and the
+e-mail address. The extension also registers
+``tx-academicjobs-info-starttime``, ``tx-academicjobs-info-contact-name`` and
+``tx-academicjobs-info-contact-additional-information``, which no shipped
+template renders, so an override that adds one of these properties to the loop
+gets an icon without registering one.
+
+The icons are the shared Font Awesome Free glyphs of
+:guilabel:`EXT:academic_base`, several properties share one. They are inlined
+and drawn in `currentColor`: they take the colour of the surrounding text and
+are as large as its font, so they need no CSS of their own.
 
 These are frontend icons. They are registered in
 :file:`Configuration/FrontendIcons.php` and rendered with the ``ab:icon``
 ViewHelper of :guilabel:`EXT:academic_base`. Replace one by registering a file
 of your own under its identifier in the :file:`Configuration/FrontendIcons.php`
 of your site package, which has to depend on the extension so that its entry is
-read last:
+read last. The other properties keep their icons, also those that show the same
+glyph:
 
 ..  code-block:: php
     :caption: EXT:mysitepackage/Configuration/FrontendIcons.php
 
     <?php
 
-    use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
+    use FGTCLB\AcademicBase\Imaging\IconProvider\CurrentColorSvgIconProvider;
 
     return [
-        'academic_jobs-workLocation' => [
-            'provider' => SvgIconProvider::class,
+        'tx-academicjobs-info-work-location' => [
+            'provider' => CurrentColorSvgIconProvider::class,
             'source' => 'EXT:mysitepackage/Resources/Public/Icons/Location.svg',
         ],
     ];
+
+:php:`CurrentColorSvgIconProvider` inlines a file drawn in `currentColor`, like
+the shipped icons. A file in other colours is registered with the
+:php:`\TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider` of TYPO3, which
+renders it as an image of 16 by 16 pixels.
 
 An entry in :file:`Configuration/Icons.php` does not reach the job views. An
 override of :file:`Job/Item.html`, :file:`Job/Information.html` or
@@ -118,6 +148,11 @@ override of :file:`Job/Item.html`, :file:`Job/Information.html` or
 ``xmlns:ab="http://typo3.org/ns/FGTCLB/AcademicBase/ViewHelpers"`` in its
 :html:`<html>` tag. With ``core:icon`` it shows TYPO3's not-found icon, see
 :ref:`breaking-jobs-job-icons-moved-to-the-frontend-icon-registry`.
+
+The content element icon and the job record icon both draw the Font Awesome
+Free briefcase of the shared set,
+:file:`EXT:academic_base/Resources/Public/Icons/info/employment.svg`, see
+:ref:`third-party-icons`.
 
 ..  index:: Templates; Images
 

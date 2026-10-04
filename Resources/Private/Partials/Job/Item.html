@@ -44,26 +44,32 @@
         </div>
 
         <ul class="list-group list-group-flush">
+            <f:comment>
+                The keys are the job properties shown, in this order. The values name their
+                icons: `tx-academicjobs-info-` and the property name in kebab case, registered in
+                Configuration/FrontendIcons.php.
+            </f:comment>
             <f:for
                 each="{
-                    0: 'employmentStartDate',
-                    1: 'companyName',
-                    2: 'sector',
-                    3: 'type',
-                    4: 'requiredDegree',
-                    5: 'contractualRelationship',
-                    6: 'employmentType',
-                    7: 'workLocation',
-                    8: 'internationalsWelcome',
-                    9: 'alumniRecommend',
-                    10: 'link',
-                    11: 'endtime',
+                    employmentStartDate: 'employment-start-date',
+                    companyName: 'company-name',
+                    sector: 'sector',
+                    type: 'type',
+                    requiredDegree: 'required-degree',
+                    contractualRelationship: 'contractual-relationship',
+                    employmentType: 'employment-type',
+                    workLocation: 'work-location',
+                    internationalsWelcome: 'internationals-welcome',
+                    alumniRecommend: 'alumni-recommend',
+                    link: 'link',
+                    endtime: 'endtime',
                 }"
-                as="item"
+                as="iconName"
+                key="item"
             >
                 <f:if condition="{job.{item}}">
                     <li class="list-group-item">
-                        <ab:icon identifier="academic_jobs-{item}"/>
+                        <ab:icon identifier="tx-academicjobs-info-{iconName}"/>
 
                         <f:if condition="{item} == 'internationalsWelcome' || {item} == 'alumniRecommend'">
                             <f:then>

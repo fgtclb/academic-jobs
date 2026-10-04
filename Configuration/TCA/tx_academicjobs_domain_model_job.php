@@ -18,7 +18,7 @@ $tcaConfiguration = [
             'endtime' => 'endtime',
         ],
         'typeicon_classes' => [
-            'default' => 'tx_academicjobs_domain_model_job',
+            'default' => 'tx-academicjobs-record-job',
         ],
         'security' => [
             'ignorePageTypeRestriction' => true,
