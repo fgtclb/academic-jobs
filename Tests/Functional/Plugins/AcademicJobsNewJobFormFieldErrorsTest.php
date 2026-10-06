@@ -9,10 +9,9 @@ use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Submits the `academicjobs_newjobform` plugin with values the validation rejects, and
- * reads the form it renders again: each rejected field carries `is-invalid` itself, names
- * its messages with `aria-describedby` and `aria-invalid`, and is followed by them in an
- * `invalid-feedback` element, which is how a Bootstrap theme shows it. A field that passed
- * carries none of it.
+ * reads the form it renders again: each rejected field carries the class `change-me`
+ * itself, names its messages with `aria-describedby` and `aria-invalid`, and is followed by
+ * them in the element `<id>-error`. A field that passed carries none of it.
  *
  * The class extends the notification mail test case for its form submission. The mail a
  * submission sends is not looked at here.
@@ -20,6 +19,12 @@ use PHPUnit\Framework\Attributes\Test;
 final class AcademicJobsNewJobFormFieldErrorsTest extends AbstractAcademicJobsNotificationMailTestCase
 {
     use NewJobFormValidationAssertionTrait;
+
+    /**
+     * The elements holding the messages of a field, whose id is the one of the field with
+     * "-error" appended.
+     */
+    private const MESSAGES = '//*[starts-with(@id, "job.")][substring(@id, string-length(@id) - 5) = "-error"]';
 
     /**
      * Two required fields left empty, an email address and a link the validators reject.
@@ -74,7 +79,7 @@ final class AcademicJobsNewJobFormFieldErrorsTest extends AbstractAcademicJobsNo
         $this->assertSame(0, $this->jobCount());
         foreach ($expectedMessages as $property => $message) {
             $field = $this->field($xpath, $property);
-            $this->assertContains('is-invalid', $this->classes($field), sprintf('The field "%s" is not marked invalid.', $property));
+            $this->assertContains('change-me', $this->classes($field), sprintf('The field "%s" is not marked invalid.', $property));
             $this->assertNotContains('f3-form-error', $this->classes($field), $property);
             $this->assertSame('true', $field->getAttribute('aria-invalid'), $property);
             $this->assertSame('job.' . $property . '-error', $field->getAttribute('aria-describedby'), $property);
@@ -96,7 +101,7 @@ final class AcademicJobsNewJobFormFieldErrorsTest extends AbstractAcademicJobsNo
 
         foreach (['companyName', 'employmentType', 'type', 'employmentStartDate', 'internationalsWelcome', 'image'] as $property) {
             $field = $this->field($xpath, $property);
-            $this->assertNotContains('is-invalid', $this->classes($field), $property);
+            $this->assertNotContains('change-me', $this->classes($field), $property);
             $this->assertFalse($field->hasAttribute('aria-invalid'), $property);
             $this->assertFalse($field->hasAttribute('aria-describedby'), $property);
             $this->assertSame([], $this->feedback($xpath, $property), $property);
@@ -118,7 +123,7 @@ final class AcademicJobsNewJobFormFieldErrorsTest extends AbstractAcademicJobsNo
             $this->assertSame(['Pflichtfeld'], $this->requiredTitles($xpath, $property), $property);
         }
         $this->assertSame([], $this->requiredTitles($xpath, 'link'));
-        $nodes = $xpath->query('//*[contains(concat(" ", normalize-space(@class), " "), " invalid-feedback ")]');
+        $nodes = $xpath->query(self::MESSAGES);
         $this->assertNotFalse($nodes);
         $this->assertSame(0, $nodes->length);
     }
@@ -164,7 +169,7 @@ final class AcademicJobsNewJobFormFieldErrorsTest extends AbstractAcademicJobsNo
             ['"<b>soon</b>" is no date.', 'This field is required.'],
             $this->feedback($xpath, 'employmentStartDate'),
         );
-        $bold = $xpath->query('//*[contains(concat(" ", normalize-space(@class), " "), " invalid-feedback ")]//b');
+        $bold = $xpath->query(self::MESSAGES . '//b');
         $this->assertNotFalse($bold);
         $this->assertSame(0, $bold->length);
     }
@@ -240,7 +245,7 @@ final class AcademicJobsNewJobFormFieldErrorsTest extends AbstractAcademicJobsNo
     private function feedback(\DOMXPath $xpath, string $property): array
     {
         $nodes = $xpath->query(sprintf(
-            '//*[@id="job.%1$s"]/following-sibling::*[@id="job.%1$s-error"][contains(concat(" ", normalize-space(@class), " "), " invalid-feedback ")]/div',
+            '//*[@id="job.%1$s"]/following-sibling::*[@id="job.%1$s-error"]/div',
             $property,
         ));
         $this->assertNotFalse($nodes);

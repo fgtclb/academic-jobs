@@ -224,7 +224,8 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
 
         $content = $this->renderListPage();
         $this->assertStringContainsString('academic-jobs-list', $content);
-        $this->assertStringContainsString('academic-jobs-itemlist', $content);
+        // The item list is the element below the list wrapper holding one element per job.
+        $this->assertSame(3, $this->countContentElementHeaderNodes($content, self::LIST_WRAPPER . '/div/div'));
         $this->assertStringContainsString('Research Assistant Position', $content);
         $this->assertStringContainsString('Student Assistant Sidejob', $content);
         $this->assertStringContainsString('Master Thesis Topic', $content);
@@ -340,8 +341,8 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
         $content = $this->renderListPage();
         // This extension has no "nothing found" label — the item list stays empty, and the
         // plugin still has to render rather than fail.
-        $this->assertStringContainsString('academic-jobs-itemlist', $content);
-        $this->assertStringNotContainsString('academic-jobs-item"', $content);
+        $this->assertSame(1, $this->countContentElementHeaderNodes($content, self::LIST_WRAPPER . '/div'));
+        $this->assertSame(0, $this->countContentElementHeaderNodes($content, self::LIST_WRAPPER . '/div/div'));
     }
 
     #[Test]
@@ -364,7 +365,7 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
         // Header layout 1 without a subheader is the "one level up" case of the heading
         // partial, so the item title has to be an `h2`.
         $this->assertMatchesRegularExpression(
-            '#<h2 class="card-title">\s*<a href="[^"]*tx_academicjobs_detail[^"]*">Research Assistant Position</a>\s*</h2>#',
+            '#<h2 class="">\s*<a href="[^"]*tx_academicjobs_detail[^"]*">Research Assistant Position</a>\s*</h2>#',
             $this->renderListPage(),
         );
     }
@@ -432,7 +433,7 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
         $this->setUpTestCase('jobPages');
 
         $content = $this->renderDetailPageOfJob($this->renderListPage(), 1);
-        $this->assertStringContainsString('academic-jobs-contact', $content);
+        $this->assertSame(1, $this->countContentElementHeaderNodes($content, $this->contactBlockQuery()));
         $this->assertStringContainsString('Dr. Ada Lovelace', $content);
         // A `tel:` URI carries no spaces, while the stored number is written for a reader —
         // so the link target drops them and the label keeps them.
@@ -460,7 +461,7 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
         // left out. `detailPluginOmitsContactBlockForJobWithoutContact()` covers the case
         // where there is no contact at all and therefore no block either.
         $content = $this->renderDetailPageOfJob($this->renderListPage(), 2);
-        $this->assertStringContainsString('academic-jobs-contact', $content);
+        $this->assertSame(1, $this->countContentElementHeaderNodes($content, $this->contactBlockQuery()));
         $this->assertStringContainsString('grace@example.org', $content);
         $this->assertStringNotContainsString('tel:', $content);
     }
@@ -545,7 +546,7 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
 
         $content = $this->renderDetailPageOfJob($this->renderListPage(), 2);
         $this->assertStringContainsString('Student Assistant Sidejob', $content);
-        $this->assertStringNotContainsString('academic-jobs-contact', $content);
+        $this->assertSame(0, $this->countContentElementHeaderNodes($content, $this->contactBlockQuery()));
     }
 
     #[Test]
@@ -557,7 +558,7 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
         // Header layout 1 without a subheader renders the section heading as `h3` — one
         // level below the `h2` of the default layout.
         $this->assertMatchesRegularExpression(
-            '#<h3 class="contact-title">\s*Contact\s*</h3>#',
+            '#<h3 class="">\s*Contact\s*</h3>#',
             $content,
         );
     }

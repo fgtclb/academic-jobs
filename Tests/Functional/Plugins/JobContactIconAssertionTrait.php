@@ -16,13 +16,20 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 trait JobContactIconAssertionTrait
 {
+    /**
+     * The contact block carries no class of its own, so it is the element around the
+     * section heading that reads "Contact".
+     */
+    private function contactBlockQuery(): string
+    {
+        return '//div[*[self::h1 or self::h2 or self::h3 or self::h4 or self::h5 or self::h6][normalize-space() = "Contact"]]';
+    }
+
     private function contactBlock(string $content): \DOMElement
     {
         $document = new \DOMDocument();
         $document->loadHTML('<?xml encoding="UTF-8">' . $content, LIBXML_NOERROR | LIBXML_NOWARNING);
-        $blocks = (new \DOMXPath($document))->query(
-            '//div[contains(concat(" ", normalize-space(@class), " "), " academic-jobs-contact ")]'
-        );
+        $blocks = (new \DOMXPath($document))->query($this->contactBlockQuery());
         $this->assertNotFalse($blocks);
         $this->assertSame(1, $blocks->length, 'The detail view renders not exactly one contact block.');
         $block = $blocks->item(0);

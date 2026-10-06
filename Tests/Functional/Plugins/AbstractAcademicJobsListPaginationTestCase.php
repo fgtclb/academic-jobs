@@ -124,7 +124,7 @@ abstract class AbstractAcademicJobsListPaginationTestCase extends AbstractAcadem
         $document = new \DOMDocument();
         @$document->loadHTML('<?xml encoding="utf-8" ?>' . $content);
         $navigations = (new \DOMXPath($document))->query(
-            '//nav[contains(concat(" ", normalize-space(@class), " "), " academic-jobs-list__pagination ")]'
+            '//div[contains(concat(" ", normalize-space(@class), " "), " academic-jobs-list ")]/nav'
         );
         if ($navigations === false || $navigations->length === 0) {
             return null;

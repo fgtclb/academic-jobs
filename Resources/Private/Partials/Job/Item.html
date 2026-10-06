@@ -28,22 +28,21 @@
     </f:else>
 </f:if>
 
-<div class="card flex-column-reverse academic-jobs-item">
-    <div class="card-content">
-        <div class="card-body">
+<div>
+    <div>
+        <div>
             <f:render
                 partial="Job/Header"
                 arguments="{
                     header: job.title,
                     layout: data.header_layout,
-                    positionClass: 'card-title',
                     link: detailUri,
                     subheader: data.subheader
                 }"
             />
         </div>
 
-        <ul class="list-group list-group-flush">
+        <ul>
             <f:comment>
                 The keys are the job properties shown, in this order. The values name their
                 icons: `tx-academicjobs-info-` and the property name in kebab case, registered in
@@ -68,7 +67,7 @@
                 key="item"
             >
                 <f:if condition="{job.{item}}">
-                    <li class="list-group-item">
+                    <li>
                         <ab:icon identifier="tx-academicjobs-info-{iconName}"/>
 
                         <f:if condition="{item} == 'internationalsWelcome' || {item} == 'alumniRecommend'">
@@ -117,7 +116,6 @@
             arguments="{
                 image: job.image,
                 preset: 'card',
-                class: 'card-img-top img-fluid'
             }"
         />
     </f:if>

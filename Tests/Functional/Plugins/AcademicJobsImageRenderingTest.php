@@ -86,7 +86,7 @@ final class AcademicJobsImageRenderingTest extends AbstractAcademicJobsTestCase
     private function items(\DOMXPath $xpath): array
     {
         $items = [];
-        foreach ($this->nodesMatching($xpath, "//*[contains(concat(' ', normalize-space(@class), ' '), ' academic-jobs-item ')]") as $item) {
+        foreach ($this->nodesMatching($xpath, "//div[contains(concat(' ', normalize-space(@class), ' '), ' academic-jobs-list ')]/div/div") as $item) {
             $this->assertInstanceOf(\DOMElement::class, $item);
             $items[] = $item;
         }
@@ -107,7 +107,7 @@ final class AcademicJobsImageRenderingTest extends AbstractAcademicJobsTestCase
             $withPhoto,
             self::CARD_SOURCES,
             self::CARD_FALLBACK_WIDTH,
-            'card-img-top img-fluid',
+            '',
             'The campus of Acme University',
         );
     }
@@ -123,7 +123,7 @@ final class AcademicJobsImageRenderingTest extends AbstractAcademicJobsTestCase
             $xpath,
             $withVectorLogo,
             '/logo.svg',
-            'card-img-top img-fluid',
+            '',
             'The logo of Acme Institute',
         );
     }
@@ -141,7 +141,7 @@ final class AcademicJobsImageRenderingTest extends AbstractAcademicJobsTestCase
 
         $xpath = $this->parseRenderedPage($this->renderFrontendPage('https://www.acme.com/home'));
         [$withoutImage] = $this->items($xpath);
-        $this->assertRendersNoImage($xpath, $withoutImage, 'card-img-top img-fluid');
+        $this->assertRendersNoImage($xpath, $withoutImage, '');
     }
 
     /**

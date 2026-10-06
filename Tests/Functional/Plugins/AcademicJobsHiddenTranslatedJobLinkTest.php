@@ -96,7 +96,7 @@ final class AcademicJobsHiddenTranslatedJobLinkTest extends AbstractAcademicJobs
      */
     private function listedJobs(string $content): array
     {
-        preg_match_all('#<h2 class="card-title">(.*?)</h2>#s', $content, $matches);
+        preg_match_all('#<h2 class="">(.*?)</h2>#s', $content, $matches);
         $jobs = [];
         foreach ($matches[1] as $heading) {
             $title = trim(strip_tags($heading));

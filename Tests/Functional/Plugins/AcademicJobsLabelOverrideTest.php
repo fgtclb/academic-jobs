@@ -200,10 +200,10 @@ final class AcademicJobsLabelOverrideTest extends AbstractAcademicJobsTestCase
             'detail', 'jobs.back', 'Back to job list', '<a href="/home"> %s </a>',
         ];
         yield 'detail, contact heading, translated in the argument of a partial' => [
-            'detail', 'jobs.contact', 'Contact', '<h2 class="contact-title"> %s </h2>',
+            'detail', 'jobs.contact', 'Contact', '<h2 class=""> %s </h2>',
         ];
         yield 'form, field label, key from a variable' => [
-            'newjobform', 'create.job.title.label', 'Job title / Thesis title', '<label class="form-label" for="job.title"> %s ',
+            'newjobform', 'create.job.title.label', 'Job title / Thesis title', '<label for="job.title"> %s ',
         ];
         yield 'form, empty option of a select, kept in a variable' => [
             'newjobform', 'create.job.type.none', 'Please choose', '<option value="0">%s</option>',

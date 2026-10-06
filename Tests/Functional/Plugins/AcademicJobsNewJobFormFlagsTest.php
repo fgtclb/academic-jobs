@@ -100,7 +100,7 @@ final class AcademicJobsNewJobFormFlagsTest extends AbstractAcademicJobsNotifica
 
         $xpath = $this->documentXPath((string)$response->getBody());
         $invalidTitles = $xpath->query(
-            self::JOB_FORM . '//div[contains(concat(" ", normalize-space(@class), " "), " is-invalid ")]//input[@id="job.title"]'
+            self::JOB_FORM . '//div[contains(concat(" ", normalize-space(@class), " "), " change-me ")]//input[@id="job.title"]'
         );
         $this->assertNotFalse($invalidTitles);
         $this->assertSame(1, $invalidTitles->length, 'The form is not shown again with the error of the title.');
