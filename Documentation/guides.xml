@@ -5,6 +5,7 @@
         links-are-relative="true"
         default-code-language="php">
     <extension class="\T3Docs\Typo3DocsTheme\DependencyInjection\Typo3DocsThemeExtension"
+               interlink-shortcode="fgtclb/academic-jobs"
                project-home="https://extensions.typo3.org/extension/academic_jobs/"
                project-repository="https://github.com/fgtclb/academic-jobs"
                project-issues="https://github.com/fgtclb/academic-extensions/issues"
