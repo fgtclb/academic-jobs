@@ -5,7 +5,7 @@
     xmlns:ab="http://typo3.org/ns/FGTCLB/AcademicBase/ViewHelpers"
 >
 
-<ul>
+<ul class="ace-properties">
     <f:comment>
         The keys are the job properties shown, in this order. The values name their
         icons: `tx-academicjobs-info-` and the property name in kebab case, registered in
@@ -30,18 +30,18 @@
         key="item"
     >
         <f:if condition="{job.{item}}">
-            <li>
-                <ab:icon identifier="tx-academicjobs-info-{iconName}"/>
+            <li class="ace-property">
+                <span class="ace-icon"><ab:icon identifier="tx-academicjobs-info-{iconName}"/></span>
 
                 <f:if condition="{item} == 'internationalsWelcome' || {item} == 'alumniRecommend'">
                     <f:then>
                         <f:comment>A flag carries no value a visitor can read: its label is the statement.</f:comment>
-                        <b>{f:translate(key: 'jobs.{item}', extensionName: 'AcademicJobs')}</b>
+                        <b class="ace-label">{f:translate(key: 'jobs.{item}', extensionName: 'AcademicJobs')}</b>
                     </f:then>
                     <f:else>
-                        <b>{f:translate(key: 'jobs.{item}', extensionName: 'AcademicJobs')}:</b>
+                        <b class="ace-label">{f:translate(key: 'jobs.{item}', extensionName: 'AcademicJobs')}:</b>
 
-                        <span>
+                        <span class="ace-value">
                             <f:if condition="{item} == 'employmentStartDate' || {item} == 'endtime'">
                                 <f:then>
                                     <f:format.date format="d.m.Y">{job.{item}}</f:format.date>
@@ -50,7 +50,7 @@
                                     <f:translate key="jobs.{item}.{job.{item}}" extensionName="AcademicJobs" />
                                 </f:else>
                                 <f:else if="{item} == 'link'">
-                                    <f:link.typolink parameter="{job.link}">
+                                    <f:link.typolink class="ace-link" parameter="{job.link}">
                                         {f:translate(key: 'jobs.linkText', extensionName: 'AcademicJobs')}
                                     </f:link.typolink>
                                 </f:else>

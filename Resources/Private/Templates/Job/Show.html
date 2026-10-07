@@ -13,7 +13,7 @@
     <f:flashMessages />
 
     <f:if condition="{settings.listPid}">
-        <f:link.page pageUid="{settings.listPid}">
+        <f:link.page class="ace-back" pageUid="{settings.listPid}">
             {f:translate(key: 'jobs.back', extensionName: 'AcademicJobs')}
         </f:link.page>
     </f:if>
@@ -41,7 +41,7 @@
         <div class="row">
             <f:if condition="{job.description}">
                 <div class="col-12 {f:if(condition: contact, then: 'col-lg-8')}">
-                    <div class="ce-bodytext">
+                    <div class="ace-content ace-richtext ce-bodytext">
                         <f:format.html>{job.description}</f:format.html>
                     </div>
                 </div>

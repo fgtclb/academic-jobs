@@ -191,19 +191,19 @@ final class AcademicJobsLabelOverrideTest extends AbstractAcademicJobsTestCase
     public static function pluginTranslationDataProvider(): \Generator
     {
         yield 'list, property of a job, key from a variable' => [
-            'list', 'jobs.companyName', 'Organization', '<b>%s:</b> <span> Acme University </span>',
+            'list', 'jobs.companyName', 'Organization', '<b class="ace-label">%s:</b> <span class="ace-value"> Acme University </span>',
         ];
         yield 'list, text of the job link' => [
-            'list', 'jobs.linkText', 'To the job posting', '<a href="https://jobs.example.org/research-assistant"> %s </a>',
+            'list', 'jobs.linkText', 'To the job posting', '<a href="https://jobs.example.org/research-assistant" class="ace-link"> %s </a>',
         ];
         yield 'detail, back link' => [
-            'detail', 'jobs.back', 'Back to job list', '<a href="/home"> %s </a>',
+            'detail', 'jobs.back', 'Back to job list', '<a class="ace-back" href="/home"> %s </a>',
         ];
         yield 'detail, contact heading, translated in the argument of a partial' => [
-            'detail', 'jobs.contact', 'Contact', '<h2 class=""> %s </h2>',
+            'detail', 'jobs.contact', 'Contact', '<h2 class="ace-title "> %s </h2>',
         ];
         yield 'form, field label, key from a variable' => [
-            'newjobform', 'create.job.title.label', 'Job title / Thesis title', '<label for="job.title"> %s ',
+            'newjobform', 'create.job.title.label', 'Job title / Thesis title', '<label class="ace-label" for="job.title"> %s ',
         ];
         yield 'form, empty option of a select, kept in a variable' => [
             'newjobform', 'create.job.type.none', 'Please choose', '<option value="0">%s</option>',

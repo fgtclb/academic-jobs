@@ -23,7 +23,7 @@ const waitForEditor = window.setInterval(() => {
     return;
   }
   window.clearInterval(waitForEditor);
-  document.querySelectorAll(".change-me").forEach((textarea) => {
+  document.querySelectorAll(".ace-ckeditor").forEach((textarea) => {
     const identifier = textarea.getAttribute("id");
     if (identifier !== null) {
       ckeditor.replace(identifier, editorConfig);

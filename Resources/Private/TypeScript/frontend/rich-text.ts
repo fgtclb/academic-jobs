@@ -50,7 +50,7 @@ const waitForEditor = window.setInterval((): void => {
 
     window.clearInterval(waitForEditor);
 
-    document.querySelectorAll<HTMLTextAreaElement>('.change-me').forEach((textarea): void => {
+    document.querySelectorAll<HTMLTextAreaElement>('.ace-ckeditor').forEach((textarea): void => {
         const identifier = textarea.getAttribute('id');
         // The original passed the attribute through unchecked. CKEditor needs an
         // element id to replace, so a textarea without one was never going to

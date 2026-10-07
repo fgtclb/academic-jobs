@@ -38,7 +38,7 @@ trait NewJobFormValidationAssertionTrait
     private function invalidFields(\DOMXPath $xpath): array
     {
         $labels = $xpath->query(
-            self::JOB_FORM . '//div[contains(concat(" ", normalize-space(@class), " "), " change-me ")]/label[@for]'
+            self::JOB_FORM . '//div[contains(concat(" ", normalize-space(@class), " "), " invalid ")]/label[@for]'
         );
         $this->assertNotFalse($labels);
         $fields = [];

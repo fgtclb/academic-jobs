@@ -16,13 +16,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 trait JobContactIconAssertionTrait
 {
-    /**
-     * The contact block carries no class of its own, so it is the element around the
-     * section heading that reads "Contact".
-     */
     private function contactBlockQuery(): string
     {
-        return '//div[*[self::h1 or self::h2 or self::h3 or self::h4 or self::h5 or self::h6][normalize-space() = "Contact"]]';
+        return '//aside[contains(concat(" ", normalize-space(@class), " "), " ace-contact ")]';
     }
 
     private function contactBlock(string $content): \DOMElement

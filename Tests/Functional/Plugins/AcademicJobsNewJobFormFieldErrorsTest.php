@@ -9,7 +9,7 @@ use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Submits the `academicjobs_newjobform` plugin with values the validation rejects, and
- * reads the form it renders again: each rejected field carries the class `change-me`
+ * reads the form it renders again: each rejected field carries the class `invalid`
  * itself, names its messages with `aria-describedby` and `aria-invalid`, and is followed by
  * them in the element `<id>-error`. A field that passed carries none of it.
  *
@@ -79,7 +79,7 @@ final class AcademicJobsNewJobFormFieldErrorsTest extends AbstractAcademicJobsNo
         $this->assertSame(0, $this->jobCount());
         foreach ($expectedMessages as $property => $message) {
             $field = $this->field($xpath, $property);
-            $this->assertContains('change-me', $this->classes($field), sprintf('The field "%s" is not marked invalid.', $property));
+            $this->assertContains('invalid', $this->classes($field), sprintf('The field "%s" is not marked invalid.', $property));
             $this->assertNotContains('f3-form-error', $this->classes($field), $property);
             $this->assertSame('true', $field->getAttribute('aria-invalid'), $property);
             $this->assertSame('job.' . $property . '-error', $field->getAttribute('aria-describedby'), $property);
@@ -101,7 +101,7 @@ final class AcademicJobsNewJobFormFieldErrorsTest extends AbstractAcademicJobsNo
 
         foreach (['companyName', 'employmentType', 'type', 'employmentStartDate', 'internationalsWelcome', 'image'] as $property) {
             $field = $this->field($xpath, $property);
-            $this->assertNotContains('change-me', $this->classes($field), $property);
+            $this->assertNotContains('invalid', $this->classes($field), $property);
             $this->assertFalse($field->hasAttribute('aria-invalid'), $property);
             $this->assertFalse($field->hasAttribute('aria-describedby'), $property);
             $this->assertSame([], $this->feedback($xpath, $property), $property);

@@ -77,7 +77,7 @@ final class AcademicJobsHiddenAndMissingJobTest extends AbstractAcademicJobsTest
     {
         $content = $this->renderFrontendPage('https://www.acme.com/home');
 
-        $this->assertMatchesRegularExpression('#<h2 class="">\s*Hidden Mentoring Position\s*</h2>#', $content);
+        $this->assertMatchesRegularExpression('#<h2 class="ace-title ">\s*Hidden Mentoring Position\s*</h2>#', $content);
         $this->assertStringNotContainsString('tx_academicjobs_detail%5Bjob%5D=2', $content);
     }
 
