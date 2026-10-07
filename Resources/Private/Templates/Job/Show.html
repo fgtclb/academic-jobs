@@ -39,11 +39,13 @@
         <f:variable name="contact" value="{f:if(condition: '{job.contactName} || {job.contactEmail} || {job.contactPhone}', then: 1, else: 0)}"/>
 
         <div class="row">
-            <div class="col-12 {f:if(condition: contact, then: 'col-lg-8')}">
-                <f:if condition="{job.description}">
-                    <f:format.html>{job.description}</f:format.html>
-                </f:if>
-            </div>
+            <f:if condition="{job.description}">
+                <div class="col-12 {f:if(condition: contact, then: 'col-lg-8')}">
+                    <div class="ce-bodytext">
+                        <f:format.html>{job.description}</f:format.html>
+                    </div>
+                </div>
+            </f:if>
 
             <f:if condition="{contact}">
                 <div class="col-12 col-lg-4">
