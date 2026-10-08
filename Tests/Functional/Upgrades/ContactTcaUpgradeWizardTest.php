@@ -50,15 +50,77 @@ final class ContactTcaUpgradeWizardTest extends AbstractAcademicJobsTestCase
         ];
     }
 
-    #[DataProvider('txAcademicJobsDomainModelContactDataSets')]
+    /**
+     * The wizard leaves the old table in place, so its existence alone made the wizard
+     * show up as necessary on every installation that ever had it (ACE-871).
+     */
     #[Test]
-    public function updateNecessaryReturnsTrueWhenTableExists(
-        string $fixtureDataSetFile,
-    ): void {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/DataSets/' . $fixtureDataSetFile);
+    public function updateNecessaryReturnsFalseWhenNoJobRelatesToAContact(): void
+    {
+        $subject = $this->get(ContactTcaUpgradeWizard::class);
+        $this->assertInstanceOf(ContactTcaUpgradeWizard::class, $subject);
+        $this->assertFalse($subject->updateNecessary());
+    }
+
+    #[Test]
+    public function updateNecessaryReturnsFalseOnceMigrated(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/DataSets/contact_notDeletedOrHidden.csv');
+        $subject = $this->get(ContactTcaUpgradeWizard::class);
+        $this->assertInstanceOf(ContactTcaUpgradeWizard::class, $subject);
+        $this->assertTrue($subject->updateNecessary());
+
+        $subject->executeUpdate();
+
+        $this->assertFalse($subject->updateNecessary());
+    }
+
+    /**
+     * A contact entered in the job itself is kept, and a contact record without a value
+     * has nothing to give, so neither makes the wizard necessary again (ACE-871).
+     */
+    #[Test]
+    public function executeUpdateKeepsTheContactEnteredInTheJob(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/DataSets/contact_jobsWithOwnContact.csv');
+        $subject = $this->get(ContactTcaUpgradeWizard::class);
+        $this->assertInstanceOf(ContactTcaUpgradeWizard::class, $subject);
+        $this->assertTrue($subject->updateNecessary());
+
+        $this->assertTrue($subject->executeUpdate());
+
+        $this->assertCSVDataSet(__DIR__ . '/Fixtures/Upgraded/contact_jobsWithOwnContact.csv');
+        $this->assertFalse($subject->updateNecessary());
+    }
+
+    #[Test]
+    public function updateNecessaryReturnsTrueWhenAJobHasAContactToMigrate(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/DataSets/contact_notDeletedOrHidden.csv');
         $subject = $this->get(ContactTcaUpgradeWizard::class);
         $this->assertInstanceOf(ContactTcaUpgradeWizard::class, $subject);
         $this->assertTrue($subject->updateNecessary(), 'updateNecessary() returns true');
+    }
+
+    /**
+     * Where the contact table still has TCA, as in this test, the migration skips hidden
+     * and deleted contact records, see executeUpdateMigratesDatabaseRecordsAndReturnsTrue().
+     * The wizard reads the same records to decide whether it is necessary.
+     */
+    public static function contactDataSetsTheMigrationSkips(): \Generator
+    {
+        yield 'contact - not deleted but hidden' => ['contact_notDeletedButHidden.csv'];
+        yield 'contact - deleted but not hidden' => ['contact_deletedButNotHidden.csv'];
+    }
+
+    #[DataProvider('contactDataSetsTheMigrationSkips')]
+    #[Test]
+    public function updateNecessaryReturnsFalseForContactsTheMigrationSkips(string $fixtureDataSetFile): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/DataSets/' . $fixtureDataSetFile);
+        $subject = $this->get(ContactTcaUpgradeWizard::class);
+        $this->assertInstanceOf(ContactTcaUpgradeWizard::class, $subject);
+        $this->assertFalse($subject->updateNecessary());
     }
 
     #[DataProvider('txAcademicJobsDomainModelContactDataSets')]
