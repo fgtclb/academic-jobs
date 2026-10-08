@@ -345,7 +345,12 @@ final class JobController extends ActionController
             $mail->to($this->settings['email']['recipientEmail']);
             $mail->from($this->settings['email']['senderEmail']);
             $mail->subject($this->settings['email']['subject']);
-            $mail->text('A new job has been posted. Please check the TYPO3 backend: ' . $url);
+            $mail->text(
+                $this->translateMail('message', 'A new job advert has been submitted. Please review it in the TYPO3 backend.')
+                . "\n\n"
+                . $this->translateMail('link', 'Open the job advert in the TYPO3 backend') . ":\n"
+                . $url
+            );
 
             return $mail->send();
         } catch (RfcComplianceException|MimeInvalidArgumentException|TransportExceptionInterface $exception) {
@@ -357,22 +362,28 @@ final class JobController extends ActionController
         }
     }
 
+    /**
+     * A link to the job in the backend that a backend user can open from a mail. A link
+     * with a token works only in the session it was created for, and the frontend has no
+     * backend session to create one for: it gets the token `dummyToken`, which the
+     * backend rejects with a redirect to the login, and a logged-in user lands on the
+     * dashboard. The shareable link carries no token. The backend sends a user who opens
+     * it through the login, which redirects to the record. The redirect keeps only the
+     * arguments the route `record_edit` allows, so a return URL would be dropped there.
+     */
     public function buildUrl(int $recordId): string
     {
-        $path = $this->backendUriBuilder
-            ->buildUriFromRoute(
-                'record_edit',
-                [
-                    'edit' => [
-                        'tx_academicjobs_domain_model_job' => [
-                            $recordId => 'edit',
-                        ],
+        return (string)$this->backendUriBuilder->buildUriFromRoute(
+            'record_edit',
+            [
+                'edit' => [
+                    'tx_academicjobs_domain_model_job' => [
+                        $recordId => 'edit',
                     ],
-                    'returnUrl' => GeneralUtility::getIndpEnv('REQUEST_URI'),
-                ]
-            );
-
-        return GeneralUtility::getIndpEnv('TYPO3_REQUEST_HOST') . $path;
+                ],
+            ],
+            BackendUriBuilder::SHAREABLE_URL,
+        );
     }
 
     private function translateAlert(
@@ -380,6 +391,11 @@ final class JobController extends ActionController
         string $missing = 'Missing translation!'
     ): string {
         return LocalizationUtility::translate('tx_academicjobs.fe.alert.' . $alert, 'AcademicJobs') ?? $missing;
+    }
+
+    private function translateMail(string $label, string $missing): string
+    {
+        return LocalizationUtility::translate('email.jobCreated.' . $label, 'AcademicJobs') ?? $missing;
     }
 
     /**

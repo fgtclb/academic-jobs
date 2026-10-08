@@ -10,8 +10,8 @@ use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 
 /**
  * The notification of a submitted job cannot be built, because the configuration of the
- * site names no recipient, no sender, or a recipient that cannot be parsed. The `null`
- * transport of the instance reports every mail that can be built as sent.
+ * site names no recipient, no sender, or a recipient that cannot be parsed. The mail
+ * transport works, and a mail that can be built is delivered.
  */
 final class AcademicJobsNewJobFormFailingMailTest extends AbstractAcademicJobsFailingNotificationMailTestCase
 {
@@ -125,6 +125,7 @@ final class AcademicJobsNewJobFormFailingMailTest extends AbstractAcademicJobsFa
                 'EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/TypoScript/Setup/NewJobFormMessages.typoscript',
             ],
         );
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/AcademicJobsNotificationMail/messagesPage.csv');
     }
 
     /**

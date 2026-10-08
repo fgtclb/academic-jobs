@@ -66,9 +66,34 @@ installation.
 On TYPO3 v13, a site that depends on the aggregate set `fgtclb/academic-jobs`
 can set them as site settings instead.
 
-The text of the mail is fixed.
+The text of the mail comes from the labels `email.jobCreated.message` and
+`email.jobCreated.link` of
+:file:`EXT:academic_jobs/Resources/Private/Language/locallang.xlf`, in the
+language of the page the form was submitted on. The extension ships them in
+English and German, and a site overrides them like any other label.
+
+The subject is not translated. A site with more than one language overrides
+the setting :typoscript:`plugin.tx_academicjobs.settings.email.subject`, which
+the constant :typoscript:`plugin.tx_academicjobs.email.subject` fills, in a
+TypoScript condition on the site language. On TYPO3 v13 the site setting does
+not help here, because site settings apply to the whole site:
+
+..  code-block:: typoscript
+
+    [siteLanguage("languageId") == 1]
+        plugin.tx_academicjobs.settings.email.subject = Neue Stellenanzeige
+    [END]
+
 :typoscript:`plugin.tx_academicjobs.email.template`, labelled "Email content",
 has no effect in 2.x.
+
+The link opens the job in the record editor of the backend. It carries no
+security token, because the frontend has no backend session to create one for.
+A backend user who opens it is asked to log in, when not logged in already,
+and is then taken to the job. The link uses the host of the request the form
+was submitted with. On TYPO3 v13, a
+:php:`$GLOBALS['TYPO3_CONF_VARS']['BE']['entryPoint']` configured as a full URL
+with a host of its own contributes only its path.
 
 ..  _configuration-general-notification-mail-failure:
 
