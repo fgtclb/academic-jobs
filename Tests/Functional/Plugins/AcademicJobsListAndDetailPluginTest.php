@@ -40,7 +40,7 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
     private const HEADER = 'Open positions';
     private const SUBHEADER = 'Apply by the end of the month';
     private const LIST_WRAPPER = '//div[contains(concat(" ", normalize-space(@class), " "), " academic-jobs-list ")]';
-    private const ITEM_LIST = self::LIST_WRAPPER . '/div[contains(concat(" ", normalize-space(@class), " "), " ace-list ")]';
+    private const ITEM_LIST = self::LIST_WRAPPER . '/div[contains(concat(" ", normalize-space(@class), " "), " ace-content ")]/div[contains(concat(" ", normalize-space(@class), " "), " ace-itemlist ")]';
     private const ITEMS = self::ITEM_LIST . '/article[contains(concat(" ", normalize-space(@class), " "), " ace-card ")]';
     private const DETAIL_WRAPPER = '//div[contains(concat(" ", normalize-space(@class), " "), " academic-jobs-detail ")]';
     private const RENDER_HEADER_CONSTANTS = 'EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/TypoScript/Constants/RenderContentElementHeader.typoscript';
@@ -573,7 +573,7 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
 
         $content = $this->renderDetailPageOfJob($this->renderListPage(), 1);
         $this->assertMatchesRegularExpression(
-            '#<a class="ace-back" href="/home">\s*Back to job list\s*</a>#',
+            '#<a class="ace-link" href="/home">\s*Back to job list\s*</a>#',
             $content,
         );
     }

@@ -197,7 +197,7 @@ final class AcademicJobsLabelOverrideTest extends AbstractAcademicJobsTestCase
             'list', 'jobs.linkText', 'To the job posting', '<a href="https://jobs.example.org/research-assistant" class="ace-link"> %s </a>',
         ];
         yield 'detail, back link' => [
-            'detail', 'jobs.back', 'Back to job list', '<a class="ace-back" href="/home"> %s </a>',
+            'detail', 'jobs.back', 'Back to job list', '<a class="ace-link" href="/home"> %s </a>',
         ];
         yield 'detail, contact heading, translated in the argument of a partial' => [
             'detail', 'jobs.contact', 'Contact', '<h2 class="ace-title "> %s </h2>',

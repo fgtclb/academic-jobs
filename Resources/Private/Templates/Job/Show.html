@@ -4,7 +4,7 @@
     xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
 >
 
-<div class="academic-jobs-detail">
+<div class="academic-jobs-detail container">
 
     <f:if condition="{settings.renderContentElementHeader}">
         <f:render partial="Header/All" arguments="{_all}" />
@@ -13,7 +13,7 @@
     <f:flashMessages />
 
     <f:if condition="{settings.listPid}">
-        <f:link.page class="ace-back" pageUid="{settings.listPid}">
+        <f:link.page class="ace-link" pageUid="{settings.listPid}">
             {f:translate(key: 'jobs.back', extensionName: 'AcademicJobs')}
         </f:link.page>
     </f:if>
@@ -38,27 +38,29 @@
 
         <f:variable name="contact" value="{f:if(condition: '{job.contactName} || {job.contactEmail} || {job.contactPhone}', then: 1, else: 0)}"/>
 
-        <div class="row">
-            <f:if condition="{job.description}">
-                <div class="col-12 {f:if(condition: contact, then: 'col-lg-8')}">
-                    <div class="ace-content ace-richtext ce-bodytext">
-                        <f:format.html>{job.description}</f:format.html>
+        <f:if condition="{job.description} || {contact}">
+            <div class="row">
+                <f:if condition="{job.description}">
+                    <div class="col-12 {f:if(condition: contact, then: 'col-lg-8')}">
+                        <div class="ce-bodytext">
+                            <f:format.html>{job.description}</f:format.html>
+                        </div>
                     </div>
-                </div>
-            </f:if>
+                </f:if>
 
-            <f:if condition="{contact}">
-                <div class="col-12 col-lg-4">
-                    <f:render
-                        partial="Job/Contact"
-                        arguments="{
-                            job: job,
-                            data: data,
-                        }"
-                    />
-                </div>
-            </f:if>
-        </div>
+                <f:if condition="{contact}">
+                    <div class="col-12 col-lg-4">
+                        <f:render
+                            partial="Job/Contact"
+                            arguments="{
+                                job: job,
+                                data: data,
+                            }"
+                        />
+                    </div>
+                </f:if>
+            </div>
+        </f:if>
     </f:if>
 </div>
 

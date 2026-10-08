@@ -4,7 +4,7 @@
     xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
 >
 
-<div class="academic-jobs-list">
+<div class="academic-jobs-list container">
 
     <f:if condition="{settings.renderContentElementHeader}">
         <f:render partial="Header/All" arguments="{_all}" />
@@ -25,24 +25,26 @@
         </f:else>
     </f:if>
 
-    <div class="ace-list">
-        <f:for each="{jobsToList}" as="job">
-            <f:render
-                partial="Job/Item"
-                arguments="{_all}"
-            />
-        </f:for>
-    </div>
+    <div class="ace-content">
+        <div class="ace-itemlist">
+            <f:for each="{jobsToList}" as="job">
+                <f:render
+                    partial="Job/Item"
+                    arguments="{_all}"
+                />
+            </f:for>
+        </div>
 
-    <f:if condition="{pagination.lastPageNumber} > 1">
-        <f:render
-            partial="Job/Pagination"
-            arguments="{
-                paginator: paginator,
-                pagination: pagination
-            }"
-        />
-    </f:if>
+        <f:if condition="{pagination.lastPageNumber} > 1">
+            <f:render
+                partial="Job/Pagination"
+                arguments="{
+                    paginator: paginator,
+                    pagination: pagination
+                }"
+            />
+        </f:if>
+    </div>
 </div>
 
 </html>
