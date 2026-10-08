@@ -14,6 +14,12 @@ services:
         identifier: generateJobSlug
         event: FGTCLB\AcademicJobs\Event\AfterSaveJobEvent
 
+  FGTCLB\AcademicJobs\EventListener\LimitJobDetailCacheLifetime:
+    tags:
+      - name: event.listener
+        identifier: academic-jobs/limit-job-detail-cache-lifetime
+        event: TYPO3\CMS\Frontend\Event\ModifyCacheLifetimeForPageEvent
+
   FGTCLB\AcademicJobs\Registry\AcademicJobsSettingsRegistry:
     public: true
     factory:
