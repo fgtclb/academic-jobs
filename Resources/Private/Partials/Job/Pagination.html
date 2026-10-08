@@ -32,6 +32,7 @@
                     arguments="{page: pagination.firstPageNumber, labelKey: 'widget.pagination.first'}"
                 />
             </li>
+
             <li class="ace-page prev">
                 <f:render
                     section="PageLink"
@@ -74,6 +75,7 @@
                     arguments="{page: pagination.nextPageNumber, labelKey: 'widget.pagination.next'}"
                 />
             </li>
+
             <li class="ace-page last">
                 <f:render
                     section="PageLink"
@@ -85,11 +87,16 @@
 </nav>
 
 <f:section name="PageLink">
-    <f:link.action
-        action="list"
-        arguments="{currentPage: page}"
-        class="ace-link"
-    ><f:if condition="{labelKey}"><f:then><f:translate key="{labelKey}" extensionName="fluid" /></f:then><f:else>{page}</f:else></f:if></f:link.action>
+    <f:link.action action="list" arguments="{currentPage: page}" class="ace-link">
+        <f:if condition="{labelKey}">
+            <f:then>
+                {f:translate(key: labelKey, extensionName: 'fluid')}
+            </f:then>
+            <f:else>
+                {page}
+            </f:else>
+        </f:if>
+    </f:link.action>
 </f:section>
 
 </html>
