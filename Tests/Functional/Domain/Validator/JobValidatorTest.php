@@ -47,24 +47,21 @@ final class JobValidatorTest extends AbstractAcademicJobsTestCase
     }
 
     /**
-     * The four string and date properties that are really empty on a fresh model are
-     * reported, each on its own property path so the Fluid form can show the message at
-     * the field.
+     * Every property the shipped settings mark as required is reported on a fresh model,
+     * each on its own property path so the Fluid form can show the message at the field.
      *
-     * Note what is *not* in this list: `type` and `employmentType` are configured
-     * `required` too, but they are `int` properties defaulting to `0`, and
-     * `NotEmptyValidator` treats `0` as a value. An unselected job type therefore passes
-     * this validator — the assertion is written as a whole list so that the gap is stated
-     * rather than merely unnoticed.
+     * That includes `type` and `employmentType`: they are `int` properties defaulting to
+     * `0`, the value the "Please choose" option of their select submits, and
+     * `NotEmptyValidator` alone would accept `0` as a value.
      */
     #[Test]
-    public function anEmptyJobReportsEveryRequiredPropertyThatIsActuallyEmpty(): void
+    public function anEmptyJobReportsEveryRequiredProperty(): void
     {
         $result = $this->subject()->validate(new Job());
 
         $this->assertTrue($result->hasErrors());
         $this->assertSame(
-            ['title', 'companyName', 'employmentStartDate', 'description'],
+            ['title', 'employmentType', 'type', 'companyName', 'employmentStartDate', 'description'],
             array_keys($result->getFlattenedErrors()),
         );
     }
@@ -81,15 +78,16 @@ final class JobValidatorTest extends AbstractAcademicJobsTestCase
 
         $this->assertSame(1221560718, $this->firstErrorCode($result, 'title'));
         $this->assertSame(1221560910, $this->firstErrorCode($result, 'employmentStartDate'));
+        $this->assertSame(1221560718, $this->firstErrorCode($result, 'type'));
+        $this->assertSame(1221560718, $this->firstErrorCode($result, 'employmentType'));
     }
 
     /**
-     * A zeroed integer is not empty. Setting both integer properties to a real value must
-     * therefore change nothing — which is the same statement as above, made from the other
-     * side, and it is what pins the behaviour if the mapping for those two ever changes.
+     * The same statement made from the other side: a chosen value of either select is
+     * accepted, so only `0` stands for "nothing chosen".
      */
     #[Test]
-    public function selectingAJobTypeChangesNothingBecauseZeroWasAlreadyAccepted(): void
+    public function choosingAJobTypeAndWorkingHoursSatisfiesBothRequiredSelects(): void
     {
         $job = new Job();
         $job->setType(3);
@@ -101,6 +99,21 @@ final class JobValidatorTest extends AbstractAcademicJobsTestCase
             ['title', 'companyName', 'employmentStartDate', 'description'],
             array_keys($result->getFlattenedErrors()),
         );
+    }
+
+    /**
+     * A job filled in apart from the two selects is refused for exactly those two.
+     */
+    #[Test]
+    public function aJobWithoutAChosenTypeOrWorkingHoursIsRefused(): void
+    {
+        $job = $this->createValidJob();
+        $job->setType(0);
+        $job->setEmploymentType(0);
+
+        $result = $this->subject()->validate($job);
+
+        $this->assertSame(['employmentType', 'type'], array_keys($result->getFlattenedErrors()));
     }
 
     #[Test]
@@ -187,7 +200,7 @@ final class JobValidatorTest extends AbstractAcademicJobsTestCase
         $result = $this->subject()->validate($job);
 
         $this->assertSame(
-            ['title', 'companyName', 'employmentStartDate', 'description', 'link', 'contactEmail'],
+            ['title', 'employmentType', 'type', 'companyName', 'employmentStartDate', 'description', 'link', 'contactEmail'],
             array_keys($result->getFlattenedErrors()),
         );
     }

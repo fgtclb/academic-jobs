@@ -62,7 +62,8 @@ by the backend record editor of a job:
         -   Backend record editor
     *   -   :yaml:`required`
         -   Marks the field with an asterisk
-        -   Value must not be empty
+        -   Value must not be empty, ``0`` counts as empty for a number such as
+            the job type
         -   Required
     *   -   :yaml:`readonly`, :yaml:`disabled`
         -   Shown, not marked
@@ -121,9 +122,10 @@ Points to be aware of
     :code:`49`. Do not use it for a field holding text such as a phone number,
     :yaml:`tel` is the flag for that. The settings of 2.x marked the contact
     phone with :yaml:`number`, so check a copy of them.
-*   :yaml:`required` cannot detect an unselected value for the job type and
-    employment type fields in the form, because those are stored as numbers
-    and an unset selection is indistinguishable from a valid zero.
+*   :yaml:`required` on a field stored as a number, such as the job type and
+    the employment type, refuses ``0``. That is the value the
+    :guilabel:`Please choose` option of their selects submits, so ``0`` cannot
+    be a value an integrator offers for a required select.
 
 Overriding the settings
 =======================
