@@ -9,6 +9,8 @@ use FGTCLB\TestingHelper\FunctionalTestCase\FrontendPluginRenderingTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use SBUERK\TYPO3\Testing\SiteHandling\SiteBasedTestTrait;
+use TYPO3\CMS\Core\Http\Stream;
+use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 
 /**
  * Label overrides through `_LOCAL_LANG` reach every kind of translation the three plugins of
@@ -23,19 +25,20 @@ use SBUERK\TYPO3\Testing\SiteHandling\SiteBasedTestTrait;
  * request: once one translation has read the right path, the ones after it show its
  * overrides whatever name they pass. Before the change, the job item and the job
  * information translated the job type and the employment type without an extension name,
- * which took the name of the plugin request and so read the right path; the only job of the
- * fixture therefore has neither. The controller translates its messages in PHP with the
- * right name too, but only for a job that is not found or a form that is sent - the one case
- * that asserts such a message renders nothing else of the file before it. That message was
- * translated with the right name before these tests existed, so it passes either way; it is
- * here so that it keeps doing so.
+ * which took the name of the plugin request and so read the right path. The only job of the
+ * fixture therefore has neither. The controller translates the messages of a sent form in
+ * PHP with the right name too, and the case of a sent form translates nothing else of the
+ * file before its message. That message was translated with the right name before these
+ * tests existed, so it passes either way, it is here so that it keeps doing so.
  *
  * Apart from those, no translation of these files had the right name before the change, so
  * every override case failed on its own. Since then, a case that is not the first
  * translation of its file in the request would pass even if its own call lost the name
  * again; the check of the extension names of all translations holds those calls.
  *
- * The list is on `/home`, the detail on `/job-detail`, the form on `/new-job`.
+ * The list is on `/home`, the detail on `/job-detail`, the form on `/new-job`. A sent form
+ * redirects to `/new-job` again, and the answer shows the messages of the session outside
+ * the page cache.
  */
 final class AcademicJobsLabelOverrideTest extends AbstractAcademicJobsTestCase
 {
@@ -48,7 +51,11 @@ final class AcademicJobsLabelOverrideTest extends AbstractAcademicJobsTestCase
 
     protected function setUp(): void
     {
-        $this->configurationToUseInTestInstance = $this->frontendPluginTestConfiguration();
+        $this->configurationToUseInTestInstance = $this->frontendPluginTestConfiguration([
+            'MAIL' => [
+                'transport' => 'null',
+            ],
+        ]);
         parent::setUp();
         $this->importCSVDataSet(__DIR__ . '/Fixtures/AcademicJobsLabelOverride/jobPages.csv');
     }
@@ -69,11 +76,13 @@ final class AcademicJobsLabelOverrideTest extends AbstractAcademicJobsTestCase
                     'EXT:academic_jobs/Configuration/TypoScript/constants.typoscript',
                     'EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/TypoScript/Constants/PluginConfiguration.typoscript',
                     'EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/TypoScript/Constants/ListAndDetailConfiguration.typoscript',
+                    'EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/TypoScript/Constants/SaveFormMessagesPage.typoscript',
                 ],
                 'setup' => [
                     'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
                     'EXT:academic_jobs/Configuration/TypoScript/setup.typoscript',
                     'EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/TypoScript/Setup/Rendering.typoscript',
+                    'EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/TypoScript/Setup/NewJobFormMessages.typoscript',
                 ],
             ],
         );
@@ -86,21 +95,82 @@ final class AcademicJobsLabelOverrideTest extends AbstractAcademicJobsTestCase
         ]);
     }
 
-    private function renderPluginPage(string $page, string $setup, ?string $path = null): string
+    /**
+     * @param string $page `list`, `detail`, `newjobform`, or `sentjob` for the page the
+     *        form shows after a job was sent.
+     */
+    private function renderPluginPage(string $page, string $setup): string
     {
         $this->setUpSite($setup);
-        $content = $this->renderFrontendPage('https://www.acme.com' . ($path ?? '/home'));
-        if ($path !== null) {
-            // Rendered as given.
-        } elseif ($page === 'detail') {
+        $content = $this->renderFrontendPage('https://www.acme.com/home');
+        if ($page === 'detail') {
             // The detail link carries a cHash, so it is taken from the list rather than built.
             $this->assertSame(1, preg_match('#href="(?P<uri>[^"]*tx_academicjobs_detail%5Bjob%5D=1[^"]*)"#', $content, $matches));
             $content = $this->renderFrontendPage('https://www.acme.com' . htmlspecialchars_decode($matches['uri']));
         } elseif ($page === 'newjobform') {
             $content = $this->renderFrontendPage('https://www.acme.com/new-job');
+        } elseif ($page === 'sentjob') {
+            $content = $this->renderPageAfterSentJob();
         }
 
         return (string)preg_replace('/\s+/', ' ', $content);
+    }
+
+    /**
+     * The plugin a page renders, whose `_LOCAL_LANG` overrides its labels.
+     */
+    private static function pluginOf(string $page): string
+    {
+        return $page === 'sentjob' ? 'newjobform' : $page;
+    }
+
+    /**
+     * Sends a job through the form on `/new-job` and returns the answer. The form redirects
+     * to its own page, and TYPO3 v12 and v13 send that redirect with `header()` and render
+     * the rest of the page, where an uncached element shows the messages of the session.
+     */
+    private function renderPageAfterSentJob(): string
+    {
+        $document = new \DOMDocument();
+        $document->loadHTML('<?xml encoding="UTF-8">' . $this->renderFrontendPage('https://www.acme.com/new-job'), LIBXML_NOERROR | LIBXML_NOWARNING);
+        $xpath = new \DOMXPath($document);
+        $forms = $xpath->query('//div[contains(concat(" ", normalize-space(@class), " "), " academic-jobs-new ")]//form');
+        $this->assertNotFalse($forms);
+        $form = $forms->item(0);
+        $this->assertInstanceOf(\DOMElement::class, $form, 'The page renders no job form.');
+        $fields = [];
+        foreach ($xpath->query('.//input[@type="hidden"][@name]', $form) ?: [] as $input) {
+            if ($input instanceof \DOMElement) {
+                $fields[] = rawurlencode($input->getAttribute('name')) . '=' . rawurlencode($input->getAttribute('value'));
+            }
+        }
+        $values = [
+            'title' => 'Research assistant',
+            'description' => 'A new job description',
+            'companyName' => 'ACME Inc.',
+            'employmentStartDate' => '2027-04-01',
+            'employmentType' => '1',
+            'type' => '1',
+        ];
+        foreach ($values as $property => $value) {
+            $fields[] = rawurlencode('tx_academicjobs_newjobform[job][' . $property . ']') . '=' . rawurlencode($value);
+        }
+        $query = implode('&', $fields);
+        parse_str($query, $parsedBody);
+        $body = new Stream('php://temp', 'rw');
+        $body->write($query);
+        $body->rewind();
+        $action = $form->getAttribute('action');
+        $answer = $this->requestFrontendPage(
+            (new InternalRequest(str_starts_with($action, '/') ? 'https://www.acme.com' . $action : $action))
+                ->withMethod('POST')
+                ->withAddedHeader('Content-Type', 'application/x-www-form-urlencoded')
+                ->withBody($body)
+                ->withParsedBody($parsedBody),
+        );
+        $this->assertSame(200, $answer->getStatusCode());
+
+        return (string)$answer->getBody();
     }
 
     /**
@@ -121,7 +191,7 @@ final class AcademicJobsLabelOverrideTest extends AbstractAcademicJobsTestCase
      * variable for the option of a select, and the options themselves, which the controller
      * translates from the full `LLL:` references of their TCA items.
      *
-     * @return \Generator<string, array{0: string, 1: string, 2: string, 3: string, 4?: string}>
+     * @return \Generator<string, array{0: string, 1: string, 2: string, 3: string}>
      */
     public static function pluginTranslationDataProvider(): \Generator
     {
@@ -146,48 +216,48 @@ final class AcademicJobsLabelOverrideTest extends AbstractAcademicJobsTestCase
         yield 'form, option of a select, translated in PHP from the item label of TCA' => [
             'newjobform', 'tx_academicjobs_domain_model_job.jobtype.job', 'Job', '<option value="1">%s</option>',
         ];
-        yield 'detail without a job, message translated in PHP' => [
-            'detail', 'tx_academicjobs.fe.alert.job_not_found.body', 'No job advert could be found.', '<div class="academic-jobs-detail"> [ERROR] %s <a href="/home">', '/job-detail',
+        yield 'sent form, message translated in PHP' => [
+            'sentjob', 'tx_academicjobs.fe.alert.job_created.title', 'Your job advert has been successfully created', '[OK] %s: We are automatically notified',
         ];
     }
 
     #[DataProvider('pluginTranslationDataProvider')]
     #[Test]
-    public function aPluginRendersTheLabelOfTheLanguageFile(string $plugin, string $key, string $label, string $markup, ?string $path = null): void
+    public function aPluginRendersTheLabelOfTheLanguageFile(string $plugin, string $key, string $label, string $markup): void
     {
-        $this->assertStringContainsString(sprintf($markup, $label), $this->renderPluginPage($plugin, '', $path));
+        $this->assertStringContainsString(sprintf($markup, $label), $this->renderPluginPage($plugin, ''));
     }
 
     #[DataProvider('pluginTranslationDataProvider')]
     #[Test]
-    public function aPluginRendersTheLabelOfTheExtension(string $plugin, string $key, string $label, string $markup, ?string $path = null): void
+    public function aPluginRendersTheLabelOfTheExtension(string $plugin, string $key, string $label, string $markup): void
     {
         $content = $this->renderPluginPage($plugin, $this->localLang($key, [
             'plugin.tx_academicjobs' => 'Extension label',
-        ]), $path);
+        ]));
 
         $this->assertStringContainsString(sprintf($markup, 'Extension label'), $content);
     }
 
     #[DataProvider('pluginTranslationDataProvider')]
     #[Test]
-    public function aPluginRendersTheLabelOfThePlugin(string $plugin, string $key, string $label, string $markup, ?string $path = null): void
+    public function aPluginRendersTheLabelOfThePlugin(string $plugin, string $key, string $label, string $markup): void
     {
         $content = $this->renderPluginPage($plugin, $this->localLang($key, [
-            'plugin.tx_academicjobs_' . $plugin => 'Plugin label',
-        ]), $path);
+            'plugin.tx_academicjobs_' . self::pluginOf($plugin) => 'Plugin label',
+        ]));
 
         $this->assertStringContainsString(sprintf($markup, 'Plugin label'), $content);
     }
 
     #[DataProvider('pluginTranslationDataProvider')]
     #[Test]
-    public function theLabelOfThePluginWinsOverTheOneOfTheExtension(string $plugin, string $key, string $label, string $markup, ?string $path = null): void
+    public function theLabelOfThePluginWinsOverTheOneOfTheExtension(string $plugin, string $key, string $label, string $markup): void
     {
         $content = $this->renderPluginPage($plugin, $this->localLang($key, [
             'plugin.tx_academicjobs' => 'Extension label',
-            'plugin.tx_academicjobs_' . $plugin => 'Plugin label',
-        ]), $path);
+            'plugin.tx_academicjobs_' . self::pluginOf($plugin) => 'Plugin label',
+        ]));
 
         $this->assertStringContainsString(sprintf($markup, 'Plugin label'), $content);
         $this->assertStringNotContainsString('Extension label', $content);

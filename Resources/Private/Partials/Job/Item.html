@@ -5,6 +5,29 @@
     xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
 >
 
+<f:comment>
+    A hidden job is listed by the option "Show hidden records" only. The detail page does not
+    show it, so its title is not linked. The detail page finds a job by its default record,
+    and a translated job carries the flag of its translation, so the flag of the default
+    record counts as well.
+</f:comment>
+<f:if condition="{job.hidden} || {jobsWithHiddenDefaultRecord.{job.uid}}">
+    <f:then>
+        <f:variable name="detailUri" value=""/>
+    </f:then>
+    <f:else>
+        <f:variable
+            name="detailUri"
+            value="{f:uri.action(
+                action: 'show',
+                pluginName: 'Detail',
+                pageUid: settings.detailPid,
+                arguments: {job: job}
+            )}"
+        />
+    </f:else>
+</f:if>
+
 <div class="card flex-column-reverse academic-jobs-item">
     <div class="card-content">
         <div class="card-body">
@@ -14,12 +37,7 @@
                     header: job.title,
                     layout: data.header_layout,
                     positionClass: 'card-title',
-                    link: '{f:uri.action(
-                        action: \'show\',
-                        pluginName: \'Detail\',
-                        pageUid: settings.detailPid,
-                        arguments: {job: job}
-                    )}',
+                    link: detailUri,
                     subheader: data.subheader
                 }"
             />

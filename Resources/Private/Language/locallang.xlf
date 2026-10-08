@@ -177,9 +177,6 @@
 			<trans-unit id="tx_academicjobs.fe.alert.job_not_created.title">
 				<source>Your job advert could not be created</source>
 			</trans-unit>
-			<trans-unit id="tx_academicjobs.fe.alert.job_not_found.body">
-				<source>No job advert could be found.</source>
-			</trans-unit>
 			<trans-unit id="create.job.noLink">
 				<source>The link to this job avert is broken. Please contact us.</source>
 			</trans-unit>

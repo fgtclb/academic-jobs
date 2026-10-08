@@ -20,6 +20,7 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mime\Exception\InvalidArgumentException as MimeInvalidArgumentException;
 use Symfony\Component\Mime\Exception\RfcComplianceException;
 use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
+use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
@@ -34,7 +35,9 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use TYPO3\CMS\Frontend\Controller\ErrorController;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use TYPO3\CMS\Frontend\Page\PageAccessFailureReasons;
 
 final class JobController extends ActionController
 {
@@ -63,6 +66,9 @@ final class JobController extends ActionController
 
         $this->view->assignMultiple([
             'jobs' => $jobs,
+            'jobsWithHiddenDefaultRecord' => $this->jobRepository->findUidsWithHiddenDefaultRecord(
+                array_map(static fn(Job $job): int => (int)$job->getUid(), $jobs->toArray()),
+            ),
             'data' => $this->getCurrentContentObjectRenderer()?->data,
         ]);
 
@@ -72,13 +78,18 @@ final class JobController extends ActionController
     public function showAction(?Job $job = null): ResponseInterface
     {
         if ($job === null) {
-            $this->addFlashMessage(
-                $this->translateAlert('job_not_found.body', 'Job not found.'),
-                '',
-                ContextualFeedbackSeverity::ERROR,
-                true
+            // Thrown rather than returned: a returned response reaches the browser only
+            // through the status of a `header()` call, and its error document would be
+            // rendered into the content element. The exception ends the request with the
+            // "page not found" handling of the site.
+            throw new PropagateResponseException(
+                GeneralUtility::makeInstance(ErrorController::class)->pageNotFoundAction(
+                    $this->request,
+                    'The requested job advert does not exist.',
+                    ['code' => PageAccessFailureReasons::PAGE_NOT_FOUND]
+                ),
+                1791463504
             );
-            return $this->htmlResponse();
         }
 
         $title = $job->getTitle();
