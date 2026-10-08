@@ -37,6 +37,27 @@ final class AcademicJobsNewJobFormNotificationMailTest extends AbstractAcademicJ
     }
 
     /**
+     * The frontend has no backend session to create a token for. A link with the token
+     * it creates instead is rejected by the backend, which shows a logged-in user the
+     * dashboard. A link without a token goes through the login, which redirects to the
+     * record and keeps no other argument, so the link carries none.
+     */
+    #[Test]
+    public function theMailLinksTheJobInTheBackendWithoutAToken(): void
+    {
+        $this->setUpTestCase();
+
+        $uid = $this->submitJob('https://www.acme.com/home', 'Research assistant');
+
+        $link = 'https://www.acme.com/typo3/record/edit?edit%5Btx_academicjobs_domain_model_job%5D%5B' . $uid . '%5D=edit';
+        $mail = $this->sentMail();
+        preg_match_all('@https://www\.acme\.com/typo3/\S+@', (string)$mail['text'], $textLinks);
+        $this->assertSame([$link], $textLinks[0]);
+        preg_match_all('@href="(https://www\.acme\.com/typo3/[^"]+)"@', (string)$mail['html'], $htmlLinks);
+        $this->assertSame([htmlspecialchars($link)], $htmlLinks[1]);
+    }
+
+    /**
      * The title is what a visitor typed. The HTML part escapes it, the plain-text part has
      * no markup to protect and shows it as typed.
      */

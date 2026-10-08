@@ -21,7 +21,6 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mime\Exception\InvalidArgumentException as MimeInvalidArgumentException;
 use Symfony\Component\Mime\Exception\RfcComplianceException;
 use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
-use TYPO3\CMS\Core\Http\NormalizedParams;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Mail\FluidEmail;
 use TYPO3\CMS\Core\Mail\MailerInterface;
@@ -553,22 +552,29 @@ final class JobController extends ActionController
         return GeneralUtility::makeInstance(FluidEmail::class)->setRequest($this->request);
     }
 
+    /**
+     * A link to the job in the backend that a backend user can open from a mail. A link
+     * with a token works only in the session it was created for, and the frontend has no
+     * backend session to create one for: it gets the token `dummyToken`, which the
+     * backend rejects with a redirect to the login, and a logged-in user lands on the
+     * dashboard. The shareable link carries no token. The backend sends a user who opens
+     * it through the login, which redirects to the record. The redirect keeps only the
+     * arguments the route `record_edit` allows, so a return URL would be dropped there.
+     * The link is absolute, with the host of the request the form was submitted with.
+     */
     public function buildUrl(int $recordId): string
     {
-        $path = $this->backendUriBuilder
-            ->buildUriFromRoute(
-                'record_edit',
-                [
-                    'edit' => [
-                        'tx_academicjobs_domain_model_job' => [
-                            $recordId => 'edit',
-                        ],
+        return (string)$this->backendUriBuilder->buildUriFromRoute(
+            'record_edit',
+            [
+                'edit' => [
+                    'tx_academicjobs_domain_model_job' => [
+                        $recordId => 'edit',
                     ],
-                    'returnUrl' => $this->getNormalizedParams()?->getRequestUri() ?? '',
-                ]
-            );
-
-        return ($this->getNormalizedParams()?->getRequestHost() ?? '') . $path;
+                ],
+            ],
+            BackendUriBuilder::SHAREABLE_URL,
+        );
     }
 
     /**
@@ -641,17 +647,6 @@ final class JobController extends ActionController
         );
 
         $this->getFlashMessageQueue($queueIdentifier)->enqueue($flashMessage);
-    }
-
-    /**
-     * `GeneralUtility::getIndpEnv()` is deprecated since TYPO3 v14.3; `NormalizedParams`
-     * is the documented replacement and exists unchanged in TYPO3 v13.4 and v14.
-     */
-    private function getNormalizedParams(): ?NormalizedParams
-    {
-        $normalizedParams = $this->request->getAttribute('normalizedParams');
-
-        return $normalizedParams instanceof NormalizedParams ? $normalizedParams : null;
     }
 
     private function getCurrentContentObjectRenderer(): ?ContentObjectRenderer

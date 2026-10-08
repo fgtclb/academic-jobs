@@ -123,6 +123,12 @@ core gets, such as :html:`{normalizedParams}`:
         -   The value of :typoscript:`plugin.tx_academicjobs.email.template`,
             empty when it is not set.
 
+The link in :html:`{url}` opens the job in the record editor of the backend.
+It carries no security token, because the frontend has no backend session to
+create one for. A backend user who opens it is asked to log in, when not
+logged in already, and is then taken to the job. The link uses the host of the
+request the form was submitted with.
+
 Fluid escapes values in the plain-text template as well. The shipped
 :file:`JobCreated.txt` therefore passes them through :html:`f:format.raw()`, and
 a template of a project should do the same.
