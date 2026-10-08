@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FGTCLB\AcademicJobs\Domain\Repository;
 
+use FGTCLB\AcademicBase\Domain\Repository\HiddenRecordsQueryTrait;
 use FGTCLB\AcademicJobs\Domain\Model\Job;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
@@ -14,6 +15,8 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  */
 class JobRepository extends Repository
 {
+    use HiddenRecordsQueryTrait;
+
     /**
      * `starttime` is `0` for every job that was never scheduled, so on its own it leaves
      * most of the list in DBMS row order - which is not the same list twice on PostgreSQL
@@ -36,7 +39,10 @@ class JobRepository extends Repository
         $query->matching(
             $query->equals('type', $jobType)
         );
-        return $query->execute();
+        $this->matchTranslationsOfHiddenRecords($query);
+        $jobs = $query->execute();
+        $this->fetchIncludingHiddenRecords($jobs);
+        return $jobs;
     }
 
     /**
@@ -48,20 +54,9 @@ class JobRepository extends Repository
         if ($includeHidden) {
             $this->includeHiddenRecords($query);
         }
-        return $query->execute();
-    }
-
-    /**
-     * Include hidden (disabled) records in the query, independent of the
-     * Context API visibility settings. Only the "hidden" enable column is
-     * ignored; deleted/starttime/endtime/fe_group restrictions stay intact.
-     *
-     * @param QueryInterface<Job> $query
-     */
-    private function includeHiddenRecords(QueryInterface $query): void
-    {
-        $querySettings = $query->getQuerySettings();
-        $querySettings->setIgnoreEnableFields(true);
-        $querySettings->setEnableFieldsToBeIgnored(['disabled']);
+        $this->matchTranslationsOfHiddenRecords($query);
+        $jobs = $query->execute();
+        $this->fetchIncludingHiddenRecords($jobs);
+        return $jobs;
     }
 }
