@@ -37,6 +37,34 @@ mapped from the constant :typoscript:`styles.content.defaultHeaderType` of
 TypoScript of :guilabel:`EXT:fluid_styled_content` sets the setting itself;
 without it, such a header renders as an empty :html:`<header>` element.
 
+..  _configuration-general-detail-page-title:
+
+The title of the job detail page
+================================
+
+A :guilabel:`Jobs Detail` content element that shows a job makes the title of
+the job the title of the page, through the page title API of TYPO3. Its
+provider is registered as :typoscript:`academicJobs` and is asked before the
+providers :typoscript:`record` and :typoscript:`seo` of the core:
+
+..  code-block:: typoscript
+    :caption: EXT:academic_jobs/Configuration/TypoScript/setup.typoscript
+
+    config.pageTitleProviders {
+      academicJobs {
+        provider = FGTCLB\AcademicJobs\PageTitle\JobTitleProvider
+        before = record,seo
+      }
+    }
+
+A site changes the order there, or removes the provider with
+:typoscript:`config.pageTitleProviders.academicJobs >`. A page without a job
+keeps its own title. The detail also writes the meta tags ``og:title`` and
+``twitter:title``, and ``description``, ``og:description`` and
+``twitter:description`` from the text of the description of the job, the
+latter three only when the job has one. A page without them keeps its own
+description, the one :guilabel:`EXT:seo` writes for example.
+
 ..  _configuration-general-notification-mail:
 
 The notification mail about a submitted job

@@ -71,3 +71,12 @@ plugin.tx_academicjobs {
     }
   }
 }
+
+# The job detail sets the title of the job it shows as the title of the page. A page that
+# shows no job leaves the provider empty, and the next one decides.
+config.pageTitleProviders {
+  academicJobs {
+    provider = FGTCLB\AcademicJobs\PageTitle\JobTitleProvider
+    before = record,seo
+  }
+}

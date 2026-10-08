@@ -12,6 +12,7 @@ use FGTCLB\AcademicJobs\Domain\Repository\JobRepository;
 use FGTCLB\AcademicJobs\Domain\Validator\JobValidator;
 use FGTCLB\AcademicJobs\Event\AfterSaveJobEvent;
 use FGTCLB\AcademicJobs\Event\ModifyJobControllerNewActionViewEvent;
+use FGTCLB\AcademicJobs\PageTitle\JobTitleProvider;
 use FGTCLB\AcademicJobs\Registry\AcademicJobsSettingsRegistry;
 use FGTCLB\AcademicJobs\SaveForm\FlashMessageCreationMode;
 use Psr\Http\Message\ResponseInterface;
@@ -51,6 +52,7 @@ final class JobController extends ActionController
         protected readonly BackendUriBuilder $backendUriBuilder,
         protected AcademicJobsSettingsRegistry $settingsRegistry,
         private readonly LoggerInterface $logger,
+        private readonly JobTitleProvider $jobTitleProvider,
     ) {}
 
     public function listAction(): ResponseInterface
@@ -98,14 +100,25 @@ final class JobController extends ActionController
 
         /** @var array<string, string> */
         $metaTags = [
-            'title' => $title,
-            'description' => $description,
             'og:title' => $title,
-            'og:description' => $description,
             'twitter:card' => 'summary',
             'twitter:title' => $title,
-            'twitter:description' => $description,
         ];
+
+        // The description is rich text. Its entities are decoded, because the meta tag
+        // escapes the text itself, and all white space, the non-breaking space of an empty
+        // paragraph included, is reduced to single spaces. A job without a description
+        // gets none, rather than an empty one.
+        $description = trim((string)preg_replace(
+            '/[\s\x{00A0}]+/u',
+            ' ',
+            html_entity_decode($description, ENT_QUOTES | ENT_HTML5, 'UTF-8'),
+        ));
+        if ($description !== '') {
+            $metaTags['description'] = $description;
+            $metaTags['og:description'] = $description;
+            $metaTags['twitter:description'] = $description;
+        }
 
         if ($image !== null) {
             $metaTags['og:image'] = $image;
@@ -115,6 +128,7 @@ final class JobController extends ActionController
         }
 
         $this->setMetaTags($metaTags);
+        $this->jobTitleProvider->setTitle($title);
 
         $this->view->assignMultiple([
             'job' => $job,
