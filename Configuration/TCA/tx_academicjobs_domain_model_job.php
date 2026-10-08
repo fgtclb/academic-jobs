@@ -76,7 +76,7 @@ $tcaConfiguration = [
         ],
         'starttime' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
+            'label' => 'LLL:EXT:academic_base/Resources/Private/Language/locallang_tca.xlf:starttime',
             'config' => [
                 'type' => 'datetime',
                 'default' => 0,
@@ -84,7 +84,7 @@ $tcaConfiguration = [
         ],
         'endtime' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
+            'label' => 'LLL:EXT:academic_base/Resources/Private/Language/locallang_tca.xlf:endtime',
             'config' => [
                 'type' => 'datetime',
                 'default' => 0,

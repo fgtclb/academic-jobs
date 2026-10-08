@@ -133,6 +133,9 @@
       <trans-unit id="tx_academicjobs_domain_model_job.work_location">
         <source>Work Location</source>
       </trans-unit>
+      <trans-unit id="tx_academicjobs_domain_model_job.work_location.description">
+        <source>For example remote, hybrid or Berlin</source>
+      </trans-unit>
       <trans-unit id="tx_academicjobs_domain_model_job.link">
         <source>Link</source>
       </trans-unit>
@@ -141,6 +144,9 @@
       </trans-unit>
       <trans-unit id="tx_academicjobs_domain_model_job.slug">
         <source>Slug</source>
+      </trans-unit>
+      <trans-unit id="tx_academicjobs_domain_model_job.slug.description">
+        <source>The URL segment of the job, generated from the title and the company name.</source>
       </trans-unit>
       <trans-unit id="tx_academicjobs_domain_model_job.job_type">
         <source>Job Type</source>

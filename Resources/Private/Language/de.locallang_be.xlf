@@ -170,8 +170,8 @@
         <target>Ort</target>
       </trans-unit>
       <trans-unit id="tx_academicjobs_domain_model_job.work_location.description">
-        <source>ex. (Remote, Hybrid, Berlin)</source>
-        <target>e.g (Remote, Hybrid, Berlin)</target>
+        <source>For example remote, hybrid or Berlin</source>
+        <target>Zum Beispiel Remote, Hybrid oder Berlin</target>
       </trans-unit>
       <trans-unit id="tx_academicjobs_domain_model_job.link">
         <source>Link</source>
@@ -184,6 +184,10 @@
       <trans-unit id="tx_academicjobs_domain_model_job.slug">
         <source>Slug</source>
         <target>Slug</target>
+      </trans-unit>
+      <trans-unit id="tx_academicjobs_domain_model_job.slug.description">
+        <source>The URL segment of the job, generated from the title and the company name.</source>
+        <target>Das URL-Segment der Stelle, erzeugt aus dem Titel und dem Namen des Unternehmens.</target>
       </trans-unit>
       <trans-unit id="tx_academicjobs_domain_model_job.job_type">
         <source>Job Type</source>
