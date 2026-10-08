@@ -66,6 +66,19 @@ keeps its own title. The detail also writes the meta tags ``og:title`` and
 latter three only when the job has one. A page without them keeps its own
 description, the one :guilabel:`EXT:seo` writes for example.
 
+..  _configuration-general-detail-cache-lifetime:
+
+The page cache of the job detail page
+=====================================
+
+The job list is rendered outside the page cache, the job detail is cached with
+its page. The cache entry of a page that shows a job ends with the next start
+or end time of that job, or of a translation of it, so a job that ends is no
+longer shown from the page cache. TYPO3 v13 and v14 do that themselves for the
+records Extbase fetches when the feature :php:`frontend.cache.autoTagging` is
+enabled, which they do for a new installation and not for an updated one. The
+extension limits the lifetime with or without it.
+
 ..  _configuration-general-notification-mail:
 
 The notification mail about a submitted job
