@@ -152,6 +152,37 @@ final class AcademicJobsNewJobFormPluginTest extends AbstractAcademicJobsTestCas
         }
     }
 
+    /**
+     * The shipped `ckeditor.js` attaches the editor to every element with the
+     * class `rich-text`, so the class is what makes a field a rich text field.
+     * The flag is passed down in a Fluid array literal, where Fluid 2 (TYPO3 v12)
+     * reads an unquoted `true` as a variable of that name and renders the field
+     * as a plain textarea.
+     */
+    #[Test]
+    public function richTextFieldsOfTheFormCarryTheRichTextClass(): void
+    {
+        $this->setUpTestCase();
+
+        $content = $this->renderHomePage();
+
+        $document = new \DOMDocument();
+        $this->assertTrue($document->loadHTML($content, LIBXML_NOERROR | LIBXML_NOWARNING));
+        $xpath = new \DOMXPath($document);
+        foreach (['description', 'contactAdditionalInformation'] as $identifier) {
+            $textareas = $xpath->query(sprintf('//textarea[@id="job.%s"]', $identifier));
+            $this->assertNotFalse($textareas);
+            $this->assertSame(1, $textareas->length, sprintf('Missing textarea for "%s".', $identifier));
+            $textarea = $textareas->item(0);
+            $this->assertInstanceOf(\DOMElement::class, $textarea);
+            $this->assertMatchesRegularExpression(
+                '/(^|\s)rich-text(\s|$)/',
+                $textarea->getAttribute('class'),
+                sprintf('Textarea "%s" is not marked as a rich text field.', $identifier),
+            );
+        }
+    }
+
     private function setContentElementHeader(int $headerLayout): void
     {
         $this->getConnectionPool()
