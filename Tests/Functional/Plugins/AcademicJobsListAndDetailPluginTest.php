@@ -547,15 +547,16 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
     }
 
     #[Test]
-    public function detailPluginRendersNotFoundMessageWithoutJobArgument(): void
+    public function detailPluginAnswersNotFoundWithoutJobArgument(): void
     {
         $this->setUpTestCase('jobPages');
 
-        // Requesting the detail page without the plugin argument is what a stale bookmark
-        // looks like: the plugin has to answer with its flash message, not with an error.
-        $content = $this->renderFrontendPage('https://www.acme.com/job-detail');
-        $this->assertStringContainsString('academic-jobs-detail', $content);
-        $this->assertStringContainsString('No job advert could be found.', $content);
+        // Requesting the detail page without the plugin argument is what a link in a menu
+        // looks like: the page has no job to show, so it answers with the "page not found"
+        // handling of the site instead of the page.
+        $response = $this->requestFrontendPage('https://www.acme.com/job-detail');
+        $this->assertSame(404, $response->getStatusCode());
+        $this->assertStringNotContainsString('academic-jobs-detail', (string)$response->getBody());
     }
 
     #[Test]

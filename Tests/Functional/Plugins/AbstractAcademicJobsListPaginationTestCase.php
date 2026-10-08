@@ -102,9 +102,10 @@ abstract class AbstractAcademicJobsListPaginationTestCase extends AbstractAcadem
     {
         $positions = [];
         foreach (self::JOBS as $job) {
-            $position = strpos($content, '>' . $job . '<');
-            if ($position !== false) {
-                $positions[$job] = $position;
+            // A hidden job is listed without a link, its title stands in the heading with
+            // the white space of the template around it.
+            if (preg_match('#>\s*' . preg_quote($job, '#') . '\s*<#', $content, $match, PREG_OFFSET_CAPTURE) === 1) {
+                $positions[$job] = $match[0][1];
             }
         }
         asort($positions);

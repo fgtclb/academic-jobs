@@ -207,10 +207,6 @@
         <source>Your job advert could not be created</source>
         <target>Ihre Stellenanzeige konnte nicht erstellt werden</target>
       </trans-unit>
-      <trans-unit id="tx_academicjobs.fe.alert.job_not_found.body">
-        <source>No job advert could be found.</source>
-        <target>Es konnte keine Stellenanzeige gefunden werden.</target>
-      </trans-unit>
       <trans-unit id="create.job.noLink">
         <source>The link to this job avert is broken. Please contact us.</source>
         <target>Der Link zu dieser Stellenanzeige ist defekt. Bitte kontaktieren Sie uns.</target>

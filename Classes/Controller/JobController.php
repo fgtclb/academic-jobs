@@ -23,6 +23,7 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mime\Exception\InvalidArgumentException as MimeInvalidArgumentException;
 use Symfony\Component\Mime\Exception\RfcComplianceException;
 use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
+use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Mail\FluidEmail;
 use TYPO3\CMS\Core\Mail\MailerInterface;
@@ -47,6 +48,8 @@ use TYPO3\CMS\Extbase\Validation\Validator\ConjunctionValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\FileSizeValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\MimeTypeValidator;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use TYPO3\CMS\Frontend\Controller\ErrorController;
+use TYPO3\CMS\Frontend\Page\PageAccessFailureReasons;
 use TYPO3Fluid\Fluid\Exception as FluidException;
 
 final class JobController extends ActionController
@@ -86,10 +89,32 @@ final class JobController extends ActionController
             'data' => $this->getCurrentContentObjectRenderer()?->data,
             'record' => $this->getCurrentContentRecord($this->getCurrentContentObjectRenderer()),
         ]);
-        $this->assignPagination($jobs, $this->requestedPage());
+        $paginator = $this->assignPagination($jobs, $this->requestedPage());
+        $this->view->assign(
+            'jobsWithHiddenDefaultRecord',
+            $showHiddenRecords ? $this->findListedJobsWithHiddenDefaultRecord($paginator?->getPaginatedItems() ?? $jobs) : [],
+        );
         $this->dispatchModifyPluginViewEvent($context, $this->view, $this->eventDispatcher);
 
         return $this->htmlResponse();
+    }
+
+    /**
+     * The listed jobs whose default record is hidden, which only a list with "Show hidden
+     * records" lists. They are read from the jobs the list renders, the page of the
+     * paginator when it paginates, so the whole result is not fetched for the uids.
+     *
+     * @param iterable<Job> $listedJobs
+     * @return array<int, true>
+     */
+    private function findListedJobsWithHiddenDefaultRecord(iterable $listedJobs): array
+    {
+        $uids = [];
+        foreach ($listedJobs as $job) {
+            $uids[] = (int)$job->getUid();
+        }
+
+        return $this->jobRepository->findUidsWithHiddenDefaultRecord($uids);
     }
 
     /**
@@ -119,11 +144,12 @@ final class JobController extends ActionController
      * both fall back to the default of their field.
      *
      * @param QueryResultInterface<int, Job> $jobs
+     * @return QueryResultPaginator|null The paginator, `null` for a list without pages.
      */
-    private function assignPagination(QueryResultInterface $jobs, int $currentPage): void
+    private function assignPagination(QueryResultInterface $jobs, int $currentPage): ?QueryResultPaginator
     {
         if (!(bool)($this->settings['paginationEnabled'] ?? false)) {
-            return;
+            return null;
         }
         $resultsPerPage = (int)($this->settings['pagination']['resultsPerPage'] ?? 0);
         $numberOfLinks = (int)($this->settings['pagination']['numberOfLinks'] ?? 0);
@@ -151,31 +177,32 @@ final class JobController extends ActionController
             'paginator' => $paginator,
             'pagination' => $pagination,
         ]);
+
+        return $paginator;
     }
 
     public function showAction(?Job $job = null): ResponseInterface
     {
+        if ($job === null) {
+            // Thrown rather than returned: a returned response reaches the browser on TYPO3
+            // v13 only through `header()`, and on v13 and v14 its error document would be
+            // rendered into the content element. The exception ends the request at the
+            // `ResponsePropagation` middleware with the "page not found" handling of the site.
+            throw new PropagateResponseException(
+                GeneralUtility::makeInstance(ErrorController::class)->pageNotFoundAction(
+                    $this->request,
+                    'The requested job advert does not exist.',
+                    ['code' => PageAccessFailureReasons::PAGE_NOT_FOUND]
+                ),
+                1791463504
+            );
+        }
+
         $context = new PluginControllerActionContext($this->request, $this->settings);
-        // Assigned before the early return below: the template renders the
-        // `EXT:fluid_styled_content` header partial in both cases, and on TYPO3 v14 that
-        // partial resolves the header through `record`. Leaving it unassigned made a
-        // request without a resolvable job fail with an exception instead of rendering the
-        // "not found" message.
         $this->view->assignMultiple([
             'data' => $this->getCurrentContentObjectRenderer()?->data,
             'record' => $this->getCurrentContentRecord($this->getCurrentContentObjectRenderer()),
         ]);
-
-        if ($job === null) {
-            $this->addFlashMessage(
-                $this->translateAlert('job_not_found.body', 'Job not found.'),
-                '',
-                ContextualFeedbackSeverity::ERROR,
-                true
-            );
-            $this->dispatchModifyPluginViewEvent($context, $this->view, $this->eventDispatcher);
-            return $this->htmlResponse();
-        }
 
         $title = $job->getTitle();
         $description = strip_tags($job->getDescription());

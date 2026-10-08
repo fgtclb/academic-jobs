@@ -86,6 +86,6 @@ partials below :file:`Partials/Job/Forms/` render the shared form partials of
     *   - :xml:`jobs.submit`
         - :file:`Templates/Job/New.html`
     *   - :xml:`tx_academicjobs.fe.alert.<alert>.title`, :xml:`tx_academicjobs.fe.alert.<alert>.body`
-        - The messages after a job is saved or not found
+        - The messages after a job is saved
     *   - :xml:`tx_academicjobs_domain_model_job.jobtype.<type>`, :xml:`tx_academicjobs_domain_model_job.employmenttype.<type>`
         - The options of the job type and employment type selects of the form; the labels live in :file:`locallang_be.xlf`, the override is keyed by their id
