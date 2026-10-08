@@ -30,7 +30,9 @@ final class PluginUpgradeWizard implements UpgradeWizardInterface
 
     public function getDescription(): string
     {
-        return '';
+        return 'Turns every "Insert plugin" content element of the plugins "academicjobs_newjobform",'
+            . ' "academicjobs_list" and "academicjobs_detail" into a content element of the type of the same name.'
+            . ' The plugins are registered as content element types, an "Insert plugin" element is not rendered.';
     }
 
     public function executeUpdate(): bool

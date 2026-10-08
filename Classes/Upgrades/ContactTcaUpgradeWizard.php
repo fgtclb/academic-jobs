@@ -23,7 +23,10 @@ final class ContactTcaUpgradeWizard implements UpgradeWizardInterface
 
     public function getDescription(): string
     {
-        return '';
+        return 'Copies name, phone, e-mail and additional information of the contact record related to a job'
+            . ' into the contact fields of the job itself. Jobs store their contact directly since the contact'
+            . ' table was removed, the old table, also when renamed to "zzz_tx_academicjobs_domain_model_contact",'
+            . ' is read once and left in place.';
     }
 
     public function executeUpdate(): bool
