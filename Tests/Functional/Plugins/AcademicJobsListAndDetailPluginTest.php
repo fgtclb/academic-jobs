@@ -41,7 +41,7 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
     private const SUBHEADER = 'Apply by the end of the month';
     private const LIST_WRAPPER = '//div[contains(concat(" ", normalize-space(@class), " "), " academic-jobs-list ")]';
     private const ITEM_LIST = self::LIST_WRAPPER . '/div[contains(concat(" ", normalize-space(@class), " "), " ace-content ")]/div[contains(concat(" ", normalize-space(@class), " "), " ace-itemlist ")]';
-    private const ITEMS = self::ITEM_LIST . '/article[contains(concat(" ", normalize-space(@class), " "), " ace-card ")]';
+    private const ITEMS = self::ITEM_LIST . '/article[contains(concat(" ", normalize-space(@class), " "), " ace-item ")]';
     private const DETAIL_WRAPPER = '//div[contains(concat(" ", normalize-space(@class), " "), " academic-jobs-detail ")]';
     private const RENDER_HEADER_CONSTANTS = 'EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/TypoScript/Constants/RenderContentElementHeader.typoscript';
     private const LAYOUT_WITHOUT_HEADER_SETUP = 'EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/TypoScript/Setup/LayoutWithoutHeader.typoscript';
@@ -409,7 +409,9 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
         $content = $this->renderDetailPageOfJob($this->renderListPage(), 1);
         $this->assertSame($expectedHeadings, $this->countHeadingsReading($content, self::HEADER));
         $this->assertSame($expectedHeadings, $this->countHeadingsReading($content, self::SUBHEADER));
-        $this->assertSame(0, $this->countHeaderElements($content, self::DETAIL_WRAPPER));
+        // The header of the job title is the ace-header, a header of the content element
+        // would be another one.
+        $this->assertSame(0, $this->countContentElementHeaderNodes($content, self::DETAIL_WRAPPER . '/header[not(contains(concat(" ", normalize-space(@class), " "), " ace-header "))]'));
     }
 
     #[Test]
@@ -467,6 +469,50 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
         $this->assertSame(1, $this->countContentElementHeaderNodes($content, $this->contactBlockQuery()));
         $this->assertStringContainsString('grace@example.org', $content);
         $this->assertStringNotContainsString('tel:', $content);
+    }
+
+    /**
+     * The additional contact information is rich text from the editor of the backend or
+     * of the new job form. It is rendered below the contact data, in the rich text element
+     * of the site, through the rich text parsing of the site, so markup an editor may not
+     * enter is not rendered.
+     */
+    #[Test]
+    public function detailPluginRendersTheAdditionalContactInformationInTheContactBlock(): void
+    {
+        $this->setUpTestCase('jobPages_contactAdditionalInformation');
+
+        $block = $this->contactBlock($this->renderDetailPageOfJob($this->renderListPage(), 1));
+        $document = $block->ownerDocument;
+        $this->assertInstanceOf(\DOMDocument::class, $document);
+        $xpath = new \DOMXPath($document);
+        $texts = $xpath->query('./div[@class="ce-bodytext"]', $block);
+        $this->assertNotFalse($texts);
+        $this->assertSame(1, $texts->length, 'The contact block renders not exactly one rich text element.');
+        $text = $texts->item(0);
+        $this->assertInstanceOf(\DOMElement::class, $text);
+        $this->assertStringStartsWith('Office hours Monday to Thursday.', trim((string)preg_replace('#\s+#', ' ', $text->textContent)));
+        $bold = $xpath->query('.//b', $text);
+        $this->assertNotFalse($bold);
+        $this->assertSame('Monday', trim((string)$bold->item(0)?->textContent));
+        // A script element is markup an editor may not enter, rendered as text at most.
+        $scripts = $xpath->query('.//script', $block);
+        $this->assertNotFalse($scripts);
+        $this->assertSame(0, $scripts->length);
+    }
+
+    #[Test]
+    public function detailPluginRendersNoAdditionalContactInformationElementWithoutAValue(): void
+    {
+        $this->setUpTestCase('jobPages_contactAdditionalInformation');
+
+        $block = $this->contactBlock($this->renderDetailPageOfJob($this->renderListPage(), 2));
+        $document = $block->ownerDocument;
+        $this->assertInstanceOf(\DOMDocument::class, $document);
+        $elements = (new \DOMXPath($document))->query('./div', $block);
+        $this->assertNotFalse($elements);
+        $this->assertSame(0, $elements->length);
+        $this->assertStringContainsString('grace@example.org', (string)$block->textContent);
     }
 
     #[Test]

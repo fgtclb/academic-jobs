@@ -18,7 +18,7 @@ trait JobContactIconAssertionTrait
 {
     private function contactBlockQuery(): string
     {
-        return '//aside[contains(concat(" ", normalize-space(@class), " "), " ace-contact ")]';
+        return '//div[contains(concat(" ", normalize-space(@class), " "), " ace-contact ")]';
     }
 
     private function contactBlock(string $content): \DOMElement

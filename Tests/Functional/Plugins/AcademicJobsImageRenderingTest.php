@@ -86,7 +86,7 @@ final class AcademicJobsImageRenderingTest extends AbstractAcademicJobsTestCase
     private function items(\DOMXPath $xpath): array
     {
         $items = [];
-        foreach ($this->nodesMatching($xpath, "//div[contains(concat(' ', normalize-space(@class), ' '), ' academic-jobs-list ')]//article[contains(concat(' ', normalize-space(@class), ' '), ' ace-card ')]") as $item) {
+        foreach ($this->nodesMatching($xpath, "//div[contains(concat(' ', normalize-space(@class), ' '), ' academic-jobs-list ')]//article[contains(concat(' ', normalize-space(@class), ' '), ' ace-item ')]") as $item) {
             $this->assertInstanceOf(\DOMElement::class, $item);
             $items[] = $item;
         }

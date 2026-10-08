@@ -5,7 +5,7 @@
     xmlns:ab="http://typo3.org/ns/FGTCLB/AcademicBase/ViewHelpers"
 >
 
-<ul class="ace-properties">
+<ul class="ace-list ace-attributes">
     <f:comment>
         The keys are the job properties shown, in this order. The values name their
         icons: `tx-academicjobs-info-` and the property name in kebab case, registered in
@@ -30,7 +30,7 @@
         key="item"
     >
         <f:if condition="{job.{item}}">
-            <li class="ace-property">
+            <li class="ace-list-item ace-attribute">
                 <span class="ace-icon"><ab:icon identifier="tx-academicjobs-info-{iconName}"/></span>
 
                 <f:if condition="{item} == 'internationalsWelcome' || {item} == 'alumniRecommend'">

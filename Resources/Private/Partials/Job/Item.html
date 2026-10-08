@@ -28,80 +28,22 @@
     </f:else>
 </f:if>
 
-<article class="ace-card">
-    <div class="ace-content">
-        <header class="ace-header">
-            <f:render
-                partial="Job/Header"
-                arguments="{
-                    header: job.title,
-                    layout: data.header_layout,
-                    link: detailUri,
-                    subheader: data.subheader
-                }"
-            />
-        </header>
+<article class="ace-item">
+    <div class="ace-item-content">
+        <f:render
+            partial="Job/Header"
+            arguments="{
+                header: job.title,
+                layout: data.header_layout,
+                link: detailUri,
+                subheader: data.subheader
+            }"
+        />
 
-        <ul class="ace-properties">
-            <f:comment>
-                The keys are the job properties shown, in this order. The values name their
-                icons: `tx-academicjobs-info-` and the property name in kebab case, registered in
-                Configuration/FrontendIcons.php.
-            </f:comment>
-            <f:for
-                each="{
-                    employmentStartDate: 'employment-start-date',
-                    companyName: 'company-name',
-                    sector: 'sector',
-                    type: 'type',
-                    requiredDegree: 'required-degree',
-                    contractualRelationship: 'contractual-relationship',
-                    employmentType: 'employment-type',
-                    workLocation: 'work-location',
-                    internationalsWelcome: 'internationals-welcome',
-                    alumniRecommend: 'alumni-recommend',
-                    link: 'link',
-                    endtime: 'endtime',
-                }"
-                as="iconName"
-                key="item"
-            >
-                <f:if condition="{job.{item}}">
-                    <li class="ace-property">
-                        <span class="ace-icon"><ab:icon identifier="tx-academicjobs-info-{iconName}"/></span>
-
-                        <f:if condition="{item} == 'internationalsWelcome' || {item} == 'alumniRecommend'">
-                            <f:then>
-                                <f:comment>A flag carries no value a visitor can read: its label is the statement.</f:comment>
-                                <b class="ace-label">{f:translate(key: 'jobs.{item}', extensionName: 'AcademicJobs')}</b>
-                            </f:then>
-                            <f:else>
-                                <b class="ace-label">{f:translate(key: 'jobs.{item}', extensionName: 'AcademicJobs')}:</b>
-
-                                <span class="ace-value">
-                                    <f:if condition="{item} == 'employmentStartDate' || {item} == 'endtime'">
-                                        <f:then>
-                                            <f:format.date format="d.m.Y">{job.{item}}</f:format.date>
-                                        </f:then>
-                                        <f:else if="{item} == 'employmentType' || {item} == 'type'">
-                                            <f:translate key="jobs.{item}.{job.{item}}" extensionName="AcademicJobs" />
-                                        </f:else>
-                                        <f:else if="{item} == 'link'">
-                                            <f:link.typolink class="ace-link" parameter="{job.link}">
-                                                {f:translate(key: 'jobs.linkText', extensionName: 'AcademicJobs')}
-                                            </f:link.typolink>
-                                        </f:else>
-                                        <f:else>
-                                            {job.{item}}
-                                        </f:else>
-                                    </f:if>
-                                </span>
-                            </f:else>
-                        </f:if>
-                    </li>
-                </f:if>
-            </f:for>
-        </ul>
+        <f:render
+            partial="Job/Information"
+            arguments="{_all}"
+        />
     </div>
 
     <f:if condition="{job.image}">
@@ -111,15 +53,13 @@
             crop variant - an employer logo is not cut, and a vector one is passed
             through unprocessed.
         </f:comment>
-        <div class="ace-media">
-            <f:render
-                partial="Academic/Image"
-                arguments="{
-                    image: job.image,
-                    preset: 'card',
-                }"
-            />
-        </div>
+        <f:render
+            partial="Academic/Image"
+            arguments="{
+                image: job.image,
+                preset: 'card',
+            }"
+        />
     </f:if>
 </article>
 

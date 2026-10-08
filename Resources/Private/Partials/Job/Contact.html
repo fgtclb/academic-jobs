@@ -5,7 +5,7 @@
     xmlns:ab="http://typo3.org/ns/FGTCLB/AcademicBase/ViewHelpers"
 >
 
-<aside class="ace-contact">
+<div class="ace-contact">
     <f:render
         partial="Job/SectionHeader"
         arguments="{
@@ -22,7 +22,7 @@
     <f:if condition="{job.contactEmail} || {job.contactPhone}">
         <ul class="ace-list">
             <f:if condition="{job.contactPhone}">
-                <li class="ace-item">
+                <li class="ace-list-item">
                     <span class="ace-icon"><ab:icon identifier="tx-academicjobs-info-contact-phone"/></span>
 
                     <f:comment>
@@ -34,7 +34,7 @@
             </f:if>
 
             <f:if condition="{job.contactEmail}">
-                <li class="ace-item">
+                <li class="ace-list-item">
                     <span class="ace-icon"><ab:icon identifier="tx-academicjobs-info-contact-email"/></span>
 
                     <f:link.email class="ace-link" email="{job.contactEmail}">{job.contactEmail}</f:link.email>
@@ -42,6 +42,12 @@
             </f:if>
         </ul>
     </f:if>
-</aside>
+
+    <f:if condition="{job.contactAdditionalInformation}">
+        <div class="ce-bodytext">
+            <f:format.html>{job.contactAdditionalInformation}</f:format.html>
+        </div>
+    </f:if>
+</div>
 
 </html>
