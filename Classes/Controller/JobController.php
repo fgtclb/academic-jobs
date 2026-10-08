@@ -9,6 +9,7 @@ use FGTCLB\AcademicBase\Controller\GetCurrentContentRecordMethodTrait;
 use FGTCLB\AcademicBase\Controller\GetSelectItemsForTcaManagedTableFieldMethodTrait;
 use FGTCLB\AcademicBase\Domain\Model\Dto\PluginControllerActionContext;
 use FGTCLB\AcademicBase\Form\AfterSaveResolver;
+use FGTCLB\AcademicBase\Persistence\HiddenRecordsFetcher;
 use FGTCLB\AcademicJobs\Domain\Model\Job;
 use FGTCLB\AcademicJobs\Domain\Repository\JobRepository;
 use FGTCLB\AcademicJobs\Domain\Validator\JobValidator;
@@ -63,6 +64,7 @@ final class JobController extends ActionController
         protected readonly MailerInterface $mailer,
         private readonly LoggerInterface $logger,
         private readonly AfterSaveResolver $afterSaveResolver,
+        private readonly HiddenRecordsFetcher $hiddenRecordsFetcher,
     ) {}
 
     public function listAction(): ResponseInterface
@@ -129,6 +131,12 @@ final class JobController extends ActionController
             $currentPage,
             $resultsPerPage > 0 ? $resultsPerPage : 10,
         );
+        // The paginator executes the query of the page on its own, and the template renders
+        // that result, so it is fetched like the one of the repository.
+        $paginatedItems = $paginator->getPaginatedItems();
+        if ($paginatedItems instanceof QueryResultInterface) {
+            $this->hiddenRecordsFetcher->fetch($paginatedItems);
+        }
         if (ExtensionManagementUtility::isLoaded('numbered_pagination')
             && class_exists(NumberedPagination::class)
         ) {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FGTCLB\AcademicJobs\Domain\Repository;
 
+use FGTCLB\AcademicBase\Persistence\HiddenRecordsFetcher;
 use FGTCLB\AcademicJobs\Domain\Model\Job;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
@@ -24,6 +25,12 @@ class JobRepository extends Repository
         'uid' => QueryInterface::ORDER_ASCENDING,
     ];
 
+    public function __construct(
+        private readonly HiddenRecordsFetcher $hiddenRecordsFetcher,
+    ) {
+        parent::__construct();
+    }
+
     /**
      * @return QueryResultInterface<int, Job>
      */
@@ -36,7 +43,7 @@ class JobRepository extends Repository
         $query->matching(
             $query->equals('type', $jobType)
         );
-        return $query->execute();
+        return $this->hiddenRecordsFetcher->execute($query);
     }
 
     /**
@@ -48,7 +55,7 @@ class JobRepository extends Repository
         if ($includeHidden) {
             $this->includeHiddenRecords($query);
         }
-        return $query->execute();
+        return $this->hiddenRecordsFetcher->execute($query);
     }
 
     /**
