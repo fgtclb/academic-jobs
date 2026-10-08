@@ -1,0 +1,27 @@
+<html
+    lang="en"
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true"
+>
+
+<f:comment>
+    The message of one validation error of a field. A label for the field and the error code
+    wins, for example "create.job.contactEmail.error.1221559976", then a label for the error
+    code alone, "create.error.1221559976", then the message of the validator.
+</f:comment>
+<f:variable
+    name="message"
+    value="{f:translate(
+        key: 'create.error.{error.code}',
+        default: error.message,
+        arguments: error.arguments,
+        extensionName: 'AcademicJobs'
+    )}"
+/>
+{f:translate(
+    key: 'create.{elementId}.error.{error.code}',
+    default: message,
+    extensionName: 'AcademicJobs'
+)}
+
+</html>

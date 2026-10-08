@@ -59,14 +59,20 @@ or the code fills in, a category type or a field name for example.
 
     *   - Key
         - Shown by
+    *   - :xml:`create.<field>.error.<code>`
+        - :file:`Partials/Job/Forms/ErrorMessage.html`, see :ref:`configuration-labels-field-messages`
     *   - :xml:`create.<field>.label`
         - :file:`Partials/Job/Forms/FieldWrapper.html`
+    *   - :xml:`create.error.<code>`
+        - :file:`Partials/Job/Forms/ErrorMessage.html`, see :ref:`configuration-labels-field-messages`
     *   - :xml:`create.job.employmentType.none`
         - :file:`Partials/Job/Properties/Job.html`
     *   - :xml:`create.job.incorrectValues`
         - :file:`Partials/Job/Forms/Errors.html`
     *   - :xml:`create.job.type.none`
         - :file:`Partials/Job/Properties/Job.html`
+    *   - :xml:`create.required`
+        - :file:`Partials/Job/Forms/FieldWrapper.html`, the title of the mark of a required field
     *   - :xml:`edit.<field>.placeholder`
         - :file:`Partials/Job/Forms/Textarea.html`, :file:`Partials/Job/Forms/Textfield.html`
     *   - :xml:`jobs.<property>`
@@ -85,3 +91,19 @@ or the code fills in, a category type or a field name for example.
         - The messages after a job is saved or not found
     *   - :xml:`tx_academicjobs_domain_model_job.jobtype.<type>`, :xml:`tx_academicjobs_domain_model_job.employmenttype.<type>`
         - The options of the job type and employment type selects of the form; the labels live in :file:`locallang_be.xlf`, the override is keyed by their id
+
+..  _configuration-labels-field-messages:
+
+The messages of a rejected field
+================================
+
+A field of the new job form that was rejected on submit shows a message below
+it. The message of an error is the first of these that exists:
+
+#.  The label for the field and the error code, for example
+    :xml:`create.job.contactEmail.error.1221559976`.
+#.  The label for the error code, for example :xml:`create.error.1221559976`.
+    The extension ships one for each error the shipped validation settings
+    produce: a required field left empty, an invalid email address, an invalid
+    URL and a date that cannot be read.
+#.  The message of the validator or of the conversion of the value.

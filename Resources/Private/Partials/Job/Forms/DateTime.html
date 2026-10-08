@@ -13,9 +13,10 @@
 >
     <f:form.textfield
         property="{element.identifier}"
-        value="{element.value -> f:format.date(format:'d.m.Y')}"
+        value="{element.value -> f:format.date(format:'Y-m-d')}"
         id="{elementId}"
         class="form-control"
+        errorClass="is-invalid"
         disabled="{element.disabled}"
         data="{render:'datepicker'}"
         type="date"

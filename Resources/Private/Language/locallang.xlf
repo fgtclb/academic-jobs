@@ -113,6 +113,24 @@
 			<trans-unit id="create.job.incorrectValues">
 				<source>One or more fields have not been filled out correctly.</source>
 			</trans-unit>
+			<trans-unit id="create.required">
+				<source>required</source>
+			</trans-unit>
+			<trans-unit id="create.error.1221560910">
+				<source>This field is required.</source>
+			</trans-unit>
+			<trans-unit id="create.error.1221560718">
+				<source>This field is required.</source>
+			</trans-unit>
+			<trans-unit id="create.error.1221559976">
+				<source>Please enter a valid email address.</source>
+			</trans-unit>
+			<trans-unit id="create.error.1238108078">
+				<source>Please enter a valid URL, for example https://www.example.com.</source>
+			</trans-unit>
+			<trans-unit id="create.error.1307719788">
+				<source>Please enter a valid date.</source>
+			</trans-unit>
 			<trans-unit id="jobs.submit">
 				<source>Submit</source>
 			</trans-unit>

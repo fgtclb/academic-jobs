@@ -5,16 +5,28 @@
     data-namespace-typo3-fluid="true"
 >
 
+<f:comment>
+    The field partials mark the field itself with "is-invalid". The messages follow it as its
+    siblings, so a Bootstrap theme shows them with ".is-invalid ~ .invalid-feedback".
+</f:comment>
 <f:form.validationResults for="{elementId}" as="validationResults">
     <div class="{f:if(condition:'{validationResults.flattenedErrors}', then:' is-invalid')} {class}">
         <label class="form-label" for="{elementId}">
             {f:translate(key:'create.{elementId}.label', extensionName: 'AcademicJobs')}
             <f:if condition="{j:validation.RequiredFromValidation(validations: element.validations, identifier: element.identifier)}">
-                <abbr title="required">*</abbr>
+                <abbr title="{f:translate(key: 'create.required', extensionName: 'AcademicJobs')}">*</abbr>
             </f:if>
         </label>
 
         {elementContent->f:format.raw()}
+
+        <f:for each="{validationResults.flattenedErrors}" as="errors">
+            <f:for each="{errors}" as="error">
+                <div class="invalid-feedback">
+                    <f:render partial="Job/Forms/ErrorMessage" arguments="{error: error, elementId: elementId}"/>
+                </div>
+            </f:for>
+        </f:for>
 
         <f:if condition="{element.help}">
             <div class="form-text">{element.help->f:format.raw()}</div>
