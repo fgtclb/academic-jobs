@@ -1,0 +1,3 @@
+plugin.tx_academicjobs._LOCAL_LANG.default {
+    create.job.employmentStartDate.error.1307719788 = "%s" is no date.
+}
