@@ -52,7 +52,7 @@ final class AcademicJobsSettingsLoaderTest extends AbstractAcademicJobsTestCase
                 'description' => ['required'],
                 'link' => ['url'],
                 'contactEmail' => ['email'],
-                'contactPhone' => ['number'],
+                'contactPhone' => ['tel'],
             ],
         ],
     ];

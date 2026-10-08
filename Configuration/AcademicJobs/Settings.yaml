@@ -22,6 +22,7 @@ validations:
   #      - email      # must be an email address; renders an email input
   #      - url        # must be a URL; renders a url input
   #      - number     # renders a number input; NOT validated server side
+  #      - tel        # renders a telephone input, NOT validated server side
   #
   # Keywords are matched case sensitively here - always write them in lower case.
   #
@@ -46,4 +47,4 @@ validations:
     contactEmail:
       - email
     contactPhone:
-      - number
+      - tel

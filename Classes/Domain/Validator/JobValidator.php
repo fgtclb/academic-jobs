@@ -11,6 +11,7 @@ use FGTCLB\AcademicJobs\Registry\AcademicJobsSettingsRegistry as SettingsRegistr
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
+use TYPO3\CMS\Extbase\Validation\Validator\NotEmptyValidator;
 
 final class JobValidator extends AbstractValidator
 {
@@ -49,6 +50,13 @@ final class JobValidator extends AbstractValidator
             foreach ($validators as $validator) {
                 $value = ObjectAccess::getPropertyPath($subject, $property);
                 $validator = GeneralUtility::makeInstance($validator);
+                if ($value === 0 && $validator instanceof NotEmptyValidator) {
+                    // An integer property holds `0` when nothing was chosen, it is what the
+                    // "Please choose" option of a select of the form submits. The validator
+                    // accepts `0` as a value, so a required integer property is checked as
+                    // the empty value it stands for.
+                    $value = '';
+                }
                 if (method_exists($validator, 'validate')) {
                     $validationResult = $validator->validate($value);
                     if ($validationResult->hasErrors()) {

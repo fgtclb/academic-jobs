@@ -161,10 +161,13 @@ final class JobController extends ActionController
         if ($this->request->hasArgument('job')) {
             $jobArgumentConfiguration = $this->arguments->getArgument('job')->getPropertyMappingConfiguration();
 
+            // The date inputs submit a day without a time. `!` starts the parsed value at
+            // midnight of the server time zone instead of the time of day of the request,
+            // which is the time of day a backend editor sees for a date set to 00:00.
             $propertiesToConvert = [
-                'employmentStartDate' => 'Y-m-d',
-                'starttime' => 'Y-m-d',
-                'endtime' => 'Y-m-d',
+                'employmentStartDate' => '!Y-m-d',
+                'starttime' => '!Y-m-d',
+                'endtime' => '!Y-m-d',
             ];
 
             foreach ($propertiesToConvert as $propertyToConvert => $format) {
@@ -205,6 +208,9 @@ final class JobController extends ActionController
         }
 
         $job->setHidden(1);
+        // The application deadline is a day the job stays visible on. The record is hidden
+        // from its `endtime` on, so the deadline ends with the last second of that day.
+        $job->getEndtime()?->setTime(23, 59, 59);
         $this->jobRepository->add($job);
         $this->persistenceManager->persistAll();
 

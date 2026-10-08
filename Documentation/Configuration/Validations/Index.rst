@@ -30,7 +30,7 @@ The shipped configuration defines a single set, :yaml:`job`. Its keys are
         contactEmail:
           - email
         contactPhone:
-          - number
+          - tel
 
 A property that is not listed is neither required nor specially rendered.
 
@@ -49,7 +49,8 @@ important part — **they do not all understand the same keywords**:
         -   Backend (TCA)
     *   -   :yaml:`required`
         -   Marks the field with an asterisk
-        -   Value must not be empty
+        -   Value must not be empty, ``0`` counts as empty for a number such as
+            the job type
         -   Not applied
     *   -   :yaml:`email`
         -   Renders :html:`<input type="email">`
@@ -61,6 +62,10 @@ important part — **they do not all understand the same keywords**:
         -   Not applied
     *   -   :yaml:`number`
         -   Renders :html:`<input type="number">`
+        -   **No validation**
+        -   Not applied
+    *   -   :yaml:`tel`
+        -   Renders :html:`<input type="tel">`
         -   **No validation**
         -   Not applied
 
@@ -97,9 +102,13 @@ Further points to be aware of:
 *   :yaml:`number` marks the field as numeric in the form but adds no server
     side validation, so a non-numeric value submitted by other means is
     accepted.
-*   :yaml:`required` cannot detect an unselected value for the job type and
-    employment type fields, because those are stored as numbers and an unset
-    selection is indistinguishable from a valid zero.
+*   :yaml:`required` on a field stored as a number, such as the job type and
+    the employment type, refuses ``0``. That is the value the
+    :guilabel:`Please choose` option of their selects submits, so ``0`` cannot
+    be a value an integrator offers for a required select.
+*   :yaml:`number` renders an input that accepts digits only. Do not use it
+    for a phone number, which is written with a leading ``+`` and with spaces,
+    use :yaml:`tel` instead.
 *   The configuration is **not** applied to the TYPO3 backend. Required fields
     in the backend record editor are configured separately in the extension's
     TCA, and the two may differ.

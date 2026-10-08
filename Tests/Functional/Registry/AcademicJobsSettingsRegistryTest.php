@@ -29,7 +29,7 @@ final class AcademicJobsSettingsRegistryTest extends AbstractAcademicJobsTestCas
 {
     /**
      * What the new-job form template receives. It is handed out verbatim, so it is the
-     * YAML section unchanged — including `number`, which neither of the other two readers
+     * YAML section unchanged, including `tel`, which neither of the other two readers
      * understands.
      */
     #[Test]
@@ -45,7 +45,7 @@ final class AcademicJobsSettingsRegistryTest extends AbstractAcademicJobsTestCas
                 'description' => ['required'],
                 'link' => ['url'],
                 'contactEmail' => ['email'],
-                'contactPhone' => ['number'],
+                'contactPhone' => ['tel'],
             ],
             $this->subject()->getValidationsForFrontend('job'),
         );
@@ -64,7 +64,7 @@ final class AcademicJobsSettingsRegistryTest extends AbstractAcademicJobsTestCas
 
     /**
      * The map `JobValidator` walks. Three of the four keywords in use are mapped;
-     * `number` is not, so `contactPhone` has no entry here at all and a submitted phone
+     * `tel` is not, so `contactPhone` has no entry here at all and a submitted phone
      * number is never validated by the Extbase side. Asserted as a whole so that the
      * missing property is visible rather than merely unasserted.
      */
@@ -94,9 +94,8 @@ final class AcademicJobsSettingsRegistryTest extends AbstractAcademicJobsTestCas
 
     /**
      * The TCA reader is the third vocabulary and it knows a different keyword set again:
-     * `required`, `email` and `number` produce configuration, `url` produces none — so
-     * `link` is absent here while `contactPhone` is present, the exact inverse of the
-     * validator map above.
+     * `required`, `email` and `number` produce configuration, `url` and `tel` produce none.
+     * So `link` and `contactPhone` are absent here.
      *
      * The property names are underscored on the way, because TCA column names are, and the
      * result is nested below a `columns` key ready to be merged into a table definition.
@@ -114,7 +113,6 @@ final class AcademicJobsSettingsRegistryTest extends AbstractAcademicJobsTestCas
                     'employment_start_date' => ['config' => ['required' => true, 'minitems' => 1]],
                     'description' => ['config' => ['required' => true, 'minitems' => 1]],
                     'contact_email' => ['config' => ['type' => 'email']],
-                    'contact_phone' => ['config' => ['type' => 'number']],
                 ],
             ],
             $this->subject()->getValidationsForTca('job'),

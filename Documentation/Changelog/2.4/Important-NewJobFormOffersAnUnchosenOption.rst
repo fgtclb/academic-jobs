@@ -22,12 +22,12 @@ Two label units are new and available for translation:
 Impact
 ======
 
-A job created through the frontend form can now be stored with
-:sql:`employment_type` respectively :sql:`type` set to ``0``, where before it
-always carried a value the visitor had not necessarily chosen. Both fields are
-listed as ``required`` in :file:`Configuration/AcademicJobs/Settings.yaml`, but
-that rule maps to :php:`NotEmptyValidator`, which accepts ``0`` — enforcing a
-choice is a change of its own and is not part of this one.
+Before, a job created through the frontend form always carried a value for
+:sql:`employment_type` and :sql:`type`, whether the visitor had chosen it or
+not. Both fields are listed as ``required`` in
+:file:`Configuration/AcademicJobs/Settings.yaml`, and a submission that keeps
+the option ``0`` is refused, see
+:ref:`important-new-job-form-stores-the-chosen-values`.
 
 Existing records are untouched.
 
