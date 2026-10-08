@@ -1,0 +1,17 @@
+"pages",
+,"uid","pid","doktype","deleted","hidden","sys_language_uid","l10n_parent","l18n_cfg","slug","title"
+,1,0,1,0,0,0,0,0,"/","Site Root"
+,2,1,1,0,0,0,0,0,"/home","Home (EN)"
+,3,1,1,0,0,0,0,0,"/job-detail","Job detail"
+,100,1,254,0,0,0,0,0,"/sysfolder-records","Recordcollection"
+"tx_academicjobs_domain_model_job",
+,"uid","pid","sys_language_uid","hidden","deleted","starttime","endtime","type","employment_type","title","slug","description","company_name","work_location"
+,1,100,0,0,0,0,0,1,1,"International Research Fellowship","international-research-fellowship","<p>Join our quantum optics group.</p>","Acme University","Munich"
+,2,100,0,0,0,0,0,1,1,"Plain Assistant Position","plain-assistant-position","","Acme University","Munich"
+,3,100,0,0,0,0,0,1,1,"Cafe Position","cafe-position","<p>Caf&eacute; &amp; &quot;Bar&quot;</p>
+<p>Second&nbsp;paragraph</p>","Acme University","Munich"
+,4,100,0,0,0,0,0,1,1,"Empty Paragraph Position","empty-paragraph-position","<p>&nbsp;</p>","Acme University","Munich"
+"tt_content",
+,"uid","pid","deleted","hidden","sys_language_uid","l18n_parent","CType","header","header_layout","subheader","pi_flexform"
+,1,2,0,0,0,0,"academicjobs_list","",0,"",""
+,2,3,0,0,0,0,"academicjobs_detail","",0,"",""
