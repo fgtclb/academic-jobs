@@ -5,13 +5,18 @@
 >
 
 <f:variable name="elementId" value="job.{element.identifier}"/>
+<f:form.validationResults for="{elementId}" as="fieldValidationResults">
+    <f:if condition="{fieldValidationResults.flattenedErrors}">
+        <f:variable name="fieldAria" value="{invalid: 'true', describedby: '{elementId}-error'}"/>
+    </f:if>
+</f:form.validationResults>
 
 <f:render
     partial="Job/Forms/FieldWrapper"
     arguments="{element: element, elementId: elementId, class: 'form-upload-wrap'}"
     contentAs="elementContent"
 >
-    <f:form.upload property="{element.identifier}" class="form-control" errorClass="is-invalid" id="{elementId}"/>
+    <f:form.upload property="{element.identifier}" class="form-control" errorClass="is-invalid" aria="{fieldAria}" id="{elementId}"/>
 </f:render>
 
 </html>

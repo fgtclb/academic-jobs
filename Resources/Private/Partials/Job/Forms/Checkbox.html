@@ -5,6 +5,11 @@
 >
 
 <f:variable name="elementId" value="job.{element.identifier}"/>
+<f:form.validationResults for="{elementId}" as="fieldValidationResults">
+    <f:if condition="{fieldValidationResults.flattenedErrors}">
+        <f:variable name="fieldAria" value="{invalid: 'true', describedby: '{elementId}-error'}"/>
+    </f:if>
+</f:form.validationResults>
 
 <f:render
     partial="Job/Forms/FieldWrapper"
@@ -22,6 +27,7 @@
         disabled="{element.disabled}"
         class="form-check-input"
         errorClass="is-invalid"
+        aria="{fieldAria}"
     />
 </f:render>
 

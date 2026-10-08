@@ -10,17 +10,21 @@ Description
 A submission of the new job form that the validation rejected came back with
 the general alert above the form only. No field said what was wrong with it,
 the class ``is-invalid`` sat on the element around the field, which a Bootstrap
-theme does not style, and the title of the mark of a required field was the
-English word "required" on every page.
+theme does not style, assistive technology learned nothing about the field,
+and the title of the mark of a required field was the English word "required"
+on every page.
 
 Now a rejected field carries ``is-invalid`` itself, in place of the class
-``f3-form-error`` the form field ViewHelpers set by default, and is followed by
-its message:
+``f3-form-error`` the form field ViewHelpers set by default, names its messages
+with ``aria-describedby`` and ``aria-invalid``, and is followed by them:
 
 ..  code-block:: html
 
-    <input type="email" class="form-control is-invalid" id="job.contactEmail" ... />
-    <div class="invalid-feedback">Please enter a valid email address.</div>
+    <input type="email" class="form-control is-invalid" id="job.contactEmail"
+        aria-invalid="true" aria-describedby="job.contactEmail-error" ... />
+    <div id="job.contactEmail-error" class="invalid-feedback">
+        <div>Please enter a valid email address.</div>
+    </div>
 
 The element around the field keeps its ``is-invalid``. A rich text field gets its
 message, but no red border: CKEditor hides the textarea that carries the class
@@ -38,7 +42,9 @@ available in English and German:
 *   ``create.error.1238108078``, an invalid URL
 *   ``create.error.1307719788``, a date that cannot be read
 
-See :ref:`configuration-labels-field-messages`.
+A label for a field and an error code, such as
+``create.job.employmentStartDate.error.1307719788``, takes precedence and is
+given the arguments of the error. See :ref:`configuration-labels-field-messages`.
 
 Impact
 ======

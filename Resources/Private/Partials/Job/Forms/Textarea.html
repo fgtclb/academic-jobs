@@ -5,6 +5,11 @@
 >
 
 <f:variable name="elementId" value="job.{element.identifier}"/>
+<f:form.validationResults for="{elementId}" as="fieldValidationResults">
+    <f:if condition="{fieldValidationResults.flattenedErrors}">
+        <f:variable name="fieldAria" value="{invalid: 'true', describedby: '{elementId}-error'}"/>
+    </f:if>
+</f:form.validationResults>
 
 <f:render
     partial="Job/Forms/FieldWrapper"
@@ -16,6 +21,7 @@
         id="{elementId}"
         class="form-control {f:if(condition: element.richtext, then: 'rich-text')}"
         errorClass="is-invalid"
+        aria="{fieldAria}"
         disabled="{element.disabled}"
         placeholder="{f:translate(key:'edit.{elementId}.placeholder', extensionName: 'AcademicJobs')}"
         rows="5"

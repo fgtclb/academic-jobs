@@ -6,8 +6,9 @@
 >
 
 <f:comment>
-    The field partials mark the field itself with "is-invalid". The messages follow it as its
-    siblings, so a Bootstrap theme shows them with ".is-invalid ~ .invalid-feedback".
+    The field partials mark the field itself with "is-invalid", and point "aria-describedby"
+    to the element "<elementId>-error", which holds its messages. It follows the field as its
+    sibling, so a Bootstrap theme shows it with ".is-invalid ~ .invalid-feedback".
 </f:comment>
 <f:form.validationResults for="{elementId}" as="validationResults">
     <div class="{f:if(condition:'{validationResults.flattenedErrors}', then:' is-invalid')} {class}">
@@ -20,13 +21,17 @@
 
         {elementContent->f:format.raw()}
 
-        <f:for each="{validationResults.flattenedErrors}" as="errors">
-            <f:for each="{errors}" as="error">
-                <div class="invalid-feedback">
-                    <f:render partial="Job/Forms/ErrorMessage" arguments="{error: error, elementId: elementId}"/>
-                </div>
-            </f:for>
-        </f:for>
+        <f:if condition="{validationResults.flattenedErrors}">
+            <div id="{elementId}-error" class="invalid-feedback">
+                <f:for each="{validationResults.flattenedErrors}" as="errors">
+                    <f:for each="{errors}" as="error">
+                        <div>
+                            <f:render partial="Job/Forms/ErrorMessage" arguments="{error: error, elementId: elementId}"/>
+                        </div>
+                    </f:for>
+                </f:for>
+            </div>
+        </f:if>
 
         <f:if condition="{element.help}">
             <div class="form-text">{element.help->f:format.raw()}</div>

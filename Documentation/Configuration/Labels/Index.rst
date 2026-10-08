@@ -107,3 +107,8 @@ it. The message of an error is the first of these that exists:
     produce: a required field left empty, an invalid email address, an invalid
     URL and a date that cannot be read.
 #.  The message of the validator or of the conversion of the value.
+
+Each of them is given the arguments of the error, so a label can name the
+rejected value with ``%s``, for example the text that could not be read as a
+date: :xml:`create.job.employmentStartDate.error.1307719788` with
+``"%s" is no date.``

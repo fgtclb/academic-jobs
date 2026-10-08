@@ -15,9 +15,10 @@ use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 
 /**
  * Submits the `academicjobs_newjobform` plugin with values the validation rejects, and
- * reads the form it renders again: each rejected field carries `is-invalid` itself and is
- * followed by its message in an `invalid-feedback` element, which is how a Bootstrap theme
- * shows it. A field that passed carries neither.
+ * reads the form it renders again: each rejected field carries `is-invalid` itself, names
+ * its messages with `aria-describedby` and `aria-invalid`, and is followed by them in an
+ * `invalid-feedback` element, which is how a Bootstrap theme shows it. A field that passed
+ * carries none of it.
  *
  * The site of a test runs in one language only, English or German, as its default language,
  * so the labels follow the locale of the site without a translated page.
@@ -68,6 +69,7 @@ final class AcademicJobsNewJobFormFieldErrorsTest extends AbstractAcademicJobsTe
                     'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
                     'EXT:academic_jobs/Configuration/TypoScript/setup.typoscript',
                     'EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/TypoScript/Setup/Rendering.typoscript',
+                    'EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/TypoScript/Setup/FieldErrorLabelOverride.typoscript',
                 ],
             ],
         );
@@ -126,6 +128,8 @@ final class AcademicJobsNewJobFormFieldErrorsTest extends AbstractAcademicJobsTe
         foreach ($expectedMessages as $property => $message) {
             $field = $this->field($xpath, $property);
             $this->assertContains('is-invalid', $this->classes($field), sprintf('The field "%s" is not marked invalid.', $property));
+            $this->assertSame('true', $field->getAttribute('aria-invalid'), $property);
+            $this->assertSame('job.' . $property . '-error', $field->getAttribute('aria-describedby'), $property);
             $this->assertSame(
                 [$message],
                 $this->feedback($xpath, $property),
@@ -145,7 +149,10 @@ final class AcademicJobsNewJobFormFieldErrorsTest extends AbstractAcademicJobsTe
         $xpath = $this->postJob(self::REJECTED_JOB_VALUES);
 
         foreach (['companyName', 'employmentType', 'type', 'employmentStartDate'] as $property) {
-            $this->assertNotContains('is-invalid', $this->classes($this->field($xpath, $property)), $property);
+            $field = $this->field($xpath, $property);
+            $this->assertNotContains('is-invalid', $this->classes($field), $property);
+            $this->assertFalse($field->hasAttribute('aria-invalid'), $property);
+            $this->assertFalse($field->hasAttribute('aria-describedby'), $property);
             $this->assertSame([], $this->feedback($xpath, $property), $property);
         }
     }
@@ -233,6 +240,30 @@ final class AcademicJobsNewJobFormFieldErrorsTest extends AbstractAcademicJobsTe
         $this->assertSame(0, $bold->length);
     }
 
+    /**
+     * A label for the field and the error code gets the arguments of the error, like the
+     * label for the code and the message of the validator. They are visitor input and are
+     * shown as text. The value that could not be read leaves the required property empty,
+     * which is reported as well.
+     */
+    #[Test]
+    public function aLabelForTheFieldAndTheCodeGetsTheArgumentsOfTheError(): void
+    {
+        $this->writeFrontendPluginTestSite([
+            $this->buildDefaultLanguageConfiguration(identifier: 'EN', base: '/'),
+        ]);
+
+        $xpath = $this->postJob(['title' => 'Research assistant', 'employmentStartDate' => '<b>soon</b>'] + self::REJECTED_JOB_VALUES);
+
+        $this->assertSame(
+            ['"<b>soon</b>" is no date.', 'This field is required.'],
+            $this->feedback($xpath, 'employmentStartDate'),
+        );
+        $bold = $xpath->query('//*[contains(concat(" ", normalize-space(@class), " "), " invalid-feedback ")]//b');
+        $this->assertNotFalse($bold);
+        $this->assertSame(0, $bold->length);
+    }
+
     private function field(\DOMXPath $xpath, string $property): \DOMElement
     {
         $nodes = $xpath->query(sprintf('//*[@id="job.%s"][self::input or self::select or self::textarea]', $property));
@@ -257,7 +288,7 @@ final class AcademicJobsNewJobFormFieldErrorsTest extends AbstractAcademicJobsTe
     private function feedback(\DOMXPath $xpath, string $property): array
     {
         $nodes = $xpath->query(sprintf(
-            '//*[@id="job.%s"]/following-sibling::*[contains(concat(" ", normalize-space(@class), " "), " invalid-feedback ")]',
+            '//*[@id="job.%1$s"]/following-sibling::*[@id="job.%1$s-error"][contains(concat(" ", normalize-space(@class), " "), " invalid-feedback ")]/div',
             $property,
         ));
         $this->assertNotFalse($nodes);

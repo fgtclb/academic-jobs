@@ -7,7 +7,8 @@
 <f:comment>
     The message of one validation error of a field. A label for the field and the error code
     wins, for example "create.job.contactEmail.error.1221559976", then a label for the error
-    code alone, "create.error.1221559976", then the message of the validator.
+    code alone, "create.error.1221559976", then the message of the validator. All three are
+    given the arguments of the error, so a label can name the refused value with "%s".
 </f:comment>
 <f:variable
     name="message"
@@ -21,6 +22,7 @@
 {f:translate(
     key: 'create.{elementId}.error.{error.code}',
     default: message,
+    arguments: error.arguments,
     extensionName: 'AcademicJobs'
 )}
 
