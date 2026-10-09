@@ -10,8 +10,8 @@ General configuration
 The header of the content elements
 ==================================
 
-The header and the subheader an editor enters on a :guilabel:`Jobs List`,
-:guilabel:`Jobs Detail` or :guilabel:`Jobs New` content element are rendered by
+The header and the subheader an editor enters on a :guilabel:`Job List`,
+:guilabel:`Job Details` or :guilabel:`Job Form` content element are rendered by
 the content element layout of the site, as for any other content element. The
 layouts of :guilabel:`EXT:fluid_styled_content` and of the bootstrap package do
 that, and the plugins render no header of their own.
@@ -42,7 +42,7 @@ without it, such a header renders as an empty :html:`<header>` element.
 The title of the job detail page
 ================================
 
-A :guilabel:`Jobs Detail` content element that shows a job makes the title of
+A :guilabel:`Job Details` content element that shows a job makes the title of
 the job the title of the page, through the page title API of TYPO3. Its
 provider is registered as :typoscript:`academicJobs` and is asked before the
 providers :typoscript:`record` and :typoscript:`seo` of the core:
@@ -84,7 +84,7 @@ extension limits the lifetime with or without it.
 The notification mail about a submitted job
 ===========================================
 
-When a visitor submits a job through the :guilabel:`Jobs New` content element,
+When a visitor submits a job through the :guilabel:`Job Form` content element,
 the job is saved hidden and one mail announces it. The mail is rendered from a
 Fluid mail template into an HTML and a plain-text part, on the core layout
 :file:`SystemEmail` that the mails of TYPO3 itself use, and it is sent through

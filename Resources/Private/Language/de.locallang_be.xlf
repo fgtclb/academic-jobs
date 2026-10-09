@@ -65,46 +65,46 @@
 
       <!-- /* academicjobs_newjobform */ -->
       <trans-unit id="plugin.newjobform.label">
-        <source>Jobs New</source>
-        <target>Jobs New</target>
+        <source>Job Form</source>
+        <target>Job Formular</target>
       </trans-unit>
 
       <!-- /* academicjobs_list */ -->
       <trans-unit id="plugin.list.label">
-        <source>Jobs List</source>
-        <target>Jobs List</target>
+        <source>Job List</source>
+        <target>Job Liste</target>
       </trans-unit>
 
       <!-- /* academicjobs_detail */ -->
       <trans-unit id="plugin.detail.label">
-        <source>Jobs Detail</source>
-        <target>Jobs Detail</target>
+        <source>Job Details</source>
+        <target>Job Details</target>
       </trans-unit>
 
       <!-- /* newContentElement */ -->
       <trans-unit id="newContentElement.wizardItems.academic.newjobform.title">
-        <source>Jobs New</source>
-        <target>Jobs New</target>
+        <source>Job Form</source>
+        <target>Job Formular</target>
       </trans-unit>
       <trans-unit id="newContentElement.wizardItems.academic.newjobform.description">
-        <source>Plugin providing new jobs form</source>
-        <target>Plugin providing new jobs form</target>
+        <source>Form for submitting job vacancies</source>
+        <target>Formular für die Einreichung von Job Angeboten</target>
       </trans-unit>
       <trans-unit id="newContentElement.wizardItems.academic.list.title">
-        <source>Jobs List</source>
-        <target>Jobs List</target>
+        <source>Job List</source>
+        <target>Job Liste</target>
       </trans-unit>
       <trans-unit id="newContentElement.wizardItems.academic.list.description">
-        <source>Plugin for listing academic jobs</source>
-        <target>Plugin for listing academic jobs</target>
+        <source>List of job vacancies</source>
+        <target>Liste von Job Angeboten</target>
       </trans-unit>
       <trans-unit id="newContentElement.wizardItems.academic.detail.title">
-        <source>Jobs Detail</source>
-        <target>Jobs Detail</target>
+        <source>Job Details</source>
+        <target>Job Details</target>
       </trans-unit>
       <trans-unit id="newContentElement.wizardItems.academic.detail.description">
-        <source>Plugin for viewing single academic job</source>
-        <target>Plugin for viewing single academic job</target>
+        <source>Detailed view for job vacancies</source>
+        <target>Detailansicht für Job Angebote</target>
       </trans-unit>
 
       <!-- Domain Model: Job -->

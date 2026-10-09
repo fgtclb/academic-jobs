@@ -34,12 +34,12 @@ offers, not how much TypoScript is loaded.
     *   -   Set
         -   Delivers
     *   -   `fgtclb/academic-jobs-new-job-form`
-        -   The :guilabel:`Jobs New` content element, the frontend form a job
+        -   The :guilabel:`Job Form` content element, the frontend form a job
             offer is entered with.
     *   -   `fgtclb/academic-jobs-list`
-        -   The :guilabel:`Jobs List` content element.
+        -   The :guilabel:`Job List` content element.
     *   -   `fgtclb/academic-jobs-detail`
-        -   The :guilabel:`Jobs Detail` content element.
+        -   The :guilabel:`Job Details` content element.
     *   -   `fgtclb/academic-jobs`
         -   Everything above. This is the set to use unless you deliberately
             want a subset, and it is the name this extension published before
@@ -129,11 +129,11 @@ Edit the :sql:`sys_template` record of the site root and add the entry to
     *   -   Entry
         -   Delivers
     *   -   :guilabel:`Academic Jobs: Jobs New (academic_jobs)`
-        -   The TypoScript of the :guilabel:`Jobs New` content element.
+        -   The TypoScript of the :guilabel:`Job Form` content element.
     *   -   :guilabel:`Academic Jobs: Jobs List (academic_jobs)`
-        -   The TypoScript of the :guilabel:`Jobs List` content element.
+        -   The TypoScript of the :guilabel:`Job List` content element.
     *   -   :guilabel:`Academic Jobs: Jobs Detail (academic_jobs)`
-        -   The TypoScript of the :guilabel:`Jobs Detail` content element.
+        -   The TypoScript of the :guilabel:`Job Details` content element.
     *   -   :guilabel:`Academic Jobs: All components (academic_jobs)`
         -   Every component this extension ships, in one entry.
     *   -   :guilabel:`Academic Jobs: Shared plugin settings (academic_jobs)`
@@ -156,12 +156,12 @@ Edit the page record of the site root, tab :guilabel:`Resources`, field
     *   -   Entry
         -   Delivers
     *   -   :guilabel:`Academic Jobs: Jobs New (academic_jobs)`
-        -   Makes the :guilabel:`Jobs New` content element selectable, and
+        -   Makes the :guilabel:`Job Form` content element selectable, and
             configures its entry in the new content element wizard.
     *   -   :guilabel:`Academic Jobs: Jobs List (academic_jobs)`
-        -   The same for :guilabel:`Jobs List`.
+        -   The same for :guilabel:`Job List`.
     *   -   :guilabel:`Academic Jobs: Jobs Detail (academic_jobs)`
-        -   The same for :guilabel:`Jobs Detail`.
+        -   The same for :guilabel:`Job Details`.
     *   -   :guilabel:`Academic Jobs: All components (academic_jobs)`
         -   Every component this extension ships, in one entry.
 
@@ -172,7 +172,7 @@ The setting is inherited by every page below the one it is set on.
 Pagination of the job list
 ==========================
 
-The :guilabel:`Jobs List` content element can split its jobs into pages.
+The :guilabel:`Job List` content element can split its jobs into pages.
 Whether it does, and how many jobs a page holds, is set on each content
 element, tab :guilabel:`Pagination`:
 

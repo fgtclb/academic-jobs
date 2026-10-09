@@ -53,37 +53,37 @@
 
       <!-- /* academicjobs_newjobform */ -->
       <trans-unit id="plugin.newjobform.label">
-        <source>Jobs New</source>
+        <source>Job Form</source>
       </trans-unit>
 
       <!-- /* academicjobs_list */ -->
       <trans-unit id="plugin.list.label">
-        <source>Jobs List</source>
+        <source>Job List</source>
       </trans-unit>
 
       <!-- /* academicjobs_detail */ -->
       <trans-unit id="plugin.detail.label">
-        <source>Jobs Detail</source>
+        <source>Job Details</source>
       </trans-unit>
 
       <!-- /* newContentElement */ -->
       <trans-unit id="newContentElement.wizardItems.academic.newjobform.title">
-        <source>Jobs New</source>
+        <source>Job Form</source>
       </trans-unit>
       <trans-unit id="newContentElement.wizardItems.academic.newjobform.description">
-        <source>Plugin providing new jobs form</source>
+        <source>Form for submitting job vacancies</source>
       </trans-unit>
       <trans-unit id="newContentElement.wizardItems.academic.list.title">
-        <source>Jobs List</source>
+        <source>Job List</source>
       </trans-unit>
       <trans-unit id="newContentElement.wizardItems.academic.list.description">
-        <source>Plugin for listing academic jobs</source>
+        <source>List of job vacancies</source>
       </trans-unit>
       <trans-unit id="newContentElement.wizardItems.academic.detail.title">
-        <source>Jobs Detail</source>
+        <source>Job Details</source>
       </trans-unit>
       <trans-unit id="newContentElement.wizardItems.academic.detail.description">
-        <source>Plugin for viewing single academic job</source>
+        <source>Detailed view for job vacancies</source>
       </trans-unit>
 
       <!-- Domain Model: Job -->
