@@ -10,7 +10,7 @@ Description
 The job list item renders the job image through the responsive image partial
 of `EXT:academic_base`, :file:`Partials/Academic/Image.html`, from 3.0 on. A
 raster image is therefore a :html:`<picture>` with WebP sources and a fallback
-:html:`<img>` that carries the classes it carried before, and an SVG file -
+:html:`<img>` with the class `ace-image` of the partial, and an SVG file -
 the shape an employer logo often has - is rendered as one :html:`<img>` of the
 original file without processing.
 

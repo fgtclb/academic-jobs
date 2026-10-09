@@ -231,9 +231,9 @@ model has: the property mapping rejects any other one and the submission fails.
         data-namespace-typo3-fluid="true"
     >
 
-    <div class="form-textfield-wrap">
-        <label class="form-label" for="job-form-captcha">Captcha</label>
-        <f:form.textfield name="captcha" id="job-form-captcha" class="form-control" />
+    <div class="ace-field ace-text-wrap">
+        <label class="ace-label" for="job-form-captcha">Captcha</label>
+        <f:form.textfield name="captcha" id="job-form-captcha" class="ace-control ace-text" />
     </div>
 
     </html>
