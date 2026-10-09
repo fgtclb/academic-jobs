@@ -66,6 +66,11 @@ for all academic extensions on the `extension points page of academic_base
 
         Override and customise the frontend templates.
 
+    ..  card:: :ref:`Styling <styling>`
+
+        The classes of the job list, detail and form, and how a site package
+        styles them.
+
     ..  card:: :ref:`Known problems <known-problems>`
 
         Known issues and information about them.
@@ -84,6 +89,7 @@ for all academic extensions on the `extension points page of academic_base
     Installation/Index
     Configuration/Index
     Templates/Index
+    Styling/Index
     KnownProblems/Index
     Changelog/Changelog-3
     Changelog/Changelog-2
