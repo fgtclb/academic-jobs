@@ -1,0 +1,2 @@
+# The scripts of the new job form switched off, as an integrator who brings their own does.
+plugin.tx_academicjobs.assets.js = 0

@@ -208,6 +208,53 @@ The site setting is declared by the aggregate set `fgtclb/academic-jobs`, like
 every other setting of this extension. A site configured through static
 templates sets the constant instead.
 
+..  _configuration-javascript:
+
+Load the script or bring your own
+=================================
+
+The :guilabel:`Jobs New` content element loads two scripts on the page that
+carries it: CKEditor 4 from its content delivery network, and the module
+:js:`@fgtclb/academic-jobs/frontend/rich-text.js`, which turns the description
+fields of the form into rich text editors. No other content element of this
+extension loads a script.
+
+Both are switched off together, per site, for an installation that brings its
+own editor or wants none:
+
+..  list-table::
+    :header-rows: 1
+
+    *   -   Site setting and constant
+        -   Default
+        -   Off means
+    *   -   :yaml:`plugin.tx_academicjobs.assets.js`
+        -   :yaml:`true`
+        -   The page loads neither the editor nor the module.
+
+With the site set, it is a site setting of `fgtclb/academic-jobs`, like every
+other setting of this extension:
+
+..  code-block:: yaml
+    :caption: config/sites/my-site/settings.yaml
+
+    plugin.tx_academicjobs.assets.js: false
+
+With the static template, it is the TypoScript constant of the same name:
+
+..  code-block:: typoscript
+    :caption: Constants of the root sys_template record
+
+    plugin.tx_academicjobs.assets.js = 0
+
+**The form keeps working without the scripts.** The description fields are
+plain text areas, marked with the class :html:`ace-ckeditor`, and a visitor
+submits the text as it is. A script of your own finds the fields by that class.
+
+A project that overrides :file:`Templates/Job/New.html` keeps whatever its copy
+loads, until it wraps its own :html:`<f:asset.script>` and
+:html:`<f:asset.module>` in :html:`<f:if condition="{settings.assets.js}">`.
+
 ..  _one-mechanism-per-site:
 
 Do not combine both
@@ -220,7 +267,8 @@ the second read happens after the site settings and after
 the extension ships a default for back to that default. For this extension that
 is the whole :typoscript:`plugin.tx_academicjobs` constants block: the Fluid
 root paths, the storage and target page ids, the notification e-mail, the job
-avatar upload settings and the content element header switch, among others.
+avatar upload settings, the content element header switch and the
+:ref:`script switch <configuration-javascript>`, among others.
 
 Nothing else is damaged: the :guilabel:`Constants` and :guilabel:`Setup` fields
 of the :sql:`sys_template` record, the page TSconfig of a page and the page

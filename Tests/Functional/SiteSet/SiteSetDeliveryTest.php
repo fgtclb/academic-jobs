@@ -364,6 +364,7 @@ final class SiteSetDeliveryTest extends AbstractAcademicJobsTestCase
                 'plugin.tx_academicjobs.jobAvatarImage.uploadFolder' => '1:/global-content/jobs/logos/',
                 'plugin.tx_academicjobs.jobAvatarImage.validation.fileSize.maximum' => '2M',
                 'plugin.tx_academicjobs.jobAvatarImage.validation.mimeType.allowedMimeTypes' => 'image/jpeg,image/png,image/webp,image/svg+xml',
+                'plugin.tx_academicjobs.assets.js' => true,
             ],
             $definitions,
         );

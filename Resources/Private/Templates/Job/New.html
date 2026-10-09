@@ -4,13 +4,19 @@
     xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
 >
 
-<f:asset.script
-    identifier="ckeditor"
-    src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"
-    defer="1"
-/>
+<f:comment>
+    The rich text editor and the module that configures it, both switched off with
+    "plugin.tx_academicjobs.assets.js". The form works without them, with plain text areas.
+</f:comment>
+<f:if condition="{settings.assets.js}">
+    <f:asset.script
+        identifier="ckeditor"
+        src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"
+        defer="1"
+    />
 
-<f:asset.module identifier="@fgtclb/academic-jobs/frontend/rich-text.js" />
+    <f:asset.module identifier="@fgtclb/academic-jobs/frontend/rich-text.js" />
+</f:if>
 
 <div class="academic-jobs-new">
 

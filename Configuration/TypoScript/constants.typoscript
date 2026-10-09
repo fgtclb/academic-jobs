@@ -35,6 +35,13 @@ plugin.tx_academicjobs {
     # cat=plugin.tx_academicjobs//a; type=boolean; label=Render the content element header in the plugins: only for a site whose content element layout renders no header
     renderContentElementHeader = 0
 
+    # The scripts of the new job form, the rich text editor and the module that configures
+    # it. Also a site setting of the set "fgtclb/academic-jobs", with the same default.
+    assets {
+        # cat=plugin.tx_academicjobs/enable; type=boolean; label=New job form: load the scripts, off for an installation that brings its own
+        js = 1
+    }
+
     pagination {
         # cat=plugin.tx_academicjobs//a; type=int+; label=Pagination: the most page numbers the job list links at once (numbered pagination only)
         numberOfLinks = 5

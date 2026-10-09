@@ -98,3 +98,9 @@ settings:
     category: academic.jobs
     type: string
     default: 'image/jpeg,image/png,image/webp,image/svg+xml'
+  plugin.tx_academicjobs.assets.js:
+    label: 'New job form | Load the scripts'
+    description: 'Off for an installation that brings its own script. Without one the form keeps working: the description fields are plain text areas instead of rich text editors.'
+    category: academic.jobs
+    type: bool
+    default: true
