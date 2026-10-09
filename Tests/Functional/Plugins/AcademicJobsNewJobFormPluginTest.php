@@ -112,6 +112,25 @@ final class AcademicJobsNewJobFormPluginTest extends AbstractAcademicJobsTestCas
     }
 
     /**
+     * The submit button keeps the button classes of Bootstrap on purpose, like the grid,
+     * the container and visually-hidden, so a site styles it with its other buttons.
+     */
+    #[Test]
+    public function newJobFormIsSubmittedByABootstrapButton(): void
+    {
+        $this->setUpTestCase();
+
+        $document = new \DOMDocument();
+        $this->assertTrue($document->loadHTML($this->renderHomePage(), LIBXML_NOERROR | LIBXML_NOWARNING));
+        $buttons = (new \DOMXPath($document))->query('//form//button[@type="submit"]');
+        $this->assertNotFalse($buttons);
+        $this->assertSame(1, $buttons->length);
+        $button = $buttons->item(0);
+        $this->assertInstanceOf(\DOMElement::class, $button);
+        $this->assertSame('btn btn-primary', $button->getAttribute('class'));
+    }
+
+    /**
      * Both selects of the form are single valued `int` properties whose item
      * sets start at 1, so without an option for "nothing chosen" the browser
      * selects the first real one and a visitor who never touched the control
