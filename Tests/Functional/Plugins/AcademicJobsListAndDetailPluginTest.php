@@ -243,9 +243,9 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
         $content = $this->renderListPage();
         $this->assertSame($expectedHeadings, $this->countHeadingsReading($content, self::HEADER));
         $this->assertSame($expectedHeadings, $this->countHeadingsReading($content, self::SUBHEADER));
-        // The header of a content element would be the first child of the list, the headers
-        // below it are the ones of the jobs.
-        $this->assertSame(0, $this->countContentElementHeaderNodes($content, self::LIST_WRAPPER . '/header'));
+        // Every job renders its title in an ace-header, any other header inside the list would
+        // be the one of the content element.
+        $this->assertSame(0, $this->countContentElementHeaderNodes($content, self::LIST_WRAPPER . '//header[not(contains(concat(" ", normalize-space(@class), " "), " ace-header "))]'));
     }
 
     #[Test]
@@ -410,8 +410,8 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
         $this->assertSame($expectedHeadings, $this->countHeadingsReading($content, self::HEADER));
         $this->assertSame($expectedHeadings, $this->countHeadingsReading($content, self::SUBHEADER));
         // The header of the job title is the ace-header, a header of the content element
-        // would be another one.
-        $this->assertSame(0, $this->countContentElementHeaderNodes($content, self::DETAIL_WRAPPER . '/header[not(contains(concat(" ", normalize-space(@class), " "), " ace-header "))]'));
+        // would be another one, wherever it renders inside the detail.
+        $this->assertSame(0, $this->countContentElementHeaderNodes($content, self::DETAIL_WRAPPER . '//header[not(contains(concat(" ", normalize-space(@class), " "), " ace-header "))]'));
     }
 
     #[Test]
