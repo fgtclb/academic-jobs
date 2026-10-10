@@ -1,0 +1,9 @@
+"tx_academicjobs_domain_model_job",
+,"uid","pid","sys_language_uid","l10n_parent","t3ver_oid","t3ver_wsid","t3ver_state","deleted","hidden","title","type","employment_type","starttime","endtime"
+,21,2,0,0,0,0,0,0,0,"Lab technician",0,2,1803884400,1806508800
+,22,2,1,21,0,0,0,0,0,"Lab technician, translated",3,0,1803884400,1806508800
+,23,3,0,0,0,0,0,0,1,"Hidden job without both values",0,0,1811800800,1814392799
+,24,2,0,0,21,1,0,0,0,"Workspace version of a job without a type",0,2,0,0
+,25,2,0,0,0,0,0,1,0,"Deleted job without a type",0,2,0,0
+,26,2,0,0,21,1,2,0,0,"Delete placeholder of a job without a type",0,2,0,0
+,27,2,0,0,0,0,0,0,0,"Job with both values",1,1,0,0

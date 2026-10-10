@@ -26,7 +26,12 @@ Impact
 
 Jobs stored before keep their values, including a ``0`` in
 :sql:`employment_type` or :sql:`type` and the time of day of their start date
-and deadline. Correct them in the backend where needed.
+and deadline. The upgrade wizard ``academicJobs_repairNewJobFormValues``
+moves the start date and the deadline of such a job to whole days, and lists
+the jobs with a ``0`` for an editor, see
+:ref:`important-repair-wizard-for-jobs-of-the-old-form`. It cannot repair a
+job with only one of the two dates, a job whose dates an editor changed since,
+nor choose the value of a ``0``. Correct those in the backend.
 
 TYPO3 v13 and v14 behave alike here.
 

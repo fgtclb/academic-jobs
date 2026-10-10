@@ -1,0 +1,9 @@
+"tx_academicjobs_domain_model_job",
+,"uid","pid","sys_language_uid","l10n_parent","t3ver_oid","t3ver_wsid","t3ver_state","deleted","hidden","title","type","employment_type","starttime","endtime"
+,6,2,0,0,0,0,0,0,0,"Editor job with two times of day",1,1,1803884400,1806508800
+,7,2,0,0,0,0,0,0,0,"Editor job at midnight",1,1,1803855600,1806444000
+,8,2,0,0,0,0,0,0,0,"Job covering whole days",1,1,1803855600,1806530399
+,9,2,0,0,0,0,0,0,0,"Job with a deadline only",1,1,0,1806495797
+,10,2,0,0,0,0,0,0,0,"Job with a start date only",1,1,1803907397,0
+,11,2,0,0,0,0,0,1,0,"Deleted form job",1,1,1803907397,1806495797
+,12,2,0,0,2,1,2,0,0,"Delete placeholder of a form job",1,1,1811840742,1814346342
