@@ -77,7 +77,8 @@ touched again. Two cases need a look before running it:
     fields of such a job by hand where the contact must not be shown.
 
 The wizard reads the old contact table and the :sql:`contact` field of the job
-table. Once the database analyzer has renamed or dropped them, there is nothing
-left to migrate.
+table, also after the database analyzer has renamed them, see
+:ref:`important-job-contact-wizard-finds-renamed-table`. Once the analyzer has
+dropped them, there is nothing left to migrate.
 
 .. index:: Database, ext:academic_jobs

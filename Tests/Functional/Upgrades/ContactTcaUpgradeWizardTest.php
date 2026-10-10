@@ -18,11 +18,18 @@ final class ContactTcaUpgradeWizardTest extends AbstractAcademicJobsTestCase
         parent::setUp();
     }
 
+    /**
+     * The database of a test case class is kept from one test to the next, only emptied.
+     * A table a test renamed is renamed back, so that the next test finds the schema of
+     * the fixture extension.
+     */
     protected function tearDown(): void
     {
         $schemaManager = $this->getConnectionPool()->getConnectionByName(ConnectionPool::DEFAULT_CONNECTION_NAME)->createSchemaManager();
-        if ($schemaManager->tablesExist(['renamedfortest_tx_academicjobs_domain_model_contact'])) {
-            $schemaManager->renameTable('renamedfortest_tx_academicjobs_domain_model_contact', 'tx_academicjobs_domain_model_contact');
+        foreach (['renamedfortest_', 'zzz_deleted_'] as $prefix) {
+            if ($schemaManager->tablesExist([$prefix . 'tx_academicjobs_domain_model_contact'])) {
+                $schemaManager->renameTable($prefix . 'tx_academicjobs_domain_model_contact', 'tx_academicjobs_domain_model_contact');
+            }
         }
         parent::tearDown();
     }
@@ -159,6 +166,43 @@ final class ContactTcaUpgradeWizardTest extends AbstractAcademicJobsTestCase
         $this->assertFalse($subject->updateNecessary(), 'updateNecessary() after the migration');
     }
 
+    /**
+     * The database analyzer renames a table the schema no longer declares to
+     * `zzz_deleted_<name>` before it drops it. The wizard reads the contact table under
+     * that name as well, with the relation field of the job left as it is (ACE-895).
+     * ContactTcaUpgradeWizardAfterDatabaseAnalyzerTest renames both, as the analyzer does.
+     */
+    #[Test]
+    public function updateNecessaryFindsTheContactTableRenamedByTheDatabaseAnalyzer(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/DataSets/contact_notDeletedOrHidden.csv');
+        $this->renameContactTableAsTheDatabaseAnalyzerDoes();
+        $subject = $this->get(ContactTcaUpgradeWizard::class);
+        $this->assertInstanceOf(ContactTcaUpgradeWizard::class, $subject);
+        $this->assertTrue($subject->updateNecessary(), 'updateNecessary() before the migration');
+
+        $this->assertTrue($subject->executeUpdate());
+
+        $this->assertFalse($subject->updateNecessary(), 'updateNecessary() after the migration');
+    }
+
+    /**
+     * Hidden and deleted contact records are left out of the renamed table as well.
+     */
+    #[DataProvider('txAcademicJobsDomainModelContactDataSets')]
+    #[Test]
+    public function executeUpdateMigratesFromTheContactTableRenamedByTheDatabaseAnalyzer(string $fixtureDataSetFile): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/DataSets/' . $fixtureDataSetFile);
+        $this->renameContactTableAsTheDatabaseAnalyzerDoes();
+        $subject = $this->get(ContactTcaUpgradeWizard::class);
+        $this->assertInstanceOf(ContactTcaUpgradeWizard::class, $subject);
+
+        $this->assertTrue($subject->executeUpdate());
+
+        $this->assertCSVDataSet(__DIR__ . '/Fixtures/Upgraded/' . $fixtureDataSetFile);
+    }
+
     #[DataProvider('txAcademicJobsDomainModelContactDataSets')]
     #[Test]
     public function executeUpdateMigratesDatabaseRecordsAndReturnsTrue(
@@ -169,5 +213,13 @@ final class ContactTcaUpgradeWizardTest extends AbstractAcademicJobsTestCase
         $this->assertInstanceOf(ContactTcaUpgradeWizard::class, $subject);
         $this->assertTrue($subject->executeUpdate(), 'updateNecessary() returns true');
         $this->assertCSVDataSet(__DIR__ . '/Fixtures/Upgraded/' . $fixtureDataSetFile);
+    }
+
+    private function renameContactTableAsTheDatabaseAnalyzerDoes(): void
+    {
+        $this->getConnectionPool()
+            ->getConnectionByName(ConnectionPool::DEFAULT_CONNECTION_NAME)
+            ->createSchemaManager()
+            ->renameTable('tx_academicjobs_domain_model_contact', 'zzz_deleted_tx_academicjobs_domain_model_contact');
     }
 }
