@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FGTCLB\AcademicJobs\Upgrades;
 
 use Doctrine\DBAL\Schema\Column;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Install\Attribute\UpgradeWizard;
 use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
@@ -25,9 +26,10 @@ final class ContactTcaUpgradeWizard implements UpgradeWizardInterface
     public function getDescription(): string
     {
         return 'Copies name, phone, e-mail and additional information of the contact record related to a job'
-            . ' into the contact fields of the job itself, for every job whose own contact fields are all empty.'
-            . ' Jobs store their contact directly since the contact table was removed, the old table, also when'
-            . ' renamed to "zzz_tx_academicjobs_domain_model_contact", is read once and left in place.';
+            . ' into the contact fields of the job itself, for every job whose own contact fields are all empty,'
+            . ' hidden, scheduled, expired and deleted jobs included. Hidden and deleted contact records are left out.'
+            . ' Jobs store their contact directly since the contact table was removed, the old table is read once'
+            . ' and left in place.';
     }
 
     public function executeUpdate(): bool
@@ -77,6 +79,17 @@ final class ContactTcaUpgradeWizard implements UpgradeWizardInterface
      * values of the record. A contact entered in the job itself is never overwritten.
      * Yields nothing without the old table or without the relation field of the job.
      *
+     * Every job is read, hidden, scheduled, expired and deleted ones included: a job shows
+     * its contact once it is visible again, or restored from the recycler, and the result
+     * does not depend on the moment the wizard runs.
+     *
+     * The old table has no TCA in an installation, so no restriction reaches it, and the
+     * conditions on it are stated here. A deleted contact record is left out, and so is a
+     * hidden one: an editor switched it off for the job, and the contact fields of a job
+     * have no switch to carry that over. Start and end time of a contact record are not
+     * looked at, so that the result does not depend on the moment the wizard runs either.
+     * A contact record whose end time has passed is therefore copied, and the job shows it.
+     *
      * @return \Generator<int, array<string, mixed>>
      */
     private function jobsToMigrate(): \Generator
@@ -90,6 +103,7 @@ final class ContactTcaUpgradeWizard implements UpgradeWizardInterface
             return;
         }
         $queryBuilder = $this->connectionPool->getConnectionForTable('tx_academicjobs_domain_model_job')->createQueryBuilder();
+        $queryBuilder->getRestrictions()->removeAll();
         $jobs = $queryBuilder
             ->select(
                 'job.uid',
@@ -104,6 +118,10 @@ final class ContactTcaUpgradeWizard implements UpgradeWizardInterface
             )
             ->from('tx_academicjobs_domain_model_job', 'job')
             ->innerJoin('job', $tableName, 'contact', 'job.contact = contact.uid')
+            ->where(
+                $queryBuilder->expr()->eq('contact.deleted', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)),
+                $queryBuilder->expr()->eq('contact.hidden', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)),
+            )
             ->orderBy('job.uid')
             ->executeQuery();
         while ($job = $jobs->fetchAssociative()) {

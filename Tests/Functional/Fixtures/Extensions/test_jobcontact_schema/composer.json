@@ -1,6 +1,6 @@
 {
     "name": "tests/test-jobcontact-schema",
-    "description": "Extension providing TCA for tests",
+    "description": "Extension providing the schema of the removed job contact table for tests",
     "type": "typo3-cms-extension",
     "license": "GPL-2.0-or-later",
     "authors": [

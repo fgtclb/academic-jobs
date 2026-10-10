@@ -1,8 +1,8 @@
 <?php
 
 $EM_CONF[$_EXTKEY] = [
-    'title' => 'TESTS: Academic Jobs TCA',
-    'description' => 'Extension providing TCA for tests',
+    'title' => 'TESTS: Academic Jobs contact schema',
+    'description' => 'Extension providing the schema of the removed job contact table for tests',
     'version' => '3.0.0',
     'category' => 'misc',
     'state' => 'beta',
