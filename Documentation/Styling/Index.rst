@@ -177,8 +177,8 @@ Every field is rendered by the form partials of
 :guilabel:`EXT:academic_base`, see `A form field
 <https://docs.typo3.org/p/fgtclb/academic-base/main/en-us/Styling/Index.html#styling-markup-form>`__
 in its chapter :guilabel:`Styling`. The text areas of the description and of
-the additional contact information carry `ace-ckeditor`. Unlike every other
-script of the academic extensions, the rich text script of the form finds its
+the additional contact information carry `ace-ckeditor`. Unlike most scripts
+of the academic extensions, the rich text script of the form finds its
 elements by this class: it starts the editor on every text area with
 `ace-ckeditor`. An override of the form keeps the class on the text areas that
 get the editor.
