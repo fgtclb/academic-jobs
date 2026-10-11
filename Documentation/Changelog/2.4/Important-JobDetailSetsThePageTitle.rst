@@ -34,7 +34,7 @@ win orders it before :typoscript:`academicJobs`. The shipped provider is
 ordered before :typoscript:`record` and :typoscript:`seo`.
 
 A job without a description leaves the description of the page in place, the
-one :guilabel:`EXT:seo` writes from the page properties for example.
+one EXT:seo writes from the page properties for example.
 
 TYPO3 v12 and v13 behave alike here.
 

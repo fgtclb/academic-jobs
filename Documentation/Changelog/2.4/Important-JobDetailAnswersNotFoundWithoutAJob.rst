@@ -12,7 +12,7 @@ status ``200`` and the message "No job advert could be found." in the content
 element. That applied to the page requested without a job, to a job that does
 not exist, and to a hidden job. Search engines indexed it as a page of its
 own. The page now answers ``404`` with the "page not found" handling of the
-site, the way the profile detail of :guilabel:`EXT:academic_persons` does.
+site, the way the profile detail of EXT:academic_persons does.
 
 The job list of a content element with :guilabel:`Show hidden records` lists
 hidden jobs, but linked them to that detail page, which cannot show them. A
