@@ -14,6 +14,27 @@ use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 #[UpgradeWizard('academicJobs_contactRelation')]
 final class ContactTcaUpgradeWizard implements UpgradeWizardInterface
 {
+    /**
+     * The names the old contact table can have, in the order they are looked for: its own,
+     * and the one the database analyzer gives it before it drops it. The analyzer prefixes
+     * a removed table or field with `zzz_deleted_`, on every TYPO3 version this wizard runs
+     * on, and shortens the result to the identifier length of the platform, which both
+     * names here stay below.
+     */
+    private const CONTACT_TABLES = [
+        'tx_academicjobs_domain_model_contact',
+        'zzz_deleted_tx_academicjobs_domain_model_contact',
+    ];
+
+    /**
+     * The names the relation field of the job can have, see CONTACT_TABLES. The analyzer
+     * renames it in the same step as the table, the job table no longer declares it.
+     */
+    private const RELATION_FIELDS = [
+        'contact',
+        'zzz_deleted_contact',
+    ];
+
     public function __construct(
         private readonly ConnectionPool $connectionPool,
     ) {}
@@ -29,7 +50,8 @@ final class ContactTcaUpgradeWizard implements UpgradeWizardInterface
             . ' into the contact fields of the job itself, for every job whose own contact fields are all empty,'
             . ' hidden, scheduled, expired and deleted jobs included. Hidden and deleted contact records are left out.'
             . ' Jobs store their contact directly since the contact table was removed, the old table is read once'
-            . ' and left in place.';
+            . ' and left in place. The database analyzer renames the table and the relation field of the job with'
+            . ' the prefix "zzz_deleted_" before it drops them, the wizard reads them under that name as well.';
     }
 
     public function executeUpdate(): bool
@@ -77,7 +99,9 @@ final class ContactTcaUpgradeWizard implements UpgradeWizardInterface
      * Yields every job that relates to a record of the old contact table, has none of its
      * own contact fields filled and gets a value from that record, together with the
      * values of the record. A contact entered in the job itself is never overwritten.
-     * Yields nothing without the old table or without the relation field of the job.
+     * The old table and the relation field are read under their own name or under the
+     * one the database analyzer renamed them to, each independently of the other. Yields
+     * nothing without the old table or without the relation field of the job.
      *
      * Every job is read, hidden, scheduled, expired and deleted ones included: a job shows
      * its contact once it is visible again, or restored from the recycler, and the result
@@ -94,12 +118,9 @@ final class ContactTcaUpgradeWizard implements UpgradeWizardInterface
      */
     private function jobsToMigrate(): \Generator
     {
-        $tableName = match (true) {
-            $this->tableExist('tx_academicjobs_domain_model_contact') => 'tx_academicjobs_domain_model_contact',
-            $this->tableExist('zzz_tx_academicjobs_domain_model_contact') => 'zzz_tx_academicjobs_domain_model_contact',
-            default => null,
-        };
-        if ($tableName === null || !$this->jobTableHasContactColumn()) {
+        $tableName = $this->findContactTable();
+        $relationField = $this->findRelationField();
+        if ($tableName === null || $relationField === null) {
             return;
         }
         $queryBuilder = $this->connectionPool->getConnectionForTable('tx_academicjobs_domain_model_job')->createQueryBuilder();
@@ -117,7 +138,12 @@ final class ContactTcaUpgradeWizard implements UpgradeWizardInterface
                 'contact.additional_information',
             )
             ->from('tx_academicjobs_domain_model_job', 'job')
-            ->innerJoin('job', $tableName, 'contact', 'job.contact = contact.uid')
+            ->innerJoin(
+                'job',
+                $tableName,
+                'contact',
+                $queryBuilder->expr()->eq('job.' . $relationField, $queryBuilder->quoteIdentifier('contact.uid')),
+            )
             ->where(
                 $queryBuilder->expr()->eq('contact.deleted', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)),
                 $queryBuilder->expr()->eq('contact.hidden', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)),
@@ -139,15 +165,22 @@ final class ContactTcaUpgradeWizard implements UpgradeWizardInterface
         return trim((string)$value) !== '';
     }
 
-    private function tableExist(string $tableName): bool
+    private function findContactTable(): ?string
     {
-        return $this->connectionPool
-            ->getConnectionForTable($tableName)
-            ->createSchemaManager()
-            ->tablesExist([$tableName]);
+        foreach (self::CONTACT_TABLES as $tableName) {
+            $tableExists = $this->connectionPool
+                ->getConnectionForTable($tableName)
+                ->createSchemaManager()
+                ->tablesExist([$tableName]);
+            if ($tableExists) {
+                return $tableName;
+            }
+        }
+
+        return null;
     }
 
-    private function jobTableHasContactColumn(): bool
+    private function findRelationField(): ?string
     {
         $columnNames = array_map(
             static fn(Column $column): string => strtolower($column->getName()),
@@ -156,7 +189,12 @@ final class ContactTcaUpgradeWizard implements UpgradeWizardInterface
                 ->createSchemaManager()
                 ->listTableColumns('tx_academicjobs_domain_model_job')
         );
+        foreach (self::RELATION_FIELDS as $fieldName) {
+            if (in_array($fieldName, $columnNames, true)) {
+                return $fieldName;
+            }
+        }
 
-        return in_array('contact', $columnNames, true);
+        return null;
     }
 }
