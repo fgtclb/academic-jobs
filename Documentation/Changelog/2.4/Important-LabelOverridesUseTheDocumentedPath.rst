@@ -7,14 +7,14 @@ Important: Label overrides are read from the documented path
 Description
 ===========
 
-The templates of this extension translate their labels with the extension name
-:html:`AcademicJobs` instead of the extension key :html:`academic_jobs`. TYPO3
-v12 and v13 build the TypoScript path of :typoscript:`_LOCAL_LANG` from that
-name as it is given, so they read label overrides from
-:typoscript:`plugin.tx_academic_jobs`. They now read them from
-:typoscript:`plugin.tx_academicjobs` and
-:typoscript:`plugin.tx_academicjobs_<plugin>`, the paths the TYPO3
-documentation names and TYPO3 v14 reads anyway.
+The templates of this extension translated their labels with the extension key
+:html:`academic_jobs` as the extension name. TYPO3 v12 and v13 build the
+TypoScript path of :typoscript:`_LOCAL_LANG` from that name as it is given, so
+they read label overrides from :typoscript:`plugin.tx_academic_jobs`. The
+templates now use the extension name :html:`AcademicJobs`, so the overrides are
+read from :typoscript:`plugin.tx_academicjobs` and
+:typoscript:`plugin.tx_academicjobs_<plugin>`, the paths the TYPO3 documentation
+names.
 
 The options of the job type and employment type selects of the form, which the
 plugin translates in PHP, follow the same rule. The messages after a job is

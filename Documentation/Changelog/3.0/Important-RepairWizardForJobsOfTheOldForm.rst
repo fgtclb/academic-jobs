@@ -1,4 +1,4 @@
-.. _important-repair-wizard-for-jobs-of-the-old-form:
+.. _important-repair-wizard-for-jobs-of-the-old-form-3-0:
 
 ============================================================
 Important: A wizard repairs the jobs of the old new job form

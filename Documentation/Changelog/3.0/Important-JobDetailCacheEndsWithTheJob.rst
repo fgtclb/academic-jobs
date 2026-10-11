@@ -1,4 +1,4 @@
-.. _important-job-detail-cache-ends-with-the-job:
+.. _important-job-detail-cache-ends-with-the-job-3-0:
 
 =========================================================
 Important: The page cache of a job detail ends with a job

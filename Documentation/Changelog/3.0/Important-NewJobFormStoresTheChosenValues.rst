@@ -1,4 +1,4 @@
-.. _important-new-job-form-stores-the-chosen-values:
+.. _important-new-job-form-stores-the-chosen-values-3-0:
 
 ====================================================
 Important: The new job form stores the chosen values

@@ -1,4 +1,4 @@
-.. _important-new-job-form-offers-an-unchosen-option:
+.. _important-new-job-form-offers-an-unchosen-option-3-0:
 
 =================================================
 Important: New job form offers an unchosen option

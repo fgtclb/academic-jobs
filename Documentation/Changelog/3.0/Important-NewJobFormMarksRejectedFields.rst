@@ -1,4 +1,4 @@
-.. _important-new-job-form-marks-rejected-fields:
+.. _important-new-job-form-marks-rejected-fields-3-0:
 
 =================================================
 Important: The new job form marks rejected fields

@@ -1,4 +1,4 @@
-.. _important-1787141400:
+.. _important-1787141400-3-0:
 
 ======================================================================
 Important: The page TSconfig directory is now spelled :file:`TSconfig`

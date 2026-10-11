@@ -1,4 +1,4 @@
-.. _important-job-contact-wizard-migrates-invisible-jobs:
+.. _important-job-contact-wizard-migrates-invisible-jobs-3-0:
 
 =========================================================
 Important: The job contact wizard migrates invisible jobs

@@ -1,4 +1,4 @@
-.. _important-job-detail-sets-the-page-title:
+.. _important-job-detail-sets-the-page-title-3-0:
 
 =============================================
 Important: The job detail sets the page title

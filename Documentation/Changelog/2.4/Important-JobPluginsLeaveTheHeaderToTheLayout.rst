@@ -9,7 +9,7 @@ Description
 
 A :guilabel:`Jobs List`, :guilabel:`Jobs Detail` or :guilabel:`Jobs New`
 content element renders through the content element layout of the site, like
-any other content element. The layouts of :guilabel:`EXT:fluid_styled_content`
+any other content element. The layouts of EXT:fluid_styled_content
 and of the bootstrap package render the header and the subheader an editor
 enters, and the templates of the three plugins rendered them a second time:
 
@@ -29,12 +29,13 @@ The templates now render the header only when the site switches it on:
 
     plugin.tx_academicjobs.renderContentElementHeader = 1
 
-The same is the site setting :guilabel:`Render the content element header in
-the plugins` of the set `fgtclb/academic-jobs`. It is off by default.
+On TYPO3 v13 the same is the site setting :guilabel:`Render the content
+element header in the plugins` of the set `fgtclb/academic-jobs`. It is off by
+default.
 
 The plugin settings now also carry :typoscript:`settings.defaultHeaderType`,
 mapped from the constant :typoscript:`styles.content.defaultHeaderType` of
-:guilabel:`EXT:fluid_styled_content`, so with the switch on the header layout
+EXT:fluid_styled_content, so with the switch on the header layout
 :guilabel:`Default` renders a heading. See
 :ref:`configuration-general-content-element-header`.
 
@@ -43,21 +44,29 @@ Impact
 
 On a site whose content element layout renders the header, the header of the
 three content elements appears once, and the markup of the plugins no longer
-contains a :html:`<header>` element.
+contains a :html:`<header>` element. TYPO3 v12 and v13 behave alike here.
 
 Affected Installations
 ======================
 
-Installations whose content element layout renders **no** header - a site
-package that renders the header in its element templates instead - lose the
-header of the job content elements. Switch
-:typoscript:`renderContentElementHeader` on for such a site.
+Every installation using one of the three job content elements.
 
-Projects that copied :file:`Job/List.html`, :file:`Job/Show.html` or
-:file:`Job/New.html` keep rendering the header in their copy. On a site whose
-layout renders the header, drop the :html:`<f:render partial="Header/All" … />`
-line from the copy; on any other site, keep it or wrap it in the same
-condition as the shipped templates:
+Installations whose content element layout renders **no** header, a site
+package that renders the header in its element templates instead, lose the
+header of the job content elements.
+
+Migration
+=========
+
+On a site whose content element layout renders no header, switch
+:typoscript:`plugin.tx_academicjobs.renderContentElementHeader` on, through the
+constant or, on TYPO3 v13, the site setting.
+
+Projects that copied :file:`Templates/Job/List.html`,
+:file:`Templates/Job/Show.html` or :file:`Templates/Job/New.html` keep
+rendering the header in their copy. On a site whose layout renders the header,
+drop the :html:`<f:render partial="Header/All" … />` line from the copy. On any
+other site, keep it or wrap it in the same condition as the shipped templates:
 
 ..  code-block:: html
 

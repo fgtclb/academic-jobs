@@ -1,4 +1,4 @@
-.. _important-job-lists-break-starttime-ties-by-uid:
+.. _important-job-lists-break-starttime-ties-by-uid-3-0:
 
 ================================================
 Important: Job lists break starttime ties by uid

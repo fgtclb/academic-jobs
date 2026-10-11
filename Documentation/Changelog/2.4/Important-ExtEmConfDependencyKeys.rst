@@ -23,13 +23,11 @@ packages failed with "The package "academic_jobs" depends on "rte-ckeditor"
 which is not present in the system". It now depends on the Rich Text Editor
 and on Fluid Styled Content, which it needs.
 
-Composer installations are not affected, and neither is TYPO3 v14: the
-:file:`composer.json` of this extension declares its version and the packages
-it provides, so TYPO3 v14 reads the dependencies from there.
+Composer installations are not affected.
 
 Affected Installations
 ======================
 
-Classic, non-Composer installations of this extension on TYPO3 v12 or v13.
+Classic, non-Composer installations of this extension.
 
 .. index:: Backend, ext:academic_jobs

@@ -1,4 +1,4 @@
-.. _important-job-contact-wizard-finds-renamed-table:
+.. _important-job-contact-wizard-finds-renamed-table-3-0:
 
 ==============================================================
 Important: The job contact wizard finds the renamed old schema

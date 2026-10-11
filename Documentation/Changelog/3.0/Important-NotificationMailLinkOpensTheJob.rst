@@ -1,4 +1,4 @@
-.. _important-notification-mail-link-opens-the-job:
+.. _important-notification-mail-link-opens-the-job-3-0:
 
 =================================================================
 Important: The link of the notification mail opens the job record
