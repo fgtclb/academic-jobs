@@ -1,0 +1,8 @@
+"tx_academicjobs_domain_model_job",
+,"uid","contact","contact_name","contact_email","contact_phone","contact_additional_information"
+,1,1,"","","","",
+,2,2,"","","","",
+"tx_academicjobs_domain_model_contact",
+,"uid","hidden","deleted","starttime","endtime","name","email","phone","additional_information"
+,1,0,0,0,946684800,"Name 1","example@mail.com","","Additional information 1",
+,2,0,0,2145916800,0,"Name 2","","01234 / 56789","Additional information 2",

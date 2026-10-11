@@ -48,6 +48,10 @@ final class ContactTcaUpgradeWizardTest extends AbstractAcademicJobsTestCase
         yield 'contact - deleted but not hidden' => [
             'fixtureDataSetFile' => 'contact_deletedButNotHidden.csv',
         ];
+        // Start and end time of a contact record are not looked at, an expired one is copied.
+        yield 'contact - expired or scheduled' => [
+            'fixtureDataSetFile' => 'contact_expiredOrScheduledContact.csv',
+        ];
     }
 
     /**
@@ -103,9 +107,10 @@ final class ContactTcaUpgradeWizardTest extends AbstractAcademicJobsTestCase
     }
 
     /**
-     * Where the contact table still has TCA, as in this test, the migration skips hidden
-     * and deleted contact records, see executeUpdateMigratesDatabaseRecordsAndReturnsTrue().
-     * The wizard reads the same records to decide whether it is necessary.
+     * The migration skips hidden and deleted contact records, see
+     * executeUpdateMigratesDatabaseRecordsAndReturnsTrue(). The contact table has no TCA,
+     * as in an installation, so nothing but the wizard itself leaves them out. The wizard
+     * reads the same records to decide whether it is necessary.
      */
     public static function contactDataSetsTheMigrationSkips(): \Generator
     {
@@ -121,6 +126,37 @@ final class ContactTcaUpgradeWizardTest extends AbstractAcademicJobsTestCase
         $subject = $this->get(ContactTcaUpgradeWizard::class);
         $this->assertInstanceOf(ContactTcaUpgradeWizard::class, $subject);
         $this->assertFalse($subject->updateNecessary());
+    }
+
+    /**
+     * Each data set holds a job in the named state and a deleted job, both related to the
+     * same contact record and both migrated.
+     */
+    public static function jobsInvisibleInTheFrontendDataSets(): \Generator
+    {
+        yield 'hidden job' => ['contact_hiddenJob.csv'];
+        yield 'expired job' => ['contact_expiredJob.csv'];
+        yield 'scheduled job' => ['contact_scheduledJob.csv'];
+    }
+
+    /**
+     * A job a visitor does not see while the wizard runs gets its contact all the same,
+     * otherwise it shows none once it is visible, while the wizard reports nothing left
+     * to do. So does a deleted job, for the day it is restored from the recycler (ACE-887).
+     */
+    #[DataProvider('jobsInvisibleInTheFrontendDataSets')]
+    #[Test]
+    public function executeUpdateMigratesJobsInvisibleInTheFrontend(string $fixtureDataSetFile): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/DataSets/' . $fixtureDataSetFile);
+        $subject = $this->get(ContactTcaUpgradeWizard::class);
+        $this->assertInstanceOf(ContactTcaUpgradeWizard::class, $subject);
+        $this->assertTrue($subject->updateNecessary(), 'updateNecessary() before the migration');
+
+        $this->assertTrue($subject->executeUpdate());
+
+        $this->assertCSVDataSet(__DIR__ . '/Fixtures/Upgraded/' . $fixtureDataSetFile);
+        $this->assertFalse($subject->updateNecessary(), 'updateNecessary() after the migration');
     }
 
     #[DataProvider('txAcademicJobsDomainModelContactDataSets')]
