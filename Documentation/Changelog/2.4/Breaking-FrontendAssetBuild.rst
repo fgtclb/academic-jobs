@@ -26,11 +26,9 @@ An installation that uses the extension as shipped needs to do nothing: the
 files are loaded by the extension itself, from the new location.
 
 An installation that referenced the old path keeps pointing at a file that no
-longer exists.
+longer exists. The rich text fields then fall back to plain textareas.
 
-The rich text fields then fall back to plain textareas.
-
-Affected installations
+Affected Installations
 ======================
 
 Installations that override :file:`Templates/Job/New.html` or reference
@@ -45,7 +43,9 @@ name:
 ..  code-block:: html
 
     <f:asset.script
-        identifier="ckeditor-config"
+        identifier="frontend-editor"
         src="EXT:academic_jobs/Resources/Public/JavaScript/frontend/ckeditor.js"
         defer="1"
     />
+
+..  index:: Frontend, JavaScript, Fluid, ext:academic_jobs

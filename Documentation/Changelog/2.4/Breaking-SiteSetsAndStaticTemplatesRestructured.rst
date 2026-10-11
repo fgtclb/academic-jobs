@@ -11,7 +11,7 @@ The TypoScript of this extension was shipped twice: the static template read
 :file:`Configuration/TypoScript/`, and the site set :yaml:`fgtclb/academic-jobs`
 shipped its own :file:`constants.typoscript` and :file:`setup.typoscript`, each
 of them a single :typoscript:`@import` of that folder. The page TSconfig was not
-selectable on a page at all — it existed only as the three wizard files under
+selectable on a page at all. It existed only as the three wizard files under
 :file:`Configuration/TSConfig/Plugins/`, glob imported into the always-included
 :file:`Configuration/page.tsconfig`.
 
@@ -29,8 +29,8 @@ deliver the extension per component instead of as one block:
     *and* what the sets point their :yaml:`pagets` key at.
 *   :file:`Configuration/TypoScript/Full/` and
     :file:`Configuration/TSconfig/Full/page.tsconfig` are the aggregates for
-    installations that do not use site sets — which is every installation on
-    TYPO3 v12, where site sets do not exist.
+    installations that do not use site sets. On TYPO3 v12 that is every
+    installation, because site sets do not exist there.
 
 The directory holding the page TSconfig was renamed from
 :file:`Configuration/TSConfig` to :file:`Configuration/TSconfig` in the same
@@ -39,24 +39,25 @@ release, see
 <important-1787141400>`.
 
 All three content elements are driven by one Extbase plugin and share one
-:typoscript:`plugin.tx_academicjobs` block. **That block did not move**: it stays
-in :file:`Configuration/TypoScript/`, which is the value every
+:typoscript:`plugin.tx_academicjobs` block. **That block did not move**: it
+stays in :file:`Configuration/TypoScript/`, which is the value every
 :sql:`sys_template` record that selected the static template of this extension
 already stores. Each component folder is a subfolder of it and names it in a
 one-line :file:`include_static_file.txt`, so the block exists once and is
 delivered by both mechanisms alike.
 
 The content elements are now **hidden by default**. The always-included
-:file:`Configuration/page.tsconfig` removes :typoscript:`academicjobs_newjobform`,
-:typoscript:`academicjobs_list` and :typoscript:`academicjobs_detail` from the
-selectable content element types, and the page TSconfig of a component adds its
-own element back — so an element is offered where it is wanted instead of on
-every page of every installation. The wizard entry of an element moved into the
-same file, together with the :typoscript:`show` key that TYPO3 v12 needs to offer
-it in the new content element wizard at all, so both arrive with the component
-instead of with every installation. The TCA registration itself did not move, so
-the frontend renders existing records exactly as before. Editing such a record in
-the backend is a different matter — read the warning below before upgrading.
+:file:`Configuration/page.tsconfig` removes
+:typoscript:`academicjobs_newjobform`, :typoscript:`academicjobs_list` and
+:typoscript:`academicjobs_detail` from the selectable content element types, and
+the page TSconfig of a component adds its own element back. An element is
+therefore offered where it is wanted instead of on every page of every
+installation. The wizard entry of an element moved into the same file, together
+with the :typoscript:`show` key that TYPO3 v12 needs to offer it in the new
+content element wizard at all, so both arrive with the component instead of with
+every installation. The TCA registration itself did not move, so the frontend
+renders existing records exactly as before. Editing such a record in the backend
+needs care. Read the warning below before upgrading.
 
 Four constants changed their shipped default from *empty* to :typoscript:`0`:
 :typoscript:`plugin.tx_academicjobs.persistence.storagePid`,
@@ -74,8 +75,8 @@ Impact
 
 A :sql:`sys_template` record that selected the static template of this extension
 keeps its stored value, and that value keeps delivering the shared plugin
-configuration — but it delivers nothing else, and it never made a content
-element selectable.
+configuration. It delivers nothing else, and it never made a content element
+selectable.
 
 A site package that imported one of the shipped page TSconfig files by path
 fails to resolve it. :typoscript:`@import` of a missing file is silent, so this
@@ -95,7 +96,7 @@ through the page field :guilabel:`Page TSconfig` on either core version.
     value it does not know, and the stored value is dropped from the form data
     as well. The field :guilabel:`Type` therefore comes up with nothing
     selected, and **saving the record writes whatever the browser preselected
-    into** :sql:`CType` — the record silently becomes another content element.
+    into** :sql:`CType`. The record silently becomes another content element.
     The frontend keeps rendering it correctly until that happens.
 
     Include the page TSconfig of the component on every page tree that holds
@@ -114,8 +115,8 @@ page TSconfig files from an own site package.
 Migration
 =========
 
-The static template entry does not have to be replaced — but selecting one of
-the new entries instead documents what a site actually uses:
+The static template entry does not have to be replaced. Selecting one of the new
+entries instead documents what a site actually uses:
 
 ..  list-table::
     :header-rows: 1
@@ -125,7 +126,7 @@ the new entries instead documents what a site actually uses:
     *   -   :guilabel:`Academic Jobs (academic_jobs)`,
             stored as `EXT:academic_jobs/Configuration/TypoScript`
         -   :guilabel:`Academic Jobs: All components (academic_jobs)`,
-            stored as `EXT:academic_jobs/Configuration/TypoScript/Full` — or one
+            stored as `EXT:academic_jobs/Configuration/TypoScript/Full`, or one
             of :guilabel:`Academic Jobs: Jobs New`,
             :guilabel:`Academic Jobs: Jobs List`,
             :guilabel:`Academic Jobs: Jobs Detail`. The old value stays
@@ -139,11 +140,11 @@ the site root, tab :guilabel:`Resources`, field :guilabel:`Page TSconfig`:
 content elements are not selectable any more, and existing records of them lose
 their :sql:`CType` when they are saved from the backend form.
 
-On TYPO3 v12 this is the only way to get them back — site sets arrived in TYPO3
-v13.1 and the set files of this extension are never read on v12.
+On TYPO3 v12 this is the only way to get them back. Site sets arrived in TYPO3
+v13.1, and the set files of this extension are never read on v12.
 
-Sites on TYPO3 v13 that use the site set instead need no migration — but they
-must not use both mechanisms at once, see the :guilabel:`Configuration` chapter.
+Sites on TYPO3 v13 that use the site set instead need no migration. They must
+not use both mechanisms at once, see the :guilabel:`Configuration` chapter.
 
 Adjust every :typoscript:`@import` in an own site package:
 

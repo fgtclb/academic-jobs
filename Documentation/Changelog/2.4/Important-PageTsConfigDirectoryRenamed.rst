@@ -8,18 +8,18 @@ Description
 ===========
 
 The extensions of this set spelled their page TSconfig directory in three
-different ways — :file:`TsConfig`, :file:`TSconfig` and :file:`TSConfig`. They now
-all use :file:`TSconfig`, which is how TYPO3 spells the term and what the core
-documentation uses.
+different ways: :file:`TsConfig`, :file:`TSconfig` and :file:`TSConfig`. They
+now all use :file:`TSconfig`, which is how TYPO3 spells the term and what the
+core documentation uses.
 
 In this extension the directory was :file:`Configuration/TSConfig`.
 
-Nothing was broken before, because every import matched the directory it
-pointed at. The reason to change it is that a filesystem is case sensitive on
-Linux and case insensitive on macOS and Windows, so a path copied between two
-of these extensions resolved on one machine and silently not on another — and
-a page TSconfig :typoscript:`@import` that does not resolve raises no error, the
-configuration is simply absent.
+Nothing was broken before, because every import matched the directory it pointed
+at. The reason to change it is that a filesystem is case sensitive on Linux and
+case insensitive on macOS and Windows, so a path copied between two of these
+extensions resolved on one machine and silently not on another. A page TSconfig
+:typoscript:`@import` that does not resolve raises no error, the configuration
+is simply absent.
 
 Impact
 ======
@@ -31,7 +31,7 @@ installs the extension has nothing to do.
 **An integrator who references these paths from their own configuration has to
 update them**, because the old path no longer exists. The files below the
 directory were reorganised in the same release, so the new path is not the old
-one with the spelling corrected — take it from the table in
+one with the spelling corrected. Take it from the table in
 :ref:`breaking-site-sets-and-static-templates-restructured`:
 
 ..  code-block:: typoscript
