@@ -14,8 +14,9 @@ handled by that loop.
 
 The flags :guilabel:`Internationals welcome` and :guilabel:`Alumni recommends`
 had no frontend label, so a set flag rendered as an empty label followed by the
-stored ``1``. They now render their label alone — a flag carries no value a
-visitor can read, and an unset flag is still not rendered at all.
+stored ``1``. They now render their label alone, "International applicants
+welcome" and "Recommended by alumni". A flag carries no value a visitor can
+read, and an unset flag is still not rendered at all.
 
 The property :guilabel:`Link` was printed as text. For a link to a page, a file
 or a record that is the stored ``t3://`` reference, which is of no use in the
@@ -41,7 +42,7 @@ new branches of the loop.
 Affected Installations
 ======================
 
-Every installation rendering the :guilabel:`Job list` or the
-:guilabel:`Job detail` plugin.
+Every installation rendering the :guilabel:`Jobs List` or the
+:guilabel:`Jobs Detail` plugin.
 
 .. index:: Frontend, Fluid, ext:academic_jobs

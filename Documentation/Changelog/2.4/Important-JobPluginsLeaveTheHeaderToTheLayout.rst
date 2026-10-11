@@ -44,21 +44,29 @@ Impact
 
 On a site whose content element layout renders the header, the header of the
 three content elements appears once, and the markup of the plugins no longer
-contains a :html:`<header>` element.
+contains a :html:`<header>` element. TYPO3 v12 and v13 behave alike here.
 
 Affected Installations
 ======================
 
-Installations whose content element layout renders **no** header - a site
-package that renders the header in its element templates instead - lose the
-header of the job content elements. Switch
-:typoscript:`renderContentElementHeader` on for such a site.
+Every installation using one of the three job content elements.
 
-Projects that copied :file:`Job/List.html`, :file:`Job/Show.html` or
-:file:`Job/New.html` keep rendering the header in their copy. On a site whose
-layout renders the header, drop the :html:`<f:render partial="Header/All" … />`
-line from the copy; on any other site, keep it or wrap it in the same
-condition as the shipped templates:
+Installations whose content element layout renders **no** header, a site
+package that renders the header in its element templates instead, lose the
+header of the job content elements.
+
+Migration
+=========
+
+On a site whose content element layout renders no header, switch
+:typoscript:`plugin.tx_academicjobs.renderContentElementHeader` on, through the
+constant or, on TYPO3 v13, the site setting.
+
+Projects that copied :file:`Templates/Job/List.html`,
+:file:`Templates/Job/Show.html` or :file:`Templates/Job/New.html` keep
+rendering the header in their copy. On a site whose layout renders the header,
+drop the :html:`<f:render partial="Header/All" … />` line from the copy. On any
+other site, keep it or wrap it in the same condition as the shipped templates:
 
 ..  code-block:: html
 

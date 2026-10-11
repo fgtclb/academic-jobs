@@ -64,6 +64,6 @@ changes.
 Affected Installations
 ======================
 
-Every installation rendering the :guilabel:`New job form` plugin.
+Every installation rendering the :guilabel:`Jobs New` plugin.
 
 .. index:: Frontend, Fluid, ext:academic_jobs

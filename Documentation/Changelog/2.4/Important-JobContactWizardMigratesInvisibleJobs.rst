@@ -8,9 +8,9 @@ Description
 ===========
 
 The upgrade wizard `academicJobs_contactRelation`
-(`FGTCLB\\AcademicJobs\\Upgrades\\ContactTcaUpgradeWizard`) copies name, phone,
-e-mail and additional information of the contact record of a job into the
-contact fields of the job itself. The contact records live in the table
+(:php:`\FGTCLB\AcademicJobs\Upgrades\ContactTcaUpgradeWizard`) copies name,
+phone, e-mail and additional information of the contact record of a job into
+the contact fields of the job itself. The contact records live in the table
 :sql:`tx_academicjobs_domain_model_contact`, which version 2.1 removed.
 
 The wizard read the jobs with the default restrictions of the query builder.
@@ -23,7 +23,7 @@ recycler.
 
 The old contact table has no TCA once the extension removed it, so no
 restriction ever reached its records, and the wizard copied hidden and deleted
-contact records as well. It now leaves both out: an editor switched a hidden
+contact records as well. It now leaves both out. An editor switched a hidden
 contact off for the job, and the contact fields of a job have no switch to
 carry that over. A contact record that is left out stays in the old table only
 and is gone once the database analyzer drops that table.
@@ -33,12 +33,19 @@ result does not depend on the moment the wizard runs. A contact record whose
 end time has passed is therefore copied as well, and the job shows it from
 then on.
 
+The wizard is offered only while a job is left that it would fill. Up to
+version 2.3 it was offered as long as the old contact table existed, also after
+it had run, and a run overwrote the contact fields of every related job, also
+those an editor had filled since.
+
 Impact
 ======
 
 A job that is hidden, scheduled, expired or deleted when the wizard runs shows
 its contact once it is visible. A hidden or deleted contact record is no longer
 copied into a job. An expired contact record is copied and shown with the job.
+A contact entered in the job itself is never overwritten, and the wizard is no
+longer offered once nothing is left to migrate.
 
 Affected Installations
 ======================
@@ -58,8 +65,9 @@ Migration
 
 Run the upgrade wizard again. An installation that already executed it has it
 recorded as done, so it has to be marked undone first. The Install Tool lists
-it under :guilabel:`Upgrade > Upgrade Wizard` among the wizards marked as done,
-with a button to mark it undone. TYPO3 v13 can do the same on the command line:
+it under :guilabel:`Admin Tools > Upgrade > Upgrade Wizard` among the wizards
+marked as done, with a button to mark it undone. TYPO3 v13 can do the same on
+the command line:
 
 ..  code-block:: bash
 

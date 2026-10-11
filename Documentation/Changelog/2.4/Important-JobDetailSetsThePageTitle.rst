@@ -17,7 +17,7 @@ time, ``&amp;`` showed as ``&amp;amp;``.
 
 The title of the job is now the title of the page, set through the page title
 API of TYPO3 with the new provider
-:php:`FGTCLB\AcademicJobs\PageTitle\JobTitleProvider`, registered as
+:php:`\FGTCLB\AcademicJobs\PageTitle\JobTitleProvider`, registered as
 :typoscript:`config.pageTitleProviders.academicJobs`. The meta tag
 :html:`<meta name="title">` is no longer written. The three description meta
 tags carry the text of the description with its entities decoded and its white
@@ -30,7 +30,8 @@ Impact
 
 The :html:`<title>` of a job detail page names the job, with the site title
 around it the way the site configures it. A site whose own provider should
-win orders it before :typoscript:`academicJobs`.
+win orders it before :typoscript:`academicJobs`. The shipped provider is
+ordered before :typoscript:`record` and :typoscript:`seo`.
 
 A job without a description leaves the description of the page in place, the
 one :guilabel:`EXT:seo` writes from the page properties for example.

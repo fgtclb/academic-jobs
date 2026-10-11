@@ -15,7 +15,7 @@ The new job form stored three kinds of values the visitor had not entered:
     :file:`Configuration/AcademicJobs/Settings.yaml` now refuses ``0`` for a
     field stored as a number, and the form is shown again.
 *   The :guilabel:`Phone number` field was a number input, which accepts
-    neither a leading ``+`` nor spaces, so ``+49 2166 9404540`` could not be
+    neither a leading ``+`` nor spaces, so ``+49 89 1234`` could not be
     entered. The shipped settings now configure it as ``tel``, which renders a
     telephone input. The number is still stored as typed and is not checked
     on submit.
@@ -48,6 +48,6 @@ TYPO3 v12 and v13 behave alike here.
 Affected Installations
 ======================
 
-Every installation rendering the :guilabel:`New job form` plugin.
+Every installation rendering the :guilabel:`Jobs New` plugin.
 
 .. index:: Frontend, ext:academic_jobs

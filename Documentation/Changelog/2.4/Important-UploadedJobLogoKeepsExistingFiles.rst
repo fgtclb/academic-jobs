@@ -39,4 +39,10 @@ Impact
 
 *   Behaviour is identical on TYPO3 v12 and v13.
 
+Affected Installations
+======================
+
+Every installation that accepts job logos through the :guilabel:`Jobs New`
+plugin.
+
 .. index:: Frontend, FAL, ext:academic_jobs

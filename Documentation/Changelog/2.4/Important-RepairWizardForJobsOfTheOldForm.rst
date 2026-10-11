@@ -48,8 +48,7 @@ values are not kept anywhere. The description of the wizard, shown by
 :bash:`vendor/bin/typo3 upgrade:list` and in the upgrade module, names the time
 zone it will use. Check it before running the wizard, and set
 :php:`phpTimeZone` or run the wizard from the upgrade module of the web server
-if it is not the zone the form ran in. After a change of the time zone since
-the form ran, the jobs of the old form are not recognised any more.
+if it is not the zone the form ran in.
 
 Employment type and job type
 ----------------------------
@@ -89,14 +88,30 @@ example both to 08:00, cannot be told from a job of the form and is moved to
 whole days as well. Check the jobs that are visible from or until a particular
 hour before running the wizard.
 
-Running it
-==========
+Impact
+======
+
+The start date and the deadline of a job the wizard repairs cover whole days,
+as for a job the form stores now. A job submitted in the afternoon no longer
+disappears in the afternoon of its deadline day. Jobs with a ``0`` are not
+changed. Behaviour is identical on TYPO3 v12 and v13.
+
+Affected Installations
+======================
+
+Every installation that received jobs through the :guilabel:`Jobs New` plugin
+before it stored whole days and refused an unchosen value.
+
+Migration
+=========
+
+Check the time zone the description of the wizard names, then run it:
 
 ..  code-block:: bash
 
     vendor/bin/typo3 upgrade:run academicJobs_repairNewJobFormValues
 
-or :guilabel:`Admin Tools > Upgrade > Upgrade Wizard`. The wizard writes the
+or use :guilabel:`Admin Tools > Upgrade > Upgrade Wizard`. The wizard writes the
 database directly, not through the :php:`DataHandler`, so the change is not
 recorded in the history of a job. Flush the frontend caches afterwards: a page
 cached before still shows the jobs with their old times.
@@ -118,11 +133,5 @@ TYPO3 v12 has no ``upgrade:mark:undone`` command, use the upgrade module there.
 
 Running it again changes no date, a repaired job no longer carries the same
 time of day on both.
-
-Affected Installations
-======================
-
-Every installation that received jobs through the :guilabel:`New job form`
-plugin before it stored whole days and refused an unchosen value.
 
 .. index:: Backend, Database, ext:academic_jobs

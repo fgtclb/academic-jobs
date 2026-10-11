@@ -8,10 +8,11 @@ Description
 ===========
 
 The upgrade wizard `academicJobs_contactRelation`
-(`FGTCLB\\AcademicJobs\\Upgrades\\ContactTcaUpgradeWizard`) copies the contact
-record of a job from the table :sql:`tx_academicjobs_domain_model_contact`
-into the contact fields of the job. Version 2.1 removed that table and the
-relation field :sql:`contact` of the job table.
+(:php:`\FGTCLB\AcademicJobs\Upgrades\ContactTcaUpgradeWizard`) copies the
+contact record of a job from the table
+:sql:`tx_academicjobs_domain_model_contact` into the contact fields of the job.
+Version 2.1 removed that table and the relation field :sql:`contact` of the job
+table.
 
 The database analyzer of the Install Tool does not drop a removed table or
 field at once. Its "remove" step renames them first, to
@@ -47,8 +48,9 @@ analyzer may have renamed only one of the two. If either is there, run the
 upgrade wizard. The command line marks a wizard as done when it reports
 nothing to do, so a wizard that was offered to an earlier
 :bash:`upgrade:run` may have to be marked undone first. The Install Tool lists
-it under :guilabel:`Upgrade > Upgrade Wizard` among the wizards marked as done,
-with a button to mark it undone. TYPO3 v13 can do the same on the command line:
+it under :guilabel:`Admin Tools > Upgrade > Upgrade Wizard` among the wizards
+marked as done, with a button to mark it undone. TYPO3 v13 can do the same on
+the command line:
 
 ..  code-block:: bash
 

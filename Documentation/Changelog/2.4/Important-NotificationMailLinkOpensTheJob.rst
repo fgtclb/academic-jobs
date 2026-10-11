@@ -42,4 +42,10 @@ Impact
     is not translated.
 *   Behaviour is identical on TYPO3 v12 and v13.
 
+Affected Installations
+======================
+
+Every installation that receives notification mails from the
+:guilabel:`Jobs New` plugin.
+
 .. index:: Frontend, ext:academic_jobs

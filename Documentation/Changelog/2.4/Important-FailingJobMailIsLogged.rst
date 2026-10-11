@@ -16,7 +16,7 @@ submitted the form again.
 The mail cannot be sent when
 
 *   the recipient or the sender address is empty or invalid. The defaults of
-    :typoscript:`plugin.tx_academicjobs.email.recipientEmail` and
+    the constants :typoscript:`plugin.tx_academicjobs.email.recipientEmail` and
     :typoscript:`plugin.tx_academicjobs.email.from` are empty, so a site that
     never set them met the error after every submitted job,
 *   the mail transport of the installation refuses the mail or cannot deliver
@@ -47,5 +47,11 @@ Impact
     the queue is sent, is not reported by this extension, and the visitor has
     already seen the success message.
 *   Behaviour is identical on TYPO3 v12 and v13.
+
+Affected Installations
+======================
+
+Every installation rendering the :guilabel:`Jobs New` plugin, in particular
+one whose mail addresses are not configured.
 
 .. index:: Frontend, ext:academic_jobs

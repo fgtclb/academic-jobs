@@ -13,8 +13,8 @@ select that marks none, so a visitor who never touched either control still
 submitted the first working time and the first job type.
 
 Both selects now open on an option labelled :guilabel:`Please choose` that
-carries the value ``0`` — the value the column holds for a field that was never
-set, and the one the :php:`int` property of the domain model accepts.
+carries the value ``0``. That is the value the column holds for a field that
+was never set, and the one the :php:`int` property of the domain model accepts.
 
 Two label units are new and available for translation:
 ``create.job.employmentType.none`` and ``create.job.type.none``.
@@ -34,7 +34,7 @@ Existing records are untouched.
 Affected Installations
 ======================
 
-Every installation rendering the :guilabel:`New job form` plugin, on TYPO3 v12
+Every installation rendering the :guilabel:`Jobs New` plugin, on TYPO3 v12
 and on v13 alike.
 
 .. index:: Frontend, Fluid, ext:academic_jobs
