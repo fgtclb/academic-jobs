@@ -283,6 +283,14 @@ final class JobController extends ActionController
             );
             $useRedirectPageId = $listPid;
         }
+        // A listener may hand in a page id of 0 or below, which is no page. It counts as no
+        // redirect page for the message and the redirect alike, as the plugin and TypoScript
+        // settings already do. Mapped after the `listPid` fallback, which therefore never
+        // takes over such a page id, and not in the event, so a later listener still reads
+        // what an earlier one set.
+        if ($useRedirectPageId !== null && $useRedirectPageId <= 0) {
+            $useRedirectPageId = null;
+        }
 
         // FlashMessage are added to a queue based on default extbase identifier determination. Creating them in the
         // session for the current form page and redirecting to another page would not consume the FlashMessages without
@@ -294,7 +302,7 @@ final class JobController extends ActionController
         // fallback to a global TypoScript setting to determine if flash messages should be created
         //   - ALWAYS
         //   - NEVER
-        //   - SUPPRESS_WHEN_REDIRECTED (only when staying on the same page)
+        //   - SUPPRESS_WITH_CONFIGURED_REDIRECT_PAGE (only when staying on the same page)
         //
         // Not that this still requires to have a uncached conent element rendering the specific newjobform plugin
         // extbase flash message queue, for example using following fluid code:
@@ -473,7 +481,6 @@ final class JobController extends ActionController
         if (isset($this->settings['flashMessageCreationMode'])
             && (is_string($this->settings['flashMessageCreationMode']) || is_int($this->settings['flashMessageCreationMode']))
             && MathUtility::canBeInterpretedAsInteger($this->settings['flashMessageCreationMode'])
-            && (int)$this->settings['flashMessageCreationMode'] >= 0
             && FlashMessageCreationMode::tryFrom((int)$this->settings['flashMessageCreationMode']) !== null
         ) {
             return FlashMessageCreationMode::from((int)$this->settings['flashMessageCreationMode']);
@@ -484,7 +491,6 @@ final class JobController extends ActionController
             && isset($this->settings['saveForm']['fallbackFlashMessageCreationMode'])
             && (is_string($this->settings['saveForm']['fallbackFlashMessageCreationMode']) || is_int($this->settings['saveForm']['fallbackFlashMessageCreationMode']))
             && MathUtility::canBeInterpretedAsInteger($this->settings['saveForm']['fallbackFlashMessageCreationMode'])
-            && (int)$this->settings['saveForm']['fallbackFlashMessageCreationMode'] >= 0
             && FlashMessageCreationMode::tryFrom((int)$this->settings['saveForm']['fallbackFlashMessageCreationMode']) !== null
         ) {
             return FlashMessageCreationMode::from((int)$this->settings['saveForm']['fallbackFlashMessageCreationMode']);

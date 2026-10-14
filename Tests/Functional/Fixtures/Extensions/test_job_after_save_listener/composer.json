@@ -1,0 +1,30 @@
+{
+    "name": "tests/test-job-after-save-listener",
+    "description": "Extension listening to the after-save event of the new job form of academic_jobs",
+    "type": "typo3-cms-extension",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Stefan Bürk",
+            "email": "stefan@buerk.tech",
+            "role": "Maintainer"
+        }
+    ],
+    "require": {
+        "typo3/cms-core": "^12.4.22 || ^13.4",
+        "fgtclb/academic-jobs": "~2.4.0@dev"
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "test_job_after_save_listener",
+            "Package": {
+                "providesPackages": []
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "TESTS\\TestJobAfterSaveListener\\": "Classes/"
+        }
+    }
+}

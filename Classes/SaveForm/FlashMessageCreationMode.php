@@ -18,8 +18,8 @@ enum FlashMessageCreationMode: int
     /**
      * - self::ALWAYS returns true
      * - self::NEVER returns false
-     * - self::SUPPRESS_WITH_CONFIGURED_REDIRECT_PAGE returns true redirectPage is not set or the current page,
-     *   otherwise false is returned (to suppress creation of FlashMessages)
+     * - self::SUPPRESS_WITH_CONFIGURED_REDIRECT_PAGE returns true if the redirect page is not set, is 0 or
+     *   below, or is the current page, otherwise false is returned (to suppress creation of FlashMessages)
      */
     public function shouldBeCreated(int $currentPageId, ?int $redirectPageId = null): bool
     {

@@ -98,7 +98,8 @@ final class FlashMessageCreationModeTest extends UnitTestCase
         yield 'conditional, no redirect page configured' => [FlashMessageCreationMode::SUPPRESS_WITH_CONFIGURED_REDIRECT_PAGE, 10, null, true];
         yield 'conditional, redirect page is the current page' => [FlashMessageCreationMode::SUPPRESS_WITH_CONFIGURED_REDIRECT_PAGE, 10, 10, true];
         // Zero and negative are not page ids anything can be rendered from. They are
-        // treated as "nothing configured" rather than as a redirect - see the note below.
+        // treated as "nothing configured" rather than as a redirect, and the controller
+        // treats such a redirect page as none as well, so it does not redirect either.
         yield 'conditional, redirect page zero' => [FlashMessageCreationMode::SUPPRESS_WITH_CONFIGURED_REDIRECT_PAGE, 10, 0, true];
         yield 'conditional, negative redirect page' => [FlashMessageCreationMode::SUPPRESS_WITH_CONFIGURED_REDIRECT_PAGE, 10, -1, true];
         // The only combination that suppresses.
