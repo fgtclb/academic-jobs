@@ -484,7 +484,7 @@ final class JobController extends ActionController
         // fallback to a global TypoScript setting to determine if flash messages should be created
         //   - ALWAYS
         //   - NEVER
-        //   - SUPPRESS_WHEN_REDIRECTED (only when staying on the same page)
+        //   - SUPPRESS_WITH_CONFIGURED_REDIRECT_PAGE (only when staying on the same page)
         //
         // Not that this still requires to have a uncached conent element rendering the specific newjobform plugin
         // extbase flash message queue, for example using following fluid code:
