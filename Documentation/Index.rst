@@ -58,6 +58,11 @@ for all academic extensions on the `extension points page of academic_base
         Install :guilabel:`academic_jobs` via Composer, the Extension
         Manager or a TER upload.
 
+    ..  card:: :ref:`Upgrade <upgrade>`
+
+        The steps to upgrade :guilabel:`academic_jobs` to a newer version, in
+        the order to take them.
+
     ..  card:: :ref:`For integrators <integrator>`
 
         The job list, the job detail and the job form, and every option of
@@ -98,6 +103,7 @@ for all academic extensions on the `extension points page of academic_base
 
     Introduction/Index
     Installation/Index
+    Upgrade/Index
     Integrator/Index
     Configuration/Index
     Templates/Index

@@ -7,7 +7,7 @@ Feature: The scripts of the new job form can be switched off
 Description
 ===========
 
-The :guilabel:`Jobs New` content element registers two scripts from inside
+The :guilabel:`Job Form` content element registers two scripts from inside
 its template: CKEditor 4 from its content delivery network, and the module
 :js:`@fgtclb/academic-jobs/frontend/rich-text.js` that configures it. An
 installation that brings its own editor, or wants none, had to override the

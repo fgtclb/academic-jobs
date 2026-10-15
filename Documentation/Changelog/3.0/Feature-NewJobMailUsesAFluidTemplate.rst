@@ -7,7 +7,7 @@ Feature: The notification mail about a new job is a Fluid template
 Description
 ===========
 
-A job submitted through the :guilabel:`Jobs New` content element was announced
+A job submitted through the :guilabel:`Job Form` content element was announced
 with one fixed English sentence and the link to the job in the backend. The
 setting :typoscript:`plugin.tx_academicjobs.email.template`, labelled "Email
 content", was not read at all.
