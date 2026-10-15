@@ -9,7 +9,6 @@ use FGTCLB\TestingHelper\FunctionalTestCase\FrontendPluginRenderingTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use SBUERK\TYPO3\Testing\SiteHandling\SiteBasedTestTrait;
-use TYPO3\CMS\Core\Information\Typo3Version;
 
 /**
  * Label overrides through `_LOCAL_LANG` reach every kind of translation the three plugins of
@@ -37,8 +36,8 @@ use TYPO3\CMS\Core\Information\Typo3Version;
  * extension names of all translations holds those calls.
  *
  * The list is on `/home`, the detail on `/job-detail`, the form on `/new-job`. A sent form
- * redirects to `/new-job` again, and the answer shows the messages of the session in an
- * uncached element.
+ * names `/new-job` as its redirect page, which is the page of the form, so it returns there
+ * and shows the confirmation above the form.
  */
 final class AcademicJobsLabelOverrideTest extends AbstractAcademicJobsTestCase
 {
@@ -82,7 +81,6 @@ final class AcademicJobsLabelOverrideTest extends AbstractAcademicJobsTestCase
                     'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
                     'EXT:academic_jobs/Configuration/TypoScript/setup.typoscript',
                     'EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/TypoScript/Setup/Rendering.typoscript',
-                    'EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/TypoScript/Setup/NewJobFormMessages.typoscript',
                 ],
             ],
         );
@@ -125,47 +123,31 @@ final class AcademicJobsLabelOverrideTest extends AbstractAcademicJobsTestCase
     }
 
     /**
-     * Sends a job through the form on `/new-job` and returns the answer. The form redirects
-     * to its own page, and the page renders all the same, where an uncached element shows
-     * the messages of the session. TYPO3 v14 answers with the status of the redirect, v13
-     * sends it with `header()` and answers `200`.
+     * Sends a job through the form on `/new-job` and returns the page the visitor gets. The
+     * form redirects to its own page, which shows the confirmation of the session above
+     * the form.
      */
     private function renderPageAfterSentJob(): string
     {
-        $document = new \DOMDocument();
-        $document->loadHTML('<?xml encoding="UTF-8">' . $this->renderFrontendPage('https://www.acme.com/new-job'), LIBXML_NOERROR | LIBXML_NOWARNING);
-        $xpath = new \DOMXPath($document);
-        $forms = $xpath->query('//div[contains(concat(" ", normalize-space(@class), " "), " academic-jobs-new ")]//form');
-        $this->assertNotFalse($forms);
-        $form = $forms->item(0);
-        $this->assertInstanceOf(\DOMElement::class, $form, 'The page renders no job form.');
-        $fields = [];
-        foreach ($xpath->query('.//input[@type="hidden"][@name]', $form) ?: [] as $input) {
-            if ($input instanceof \DOMElement) {
-                $fields[] = rawurlencode($input->getAttribute('name')) . '=' . rawurlencode($input->getAttribute('value'));
-            }
-        }
-        $values = [
-            'title' => 'Research assistant',
-            'description' => 'A new job description',
-            'companyName' => 'ACME Inc.',
-            'employmentStartDate' => '2027-04-01',
-            'employmentType' => '1',
-            'type' => '1',
-        ];
-        foreach ($values as $property => $value) {
-            $fields[] = rawurlencode('tx_academicjobs_newjobform[job][' . $property . ']') . '=' . rawurlencode($value);
-        }
-        parse_str(implode('&', $fields), $parsedBody);
-        $action = $form->getAttribute('action');
-        /** @var array<string, mixed> $parsedBody */
-        $answer = $this->requestFrontendPage($this->frontendPostRequest(
-            str_starts_with($action, '/') ? 'https://www.acme.com' . $action : $action,
-            $parsedBody,
-        ));
-        $this->assertSame((new Typo3Version())->getMajorVersion() >= 14 ? 303 : 200, $answer->getStatusCode());
+        $answer = $this->submitFrontendForm(
+            'https://www.acme.com/new-job',
+            '//div[contains(concat(" ", normalize-space(@class), " "), " academic-jobs-new ")]//form',
+            [
+                'tx_academicjobs_newjobform' => [
+                    'job' => [
+                        'title' => 'Research assistant',
+                        'description' => 'A new job description',
+                        'companyName' => 'ACME Inc.',
+                        'employmentStartDate' => '2027-04-01',
+                        'employmentType' => '1',
+                        'type' => '1',
+                    ],
+                ],
+            ],
+        );
+        $this->assertSame('https://www.acme.com/new-job', $answer->getHeaderLine('Location'));
 
-        return (string)$answer->getBody();
+        return $this->followSeeOther($answer);
     }
 
     /**

@@ -42,6 +42,7 @@ use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
+use TYPO3\CMS\Extbase\Service\CacheService;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Extbase\Validation\Validator\ConjunctionValidator;
@@ -58,6 +59,12 @@ final class JobController extends ActionController
     use GetCurrentContentRecordMethodTrait;
     use GetSelectItemsForTcaManagedTableFieldMethodTrait;
 
+    /**
+     * The queue of the confirmation for a visitor who returns to the form after a saved
+     * job, rendered by the template of the form.
+     */
+    public const CONFIRMATION_QUEUE_IDENTIFIER = 'academic_jobs.new_job_form.confirmation';
+
     public function __construct(
         private readonly JobRepository $jobRepository,
         private readonly PersistenceManagerInterface $persistenceManager,
@@ -70,6 +77,7 @@ final class JobController extends ActionController
         private readonly AfterSaveResolver $afterSaveResolver,
         private readonly HiddenRecordsFetcher $hiddenRecordsFetcher,
         private readonly JobTitleProvider $jobTitleProvider,
+        private readonly CacheService $cacheService,
     ) {}
 
     public function listAction(): ResponseInterface
@@ -413,13 +421,19 @@ final class JobController extends ActionController
     }
 
     /**
+     * Saves a submitted job and sends the visitor on. Every way out is a thrown redirect:
+     * a returned one reaches the browser on TYPO3 v13 only through `header()`, and on v13
+     * and v14 the whole page would be rendered for nothing. A request without a job
+     * returns to the form without a message.
+     *
      * @todo It's not a really good practice to use persisting extbase models directly, this should be a DTO object,
      *       see `EXT:academic_persons_edit` for examples.
+     * @throws PropagateResponseException
      */
     public function createAction(?Job $job = null): ResponseInterface
     {
         if ($job === null) {
-            return $this->redirect('new');
+            $this->returnToForm();
         }
 
         $job->setHidden(1);
@@ -431,13 +445,14 @@ final class JobController extends ActionController
 
         $uid = $job->getUid();
         if ($uid === null) {
-            $this->addFlashMessage(
+            $this->addFlashMessageToQueue(
                 $this->translateAlert('job_not_created.body', 'Something went wrong.'),
                 $this->translateAlert('job_not_created.title', 'Job not created'),
                 ContextualFeedbackSeverity::ERROR,
-                true
+                true,
+                self::CONFIRMATION_QUEUE_IDENTIFIER,
             );
-            $this->redirect('new');
+            $this->returnToForm();
         }
 
         $currentPageId = $this->determineCurrentPageId();
@@ -457,11 +472,11 @@ final class JobController extends ActionController
 
         $redirectPageId = $afterSaveJobEvent->getRedirectPageId();
         $flashMessageCreationMode = $afterSaveJobEvent->getFlashMessageCreationMode();
-        $listPid = $this->settings['listPid'] ? (int)$this->settings['listPid'] : null;
+        $listPid = (int)($this->settings['listPid'] ?? 0);
         $mailWasSent = $this->sendEmail($uid, $job);
 
         $useRedirectPageId = $redirectPageId;
-        if ($useRedirectPageId === null && $listPid !== null && $listPid > 0) {
+        if ($useRedirectPageId === null && $listPid > 0) {
             trigger_error(
                 sprintf(
                     'Using TypoScript setting "%s" to redirect after persisting new job is deprecated.'
@@ -474,51 +489,77 @@ final class JobController extends ActionController
             $useRedirectPageId = $listPid;
         }
 
-        // FlashMessage are added to a queue based on default extbase identifier determination. Creating them in the
-        // session for the current form page and redirecting to another page would not consume the FlashMessages without
-        // enforcing a concrete matching identifier. If target page is already fully cached and no USER_INT elements is
-        // placed on that page, they will not be consumed. When user navigates back to the new form page will display
-        // the FlashMessage which is highly confusing to casual website visitors.
-        //
-        // Based on the above reasoning, we allow to configure the behaviour in installation per plugin instance with
-        // fallback to a global TypoScript setting to determine if flash messages should be created
-        //   - ALWAYS
-        //   - NEVER
-        //   - SUPPRESS_WITH_CONFIGURED_REDIRECT_PAGE (only when staying on the same page)
-        //
-        // Not that this still requires to have a uncached conent element rendering the specific newjobform plugin
-        // extbase flash message queue, for example using following fluid code:
-        //
-        // ```xml
-        // <f:flashMessages queueIdentifier="extbase.flashmessages.tx_academicjobs_newjobform"/>
-        // ```
-        // @todo Make flashmessage queue identifier configurable or at least use a dedicated identifer when redirecting.
+        // A visitor who stays with the form gets the confirmation from the queue the form
+        // template renders. A visitor sent to another page gets it in the queue of the
+        // plugin, which that page has to render outside the page cache.
         $afterSaveDecision = $this->afterSaveResolver->decide($currentPageId, $useRedirectPageId, $flashMessageCreationMode);
+        $queueIdentifier = $afterSaveDecision->returnsToForm ? self::CONFIRMATION_QUEUE_IDENTIFIER : null;
         if ($afterSaveDecision->createFlashMessage) {
             if ($mailWasSent) {
                 $this->addFlashMessageToQueue(
                     $this->translateAlert('job_created.body', 'Job created and email sent.'),
                     $this->translateAlert('job_created.title', 'Job created'),
                     ContextualFeedbackSeverity::OK,
-                    true
+                    true,
+                    $queueIdentifier,
                 );
             } else {
                 $this->addFlashMessageToQueue(
                     $this->translateAlert('job_created_no_email.body', 'Job created, but email could not be sent.'),
                     $this->translateAlert('job_created_no_email.title', 'Job created'),
                     ContextualFeedbackSeverity::WARNING,
-                    true
+                    true,
+                    $queueIdentifier,
                 );
             }
         }
 
-        if ($afterSaveDecision->redirectPageId !== null) {
-            $uri = $this->uriBuilder->setTargetPageUid($afterSaveDecision->redirectPageId)->build();
-            // Since TYPO3v12 redirect method returns a response object. Return it directly.
-            return $this->redirectToUri($uri);
+        if ($afterSaveDecision->returnsToForm || $afterSaveDecision->redirectPageId === null) {
+            $this->returnToForm();
         }
-        // Since TYPO3v12 redirect method returns a response object. Return it directly.
-        return $this->redirect('list');
+        $this->propagateRedirect(
+            $this->uriBuilder->reset()->setTargetPageUid($afterSaveDecision->redirectPageId)->setCreateAbsoluteUri(true)->build(),
+        );
+    }
+
+    /**
+     * Sends the visitor back to the page of the form, to its address without any argument
+     * of a plugin, where the form renders its queue of messages.
+     *
+     * @throws PropagateResponseException
+     */
+    private function returnToForm(): never
+    {
+        $this->propagateRedirect($this->uriBuilder->reset()->setCreateAbsoluteUri(true)->build());
+    }
+
+    /**
+     * Ends the request with a redirect to `$uri`, which the `ResponsePropagation` middleware
+     * answers on TYPO3 v13 and v14 alike, without rendering the page.
+     *
+     * The exception skips what Extbase does after an action, so it is done here instead:
+     * persisting what the request changed, a change a listener of `AfterSaveJobEvent`
+     * made through a repository without persisting it among them, and then clearing the
+     * page caches the saved records registered, which includes the pages
+     * `TCEMAIN.clearCacheCmd` of the storage folder names.
+     *
+     * @throws PropagateResponseException
+     */
+    private function propagateRedirect(string $uri): never
+    {
+        $this->persistenceManager->persistAll();
+        $this->cacheService->clearCachesOfRegisteredPageIds();
+        throw new PropagateResponseException($this->redirectToUri($uri), 1792075546);
+    }
+
+    /**
+     * No generic error message of Extbase for a rejected submission. The form shows the
+     * message of every rejected field, and the generic one named a PHP method to the
+     * visitor wherever a page rendered the queue of the plugin.
+     */
+    protected function getErrorFlashMessage(): bool
+    {
+        return false;
     }
 
     /**

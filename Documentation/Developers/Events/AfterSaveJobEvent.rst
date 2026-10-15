@@ -29,7 +29,7 @@ the action that receives the submission. By then:
 After the event the form uses the deprecated
 :typoscript:`plugin.tx_academicjobs.settings.listPid` when the listeners left
 no redirect page, sends the notification mail, queues the confirmation as the
-mode says and redirects.
+mode says and redirects, to the redirect page or back to the form.
 
 ..  _developers-event-after-save-job-event-api:
 
@@ -123,7 +123,9 @@ Rules and pitfalls
 
 **The job is saved already.** A listener cannot stop the save or reject the
 job. The checks of a submission belong in the :ref:`validation settings
-<configuration-validations>`.
+<configuration-validations>`. A change a listener makes to the job, or to
+another record, through a repository is persisted by the form before it
+redirects, so the listener does not have to persist it itself.
 
 **A later listener reads what an earlier one set.** :php:`getRedirectPageId()`
 returns the value the previous listener handed in, a page id of `0` or below
@@ -133,16 +135,16 @@ attribute when two of them decide the page.
 **A page id of 0 or below is no page.** The visitor is then sent back to the
 page of the form, exactly as when no page was set, and the deprecated list page
 is not used for it, see
-:ref:`important-redirect-page-zero-from-a-listener-means-none`. Leave a page in
-place rather than removing it: without any redirect page the content element
-shows an error instead of the form, see the note at
-:confval:`Redirect page after job creation <job-form-redirect-page-id>`.
+:ref:`important-redirect-page-zero-from-a-listener-means-none`. The form shows
+the confirmation above itself there, see
+:ref:`important-job-form-returns-to-its-page`.
 
 **The mail is sent after the event.** A listener does not learn whether it
 could be sent. The confirmation the form queues says so to the visitor.
 
-**The confirmation needs a page that renders it.** Queuing it is all the mode
-decides, see :ref:`integrator-job-form-flash-messages`.
+**The confirmation on a redirect page needs a page that renders it.** The form
+shows it for a visitor who returns to the form. For a redirect page, queuing it
+is all the mode decides, see :ref:`integrator-job-form-flash-messages`.
 
 ..  _developers-event-after-save-job-event-introduced:
 
@@ -152,6 +154,7 @@ Introduced in
 The event exists since the first release of the extension. Changed in 2.4:
 
 *   :ref:`important-redirect-page-zero-from-a-listener-means-none`
+*   :ref:`important-job-form-returns-to-its-page`
 
 Changed in 3.0:
 

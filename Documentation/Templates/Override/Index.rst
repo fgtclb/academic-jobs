@@ -241,3 +241,23 @@ model has: the property mapping rejects any other one and the submission fails.
 The partial only renders the field. The extension neither checks its value nor
 dispatches an event before the job is stored, so a site checks a captcha answer
 before the request reaches the plugin, in a middleware for example.
+
+..  index:: Templates; New job form confirmation
+..  _templates-override-new-job-form-confirmation:
+
+Keep the confirmation in a copy of the form template
+----------------------------------------------------
+
+A visitor who returns to the form after a saved job sees the confirmation
+above the form. :file:`Templates/Job/New.html` renders it, inside the element
+with the class `academic-jobs-new`, from a queue of its own:
+
+..  code-block:: html
+    :caption: The line of :file:`Templates/Job/New.html` that renders the confirmation
+
+    <f:flashMessages queueIdentifier="academic_jobs.new_job_form.confirmation" />
+
+A copy of the template in a site package takes this line over. Without it the
+confirmation waits in the session of the visitor, and the visitor sees the
+empty form. The confirmation for a redirect page is queued elsewhere, see
+:ref:`integrator-job-form-flash-messages`.

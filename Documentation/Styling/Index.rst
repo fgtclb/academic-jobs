@@ -136,10 +136,12 @@ The flash messages
 ==================
 
 The job list and the job detail render the flash messages queued for them.
-The confirmation after a submitted job, or the message that it could not be
-created, is queued for the job form and rendered only where a site renders
-that queue, see :ref:`integrator-job-form-flash-messages`. TYPO3 renders all of
-them with the alert classes of Bootstrap and no speaking class:
+The job form renders the confirmation after a submitted job, or the message
+that it could not be created, above the form when the visitor returns to it.
+For a redirect page the confirmation is rendered only where a site renders
+the queue of the form, see :ref:`integrator-job-form-flash-messages`. TYPO3
+renders all of them with the alert classes of Bootstrap and no speaking
+class:
 
 ..  code-block:: html
 
@@ -161,6 +163,8 @@ The new job form
 ..  code-block:: html
 
     <div class="academic-jobs-new">
+        <!-- the header of the content element, when the plugin renders it -->
+        <!-- the flash messages, see above -->
         <!-- shown when a field failed validation -->
         <div class="ace-errors">…</div>
         <form class="ace-form" …>

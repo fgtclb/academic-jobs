@@ -8,6 +8,7 @@ use FGTCLB\AcademicJobs\Tests\Functional\AbstractAcademicJobsTestCase;
 use FGTCLB\TestingHelper\FunctionalTestCase\PluginFlexFormDataStructureTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
+use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 
 /**
  * Guards the FlexForm data structure of the plugins against a shape that only
@@ -70,6 +71,48 @@ final class PluginFlexFormTest extends AbstractAcademicJobsTestCase
         $this->assertSame('0', (string)($fields['settings.paginationEnabled']['config']['default'] ?? null));
         $this->assertSame('10', (string)($fields['settings.pagination.resultsPerPage']['config']['default'] ?? null));
         $this->assertSame('1', (string)($fields['settings.pagination.resultsPerPage']['config']['range']['lower'] ?? null));
+    }
+
+    /**
+     * The items of the message mode say what they do, in English and German, with the
+     * values a stored element holds. The item `0` used to name the list page, which it
+     * never looked at, and the German file translated a key the item does not use
+     * (ACE-919).
+     *
+     * @return \Generator<string, array{0: string, 1: array<int, string>}>
+     */
+    public static function messageModeLabelsDataProvider(): \Generator
+    {
+        yield 'English' => ['default', [
+            -1 => 'Use the site or TypoScript setting',
+            1 => 'always',
+            2 => 'never',
+            0 => 'Suppress when a redirect page is set',
+        ]];
+        yield 'German' => ['de', [
+            -1 => 'Site- oder TypoScript-Einstellung verwenden',
+            1 => 'immer',
+            2 => 'niemals',
+            0 => 'Unterdrücken, wenn eine Weiterleitungsseite gesetzt ist',
+        ]];
+    }
+
+    /**
+     * @param array<int, string> $expected Label by value.
+     */
+    #[Test]
+    #[DataProvider('messageModeLabelsDataProvider')]
+    public function theItemsOfTheMessageModeSayWhatTheyDo(string $locale, array $expected): void
+    {
+        $field = $this->resolvePluginFlexFormDataStructure('academicjobs_newjobform')['sheets']['sDEF']['ROOT']['el']['settings.flashMessageCreationMode'] ?? [];
+        $languageService = $this->get(LanguageServiceFactory::class)->create($locale);
+
+        $labels = [];
+        foreach ($field['config']['items'] ?? [] as $item) {
+            $labels[(int)$item['value']] = $languageService->sL((string)$item['label']);
+        }
+
+        $this->assertSame($expected, $labels);
     }
 
     /**

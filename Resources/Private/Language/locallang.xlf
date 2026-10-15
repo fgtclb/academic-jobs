@@ -15,7 +15,7 @@
         <source>Flashmessage creation mode when persisting new jobs (FE)</source>
       </trans-unit>
       <trans-unit id="saveForm.flashMessageCreationMode.use_global_setting">
-        <source>Fallback - Use TypoScript settings</source>
+        <source>Use the site or TypoScript setting</source>
       </trans-unit>
       <trans-unit id="saveForm.flashMessageCreationMode.option_always">
         <source>always</source>
@@ -24,7 +24,7 @@
         <source>never</source>
       </trans-unit>
       <trans-unit id="saveForm.flashMessageCreationMode.option_suppressWhenRedirectPageIsSelected">
-        <source>suppress when list pid has been configured</source>
+        <source>Suppress when a redirect page is set</source>
       </trans-unit>
 
       <!-- Frontend -->

@@ -22,7 +22,7 @@ The two options of the job form fall back in the code instead: an empty
 :confval:`Redirect page after job creation <job-form-redirect-page-id>` uses
 the site setting
 :typoscript:`plugin.tx_academicjobs.saveForm.fallbackRedirectPageId`, and the
-value :guilabel:`Fallback - Use TypoScript settings` of
+value :guilabel:`Use the site or TypoScript setting` of
 :confval:`Flashmessage creation mode when persisting new jobs
 <job-form-flash-message-creation-mode>` uses the site setting
 :typoscript:`plugin.tx_academicjobs.saveForm.fallbackFlashMessageCreationMode`.

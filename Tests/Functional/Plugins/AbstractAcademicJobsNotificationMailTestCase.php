@@ -129,8 +129,8 @@ abstract class AbstractAcademicJobsNotificationMailTestCase extends AbstractAcad
      * hidden fields of the form and therefore replace a hidden field of the same name,
      * such as the empty value a checkbox renders for itself.
      *
-     * The response is not asserted: TYPO3 v13 sends the redirect a plugin action returns
-     * with `header()` and answers 200, TYPO3 v14 answers the redirect itself.
+     * The response is not asserted: a saved job is answered with a redirect, a rejected
+     * one with the form again.
      *
      * @param array<string, string> $values
      */

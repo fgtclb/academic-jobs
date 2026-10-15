@@ -184,9 +184,12 @@ The mail is sent after the job is saved. When it cannot be sent, because the
 recipient or the sender address is empty or invalid, because the mail transport
 refuses it or cannot deliver it, or because the template cannot be found or
 rendered, the job stays saved and the visitor gets the same redirect as after
-a sent mail. Where the site shows the messages of the form, the visitor sees
-the warning "Notification email could not be sent" instead of the success
-message.
+a sent mail. The visitor sees the warning "Notification email could not be
+sent" instead of the success message, on the form when no redirect page is
+set, and on a redirect page that renders the messages of the form, see
+:ref:`integrator-job-form-flash-messages`. With the mode
+:guilabel:`Suppress when a redirect page is set` and a redirect page, neither
+message is queued.
 
 The failure is logged at level error, with the uid of the job and the
 exception, whose message names for example the missing template and the paths

@@ -266,6 +266,11 @@ file and take over the changes. The paths below are relative to
     *   -   :file:`Templates/Job/New.html`
         -   Loads the moved editor script.
         -   :ref:`breaking-ckeditor-configuration-moved`
+    *   -   :file:`Templates/Job/New.html`
+        -   Renders the confirmation for a visitor who returns to the form,
+            with :html:`<f:flashMessages queueIdentifier="academic_jobs.new_job_form.confirmation" />`.
+            A copy without this line shows no confirmation.
+        -   :ref:`important-job-form-returns-to-its-page`
     *   -   :file:`Partials/Job/Item.html`
         -   The heading level is corrected, the flags and the link row are
             new, and a hidden job is not linked.
@@ -308,9 +313,12 @@ Adapt your code
     :ref:`breaking-ace-250-academic-jobs`.
 *   A listener of :php:`\FGTCLB\AcademicJobs\Event\AfterSaveJobEvent` that
     sets a redirect page of ``0`` or below now sends the visitor back to the
-    form page, which then shows an error in place of the form. Keep a redirect
-    page set in the content element or in the TypoScript constant, see
+    form page, which shows the form and the confirmation, see
     :ref:`important-redirect-page-zero-from-a-listener-means-none`.
+*   Code that reads the answer to a submitted job gets an empty ``303`` now,
+    and a page that renders the messages of the form no longer gets the error
+    message of Extbase after a rejected submission, see
+    :ref:`important-job-form-returns-to-its-page`.
 *   A listener of
     :php:`\FGTCLB\AcademicJobs\Event\ModifyJobControllerNewActionViewEvent`
     that fills a date field from an assigned job gets the date as ``Y-m-d``
@@ -330,6 +338,8 @@ Check the result
 *   The jobs the repair wizard listed carry a chosen employment type and job
     type.
 *   The header of the job content elements appears once.
+*   A job submitted through a form without a redirect page returns the
+    visitor to the form, which shows the confirmation.
 *   A job submitted through the form reaches the editors. A notification mail
     that cannot be sent is logged now instead of failing the form, so check
     the log after a change of the mail configuration, see

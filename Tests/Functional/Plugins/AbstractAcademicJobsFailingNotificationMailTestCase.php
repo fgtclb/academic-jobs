@@ -58,15 +58,14 @@ abstract class AbstractAcademicJobsFailingNotificationMailTestCase extends Abstr
     }
 
     /**
-     * The answer to a saved job is the redirect the plugin returns, whose empty body takes
-     * the place of the plugin. TYPO3 v14 answers with the redirect, TYPO3 v13 sends it with
-     * `header()` and answers 200 with the rest of the page, so the status is not asserted
-     * here. A form rendered again would still be there, and a post that ends in an
-     * exception fails the test before this.
+     * The answer to a saved job is the redirect alone, on TYPO3 v13 and v14 alike: no page
+     * is rendered for it, so a form rendered again cannot hide behind it, and a post that
+     * ends in an exception fails the test before this.
      */
     protected function assertAnsweredAsSavedJob(ResponseInterface $response): void
     {
-        $this->assertStringNotContainsString('academic-jobs-new', (string)$response->getBody());
+        $this->assertSame(303, $response->getStatusCode());
+        $this->assertSame('', (string)$response->getBody());
     }
 
     protected function assertJobIsSavedHidden(int $uid): void

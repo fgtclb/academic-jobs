@@ -446,6 +446,12 @@ shipped file of 3.0 and take over the changes. The paths below are relative to
         -   :ref:`upgrade-from-2-3-to-3-0-rich-text`,
             :ref:`feature-1791566501`,
             :ref:`feature-new-job-form-additional-fields-partial`
+    *   -   :file:`Templates/Job/New.html`
+        -   Renders the confirmation for a visitor who returns to the form,
+            with :html:`<f:flashMessages queueIdentifier="academic_jobs.new_job_form.confirmation" />`.
+            A copy without this line shows no confirmation.
+        -   :ref:`important-job-form-returns-to-its-page`,
+            :ref:`templates-override-new-job-form-confirmation`
     *   -   :file:`Partials/Job/Item.html`
         -   The heading level is corrected, the flags and the link row are
             new, a hidden job is not linked, the image renders through the
@@ -506,9 +512,12 @@ Adapt your code
     :ref:`breaking-ace-250-academic-jobs`.
 *   A listener of :php:`\FGTCLB\AcademicJobs\Event\AfterSaveJobEvent` that
     sets a redirect page of ``0`` or below now sends the visitor back to the
-    form page, which then shows an error in place of the form. Keep a redirect
-    page set in the content element or in the TypoScript constant, see
+    form page, which shows the form and the confirmation, see
     :ref:`important-redirect-page-zero-from-a-listener-means-none`.
+*   Code that reads the answer to a submitted job gets an empty ``303`` now,
+    and a page that renders the messages of the form no longer gets the error
+    message of Extbase after a rejected submission, see
+    :ref:`important-job-form-returns-to-its-page`.
 *   A listener of
     :php:`\FGTCLB\AcademicJobs\Event\ModifyJobControllerNewActionViewEvent` is
     no longer called. It listens to
@@ -550,6 +559,8 @@ Check the result
 *   The jobs the repair wizard listed carry a chosen employment type and job
     type.
 *   The header of the job content elements appears once.
+*   A job submitted through a form without a redirect page returns the
+    visitor to the form, which shows the confirmation.
 *   Saving a job in the backend keeps its contact phone number, and a job
     without a company name or a description can only be saved there once both
     are filled in, unless the settings make them optional.

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace FGTCLB\AcademicJobs\Tests\Functional\Plugins;
 
-use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
@@ -134,12 +133,9 @@ final class AcademicJobsNewJobFormFailingMailTest extends AbstractAcademicJobsFa
     }
 
     /**
-     * A failing mail changes nothing about the redirect of a saved job. Only TYPO3 v14
-     * answers with it: TYPO3 v13 sends the redirect a plugin action returns with
-     * `header()` and answers 200 with the rest of the page.
+     * A failing mail changes nothing about the redirect of a saved job.
      */
     #[Test]
-    #[Group('not-core-13')]
     public function theVisitorIsRedirectedToTheConfiguredPageAndToldThatNobodyWasNotified(): void
     {
         $this->setUpMessagesPage([
@@ -153,6 +149,31 @@ final class AcademicJobsNewJobFormFailingMailTest extends AbstractAcademicJobsFa
         $this->assertSame('/messages', parse_url($location, PHP_URL_PATH));
         $messages = $this->messagesOfTheSession($response, $location);
         $this->assertStringContainsString(self::WARNING_MESSAGE, $messages);
+    }
+
+    /**
+     * Without a redirect page the visitor returns to the form, which shows the warning
+     * above itself.
+     */
+    #[Test]
+    public function theFormTellsTheVisitorThatNobodyWasNotified(): void
+    {
+        $this->setUpTestCase([
+            'EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/TypoScript/Constants/EmailRecipientEmpty.typoscript',
+        ]);
+
+        $response = $this->postJob('https://www.acme.com/home', 'Research assistant');
+
+        $this->assertSame(303, $response->getStatusCode());
+        $this->assertSame('https://www.acme.com/home', $response->getHeaderLine('location'));
+        $forms = $this->documentXPath($this->followSeeOther($response))->query(
+            '//div[contains(concat(" ", normalize-space(@class), " "), " academic-jobs-new ")][.//form]',
+        );
+        $this->assertNotFalse($forms);
+        $form = $forms->item(0);
+        $this->assertInstanceOf(\DOMElement::class, $form, 'The page renders no job form.');
+        $this->assertStringContainsString(self::WARNING_MESSAGE, $form->textContent);
+        $this->assertStringNotContainsString(self::SUCCESS_MESSAGE, $form->textContent);
     }
 
     /**
@@ -179,12 +200,11 @@ final class AcademicJobsNewJobFormFailingMailTest extends AbstractAcademicJobsFa
     private function messagesOfTheSession(ResponseInterface $answerToThePost, string $url): string
     {
         $this->assertAnsweredAsSavedJob($answerToThePost);
-        if (preg_match('@(?:^|,\s*)fe_typo_user=([^;]+)@', $answerToThePost->getHeaderLine('set-cookie'), $cookie) !== 1) {
-            $this->fail('The answer to the submitted form starts no session.');
-        }
+        $sessionCookie = $this->frontendSessionCookie($answerToThePost);
+        $this->assertNotNull($sessionCookie, 'The answer to the submitted form starts no session.');
 
         return $this->renderFrontendPage(
-            (new InternalRequest($url))->withCookieParams(['fe_typo_user' => $cookie[1]]),
+            (new InternalRequest($url))->withCookieParams(['fe_typo_user' => $sessionCookie]),
         );
     }
 }

@@ -52,8 +52,8 @@ Nothing a visitor submits is published right away:
     application deadline is kept until the end of the chosen day.
 #.  One notification mail announces the job, see
     :ref:`configuration-general-notification-mail`.
-#.  The visitor is redirected, and a confirmation message is queued, as the
-    two options below decide.
+#.  The visitor is redirected, to the redirect page or back to the form, and
+    a confirmation message is queued, as the two options below decide.
 
 An editor then reviews the job in the backend and publishes it. Until then a
 :ref:`job list <integrator-job-list>` shows it only with
@@ -71,7 +71,10 @@ Settings
     :Default: empty
 
     The page the visitor is sent to after the job is saved, usually a page
-    that thanks for the submission and says what happens next.
+    that thanks for the submission and says what happens next. Without one,
+    and with the page of the form chosen here, the visitor returns to the
+    form, which shows the confirmation above itself, see
+    :ref:`integrator-job-form-flash-messages`.
 
     A page chosen here decides alone. Empty, the site setting
     :typoscript:`plugin.tx_academicjobs.saveForm.fallbackRedirectPageId`
@@ -88,24 +91,17 @@ Settings
     An event listener can replace the page this option resolved to, see
     :ref:`developers-event-after-save-job-event`.
 
-    ..  important::
-
-        Set a redirect page, here or in the site setting. Without any, the
-        form sends the visitor back to its own page with an action the
-        content element does not offer, and the content element shows an
-        error in place of the form and of the confirmation.
-
 ..  confval:: Flashmessage creation mode when persisting new jobs (FE)
     :name: job-form-flash-message-creation-mode
     :type: select
-    :Default: Fallback - Use TypoScript settings
+    :Default: Use the site or TypoScript setting
 
     Whether the confirmation is queued as a flash message after the job is
     saved. The confirmation says that the job was created and will be reviewed,
     or, when the notification mail could not be sent, that it was created and
     the visitor should get in touch.
 
-    :guilabel:`Fallback - Use TypoScript settings`
+    :guilabel:`Use the site or TypoScript setting`
         The site setting
         :typoscript:`plugin.tx_academicjobs.saveForm.fallbackFlashMessageCreationMode`
         decides, :guilabel:`Flash message creation mode`. Its values are those
@@ -115,14 +111,16 @@ Settings
         The confirmation is queued after every saved job.
 
     :guilabel:`never`
-        No confirmation is queued. Choose it when the redirect page carries a
-        confirmation text of its own.
+        No confirmation is queued, on the form as on a redirect page. Choose it
+        when the redirect page carries a confirmation text of its own.
 
-    :guilabel:`suppress when list pid has been configured`
+    :guilabel:`Suppress when a redirect page is set`
         The confirmation is queued unless the visitor is redirected to another
-        page than the one of the form. Despite its label, the item looks at the
-        redirect page, the one of the option above, of the site setting, of a
-        listener or of the deprecated list page, and not at the list page.
+        page than the one of the form. The redirect page is the one of the
+        option above, of the site setting, of a listener or of the deprecated
+        list page. The warning about a notification mail that could not be
+        sent is suppressed the same way, so a site that sends the visitor to a
+        page of its own in this mode does not tell about it.
 
     An event listener can replace the mode, see
     :ref:`developers-event-after-save-job-event`.
@@ -132,16 +130,23 @@ Settings
 Where the confirmation is shown
 -------------------------------
 
-The form queues its confirmation for itself, in the queue
-`extbase.flashmessages.tx_academicjobs_newjobform`. None of the shipped
-templates renders that queue: the form template renders no flash message, and
-the job list and the job detail render only the messages queued for them. A
-queued confirmation stays in the session of the visitor until a page renders
-its queue.
+The visitor who returns to the form, because no redirect page is set or the
+redirect page is the page of the form, sees the confirmation above the form.
+The form template renders it from a queue of its own,
+`academic_jobs.new_job_form.confirmation`. The form is not cached with the
+page, so the confirmation is shown once and to that visitor only. A copy of
+:file:`Templates/Job/New.html` in a site package keeps the line that renders
+it, see :ref:`templates-override-new-job-form-confirmation`.
 
-To show it, render the queue on the page the visitor is redirected to, in a
-part of that page that is not cached, for example with a
-:typoscript:`COA_INT` that renders a Fluid template:
+The visitor who is sent to a redirect page gets the confirmation in the queue
+of the plugin, `extbase.flashmessages.tx_academicjobs_newjobform`. No shipped
+template renders that queue, and the confirmation stays in the session of the
+visitor until a page renders it. The form does not show it either, so it never
+turns up there at a later visit.
+
+To show it, render the queue on the redirect page, in a part of that page that
+is not cached, for example with a :typoscript:`COA_INT` that renders a Fluid
+template:
 
 ..  code-block:: html
     :caption: The Fluid template rendered on the redirect page
@@ -149,4 +154,8 @@ part of that page that is not cached, for example with a
     <f:flashMessages queueIdentifier="extbase.flashmessages.tx_academicjobs_newjobform" />
 
 A site that shows a confirmation page of its own instead chooses
-:guilabel:`never`, so no message waits in the session for a later page.
+:guilabel:`never` or :guilabel:`Suppress when a redirect page is set`, so no
+message waits in the session.
+
+A submission the form rejects shows the form again with a message at every
+rejected field, and no other message.
