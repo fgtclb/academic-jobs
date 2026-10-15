@@ -149,8 +149,11 @@ decides, see :ref:`integrator-job-form-flash-messages`.
 Introduced in
 =============
 
-The event exists since the first release of the extension. Changed in 3.0:
+The event exists since the first release of the extension. Changed in 2.4:
+
+*   :ref:`important-redirect-page-zero-from-a-listener-means-none`
+
+Changed in 3.0:
 
 *   :ref:`deprecation-flash-message-creation-mode-moved`: the enum of the mode
     is :php:`\FGTCLB\AcademicBase\Form\FlashMessageCreationMode` now.
-*   :ref:`important-redirect-page-zero-from-a-listener-means-none`
