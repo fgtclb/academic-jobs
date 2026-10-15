@@ -54,6 +54,11 @@ and a detail view available.
         Install :guilabel:`academic_jobs` via Composer, the Extension
         Manager or a TER upload.
 
+    ..  card:: :ref:`Upgrade <upgrade>`
+
+        The steps to upgrade :guilabel:`academic_jobs` to a newer version, in
+        the order to take them.
+
     ..  card:: :ref:`Configuration <configuration>`
 
         Configure the extension and its plugins for your installation.
@@ -78,6 +83,7 @@ and a detail view available.
 
     Introduction/Index
     Installation/Index
+    Upgrade/Index
     Configuration/Index
     Templates/Index
     KnownProblems/Index
