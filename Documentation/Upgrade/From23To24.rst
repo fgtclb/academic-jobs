@@ -308,7 +308,8 @@ Adapt your code
     :ref:`breaking-ace-250-academic-jobs`.
 *   A listener of :php:`\FGTCLB\AcademicJobs\Event\AfterSaveJobEvent` that
     sets a redirect page of ``0`` or below now sends the visitor back to the
-    form page, see
+    form page, which then shows an error in place of the form. Keep a redirect
+    page set in the content element or in the TypoScript constant, see
     :ref:`important-redirect-page-zero-from-a-listener-means-none`.
 *   A listener of
     :php:`\FGTCLB\AcademicJobs\Event\ModifyJobControllerNewActionViewEvent`
