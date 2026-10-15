@@ -58,9 +58,15 @@ for all academic extensions on the `extension points page of academic_base
         Install :guilabel:`academic_jobs` via Composer, the Extension
         Manager or a TER upload.
 
+    ..  card:: :ref:`For integrators <integrator>`
+
+        The job list, the job detail and the job form, and every option of
+        their content elements.
+
     ..  card:: :ref:`Configuration <configuration>`
 
-        Configure the extension and its plugins for your installation.
+        The sets, the static templates and the site settings of the
+        extension.
 
     ..  card:: :ref:`Templates <templates>`
 
@@ -70,6 +76,11 @@ for all academic extensions on the `extension points page of academic_base
 
         The classes of the job list, detail and form, and how a site package
         styles them.
+
+    ..  card:: :ref:`For developers <developers>`
+
+        Decide where a visitor lands after submitting a job, add view
+        variables and adapt the job types with event listeners.
 
     ..  card:: :ref:`Known problems <known-problems>`
 
@@ -87,9 +98,11 @@ for all academic extensions on the `extension points page of academic_base
 
     Introduction/Index
     Installation/Index
+    Integrator/Index
     Configuration/Index
     Templates/Index
     Styling/Index
+    Developers/Index
     KnownProblems/Index
     Changelog/Changelog-3
     Changelog/Changelog-2

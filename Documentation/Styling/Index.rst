@@ -135,10 +135,11 @@ The job detail
 The flash messages
 ==================
 
-The job list and the job detail render the flash messages of the extension,
-the confirmation after a submitted job or the message that it could not be
-created. TYPO3 renders them, with the alert classes of Bootstrap and no
-speaking class:
+The job list and the job detail render the flash messages queued for them.
+The confirmation after a submitted job, or the message that it could not be
+created, is queued for the job form and rendered only where a site renders
+that queue, see :ref:`integrator-job-form-flash-messages`. TYPO3 renders all of
+them with the alert classes of Bootstrap and no speaking class:
 
 ..  code-block:: html
 

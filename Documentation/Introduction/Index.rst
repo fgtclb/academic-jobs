@@ -52,3 +52,10 @@ the content element and the job record icon, draw the shared icons of
 licensed under the `Creative Commons Attribution 4.0 International license
 <https://creativecommons.org/licenses/by/4.0/>`__. The extension ships no icon
 file of its own apart from :file:`Extension.svg`.
+
+This manual shows the icon of the content elements from
+:file:`Documentation/Images/Icons/employment.svg`. It is a copy of
+:file:`Resources/Public/Icons/info/employment.svg` of
+:guilabel:`academic_base`, the Font Awesome icon `briefcase`, drawn in a fixed
+grey instead of the colour of the surrounding text, so that it reads on a light
+and a dark page alike.

@@ -16,6 +16,7 @@ dispatches :php:`\FGTCLB\AcademicBase\Event\ModifyPluginViewEvent` of
 :guilabel:`academic_base` instead, once each time it renders. It is one event
 for every academic plugin and carries the same two things the removed one did:
 the plugin action context of :guilabel:`academic_base` and the view. See
+:ref:`developers-event-modify-plugin-view-event`,
 :ref:`feature-plugin-view-event` and the `changelog of academic_base
 <https://docs.typo3.org/p/fgtclb/academic-base/main/en-us/Changelog/3.0/Feature-ModifyPluginViewEvent.html>`__.
 

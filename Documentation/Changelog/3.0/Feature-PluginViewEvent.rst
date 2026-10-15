@@ -21,7 +21,9 @@ It replaces the view event of the new job form, which is removed, see
 :ref:`breaking-removed-job-new-action-view-event`. The validations of the form
 are assigned after the event and cannot be replaced by a listener.
 
-The event, with an example listener, is described in the `changelog of
+What the plugins of this extension hand to the event, with an example
+listener, is described in :ref:`developers-event-modify-plugin-view-event`.
+The event itself is described in the `changelog of
 academic_base
 <https://docs.typo3.org/p/fgtclb/academic-base/main/en-us/Changelog/3.0/Feature-ModifyPluginViewEvent.html>`__.
 

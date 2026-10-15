@@ -20,7 +20,8 @@ Impact
 ======
 
 Nothing is logged. A listener of :php:`AfterSaveJobEvent` that uses the old
-name keeps working. The alias is removed in version 4.0.
+name keeps working. The alias is removed in version 4.0. The event is
+described in :ref:`developers-event-after-save-job-event`.
 
 Affected Installations
 ======================

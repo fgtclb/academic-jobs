@@ -7,8 +7,9 @@ Feature: The job list can be paginated
 Description
 ===========
 
-The :guilabel:`Jobs List` content element rendered every job of its job type on
-one page. It now has a :guilabel:`Pagination` tab with two fields:
+The :guilabel:`Job List` content element rendered every job of its job type on
+one page. It now has a :guilabel:`Pagination` tab with two fields, see
+:ref:`integrator-job-list-pagination`:
 
 *   :guilabel:`Enable pagination`, off by default. Off, the list renders every
     job, as before.

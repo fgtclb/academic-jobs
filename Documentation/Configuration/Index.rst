@@ -172,25 +172,10 @@ The setting is inherited by every page below the one it is set on.
 Pagination of the job list
 ==========================
 
-The :guilabel:`Job List` content element can split its jobs into pages.
-Whether it does, and how many jobs a page holds, is set on each content
-element, tab :guilabel:`Pagination`:
-
-..  list-table::
-    :header-rows: 1
-
-    *   -   Field
-        -   Default
-        -   Meaning
-    *   -   :guilabel:`Enable pagination`
-        -   off
-        -   Off, the list renders every job of its job type.
-    *   -   :guilabel:`Results per page`
-        -   10
-        -   The number of jobs on one page.
-
-How many page numbers the navigation links at once is one value for the whole
-site:
+Whether a :guilabel:`Job List` content element splits its jobs into pages,
+and how many jobs a page holds, is set on each content element, see
+:ref:`integrator-job-list-pagination`. How many page numbers the navigation
+links at once is one value for the whole site:
 
 ..  list-table::
     :header-rows: 1
@@ -213,7 +198,7 @@ templates sets the constant instead.
 Load the script or bring your own
 =================================
 
-The :guilabel:`Jobs New` content element loads two scripts on the page that
+The :guilabel:`Job Form` content element loads two scripts on the page that
 carries it: CKEditor 4 from its content delivery network, and the module
 :js:`@fgtclb/academic-jobs/frontend/rich-text.js`, which turns the description
 fields of the form into rich text editors. No other content element of this
