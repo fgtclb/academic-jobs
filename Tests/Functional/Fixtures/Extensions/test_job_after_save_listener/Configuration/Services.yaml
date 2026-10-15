@@ -14,7 +14,7 @@ services:
       - name: event.listener
         identifier: 'test-job-after-save-listener/set-redirect-page'
 
-  TESTS\TestJobAfterSaveListener\EventListener\RecordNewJobFormResponse:
+  TESTS\TestJobAfterSaveListener\EventListener\UpdateJobTitle:
     tags:
       - name: event.listener
-        identifier: 'test-job-after-save-listener/record-new-job-form-response'
+        identifier: 'test-job-after-save-listener/update-job-title'

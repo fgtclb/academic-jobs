@@ -144,9 +144,12 @@ When the mail cannot be sent
 The mail is sent after the job is saved. When it cannot be sent, because the
 recipient or the sender address is empty or invalid, or because the mail
 transport refuses it or cannot deliver it, the job stays saved and the visitor
-gets the same redirect as after a sent mail. Where the site shows the messages
-of the form, the visitor sees the warning "Notification email could not be
-sent" instead of the success message.
+gets the same redirect as after a sent mail. The visitor sees the warning
+"Notification email could not be sent" instead of the success message, on the
+form when no redirect page is set, and on a redirect page that renders the
+messages of the form, see :ref:`templates-override-new-job-form-redirect-page`.
+With the mode :guilabel:`Suppress when a redirect page is set` and a redirect
+page, neither message is queued.
 
 The failure is logged at level error, with the uid of the job and the
 exception. The logger is the one of

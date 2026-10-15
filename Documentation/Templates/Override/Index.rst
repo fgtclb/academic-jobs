@@ -75,3 +75,49 @@ copying the partial:
 
 Every label of the extension, and the path of each content element, is listed
 in :ref:`configuration-labels`.
+
+..  index:: Templates; New job form confirmation
+..  _templates-override-new-job-form-confirmation:
+
+Keep the confirmation in a copy of the form template
+----------------------------------------------------
+
+A visitor who returns to the form after a saved job, because no redirect page
+is set or the redirect page is the page of the form, sees the confirmation
+above the form. :file:`Templates/Job/New.html` renders it, inside the element
+with the class `academic-jobs-new`, from a queue of its own:
+
+..  code-block:: html
+    :caption: The line of :file:`Templates/Job/New.html` that renders the confirmation
+
+    <f:flashMessages queueIdentifier="academic_jobs.new_job_form.confirmation" />
+
+A copy of the template in a site package takes this line over. Without it the
+confirmation waits in the session of the visitor, and the visitor sees the
+empty form. The form is not cached with the page, so the confirmation is shown
+once and to that visitor only.
+
+..  _templates-override-new-job-form-redirect-page:
+
+Show the confirmation on a redirect page
+----------------------------------------
+
+The visitor who is sent to a redirect page gets the confirmation in the queue
+of the plugin, `extbase.flashmessages.tx_academicjobs_newjobform`. No shipped
+template renders that queue, and the confirmation stays in the session of the
+visitor until a page renders it. The form does not render it either, so it
+never turns up there at a later visit.
+
+To show it, render the queue on the redirect page, in a part of that page that
+is not cached, for example with a :typoscript:`COA_INT` that renders a Fluid
+template:
+
+..  code-block:: html
+    :caption: The Fluid template rendered on the redirect page
+
+    <f:flashMessages queueIdentifier="extbase.flashmessages.tx_academicjobs_newjobform" />
+
+A site that shows a confirmation page of its own instead chooses
+:guilabel:`never` or :guilabel:`Suppress when a redirect page is set` for
+:guilabel:`Flashmessage creation mode when persisting new jobs (FE)`, so no
+message waits in the session.

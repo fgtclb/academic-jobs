@@ -21,6 +21,13 @@
         <f:render partial="Header/All" arguments="{_all}" />
     </f:if>
 
+    <f:comment>
+        The confirmation after a saved job for a visitor who returns to the form, queued by
+        the controller as JobController::CONFIRMATION_QUEUE_IDENTIFIER. A redirect page gets
+        the confirmation in the queue of the plugin instead.
+    </f:comment>
+    <f:flashMessages queueIdentifier="academic_jobs.new_job_form.confirmation" />
+
     <f:render
         partial="Job/Forms/Errors"
         arguments="{

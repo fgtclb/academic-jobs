@@ -19,13 +19,11 @@ save, but on the next visit of the form.
 
 Such a page id now counts as no redirect page for the redirect as well. The
 form sends the visitor back to the form page, exactly as when no redirect page
-is set, and queues the message as the configured mode says. That is not a
-working state: the redirect asks for an action the content element does not
-offer, so the form page shows an error in place of the form and of the
-message. Keep a redirect page set in the content element or in the TypoScript
-constant. The deprecated TypoScript setting
-``plugin.tx_academicjobs.settings.listPid`` is not used for it, it still only
-applies when the listeners leave no redirect page at all.
+is set, and queues the message as the configured mode says. The form page
+shows the form with the message above it, see
+:ref:`important-job-form-returns-to-its-page`. The deprecated TypoScript
+setting ``plugin.tx_academicjobs.settings.listPid`` is not used for it, it
+still only applies when the listeners leave no redirect page at all.
 
 :php:`getRedirectPageId()` of the event still returns what a listener set, so a
 later listener reads the ``0`` of an earlier one.
@@ -34,8 +32,8 @@ Impact
 ======
 
 *   A listener that sets a redirect page of ``0`` or below sends the visitor
-    back to the form page, which then shows an error, instead of to the
-    directory of the requested address.
+    back to the form page, which shows the form and the message of the
+    configured mode, instead of to the directory of the requested address.
 *   The plugin setting :guilabel:`Redirect page after job creation` and the
     TypoScript constant
     ``plugin.tx_academicjobs.saveForm.fallbackRedirectPageId`` already

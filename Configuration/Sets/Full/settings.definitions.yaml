@@ -62,11 +62,13 @@ settings:
     default: 'A new job application has been submitted. Please check the backend.'
   plugin.tx_academicjobs.saveForm.fallbackRedirectPageId:
     label: 'Default redirect page PID, can be overruled in plugin'
+    description: 'The page a visitor is sent to after a saved job. 0 returns the visitor to the page of the form, which shows the confirmation.'
     category: academic.jobs
     type: int
     default: 0
   plugin.tx_academicjobs.saveForm.fallbackFlashMessageCreationMode:
     label: 'Flash message creation mode'
+    description: 'Whether the job form queues its confirmation after a saved job: 1 always, 2 never, 0 suppress when a redirect page is set. On a redirect page, only an uncached element that renders the messages of the plugin shows it.'
     category: academic.jobs
     type: int
     default: 0

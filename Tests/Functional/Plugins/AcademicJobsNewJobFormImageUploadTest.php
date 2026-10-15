@@ -168,14 +168,13 @@ final class AcademicJobsNewJobFormImageUploadTest extends AbstractAcademicJobsTe
     }
 
     /**
-     * The answer to a saved job is the redirect the plugin returns. TYPO3 v12 and v13 send
-     * it with `header()` and answer 200 with the rest of the page, where the empty body of
-     * the redirect takes the place of the plugin.
+     * The answer to a saved job is the redirect alone, on TYPO3 v12 and v13 alike: no page
+     * is rendered for it, so a form rendered again cannot hide behind it.
      */
     private function assertAnsweredAsSavedJob(ResponseInterface $response): void
     {
-        $this->assertSame(200, $response->getStatusCode());
-        $this->assertStringNotContainsString('academic-jobs-new', (string)$response->getBody());
+        $this->assertSame(303, $response->getStatusCode());
+        $this->assertSame('', (string)$response->getBody());
     }
 
     /**

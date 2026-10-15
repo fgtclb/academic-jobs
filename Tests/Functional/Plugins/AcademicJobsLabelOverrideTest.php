@@ -37,8 +37,8 @@ use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
  * again; the check of the extension names of all translations holds those calls.
  *
  * The list is on `/home`, the detail on `/job-detail`, the form on `/new-job`. A sent form
- * redirects to `/new-job` again, and the answer shows the messages of the session outside
- * the page cache.
+ * names `/new-job` as its redirect page, which is the page of the form, so it returns there
+ * and shows the confirmation above the form.
  */
 final class AcademicJobsLabelOverrideTest extends AbstractAcademicJobsTestCase
 {
@@ -82,7 +82,6 @@ final class AcademicJobsLabelOverrideTest extends AbstractAcademicJobsTestCase
                     'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
                     'EXT:academic_jobs/Configuration/TypoScript/setup.typoscript',
                     'EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/TypoScript/Setup/Rendering.typoscript',
-                    'EXT:academic_jobs/Tests/Functional/Plugins/Fixtures/TypoScript/Setup/NewJobFormMessages.typoscript',
                 ],
             ],
         );
@@ -125,9 +124,9 @@ final class AcademicJobsLabelOverrideTest extends AbstractAcademicJobsTestCase
     }
 
     /**
-     * Sends a job through the form on `/new-job` and returns the answer. The form redirects
-     * to its own page, and TYPO3 v12 and v13 send that redirect with `header()` and render
-     * the rest of the page, where an uncached element shows the messages of the session.
+     * Sends a job through the form on `/new-job` and returns the page the visitor gets. The
+     * form redirects to its own page, which shows the confirmation of the session above
+     * the form.
      */
     private function renderPageAfterSentJob(): string
     {
@@ -168,9 +167,9 @@ final class AcademicJobsLabelOverrideTest extends AbstractAcademicJobsTestCase
                 ->withBody($body)
                 ->withParsedBody($parsedBody),
         );
-        $this->assertSame(200, $answer->getStatusCode());
+        $this->assertSame('https://www.acme.com/new-job', $answer->getHeaderLine('Location'));
 
-        return (string)$answer->getBody();
+        return $this->followSeeOther($answer);
     }
 
     /**

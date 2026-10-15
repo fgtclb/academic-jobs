@@ -122,15 +122,21 @@ abstract class AbstractAcademicJobsNotificationMailTestCase extends AbstractAcad
 
     /**
      * Posts a job as `submitJob()` does and returns the response to the post.
+     *
+     * `$cookieParams` are sent with both requests, the frontend session cookie of an
+     * earlier answer for example, so a second submission continues the session of the
+     * first one: `['fe_typo_user' => $this->frontendSessionCookie($answer)]`.
+     *
+     * The response is not asserted: a saved job is answered with a redirect, a rejected
+     * one with the form again.
+     *
+     * @param array<string, string> $cookieParams
      */
-    protected function postJob(string $pageUrl, string $title): ResponseInterface
+    protected function postJob(string $pageUrl, string $title, array $cookieParams = []): ResponseInterface
     {
-        $document = new \DOMDocument();
-        $document->loadHTML(
-            '<?xml encoding="UTF-8">' . $this->renderFrontendPage($pageUrl),
-            LIBXML_NOERROR | LIBXML_NOWARNING,
+        $xpath = $this->documentXPath(
+            $this->renderFrontendPage((new InternalRequest($pageUrl))->withCookieParams($cookieParams)),
         );
-        $xpath = new \DOMXPath($document);
         $forms = $xpath->query('//div[contains(concat(" ", normalize-space(@class), " "), " academic-jobs-new ")]//form');
         $this->assertNotFalse($forms);
         $form = $forms->item(0);
@@ -156,9 +162,18 @@ abstract class AbstractAcademicJobsNotificationMailTestCase extends AbstractAcad
             ->withMethod('POST')
             ->withAddedHeader('Content-Type', 'application/x-www-form-urlencoded')
             ->withBody($body)
-            ->withParsedBody($parsedBody);
+            ->withParsedBody($parsedBody)
+            ->withCookieParams($cookieParams);
 
         return $this->requestFrontendPage($request);
+    }
+
+    protected function documentXPath(string $html): \DOMXPath
+    {
+        $document = new \DOMDocument();
+        $document->loadHTML('<?xml encoding="UTF-8">' . $html, LIBXML_NOERROR | LIBXML_NOWARNING);
+
+        return new \DOMXPath($document);
     }
 
     /**
