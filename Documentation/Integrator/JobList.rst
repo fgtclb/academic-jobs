@@ -66,18 +66,27 @@ Settings
     :Default: None
 
     Which jobs the list shows. :guilabel:`None` lists every job of the storage
-    folder. :guilabel:`Job`, :guilabel:`Sidejob` and :guilabel:`Thesis` list
-    only the jobs of that type, which the editor chooses in the field
-    :guilabel:`Job Type` of the job record.
+    folder. Every other choice lists only the jobs of that type, which the
+    editor chooses in the field :guilabel:`Job Type` of the job record.
+
+    After :guilabel:`None` come the types of the job record:
+    :guilabel:`Job`, :guilabel:`Sidejob` and :guilabel:`Thesis`, and every type
+    a project adds or removes with an event listener, see
+    :ref:`developers-event-modify-tca-select-field-items-event`.
+
+    Page TSconfig of the record field does not reach this option. A type added
+    or removed with :typoscript:`addItems` or :typoscript:`removeItems` below
+    :typoscript:`TCEFORM.tx_academicjobs_domain_model_job.type` needs the same
+    lines for the FlexForm field:
+
+    ..  code-block:: typoscript
+        :caption: Page TSconfig
+
+        TCEFORM.tx_academicjobs_domain_model_job.type.removeItems = 3
+        TCEFORM.tt_content.pi_flexform.academicjobs_list.sDEF.settings\.job\.type.removeItems = 3
 
     Use one list per type when a site presents them on pages of their own, and
     :guilabel:`None` for a single page of every open position.
-
-    The choices are a fixed list. A job type a project adds to the job record
-    with an event listener, see
-    :ref:`developers-event-modify-tca-select-field-items-event`, cannot be
-    chosen here, and a list of :guilabel:`None` shows those jobs together with
-    all others.
 
 ..  confval:: Show hidden records
     :name: job-list-show-hidden-records

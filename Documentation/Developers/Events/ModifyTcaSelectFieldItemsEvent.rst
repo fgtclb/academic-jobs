@@ -16,7 +16,10 @@ When it is dispatched
 =====================
 
 Two fields of the job record build their items with an item provider of this
-extension, and each provider dispatches the event once each time it runs:
+extension, and each provider dispatches the event once each time it runs. The
+option :confval:`Job Type <job-list-job-type>` of the job list offers the job
+types of the record behind its own :guilabel:`None`, and dispatches the event
+with the table and the field of the record:
 
 ..  list-table::
     :header-rows: 1
@@ -33,10 +36,18 @@ extension, and each provider dispatches the event once each time it runs:
         -   `tx_academicjobs_domain_model_job`, `employment_type`
         -   :php:`\FGTCLB\AcademicJobs\Backend\FormEngine\EmploymentTypeItems`
         -   `1` Full-time, `2` Part-time
+    *   -   :guilabel:`Job Type` of the job list
+        -   `tx_academicjobs_domain_model_job`, `type`
+        -   :php:`\FGTCLB\AcademicJobs\Backend\FormEngine\JobListTypeItems`,
+            which calls :php:`TypeItems`
+        -   `1` Job, `2` Sidejob, `3` Thesis, after `0` None, which the
+            listeners do not get
 
-The providers run in two places:
+The providers run in three places:
 
 *   in the backend, when an editor opens the record of a job.
+*   in the backend, when an editor opens a :ref:`Job List <integrator-job-list>`
+    content element, for its option :guilabel:`Job Type`.
 *   in the frontend, each time the :ref:`Job Form <integrator-job-form>`
     renders, to build the choices of its two select fields. The form translates
     the labels after the listeners ran, so a label may be an `LLL:` reference.
@@ -59,6 +70,18 @@ What this extension passes in
             backend :php:`row` holds the job being edited. In the frontend
             :php:`row` is an empty array, and :php:`effectivePid` is the page
             of the form.
+
+For the job list, :php:`table` and :php:`field` name the field of the job
+record, and every other parameter is the one TYPO3 passes for the FlexForm
+field: :php:`flexParentDatabaseRow` holds the content element,
+:php:`row` the values of its FlexForm, :php:`effectivePid` its page, and
+:php:`config` and :php:`TSconfig` belong to the FlexForm field. Only the job
+list passes :php:`flexParentDatabaseRow`, so a listener that means the record
+or the list alone checks it:
+
+..  code-block:: php
+
+    $isJobList = isset($parameters['flexParentDatabaseRow']);
 
 In the backend form, TYPO3 v13 and v14 hand the static items of a field to the
 item provider as :php:`\TYPO3\CMS\Core\Schema\Struct\SelectItem` objects,
@@ -142,14 +165,19 @@ FlexForms, so a listener returns early for every field it does not mean.
 and passes an empty :php:`row`. The event declares :php:`row` optional, so a
 listener reads it with a fallback, :php:`$parameters['row'] ?? []`, and every
 field of it as well, for example the page as
-:php:`$row['pid'] ?? $parameters['effectivePid']`.
+:php:`$row['pid'] ?? $parameters['effectivePid']`. For the job list, that is
+the page of the content element, because :php:`row` holds the values of its
+FlexForm and has no :php:`pid`. The storage folder of the list is a field of
+the content element, which :php:`flexParentDatabaseRow` holds.
 
 **Removing an item hides it.** A job that already has the value keeps it, and
 the job form does not check a submitted value against the items.
 
-**The job list filters by a fixed list.** The option :confval:`Job Type
-<job-list-job-type>` of the job list offers the three shipped types only. A type
-a listener adds cannot be chosen there.
+**The job list offers the same types.** A type a listener adds to the field
+:php:`type` can be chosen for the job list as well, and one it removes is not
+offered there, see :ref:`important-job-list-offers-the-job-types-of-listeners`.
+Give a type a positive integer as its value: the column of the job stores an
+integer, and the list treats `0` and below as :guilabel:`None`.
 
 ..  _developers-event-modify-tca-select-field-items-event-introduced:
 
@@ -159,3 +187,5 @@ Introduced in
 *   :ref:`feature-1757757620`: the item providers of the job type and the
     employment type dispatch the event. The example of that entry names
     methods the event does not have, the example above uses the ones it has.
+*   :ref:`important-job-list-offers-the-job-types-of-listeners`: the option
+    :guilabel:`Job Type` of the job list offers the types of the listeners.

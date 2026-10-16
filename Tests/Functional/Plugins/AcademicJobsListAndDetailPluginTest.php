@@ -326,6 +326,21 @@ final class AcademicJobsListAndDetailPluginTest extends AbstractAcademicJobsTest
         $this->assertStringNotContainsString('Master Thesis Topic', $content);
     }
 
+    /**
+     * A job type a project adds with a listener of the select items event can be chosen
+     * for the list since ACE-923, and the list filters by it like by a shipped type.
+     */
+    #[Test]
+    public function listPluginRestrictsJobsToAJobTypeAProjectAdded(): void
+    {
+        $this->setUpTestCase('jobPages_addedJobTypeFilter');
+
+        $content = $this->renderListPage();
+        $this->assertStringContainsString('Doctoral Position', $content);
+        $this->assertStringNotContainsString('Research Assistant Position', $content);
+        $this->assertStringNotContainsString('Student Assistant Sidejob', $content);
+    }
+
     #[Test]
     public function listPluginRendersHiddenJobsWhenConfigured(): void
     {
