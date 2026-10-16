@@ -320,6 +320,12 @@ Adapt your code
     message of Extbase after a rejected submission, see
     :ref:`important-job-form-returns-to-its-page`.
 *   A listener of
+    :php:`\FGTCLB\AcademicBase\Event\ModifyTcaSelectFieldItemsEvent` that
+    changes the job types of the job record changes the option
+    :guilabel:`Job Type` of the job list as well now. One meant for the record
+    alone returns early when :php:`flexParentDatabaseRow` is set, see
+    :ref:`important-job-list-offers-the-job-types-of-listeners`.
+*   A listener of
     :php:`\FGTCLB\AcademicJobs\Event\ModifyJobControllerNewActionViewEvent`
     that fills a date field from an assigned job gets the date as ``Y-m-d``
     in the form now, see
