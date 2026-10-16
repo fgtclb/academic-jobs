@@ -60,15 +60,15 @@ What this extension passes in
             :php:`row` is an empty array, and :php:`effectivePid` is the page
             of the form.
 
-In the backend form, TYPO3 v13 hands the static items of a field to the item
-provider as :php:`\TYPO3\CMS\Core\Schema\Struct\SelectItem` objects, TYPO3
-v14 as arrays, and the items a provider adds are arrays on both versions. A
-:php:`SelectItem` implements :php:`\ArrayAccess`, so a closure typed
-:php:`array|SelectItem` that reads :php:`$item['value']` works on both.
+In the backend form, TYPO3 v13 and v14 hand the static items of a field to the
+item provider as :php:`\TYPO3\CMS\Core\Schema\Struct\SelectItem` objects,
+and the items a provider adds are arrays. A :php:`SelectItem` implements
+:php:`\ArrayAccess`, so a closure typed :php:`array|SelectItem` that reads
+:php:`$item['value']` works for both.
 
 The two job fields declare no static items, but a project that adds one in
-the TCA gets an object on TYPO3 v13. The job form of the frontend hands every
-item over as an array.
+the TCA gets an object in the backend form. The job form of the frontend hands
+every item over as an array.
 
 ..  _developers-event-modify-tca-select-field-items-event-example:
 
