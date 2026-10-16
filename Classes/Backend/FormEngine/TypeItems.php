@@ -6,7 +6,7 @@ namespace FGTCLB\AcademicJobs\Backend\FormEngine;
 
 use FGTCLB\AcademicBase\Event\ModifyTcaSelectFieldItemsEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use TYPO3\CMS\Core\Utility\ArrayUtility;
+use TYPO3\CMS\Core\Schema\Struct\SelectItem;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -26,10 +26,7 @@ final class TypeItems
      */
     public function itemsProcFunc(array &$parameters): void
     {
-        ArrayUtility::mergeRecursiveWithOverrule(
-            $parameters['items'],
-            $this->getDefaultTypes()
-        );
+        $parameters['items'] = $this->appendMissingItems($parameters['items'], $this->getDefaultTypes());
         /** @var ModifyTcaSelectFieldItemsEvent $event */
         $event = GeneralUtility::makeInstance(EventDispatcherInterface::class)->dispatch(new ModifyTcaSelectFieldItemsEvent(parameters: $parameters));
         $parameters = $event->getParameters();
@@ -57,5 +54,29 @@ final class TypeItems
                 'value' => 3,
             ],
         ];
+    }
+
+    /**
+     * Appends the shipped items after the items the field declares, skipping a shipped
+     * item whose value is declared already. Both lists are indexed from 0, so merging them
+     * by key let the shipped items replace the declared ones.
+     *
+     * @param array<int, SelectItem|array{label?: string|null, value?: mixed, icon?: string|null, group?: string|null}> $items
+     * @param array<int, array{label: string|null, value: int}> $shippedItems
+     * @return array<int, SelectItem|array{label?: string|null, value?: mixed, icon?: string|null, group?: string|null}>
+     */
+    private function appendMissingItems(array $items, array $shippedItems): array
+    {
+        $items = array_values($items);
+        $declaredValues = array_map(
+            static fn(array|SelectItem $item): string => (string)($item['value'] ?? ''),
+            $items,
+        );
+        foreach ($shippedItems as $shippedItem) {
+            if (!in_array((string)$shippedItem['value'], $declaredValues, true)) {
+                $items[] = $shippedItem;
+            }
+        }
+        return $items;
     }
 }

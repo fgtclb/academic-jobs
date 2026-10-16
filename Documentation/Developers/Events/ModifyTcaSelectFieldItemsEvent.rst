@@ -68,7 +68,9 @@ and the items a provider adds are arrays. A :php:`SelectItem` implements
 
 The two job fields declare no static items, but a project that adds one in
 the TCA gets an object in the backend form. The job form of the frontend hands
-every item over as an array.
+every item over as an array. Such an item comes first, and a shipped item with
+a value it declares already is left out, see
+:ref:`important-job-type-items-keep-declared-items`.
 
 ..  _developers-event-modify-tca-select-field-items-event-example:
 
