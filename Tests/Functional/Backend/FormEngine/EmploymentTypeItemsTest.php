@@ -124,6 +124,32 @@ final class EmploymentTypeItemsTest extends AbstractAcademicJobsTestCase
     }
 
     /**
+     * The items a field declares, handed over as arrays the way the job form of the
+     * frontend hands them, stay in front of the shipped ones, and a shipped item whose
+     * value is declared already is left out. Merged by key, the shipped items replaced
+     * the declared ones (ACE-923).
+     */
+    #[Test]
+    public function declaredItemsAreKeptInFrontOfTheShippedOnes(): void
+    {
+        $this->applyFakeTableTca();
+        $GLOBALS['TCA']['fake_table']['columns']['fake_field']['config']['items'] = [
+            ['label' => 'Not decided', 'value' => 0],
+            ['label' => 'Position', 'value' => 1],
+        ];
+        $site = new Site('acme', 1, []);
+
+        $this->assertSame(
+            [
+                ['label' => 'Not decided', 'value' => 0],
+                ['label' => 'Position', 'value' => 1],
+                ['label' => 'LLL:EXT:academic_jobs/Resources/Private/Language/locallang_be.xlf:tx_academicjobs_domain_model_job.employment_type.parttime', 'value' => 2],
+            ],
+            $this->callItemsProcFunc(1, $site, 'fake_table', 'fake_field'),
+        );
+    }
+
+    /**
      * @return array<int, array{
      *     label?: string|null,
      *     value?: mixed,
