@@ -1,10 +1,10 @@
 # TYPO3 Extension `Academic Jobs` (READ-ONLY)
 
-|                  | URL                                                       |
-|------------------|-----------------------------------------------------------|
-| **Repository:**  | https://github.com/fgtclb/academic-jobs                   |
-| **Read online:** | https://docs.typo3.org/p/fgtclb/academic-jobs/main/en-us/ |
-| **TER:**         | https://extensions.typo3.org/extension/academic_jobs/     |
+|                  | URL                                                      |
+|------------------|----------------------------------------------------------|
+| **Repository:**  | https://github.com/fgtclb/academic-jobs                  |
+| **Read online:** | https://docs.typo3.org/p/fgtclb/academic-jobs/2.4/en-us/ |
+| **TER:**         | https://extensions.typo3.org/extension/academic_jobs/    |
 
 ## Description
 
