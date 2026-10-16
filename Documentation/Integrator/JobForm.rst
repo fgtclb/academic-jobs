@@ -91,6 +91,9 @@ Settings
     An event listener can replace the page this option resolved to, see
     :ref:`developers-event-after-save-job-event`.
 
+    The page has to be one that can be linked in the language of the
+    visitor, see :ref:`integrator-job-form-redirect-page-languages`.
+
 ..  confval:: Flashmessage creation mode when persisting new jobs (FE)
     :name: job-form-flash-message-creation-mode
     :type: select
@@ -130,8 +133,9 @@ Settings
 Where the confirmation is shown
 -------------------------------
 
-The visitor who returns to the form, because no redirect page is set or the
-redirect page is the page of the form, sees the confirmation above the form.
+The visitor who returns to the form, because no redirect page is set, the
+redirect page is the page of the form or it cannot be linked, sees the
+confirmation above the form.
 The form template renders it from a queue of its own,
 `academic_jobs.new_job_form.confirmation`. The form is not cached with the
 page, so the confirmation is shown once and to that visitor only. A copy of
@@ -159,3 +163,32 @@ message waits in the session.
 
 A submission the form rejects shows the form again with a message at every
 rejected field, and no other message.
+
+..  _integrator-job-form-redirect-page-languages:
+
+The redirect page in other languages
+------------------------------------
+
+On a site with more than one language, the form sends the visitor to the
+redirect page in the language of the form page. A translated content element
+has its own options, so its translation may name a redirect page of its own.
+
+TYPO3 links no page that has no translation into a language whose fallback is
+strict, which is the default of a new site language, nor for example a hidden,
+deleted or missing page, a page restricted to other users or outside its
+publish dates, or a folder. The form then treats the page as no redirect page:
+the visitor returns to the form, which shows the confirmation as the flash
+message creation mode decides for a form without a redirect page. So the mode
+:guilabel:`Suppress when a redirect page is set` shows it. The job controller
+logs a warning that names the redirect page, the page of the form and the
+language:
+
+..  code-block:: text
+
+    The redirect page 6 of the job form on page 5 cannot be linked in language 1 (Deutsch), it is missing, hidden, access restricted, not translated or of a type that cannot be linked. The visitor returns to the form.
+
+The default log configuration of TYPO3 writes it to the log file of the
+installation, see :ref:`configuration-general-notification-mail-failure` for
+where that is. Translate the redirect page into every language of the form, or
+choose a page that exists in all of them. This applies to a redirect page from
+the site setting, from a listener and from the deprecated list page as well.

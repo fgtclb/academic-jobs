@@ -8,8 +8,9 @@ use FGTCLB\AcademicJobs\Tests\Functional\AbstractAcademicJobsTestCase;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * The FlexForm of a new-job form element, and what the answer to a submission and the
- * rendered form are read with, shared by the tests of where the form sends the visitor.
+ * The FlexForm of a new-job form element, what the answer to a submission and the
+ * rendered form are read with, and the deprecations a submission raises, shared by the
+ * tests of where the form sends the visitor.
  *
  * @phpstan-require-extends AbstractAcademicJobsTestCase
  */
@@ -64,5 +65,35 @@ trait NewJobFormSubmissionTrait
             . '<T3FlexForms><data><sheet index="sDEF"><language index="lDEF">'
             . $fields
             . '</language></sheet></data></T3FlexForms>';
+    }
+
+    /**
+     * Only the deprecations raised in the classes of this extension are taken. The core
+     * raises its own while it renders a page, and those are left to the handler of
+     * PHPUnit, as they are in every other test.
+     *
+     * @return list<string> The messages of the `E_USER_DEPRECATED` errors the classes of
+     *         this extension raised while `$callback` ran.
+     */
+    private function collectDeprecations(\Closure $callback): array
+    {
+        $deprecations = [];
+        $previousHandler = null;
+        $previousHandler = set_error_handler(
+            static function (int $level, string $message, string $file = '', int $line = 0) use (&$deprecations, &$previousHandler): bool {
+                if ($level === E_USER_DEPRECATED && str_contains($file, '/academic-jobs/Classes/')) {
+                    $deprecations[] = $message;
+                    return true;
+                }
+                return is_callable($previousHandler) && (bool)$previousHandler($level, $message, $file, $line);
+            },
+        );
+        try {
+            $callback();
+        } finally {
+            restore_error_handler();
+        }
+
+        return $deprecations;
     }
 }
