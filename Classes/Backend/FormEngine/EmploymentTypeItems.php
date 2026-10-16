@@ -31,7 +31,7 @@ final class EmploymentTypeItems
      *      config: array<string, mixed>,
      *      TSconfig: array<string, mixed>|null,
      *      table: string,
-     *      row: array<string, mixed>,
+     *      row?: array<string, mixed>,
      *      field: string,
      *      effectivePid: int,
      *      site: Site|null,

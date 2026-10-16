@@ -1,0 +1,15 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  TESTS\TestJobSelectItemsListener\:
+    resource: '../Classes/*'
+
+  # Registered by tag, because TYPO3 v12 has no #[AsEventListener] attribute. The event
+  # is read from the parameter of __invoke().
+  TESTS\TestJobSelectItemsListener\EventListener\OfferItemOfTheRecordPage:
+    tags:
+      - name: event.listener
+        identifier: 'test-job-select-items-listener/offer-item-of-the-record-page'
