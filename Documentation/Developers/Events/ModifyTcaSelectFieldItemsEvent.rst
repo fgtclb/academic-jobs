@@ -57,8 +57,8 @@ What this extension passes in
             :php:`value`. :php:`table`, :php:`field`, :php:`effectivePid`,
             :php:`site` and :php:`TSconfig` say where they are built. In the
             backend :php:`row` holds the job being edited. In the frontend
-            there is no :php:`row`, and :php:`effectivePid` is the page of
-            the form.
+            :php:`row` is an empty array, and :php:`effectivePid` is the page
+            of the form.
 
 In the backend form, TYPO3 v13 hands the static items of a field to the item
 provider as :php:`\TYPO3\CMS\Core\Schema\Struct\SelectItem` objects, TYPO3
@@ -136,8 +136,11 @@ Rules and pitfalls
 providers of several academic extensions, for fields of other tables and of
 FlexForms, so a listener returns early for every field it does not mean.
 
-**Do not rely on the row.** The job form calls the providers without a record,
-so a listener that reads :php:`$parameters['row']` reads it with a fallback.
+**Do not rely on the row.** The job form calls the providers without a record
+and passes an empty :php:`row`. The event declares :php:`row` optional, so a
+listener reads it with a fallback, :php:`$parameters['row'] ?? []`, and every
+field of it as well, for example the page as
+:php:`$row['pid'] ?? $parameters['effectivePid']`.
 
 **Removing an item hides it.** A job that already has the value keeps it, and
 the job form does not check a submitted value against the items.
