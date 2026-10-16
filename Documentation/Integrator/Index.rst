@@ -40,20 +40,20 @@ pagination links among others, is a site setting, see
         -   Content element
         -   CType
         -   Shows
-    *   -   ..  image:: /Images/Icons/employment.svg
+    *   -   ..  figure:: /Images/Icons/employment.svg
                 :width: 32px
                 :alt: Icon of the Job List content element
         -   :ref:`Job List <integrator-job-list>`
         -   ``academicjobs_list``
         -   The jobs of the storage folder, all of them or those of one job
             type, on one page or split into pages.
-    *   -   ..  image:: /Images/Icons/employment.svg
+    *   -   ..  figure:: /Images/Icons/employment.svg
                 :width: 32px
                 :alt: Icon of the Job Details content element
         -   :ref:`Job Details <integrator-job-details>`
         -   ``academicjobs_detail``
         -   The job a link of the job list points to.
-    *   -   ..  image:: /Images/Icons/employment.svg
+    *   -   ..  figure:: /Images/Icons/employment.svg
                 :width: 32px
                 :alt: Icon of the Job Form content element
         -   :ref:`Job Form <integrator-job-form>`
