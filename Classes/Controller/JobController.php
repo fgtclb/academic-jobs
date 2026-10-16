@@ -25,6 +25,7 @@ use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
+use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -310,8 +311,17 @@ final class JobController extends ActionController
         // A visitor who stays with the form gets the confirmation from the queue the form
         // template renders: without a redirect page, and with the page of the form as the
         // redirect page. A visitor sent to another page gets it in the queue of the plugin,
-        // which that page has to render outside the page cache.
+        // which that page has to render outside the page cache. A redirect page that cannot
+        // be linked counts as none, for the confirmation as well.
         $returnsToForm = $useRedirectPageId === null || $useRedirectPageId === $currentPageId;
+        $redirectUri = '';
+        if (!$returnsToForm && $useRedirectPageId !== null) {
+            $redirectUri = $this->buildRedirectPageUri($useRedirectPageId, $currentPageId);
+            if ($redirectUri === '') {
+                $useRedirectPageId = null;
+                $returnsToForm = true;
+            }
+        }
         $queueIdentifier = $returnsToForm ? self::CONFIRMATION_QUEUE_IDENTIFIER : null;
         if ($flashMessageCreationMode->shouldBeCreated($currentPageId, $useRedirectPageId)) {
             if ($mailWasSent) {
@@ -333,12 +343,39 @@ final class JobController extends ActionController
             }
         }
 
-        if ($useRedirectPageId === null || $returnsToForm) {
+        if ($returnsToForm || $redirectUri === '') {
             $this->returnToForm();
         }
-        $this->propagateRedirect(
-            $this->uriBuilder->reset()->setTargetPageUid($useRedirectPageId)->setCreateAbsoluteUri(true)->build(),
-        );
+        $this->propagateRedirect($redirectUri);
+    }
+
+    /**
+     * The absolute address of the redirect page in the language of the request, or an
+     * empty string with a warning when the page cannot be linked in it. TYPO3 links no
+     * page that is missing, deleted, hidden, outside its publish dates, restricted to
+     * other users, or not translated into a language whose fallback is strict, and on
+     * TYPO3 v13 no folder. The redirect of an empty address would send the visitor to
+     * the root of the site.
+     */
+    private function buildRedirectPageUri(int $redirectPageId, int $currentPageId): string
+    {
+        $uri = $this->uriBuilder->reset()->setTargetPageUid($redirectPageId)->setCreateAbsoluteUri(true)->build();
+        if ($uri === '') {
+            $language = $this->request->getAttribute('language');
+            $this->logger->warning(
+                'The redirect page {page} of the job form on page {formPage} cannot be linked in language {language} ({languageTitle}),'
+                . ' it is missing, hidden, access restricted, not translated or of a type that cannot be linked.'
+                . ' The visitor returns to the form.',
+                [
+                    'page' => $redirectPageId,
+                    'formPage' => $currentPageId,
+                    'language' => $language instanceof SiteLanguage ? $language->getLanguageId() : 0,
+                    'languageTitle' => $language instanceof SiteLanguage ? $language->getTitle() : '',
+                ],
+            );
+        }
+
+        return $uri;
     }
 
     /**

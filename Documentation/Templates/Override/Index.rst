@@ -83,9 +83,9 @@ Keep the confirmation in a copy of the form template
 ----------------------------------------------------
 
 A visitor who returns to the form after a saved job, because no redirect page
-is set or the redirect page is the page of the form, sees the confirmation
-above the form. :file:`Templates/Job/New.html` renders it, inside the element
-with the class `academic-jobs-new`, from a queue of its own:
+is set, the redirect page is the page of the form or it cannot be linked, sees
+the confirmation above the form. :file:`Templates/Job/New.html` renders it,
+inside the element with the class `academic-jobs-new`, from a queue of its own:
 
 ..  code-block:: html
     :caption: The line of :file:`Templates/Job/New.html` that renders the confirmation

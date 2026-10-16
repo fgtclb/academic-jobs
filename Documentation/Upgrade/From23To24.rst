@@ -340,6 +340,10 @@ Check the result
 *   The header of the job content elements appears once.
 *   A job submitted through a form without a redirect page returns the
     visitor to the form, which shows the confirmation.
+*   On a site with more than one language, the redirect page of every form
+    exists in every language of the form. A redirect page the form cannot
+    link returns the visitor to the form and logs a warning, see
+    :ref:`important-job-form-returns-when-redirect-page-cannot-be-linked`.
 *   A job submitted through the form reaches the editors. A notification mail
     that cannot be sent is logged now instead of failing the form, so check
     the log after a change of the mail configuration, see

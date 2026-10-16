@@ -164,3 +164,38 @@ queue is sent, is not reported by this extension, and the visitor has already
 seen the success message.
 
 Any other error while the mail is built or sent still ends the request.
+
+..  _configuration-general-job-form-redirect-page-languages:
+
+The redirect page of the job form in other languages
+====================================================
+
+After a saved job, the :guilabel:`Jobs New` content element sends the visitor
+to the page of its option :guilabel:`Redirect page after job creation`. On a
+site with more than one language, that is the redirect page in the language of
+the form page. A translated content element has its own options, so its
+translation may name a redirect page of its own.
+
+TYPO3 cannot link every page, for example a page that has no translation into
+a language whose fallback is strict, which is the default of a new site
+language, a hidden, deleted or missing page, a page outside its publish dates
+or one the visitor has no access to. The form then treats the page as no
+redirect page: the visitor
+returns to the form, which shows the confirmation as the flash message creation
+mode decides for a form without a redirect page, see
+:ref:`templates-override-new-job-form-confirmation`. So the mode
+:guilabel:`Suppress when a redirect page is set` shows it. The job controller
+logs a warning that names the redirect page, the page of the form and the
+language:
+
+..  code-block:: text
+
+    The redirect page 6 of the job form on page 5 cannot be linked in language 1 (Deutsch), it is missing, hidden, access restricted, not translated or of a type that cannot be linked. The visitor returns to the form.
+
+The default log configuration of TYPO3 writes it to the log file of the
+installation, see :ref:`configuration-general-notification-mail-failure` for
+where that is. Translate the redirect page into every language of the form, or
+choose a page that exists in all of them. This applies to a redirect page from
+the setting ``plugin.tx_academicjobs.saveForm.fallbackRedirectPageId``, from a
+listener of :php:`\FGTCLB\AcademicJobs\Event\AfterSaveJobEvent` and from the
+deprecated setting ``plugin.tx_academicjobs.listPid`` as well.
