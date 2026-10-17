@@ -6,7 +6,7 @@
 # validator only - it is NOT applied to the TYPO3 backend.
 #
 # Documented at:
-# https://docs.typo3.org/p/fgtclb/academic-jobs/main/en-us/Configuration/Validations/Index.html
+# https://docs.typo3.org/p/fgtclb/academic-jobs/2.4/en-us/Configuration/Validations/Index.html
 #-----------------------------------------------------------------------------------------------------------------------
 # @internal The syntax of this configuration file is considered experimental and may still change.
 #-----------------------------------------------------------------------------------------------------------------------
