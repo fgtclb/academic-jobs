@@ -37,8 +37,8 @@ Records can be created, edited and displayed in the frontend, with both a list
 and a detail view available.
 
 What a project may build on in this extension, and what it may not, is stated
-for all academic extensions on the `extension points page of academic_base
-<https://docs.typo3.org/p/fgtclb/academic-base/main/en-us/Developers/ExtensionPoints/Index.html>`__.
+for all academic extensions on the :ref:`extension points page of academic_base
+<fgtclb/academic-base:developers-extension-points>`.
 
 ----
 

@@ -6,8 +6,8 @@ ModifyTcaSelectFieldItemsEvent
 
 :php:`\FGTCLB\AcademicBase\Event\ModifyTcaSelectFieldItemsEvent` is owned by
 :guilabel:`academic_base`, which describes it for every academic extension in
-`its developer chapter
-<https://docs.typo3.org/p/fgtclb/academic-base/main/en-us/Developers/Events/ModifyTcaSelectFieldItemsEvent.html>`__.
+:ref:`its developer chapter
+<fgtclb/academic-base:developers-event-modify-tca-select-field-items-event>`.
 This page says which items of :guilabel:`academic_jobs` it carries.
 
 ..  _developers-event-modify-tca-select-field-items-event-dispatched:

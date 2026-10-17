@@ -8,8 +8,8 @@ Styling
 The plugins of this extension render their markup with the class system of the
 academic extensions and ship no styling for it. The system, the classes of
 Bootstrap it keeps and how a site package styles the markup are described once,
-in the chapter `Styling of academic_base
-<https://docs.typo3.org/p/fgtclb/academic-base/main/en-us/Styling/Index.html>`__.
+in the chapter :ref:`Styling of academic_base
+<fgtclb/academic-base:styling>`.
 This chapter shows how the markup of this extension is built up.
 
 ..  contents::
@@ -179,8 +179,8 @@ The new job form
     </div>
 
 Every field is rendered by the form partials of
-:guilabel:`EXT:academic_base`, see `A form field
-<https://docs.typo3.org/p/fgtclb/academic-base/main/en-us/Styling/Index.html#styling-markup-form>`__
+:guilabel:`EXT:academic_base`, see :ref:`A form field
+<fgtclb/academic-base:styling-markup-form>`
 in its chapter :guilabel:`Styling`. The text areas of the description and of
 the additional contact information carry `ace-ckeditor`. Unlike most scripts
 of the academic extensions, the rich text script of the form finds its

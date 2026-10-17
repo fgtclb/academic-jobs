@@ -6,8 +6,8 @@ ModifyPluginViewEvent
 
 :php:`\FGTCLB\AcademicBase\Event\ModifyPluginViewEvent` is owned by
 :guilabel:`academic_base`, which describes it for the seven academic
-extensions whose plugins dispatch it in `its developer chapter
-<https://docs.typo3.org/p/fgtclb/academic-base/main/en-us/Developers/Events/ModifyPluginViewEvent.html>`__.
+extensions whose plugins dispatch it in :ref:`its developer chapter
+<fgtclb/academic-base:developers-event-modify-plugin-view-event>`.
 This page says what the plugins of :guilabel:`academic_jobs` hand to it.
 
 ..  _developers-event-modify-plugin-view-event-dispatched:

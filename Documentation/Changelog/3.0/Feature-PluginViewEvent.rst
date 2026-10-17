@@ -23,9 +23,9 @@ are assigned after the event and cannot be replaced by a listener.
 
 What the plugins of this extension hand to the event, with an example
 listener, is described in :ref:`developers-event-modify-plugin-view-event`.
-The event itself is described in the `changelog of
+The event itself is described in the :ref:`changelog of
 academic_base
-<https://docs.typo3.org/p/fgtclb/academic-base/main/en-us/Changelog/3.0/Feature-ModifyPluginViewEvent.html>`__.
+<fgtclb/academic-base:feature-modify-plugin-view-event>`.
 
 Impact
 ======

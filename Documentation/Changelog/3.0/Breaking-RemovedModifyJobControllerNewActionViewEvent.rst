@@ -17,8 +17,8 @@ dispatches :php:`\FGTCLB\AcademicBase\Event\ModifyPluginViewEvent` of
 for every academic plugin and carries the same two things the removed one did:
 the plugin action context of :guilabel:`academic_base` and the view. See
 :ref:`developers-event-modify-plugin-view-event`,
-:ref:`feature-plugin-view-event` and the `changelog of academic_base
-<https://docs.typo3.org/p/fgtclb/academic-base/main/en-us/Changelog/3.0/Feature-ModifyPluginViewEvent.html>`__.
+:ref:`feature-plugin-view-event` and the :ref:`changelog of academic_base
+<fgtclb/academic-base:feature-modify-plugin-view-event>`.
 
 As before, the form assigns the validations after the event, so a listener
 cannot replace them.
