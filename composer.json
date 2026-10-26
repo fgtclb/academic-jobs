@@ -17,7 +17,7 @@
     "homepage": "https://www.fgtclb.com/",
     "require": {
         "php": "^8.1 || ^8.2 || ^8.3 || ^8.4",
-        "fgtclb/academic-base": "2.4.0@dev",
+        "fgtclb/academic-base": "~2.4.1@dev",
         "typo3/cms-core": "^12.4.22 || ^13.4",
         "typo3/cms-fluid-styled-content": "^12.4.22 || ^13.4",
         "typo3/cms-install": "^12.4.22 || ^13.4",
@@ -47,7 +47,7 @@
             "web-dir": ".Build/Web",
             "app-dir": ".Build",
             "extension-key": "academic_jobs",
-            "version": "2.4.0"
+            "version": "2.4.1-dev"
         },
         "branch-alias": {
             "2.x-dev": "2.4.x-dev"
