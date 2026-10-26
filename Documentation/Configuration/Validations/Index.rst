@@ -90,7 +90,7 @@ Current limitations
 
     They *are* supported by :guilabel:`academic_persons`, which is a separate
     mechanism — see `its validation settings
-    <https://docs.typo3.org/p/fgtclb/academic-persons/2.4/en-us/Configuration/Validations/Index.html>`__.
+    <https://docs.typo3.org/p/fgtclb/academic-persons/2.5/en-us/Configuration/Validations/Index.html>`__.
 
 Further points to be aware of:
 

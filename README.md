@@ -3,7 +3,7 @@
 |                  | URL                                                      |
 |------------------|----------------------------------------------------------|
 | **Repository:**  | https://github.com/fgtclb/academic-jobs                  |
-| **Read online:** | https://docs.typo3.org/p/fgtclb/academic-jobs/2.4/en-us/ |
+| **Read online:** | https://docs.typo3.org/p/fgtclb/academic-jobs/2.5/en-us/ |
 | **TER:**         | https://extensions.typo3.org/extension/academic_jobs/    |
 
 ## Description
