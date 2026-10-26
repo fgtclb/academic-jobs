@@ -6,7 +6,7 @@
 # editor of a job.
 #
 # Documented at:
-# https://docs.typo3.org/p/fgtclb/academic-jobs/main/en-us/Configuration/Validations/Index.html
+# https://docs.typo3.org/p/fgtclb/academic-jobs/3.0/en-us/Configuration/Validations/Index.html
 #-----------------------------------------------------------------------------------------------------------------------
 # The same file of every active package is merged in package loading order. A package names only the fields it
 # changes: a list replaces the flags of that field, an empty list `[]` drops them, and `~` removes the field.
