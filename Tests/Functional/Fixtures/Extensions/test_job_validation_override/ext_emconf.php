@@ -3,7 +3,7 @@
 $EM_CONF[$_EXTKEY] = [
     'title' => 'TESTS: Academic Jobs validation settings override',
     'description' => 'A site package that overrides the jobs validation settings and the job TCA, for the functional tests of the settings',
-    'version' => '3.0.0',
+    'version' => '3.0.1',
     'category' => 'plugin',
     'state' => 'beta',
     'author' => 'FGTCLB GmbH',
@@ -13,7 +13,7 @@ $EM_CONF[$_EXTKEY] = [
         'depends' => [
             'typo3' => '13.4.35-14.3.99',
             'core' => '13.4.35-14.3.99',
-            'academic_jobs' => '3.0.0',
+            'academic_jobs' => '3.0.1',
         ],
     ],
 ];
