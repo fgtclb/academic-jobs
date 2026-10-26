@@ -3,7 +3,7 @@
 $EM_CONF[$_EXTKEY] = [
     'title' => 'TESTS: Academic Jobs icon replacement',
     'description' => 'A site package that replaces job icons, two in the right file and two in the wrong one, for the functional tests of the job icons',
-    'version' => '3.0.1',
+    'version' => '3.1.0',
     'category' => 'plugin',
     'state' => 'beta',
     'author' => 'FGTCLB GmbH',
@@ -13,7 +13,7 @@ $EM_CONF[$_EXTKEY] = [
         'depends' => [
             'typo3' => '13.4.35-14.3.99',
             'core' => '13.4.35-14.3.99',
-            'academic_jobs' => '3.0.1',
+            'academic_jobs' => '3.1.0',
         ],
     ],
 ];

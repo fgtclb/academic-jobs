@@ -3,7 +3,7 @@
 $EM_CONF[$_EXTKEY] = [
     'title' => 'FGTCLB: Academic Jobs',
     'description' => 'The Academic Jobs extension allows users to create and manage job postings.',
-    'version' => '3.0.1',
+    'version' => '3.1.0',
     'category' => 'misc',
     'state' => 'beta',
     'author' => 'FGTCLB',
@@ -16,7 +16,7 @@ $EM_CONF[$_EXTKEY] = [
             'rte_ckeditor' => '13.4.35-14.3.99',
             'install' => '13.4.35-14.3.99',
             'fluid_styled_content' => '13.4.35-14.3.99',
-            'academic_base' => '3.0.1',
+            'academic_base' => '3.1.0',
         ],
         'suggests' => [
             'numbered_pagination' => '2.1.0-2.99.99',
